@@ -1,0 +1,8 @@
+Build
+Generated
+**.vcxproj
+**.sln
+**.exe
+.vscode/
+Makefile
+**.make
