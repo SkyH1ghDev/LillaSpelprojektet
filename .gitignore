@@ -3,6 +3,7 @@ Generated
 **.vcxproj
 **.sln
 **.exe
+.vs/
 .vscode/
 Makefile
 **.make
