@@ -3,7 +3,7 @@ project "Tests"
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
     files {"src/**"}
-    includedirs{"../Libraries/include/**", "../External/googletest/googletest/", "../External/googletest/googletest/include"}
+    includedirs{"../Libraries/include/**", "../Libraries/include/", "../External/googletest/googletest/", "../External/googletest/googletest/include"}
 
     libdirs{targetBuildPath .. "/googletest"}
 
