@@ -3,6 +3,7 @@
 
 #include <crtdbg.h>
 #include <Windows.h>
+#include "Application.hpp"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
@@ -12,9 +13,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Braces to let the application go out of scope before checking memory leaks
 	{
-		
-		// Have "Application"-object that gets allocated on stack
-		
+		Application application;
+		application.Run();
 	}
 
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
