@@ -1,9 +1,9 @@
 require "clean"
 require "vscode"
 
-workspace "DummyWorkspace"
+workspace "LillaSpelprojektet"
     location "Generated"
-    cppdialect "C++17"
+    cppdialect "C++20"
     configurations
     {
         "debug",
@@ -26,6 +26,6 @@ workspace "DummyWorkspace"
     objBuildPath = path.getdirectory(_SCRIPT) .. "/Build/obj"
 
 include "External"
-include "DummyLib"
-include "DummyApp"
-include "DummyTest"
+include "Libraries"
+include "Application"
+include "Tests"

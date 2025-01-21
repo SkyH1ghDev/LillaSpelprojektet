@@ -1,6 +1,6 @@
-project "DummyLib"
+project "Libraries"
     kind "StaticLib"
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
-    files {"include/**.h", "src/**.cpp"}
+    files {"include/**.hpp", "src/**.cpp"}
     includedirs{"include/"}
