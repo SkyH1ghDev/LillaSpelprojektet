@@ -2,7 +2,7 @@ project "Application"
     kind "WindowedApp"
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
-    files {"src/**.hpp", "src/**.h", "src/**.cpp"}
-    includedirs{"../Libraries/include"}
+    files {"src/**.cpp", "src/**.hpp", "src/**.h"}
+    includedirs{"../Libraries/include/**", "../Libraries/include/", "src/**", "src/"}
 
     links{"Libraries"}
