@@ -8,5 +8,5 @@ public:
 
 private:
 
-    void Setup();
+    void Setup(HINSTANCE, int nCmdShow);
 };
