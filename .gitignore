@@ -4,5 +4,6 @@ Generated
 **.sln
 **.exe
 .vscode/
+.idea/
 Makefile
 **.make

@@ -1,4 +1,4 @@
-#include <lib.h>
+#include <lib.hpp>
 
 #include <gtest/gtest.h>
 
