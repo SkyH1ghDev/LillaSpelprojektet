@@ -8,5 +8,6 @@ public:
 
 private:
 
-    void Setup(HINSTANCE, int nCmdShow);
+    void Setup(HINSTANCE, int nCmdShow, ID3D11Device*& device, ID3D11DeviceContext*& immediateContext,
+        IDXGISwapChain*& swapChain, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView, ID3D11RenderTargetView*& rtv);
 };

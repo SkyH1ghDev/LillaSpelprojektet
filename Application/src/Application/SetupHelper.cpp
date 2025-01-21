@@ -129,3 +129,28 @@ void SetupHelper::SetViewport(D3D11_VIEWPORT& viewport, UINT width, UINT height)
 	viewport.MinDepth = 0;
 	viewport.MaxDepth = 1;
 }
+
+bool SetupHelper::Setup(HINSTANCE hInstance, int nCmdShow, HWND &window, ID3D11Device* &device, ID3D11DeviceContext* &immediateContext, 
+	IDXGISwapChain* &swapChain, ID3D11Texture2D* &dsTexture, ID3D11DepthStencilView* &dsView, ID3D11RenderTargetView* &rtv)
+{
+	
+	if (!SetupWindow(hInstance, nCmdShow, window))
+	{
+		throw std::runtime_error("Failed to setup Window");
+	}
+
+	if (!SetupInterfaces(device, immediateContext, swapChain, 720, 560, window))
+	{
+		throw std::runtime_error("Failed to setup Interfaces");
+	}
+
+	if (!SetupDepthStencil(device, 720, 560, dsTexture, dsView))
+	{
+		throw std::runtime_error("Failed to setup Depth Stencil View");
+	}
+
+	if (!SetupRenderTargetView(device, swapChain, rtv))
+	{
+		throw std::runtime_error("Failed to setup Render Target View");
+	}
+}

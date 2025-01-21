@@ -1,11 +1,19 @@
 #include "Application.hpp"
 
-void Application::Setup(HINSTANCE hInstance, int nCmdShow) 
+void Application::Setup(HINSTANCE hInstance, int nCmdShow, ID3D11Device*& device, ID3D11DeviceContext*& immediateContext,
+	IDXGISwapChain*& swapChain, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView, ID3D11RenderTargetView*& rtv)
 {
 	SetupHelper setup;
 	D3D11_VIEWPORT viewport;
 	HWND window;
 
+	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv);
+
+	setup.SetViewport(viewport, 720, 560);
+}
+
+void Application::Run(HINSTANCE hInstance, int nCmdShow)
+{
 	ID3D11Device* device;
 	ID3D11DeviceContext* immediateContext;
 	IDXGISwapChain* swapChain;
@@ -14,33 +22,7 @@ void Application::Setup(HINSTANCE hInstance, int nCmdShow)
 	ID3D11DepthStencilView* dsView;
 	ID3D11RenderTargetView* rtv;
 
-
-	if (!setup.SetupWindow(hInstance, nCmdShow, window))
-	{
-		throw std::runtime_error("Failed to setup Window");
-	}
-
-	if (!setup.SetupInterfaces(device, immediateContext, swapChain, 720, 560, window))
-	{
-		throw std::runtime_error("Failed to setup Interfaces");
-	}
-
-	if (!setup.SetupDepthStencil(device, 720, 560, dsTexture, dsView))
-	{
-		throw std::runtime_error("Failed to setup Depth Stencil View");
-	}
-
-	if (!setup.SetupRenderTargetView(device, swapChain, rtv))
-	{
-		throw std::runtime_error("Failed to setup Render Target View");
-	}
-
-	setup.SetViewport(viewport, 720, 560);
-}
-
-void Application::Run(HINSTANCE hInstance, int nCmdShow)
-{
-	Setup(hInstance, nCmdShow);
+	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv);
 
 	MSG msg = {};
 
@@ -51,5 +33,14 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+
+		swapChain->Present(0, 0);
 	}
+
+	device->Release();
+	immediateContext->Release();
+	swapChain->Release();
+	dsTexture->Release();
+	dsView->Release();
+	rtv->Release();
 }
