@@ -8,7 +8,7 @@ project "Application"
     links{"Libraries", "d3d11", "d3dcompiler", "DXGI"}
 
     filter {"files:**.hlsl"}
-        shadermodel("6.7")
+        shadermodel("5.0")
         buildaction("FxCompile")
     filter {"files:vs**.hlsl"}
         shadertype "Vertex"
