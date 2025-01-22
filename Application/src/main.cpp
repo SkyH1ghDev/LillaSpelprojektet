@@ -14,7 +14,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// Braces to let the application go out of scope before checking memory leaks
 	{
 		Application application;
-		application.Run();
+		application.Run(hInstance, nCmdShow);
 	}
 
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
