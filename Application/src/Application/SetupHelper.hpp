@@ -7,6 +7,24 @@ class SetupHelper
 public:
 
 	/**
+	 *
+	 * @param hInstance Instance handle
+	 * @param nCmdShow Window display value
+	 * @param window Window handle
+	 * @param device DirectX11 device
+	 * @param immediateContext DirectX11 context
+	 * @param swapChain DirectX11 swapchain
+	 * @param dsTexture DirectX11 depth stencil texture
+	 * @param dsView DirectX11 depth stencil view
+	 * @param rtv DirectX11 render target view
+	 * @return 0 on Success, -1 on Fail
+	 */
+	bool Setup(HINSTANCE hInstance, int nCmdShow, HWND &window, ID3D11Device*& device, ID3D11DeviceContext*& immediateContext,
+	           IDXGISwapChain*& swapChain, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView, ID3D11RenderTargetView*& rtv);
+
+private:
+
+	/**
 	 * Creates the window, we should pass a variable to change the startup size, maybe based on save data
 	 *
 	 * @param instance Instance handle
@@ -42,7 +60,7 @@ public:
 	bool SetupDepthStencil(ID3D11Device* device, UINT width, UINT height, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView);
 
 	/**
-	 * 
+	 *
 	 * @param device DirectX11 device
 	 * @param swapChain DirectX11 swapchain
 	 * @param[OUT] rtv DirectX11 render target view
@@ -59,32 +77,5 @@ public:
 	 */
 	void SetViewport(UINT width, UINT height, D3D11_VIEWPORT& viewport);
 
-	/**
-	 *
-	 * @param hInstance Instance handle
-	 * @param nCmdShow Window display value
-	 * @param window Window handle
-	 * @param device DirectX11 device
-	 * @param immediateContext DirectX11 context
-	 * @param swapChain DirectX11 swapchain
-	 * @param dsTexture DirectX11 depth stencil texture
-	 * @param dsView DirectX11 depth stencil view
-	 * @param rtv DirectX11 render target view
-	 * @return 0 on Success, -1 on Fail
-	 */
-	bool Setup(HINSTANCE hInstance, int nCmdShow, HWND &window, ID3D11Device*& device, ID3D11DeviceContext*& immediateContext,
-	           IDXGISwapChain*& swapChain, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView, ID3D11RenderTargetView*& rtv);
-
-private:
-
-	/**
-	 * Function to display order of operation, mainly for visibility
-	 *
-	 * @param hWnd Window handle
-	 * @param message Windows message
-	 * @param wParam Word (16-bit) parameter
-	 * @param lParam Long (32-bit) parameter
-	 * @return Windows message result
-	 */
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
