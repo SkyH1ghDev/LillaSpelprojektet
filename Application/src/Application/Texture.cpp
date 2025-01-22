@@ -1,5 +1,8 @@
+#pragma once
 #include "Texture.hpp"
 #include <iostream>
+
+#define STB_IMAGE_IMPLEMENTATION    
 #include "stb_image.h"
 
 ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath)
@@ -11,7 +14,6 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 	int textureHeight, textureWidth, rgbaChannels;
 
 	unsigned char* imageData = stbi_load(filepath.c_str(), &textureWidth, &textureHeight, &rgbaChannels, 0);
-
 	rgbaChannels = 4;
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
@@ -25,7 +27,7 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 	texture2DDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	texture2DDesc.CPUAccessFlags = 0;
 	texture2DDesc.MiscFlags = 0;
-
+	
 	D3D11_SUBRESOURCE_DATA texture2DData;
 	texture2DData.pSysMem = imageData;
 	texture2DData.SysMemPitch = textureWidth * rgbaChannels;
@@ -50,14 +52,6 @@ ShaderResourceTexture::~ShaderResourceTexture()
 }
 
 void ShaderResourceTexture::DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position)
-{
-	DX::XMFLOAT3 floatColour = DX::XMFLOAT3(1.0f, 1.0f, 1.0f);
-	
-	spriteBatch->Draw(srv.Get(), position, DX::Colors::White);
-}
-
-//Temp function
-ID3D11ShaderResourceView* ShaderResourceTexture::GetSrv() 
-{
-	return this->srv.Get();
+{	
+	spriteBatch->Draw(this->srv.Get(), position, DX::Colors::White);
 }

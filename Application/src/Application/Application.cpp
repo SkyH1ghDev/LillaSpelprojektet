@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include <SpriteBatch.h>
 
 //Setup function handling all initialisation of resources
 void Application::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, 
@@ -26,12 +27,14 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv);
 
-	std::unique_ptr<DX::SpriteBatch> spriteBatch;
-	spriteBatch = std::make_unique<DX::SpriteBatch>(immediateContext);
+	ID3D11DeviceContext* deviceContext = immediateContext.Get();
+
+	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
+	spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(deviceContext);
 
 	MSG msg = {};
 
-	ShaderResourceTexture toe(device, "../Application/Resources/Toe.png");
+	ShaderResourceTexture toe(device.Get(), "../Application/Resources/Toe.png");
 
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
@@ -44,8 +47,7 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 		}
 
 		spriteBatch->Begin();
-		//toe.DrawTexture(spriteBatch, DX::XMFLOAT2(100.0f, 100.0f));
-		spriteBatch->Draw(toe.GetSrv(), DX::XMFLOAT2(100.0f, 100.0f), DX::Colors::White);
+		toe.DrawTexture(spriteBatch, DX::XMFLOAT2(100.0f, 100.0f));
 		spriteBatch->End();
 
 		swapChain->Present(0, 0);
