@@ -20,7 +20,6 @@ LRESULT CALLBACK SetupHelper::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-//Creates the window, we should pass a variable to change the startup size, maybe based on save data
 bool SetupHelper::SetupWindow(HINSTANCE instance, int nCmdShow, HWND &window) {
 	const wchar_t CLASS_NAME[] = L"Test Window Class";
 
@@ -45,8 +44,7 @@ bool SetupHelper::SetupWindow(HINSTANCE instance, int nCmdShow, HWND &window) {
 	return true;
 }
 
-//Creates a device and context along with a swapchain based on window dimensions
-bool SetupHelper::SetupInterfaces(ID3D11Device*& device, ID3D11DeviceContext*& immediateContext, IDXGISwapChain*& swapChain, UINT width, UINT height, HWND &window)
+bool SetupHelper::SetupInterfaces(ID3D11DeviceContext*& immediateContext, UINT width, UINT height, HWND &window, ID3D11Device*& device, IDXGISwapChain*& swapChain)
 {
 	UINT flags = 0;
 	if (_DEBUG)
@@ -98,7 +96,6 @@ bool SetupHelper::SetupRenderTargetView(ID3D11Device* device, IDXGISwapChain* sw
 
 }
 
-//Creates a depth stencil view with a texture2d
 bool SetupHelper::SetupDepthStencil(ID3D11Device* device, UINT width, UINT height, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView)
 {
 	D3D11_TEXTURE2D_DESC textureDesc;
@@ -123,8 +120,7 @@ bool SetupHelper::SetupDepthStencil(ID3D11Device* device, UINT width, UINT heigh
 	return !(FAILED(hr));
 }
 
-//Sets initial values to the viewport
-void SetupHelper::SetViewport(D3D11_VIEWPORT& viewport, UINT width, UINT height)
+void SetupHelper::SetViewport(UINT width, UINT height, D3D11_VIEWPORT& viewport)
 {
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
@@ -134,7 +130,6 @@ void SetupHelper::SetViewport(D3D11_VIEWPORT& viewport, UINT width, UINT height)
 	viewport.MaxDepth = 1;
 }
 
-//Function to display order of operation, mainly for visibility
 bool SetupHelper::Setup(HINSTANCE hInstance, int nCmdShow, HWND &window, ID3D11Device* &device, ID3D11DeviceContext* &immediateContext, 
 	IDXGISwapChain* &swapChain, ID3D11Texture2D* &dsTexture, ID3D11DepthStencilView* &dsView, ID3D11RenderTargetView* &rtv)
 {
@@ -144,7 +139,7 @@ bool SetupHelper::Setup(HINSTANCE hInstance, int nCmdShow, HWND &window, ID3D11D
 		throw std::runtime_error("Failed to setup Window");
 	}
 
-	if (!SetupInterfaces(device, immediateContext, swapChain, 720, 560, window))
+	if (!SetupInterfaces(immediateContext, 720, 560, window, device, swapChain))
 	{
 		throw std::runtime_error("Failed to setup Interfaces");
 	}

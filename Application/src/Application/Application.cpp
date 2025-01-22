@@ -10,7 +10,7 @@ void Application::Setup(HINSTANCE hInstance, int nCmdShow, ID3D11Device*& device
 
 	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv);
 
-	setup.SetViewport(viewport, 720, 560);
+	setup.SetViewport(720, 560, viewport);
 }
 
 //Extension of Main
