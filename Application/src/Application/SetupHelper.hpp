@@ -1,5 +1,4 @@
 #include <Windows.h>
-#include <iostream>
 #include <d3d11.h>
 #include <wrl/client.h>
 
@@ -25,6 +24,15 @@ public:
 	 */
 	bool Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
 	           MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv);
+
+	/**
+	 * Sets initial values to the viewport
+	 *
+	 * @param width Window width
+	 * @param height Window height
+	 * @param[OUT] viewport DirectX11 Window
+	 */
+	void SetViewport(const UINT& width, const UINT& height, D3D11_VIEWPORT& viewport);
 
 private:
 
@@ -72,15 +80,6 @@ private:
 	 * @return 0 on Success, -1 on Fail
 	 */
 	bool SetupRenderTargetView(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11RenderTargetView>& rtv);
-
-	/**
-	 * Sets initial values to the viewport
-	 *
-	 * @param width Window width
-	 * @param height Window height
-	 * @param[OUT] viewport DirectX11 Window
-	 */
-	void SetViewport(const UINT& width, const UINT& height, D3D11_VIEWPORT& viewport);
 
 	static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };

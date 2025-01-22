@@ -1,4 +1,5 @@
 #include "SetupHelper.hpp"
+#include <iostream>
 
 LRESULT CALLBACK SetupHelper::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -154,4 +155,6 @@ bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &w
 	{
 		throw std::runtime_error("Failed to setup Render Target View");
 	}
+
+	return true;
 }

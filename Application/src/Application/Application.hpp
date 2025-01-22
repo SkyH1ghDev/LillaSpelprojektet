@@ -1,5 +1,9 @@
 #pragma once
+#include "Texture.hpp"
 #include "SetupHelper.hpp"
+#include <SpriteBatch.h>
+
+namespace DX = DirectX;
 
 class Application
 {
@@ -8,6 +12,6 @@ public:
 
 private:
 
-    void Setup(HINSTANCE, int nCmdShow, ID3D11Device*& device, ID3D11DeviceContext*& immediateContext,
-        IDXGISwapChain*& swapChain, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView, ID3D11RenderTargetView*& rtv);
+    void Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
+       MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv);
 };
