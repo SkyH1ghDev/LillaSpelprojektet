@@ -2,8 +2,8 @@ require "clean"
 require "vscode"
 
 workspace "LillaSpelprojektet"
-    location "Generated"
     cppdialect "C++20"
+    location "Generated"
     configurations
     {
         "debug",
@@ -28,4 +28,4 @@ workspace "LillaSpelprojektet"
 include "External"
 include "Libraries"
 include "Application"
-include "Tests"
+include "Tests" 

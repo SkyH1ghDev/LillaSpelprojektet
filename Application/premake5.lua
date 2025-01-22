@@ -1,11 +1,28 @@
 project "Application"
     kind "WindowedApp"
+    staticruntime "off"
+    runtime "Debug"
+
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
     files {"src/**.cpp", "src/**.hpp", "src/**.h"}
-    includedirs{"../Libraries/include/**", "../Libraries/include/", "src/**", "src/"}
+    includedirs{
+        "../Libraries/include/**",
+        "../Libraries/include/",
+        "src/**",
+        "src/",
+        targetBuildPath .. "External/include/"
+    }
 
-    links{"Libraries", "d3d11", "d3dcompiler", "DXGI"}
+    dependson{"DirectXTK"}
+
+    links{
+        "Libraries", 
+        "d3d11",
+        "d3dcompiler",
+        "DXGI",
+        targetBuildPath .. "/External/lib/DirectXTK"
+    }
 
     filter {"files:**.hlsl"}
         shadermodel("5.0")
