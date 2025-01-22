@@ -20,7 +20,7 @@ LRESULT CALLBACK SetupHelper::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-bool SetupHelper::SetupWindow(HINSTANCE instance, int nCmdShow, HWND &window) {
+bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HWND &window) {
 	const wchar_t CLASS_NAME[] = L"Test Window Class";
 
 	WNDCLASS wc = { };
@@ -44,7 +44,7 @@ bool SetupHelper::SetupWindow(HINSTANCE instance, int nCmdShow, HWND &window) {
 	return true;
 }
 
-bool SetupHelper::SetupInterfaces(ID3D11DeviceContext*& immediateContext, UINT width, UINT height, HWND &window, ID3D11Device*& device, IDXGISwapChain*& swapChain)
+bool SetupHelper::SetupInterfaces(const ID3D11DeviceContext*& immediateContext, const UINT& width, const UINT& height, const HWND& window, ID3D11Device*& device, IDXGISwapChain*& swapChain)
 {
 	UINT flags = 0;
 	if (_DEBUG)
@@ -78,7 +78,7 @@ bool SetupHelper::SetupInterfaces(ID3D11DeviceContext*& immediateContext, UINT w
 	return !(FAILED(hr));
 }
 
-bool SetupHelper::SetupRenderTargetView(ID3D11Device* device, IDXGISwapChain* swapChain, ID3D11RenderTargetView*& rtv)
+bool SetupHelper::SetupRenderTargetView(const ID3D11Device*& device, const IDXGISwapChain*& swapChain, ID3D11RenderTargetView*& rtv)
 {
 	// get the address of the back buffer
 	ID3D11Texture2D* backBuffer = nullptr;
@@ -96,7 +96,7 @@ bool SetupHelper::SetupRenderTargetView(ID3D11Device* device, IDXGISwapChain* sw
 
 }
 
-bool SetupHelper::SetupDepthStencil(ID3D11Device* device, UINT width, UINT height, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView)
+bool SetupHelper::SetupDepthStencil(const ID3D11Device*& device, const UINT& width, const UINT& height, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView)
 {
 	D3D11_TEXTURE2D_DESC textureDesc;
 	textureDesc.Width = width;
@@ -120,7 +120,7 @@ bool SetupHelper::SetupDepthStencil(ID3D11Device* device, UINT width, UINT heigh
 	return !(FAILED(hr));
 }
 
-void SetupHelper::SetViewport(UINT width, UINT height, D3D11_VIEWPORT& viewport)
+void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWPORT& viewport)
 {
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
@@ -130,8 +130,8 @@ void SetupHelper::SetViewport(UINT width, UINT height, D3D11_VIEWPORT& viewport)
 	viewport.MaxDepth = 1;
 }
 
-bool SetupHelper::Setup(HINSTANCE hInstance, int nCmdShow, HWND &window, ID3D11Device* &device, ID3D11DeviceContext* &immediateContext, 
-	IDXGISwapChain* &swapChain, ID3D11Texture2D* &dsTexture, ID3D11DepthStencilView* &dsView, ID3D11RenderTargetView* &rtv)
+bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, ID3D11Device* &device, ID3D11DeviceContext* &immediateContext,
+                        IDXGISwapChain* &swapChain, ID3D11Texture2D* &dsTexture, ID3D11DepthStencilView* &dsView, ID3D11RenderTargetView* &rtv)
 {
 	
 	if (!SetupWindow(hInstance, nCmdShow, window))
