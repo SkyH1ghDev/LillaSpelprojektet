@@ -36,7 +36,7 @@ bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HW
 
 	if (window == nullptr)
 	{
-		std::cerr << "HWND was nullptr, last error: " << GetLastError() << std::endl;
+		std::cerr << "HWND was nullptr, last error: " << GetLastError() << "\n";
 		return false;
 	}
 
@@ -44,7 +44,7 @@ bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HW
 	return true;
 }
 
-bool SetupHelper::SetupInterfaces(const ID3D11DeviceContext*& immediateContext, const UINT& width, const UINT& height, const HWND& window, ID3D11Device*& device, IDXGISwapChain*& swapChain)
+bool SetupHelper::SetupInterfaces(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const UINT& width, const UINT& height, const HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain)
 {
 	UINT flags = 0;
 	if (_DEBUG)
@@ -72,19 +72,20 @@ bool SetupHelper::SetupInterfaces(const ID3D11DeviceContext*& immediateContext, 
 	swapChainDesc.Windowed = true;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	swapChainDesc.Flags = 0;
-	
-	HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, featureLevels, 1, D3D11_SDK_VERSION, &swapChainDesc, &swapChain, &device, nullptr, &immediateContext);
+
+	ID3D11DeviceContext* immediateContextCpy = immediateContext.Get();
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, featureLevels, 1, D3D11_SDK_VERSION, &swapChainDesc, &swapChain, &device, nullptr, &immediateContextCpy);
 
 	return !(FAILED(hr));
 }
 
-bool SetupHelper::SetupRenderTargetView(const ID3D11Device*& device, const IDXGISwapChain*& swapChain, ID3D11RenderTargetView*& rtv)
+bool SetupHelper::SetupRenderTargetView(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11RenderTargetView>& rtv)
 {
 	// get the address of the back buffer
 	ID3D11Texture2D* backBuffer = nullptr;
 	if (FAILED(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer))))
 	{
-		std::cerr << "Failed to get back buffer!" << std::endl;
+		std::cerr << "Failed to get back buffer! \n";
 		return false;
 	}
 
@@ -96,7 +97,7 @@ bool SetupHelper::SetupRenderTargetView(const ID3D11Device*& device, const IDXGI
 
 }
 
-bool SetupHelper::SetupDepthStencil(const ID3D11Device*& device, const UINT& width, const UINT& height, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView)
+bool SetupHelper::SetupDepthStencil(const MW::ComPtr<ID3D11Device>& device, const UINT& width, const UINT& height, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView)
 {
 	D3D11_TEXTURE2D_DESC textureDesc;
 	textureDesc.Width = width;
@@ -112,11 +113,11 @@ bool SetupHelper::SetupDepthStencil(const ID3D11Device*& device, const UINT& wid
 	textureDesc.MiscFlags = 0;
 	if (FAILED(device->CreateTexture2D(&textureDesc, nullptr, &dsTexture)))
 	{
-		std::cerr << "Failed to create depth stencil texture!" << std::endl;
+		std::cerr << "Failed to create depth stencil texture! \n";
 		return false;
 	}
 
-	HRESULT hr = device->CreateDepthStencilView(dsTexture, 0, &dsView);
+	HRESULT hr = device->CreateDepthStencilView(dsTexture.Get(), 0, &dsView);
 	return !(FAILED(hr));
 }
 
@@ -130,8 +131,8 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 	viewport.MaxDepth = 1;
 }
 
-bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, ID3D11Device* &device, ID3D11DeviceContext* &immediateContext,
-                        IDXGISwapChain* &swapChain, ID3D11Texture2D* &dsTexture, ID3D11DepthStencilView* &dsView, ID3D11RenderTargetView* &rtv)
+bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
+                        MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv)
 {
 	
 	if (!SetupWindow(hInstance, nCmdShow, window))

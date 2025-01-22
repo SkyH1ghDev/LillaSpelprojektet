@@ -1,12 +1,16 @@
 #include <Windows.h>
 #include <iostream>
 #include <d3d11.h>
+#include <wrl/client.h>
+
+namespace MW = Microsoft::WRL;
 
 class SetupHelper
 {
 public:
 
 	/**
+	 * Sets up the DirectX11 Components
 	 *
 	 * @param hInstance Instance handle
 	 * @param nCmdShow Window display value
@@ -19,8 +23,8 @@ public:
 	 * @param[OUT] rtv DirectX11 render target view
 	 * @return 0 on Success, -1 on Fail
 	 */
-	bool Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, ID3D11Device*& device, ID3D11DeviceContext*& immediateContext,
-	           IDXGISwapChain*& swapChain, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView, ID3D11RenderTargetView*& rtv);
+	bool Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
+	           MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv);
 
 private:
 
@@ -45,7 +49,7 @@ private:
 	 * @param[OUT] swapChain DirectX11 swapchain
 	 * @return 0 on Success, -1 on Fail
 	 */
-	bool SetupInterfaces(const ID3D11DeviceContext*& immediateContext, const UINT& width, const UINT& height, const HWND& window, ID3D11Device*& device, IDXGISwapChain*& swapChain);
+	bool SetupInterfaces(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const UINT& width, const UINT& height, const HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain);
 
 	/**
 	 * Creates a depth stencil view with a texture2d
@@ -57,16 +61,17 @@ private:
 	 * @param[OUT] dsView DirectX11 depth stencil view
 	 * @return 0 on Success, -1 on Fail
 	 */
-	bool SetupDepthStencil(const ID3D11Device*& device, const UINT& width, const UINT& height, ID3D11Texture2D*& dsTexture, ID3D11DepthStencilView*& dsView);
+	bool SetupDepthStencil(const MW::ComPtr<ID3D11Device>& device, const UINT& width, const UINT& height, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView);
 
 	/**
+	 *	Creates a render target view
 	 *
 	 * @param device DirectX11 device
 	 * @param swapChain DirectX11 swapchain
 	 * @param[OUT] rtv DirectX11 render target view
 	 * @return 0 on Success, -1 on Fail
 	 */
-	bool SetupRenderTargetView(const ID3D11Device*& device, const IDXGISwapChain*& swapChain, ID3D11RenderTargetView*& rtv);
+	bool SetupRenderTargetView(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11RenderTargetView>& rtv);
 
 	/**
 	 * Sets initial values to the viewport
