@@ -13,6 +13,7 @@ public:
 	ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath);
 	~ShaderResourceTexture();
 	void DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position);
+
 private:
 	MW::ComPtr<ID3D11ShaderResourceView> srv;
 };

@@ -1,6 +1,9 @@
 #pragma once
 #include "Texture.hpp"
 #include "SetupHelper.hpp"
+#include <SpriteBatch.h>
+
+namespace DX = DirectX;
 
 namespace DX = DirectX;
 
