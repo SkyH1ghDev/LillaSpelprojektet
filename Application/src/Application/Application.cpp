@@ -38,7 +38,6 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 	
 	MSG msg = {};
 
-
 	ID3D11RenderTargetView* rtvCpy = rtv.Get();
 	//Render- / main application loop
 	//May want to change the condition to a bool variable

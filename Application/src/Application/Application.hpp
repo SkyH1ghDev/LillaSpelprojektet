@@ -5,8 +5,6 @@
 
 namespace DX = DirectX;
 
-namespace DX = DirectX;
-
 class Application
 {
 public:

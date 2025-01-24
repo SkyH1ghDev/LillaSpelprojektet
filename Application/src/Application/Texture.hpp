@@ -2,6 +2,7 @@
 #include <string>
 #include "SpriteBatch.h"
 #include <wrl/client.h>
+#include <iostream>
 
 namespace MW = Microsoft::WRL;
 namespace DX = DirectX;

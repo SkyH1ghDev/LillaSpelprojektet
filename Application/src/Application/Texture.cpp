@@ -58,6 +58,6 @@ ShaderResourceTexture::~ShaderResourceTexture()
 }
 
 void ShaderResourceTexture::DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position)
-{	
+{
 	spriteBatch->Draw(this->srv.Get(), DX::XMFLOAT2(position.x - this->width / 2, position.y - this->height / 2));
 }
