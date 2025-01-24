@@ -7,8 +7,7 @@
 
 ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath)
 {
-
-	ID3D11ShaderResourceView* textureView = this->srv.Get();
+	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
 
 	int textureHeight, textureWidth, rgbaChannels;
@@ -16,6 +15,9 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 	unsigned char* imageData = stbi_load(filepath.c_str(), &textureWidth, &textureHeight, &rgbaChannels, 0);
 
 	rgbaChannels = 4;
+
+	this->height = textureHeight;
+	this->width = textureWidth;
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
 	texture2DDesc.Width = textureWidth;
@@ -40,9 +42,12 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 		throw("Failed to create Texture");
 	}
 
-	HRESULT hr = device->CreateShaderResourceView(texture, nullptr, &textureView);
+	HRESULT hr = device->CreateShaderResourceView(texture, nullptr, &srvCpy);
 
 	stbi_image_free(imageData);
+	this->srv.Attach(srvCpy);
+
+	texture->Release();
 
 	if (FAILED(hr))
 		throw("Failed to create Texture Shader Resource View");
@@ -54,5 +59,5 @@ ShaderResourceTexture::~ShaderResourceTexture()
 
 void ShaderResourceTexture::DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position)
 {	
-	spriteBatch->Draw(this->srv.Get(), position, DX::Colors::White);
+	spriteBatch->Draw(this->srv.Get(), DX::XMFLOAT2(position.x - this->width / 2, position.y - this->height / 2));
 }

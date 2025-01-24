@@ -15,6 +15,8 @@ public:
 	void DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position);
 
 private:
+	int width = 0;
+	int height = 0;
 	MW::ComPtr<ID3D11ShaderResourceView> srv;
 };
 

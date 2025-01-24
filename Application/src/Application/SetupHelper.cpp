@@ -21,7 +21,7 @@ LRESULT CALLBACK SetupHelper::WindowProc(HWND hWnd, UINT message, WPARAM wParam,
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HWND &window) {
+bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HWND &window, const UINT &width, const UINT &height) {
 	const wchar_t CLASS_NAME[] = L"Test Window Class";
 
 	WNDCLASS wc = { };
@@ -33,7 +33,7 @@ bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HW
 	RegisterClass(&wc);
 
 	window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, 720, 540, nullptr, nullptr, instance, nullptr);
+		CW_USEDEFAULT, 0, width, height, nullptr, nullptr, instance, nullptr);
 
 	if (window == nullptr)
 	{
@@ -45,7 +45,7 @@ bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HW
 	return true;
 }
 
-bool SetupHelper::SetupInterfaces(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const UINT& width, const UINT& height, const HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain)
+bool SetupHelper::SetupInterfaces(MW::ComPtr<ID3D11DeviceContext>& immediateContext, const UINT& width, const UINT& height, const HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain)
 {
 	UINT flags = 0;
 	if (_DEBUG)
@@ -54,6 +54,10 @@ bool SetupHelper::SetupInterfaces(const MW::ComPtr<ID3D11DeviceContext>& immedia
 	D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_11_0 };
 
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+
+	ID3D11DeviceContext* immediateContextCpy;
+	ID3D11Device* deviceCpy;
+	IDXGISwapChain* swapChainCpy;
 
 	swapChainDesc.BufferDesc.Width = width;
 	swapChainDesc.BufferDesc.Height = height;
@@ -74,15 +78,20 @@ bool SetupHelper::SetupInterfaces(const MW::ComPtr<ID3D11DeviceContext>& immedia
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	swapChainDesc.Flags = 0;
 
-	ID3D11DeviceContext* immediateContextCpy = immediateContext.Get();
-	HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, featureLevels, 1, D3D11_SDK_VERSION, &swapChainDesc, &swapChain, &device, nullptr, &immediateContextCpy);
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, flags, featureLevels, 1, D3D11_SDK_VERSION, &swapChainDesc, &swapChainCpy, &deviceCpy, nullptr, &immediateContextCpy);
+
+	immediateContext.Attach(immediateContextCpy);
+	device.Attach(deviceCpy);
+	swapChain.Attach(swapChainCpy);
 
 	return !(FAILED(hr));
 }
 
-bool SetupHelper::SetupRenderTargetView(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11RenderTargetView>& rtv)
+bool SetupHelper::SetupRenderTargetView(MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11RenderTargetView>& rtv)
 {
 	// get the address of the back buffer
+
+	ID3D11RenderTargetView* rtvCpy;
 	ID3D11Texture2D* backBuffer = nullptr;
 	if (FAILED(swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer))))
 	{
@@ -92,14 +101,19 @@ bool SetupHelper::SetupRenderTargetView(const MW::ComPtr<ID3D11Device>& device, 
 
 	// use the back buffer address to create the render target
 	// null as description to base it on the backbuffers values
-	HRESULT hr = device->CreateRenderTargetView(backBuffer, NULL, &rtv);
+	HRESULT hr = device->CreateRenderTargetView(backBuffer, NULL, &rtvCpy);
 	backBuffer->Release();
-	return !(FAILED(hr));
 
+	rtv.Attach(rtvCpy);
+
+	return !(FAILED(hr));
 }
 
-bool SetupHelper::SetupDepthStencil(const MW::ComPtr<ID3D11Device>& device, const UINT& width, const UINT& height, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView)
+bool SetupHelper::SetupDepthStencil(MW::ComPtr<ID3D11Device>& device, const UINT& width, const UINT& height, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView)
 {
+	ID3D11Texture2D* dsTextureCpy;
+	ID3D11DepthStencilView* dsViewCpy;
+
 	D3D11_TEXTURE2D_DESC textureDesc;
 	textureDesc.Width = width;
 	textureDesc.Height = height;
@@ -112,13 +126,17 @@ bool SetupHelper::SetupDepthStencil(const MW::ComPtr<ID3D11Device>& device, cons
 	textureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	textureDesc.CPUAccessFlags = 0;
 	textureDesc.MiscFlags = 0;
-	if (FAILED(device->CreateTexture2D(&textureDesc, nullptr, &dsTexture)))
+	if (FAILED(device->CreateTexture2D(&textureDesc, nullptr, &dsTextureCpy)))
 	{
 		std::cerr << "Failed to create depth stencil texture! \n";
 		return false;
 	}
 
-	HRESULT hr = device->CreateDepthStencilView(dsTexture.Get(), 0, &dsView);
+	HRESULT hr = device->CreateDepthStencilView(dsTextureCpy, 0, &dsViewCpy);
+
+	dsTexture.Attach(dsTextureCpy);
+	dsView.Attach(dsViewCpy);
+
 	return !(FAILED(hr));
 }
 
@@ -126,27 +144,27 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 {
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
-	viewport.Width = static_cast<float>(width);
-	viewport.Height = static_cast<float>(height);
+	viewport.Width = width;
+	viewport.Height = height;
 	viewport.MinDepth = 0;
 	viewport.MaxDepth = 1;
 }
 
 bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
-                        MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv)
+                        MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, const UINT &width, const UINT &height)
 {
 	
-	if (!SetupWindow(hInstance, nCmdShow, window))
+	if (!SetupWindow(hInstance, nCmdShow, window, width, height))
 	{
 		throw std::runtime_error("Failed to setup Window");
 	}
 
-	if (!SetupInterfaces(immediateContext, 720, 560, window, device, swapChain))
+	if (!SetupInterfaces(immediateContext, width, height, window, device, swapChain))
 	{
 		throw std::runtime_error("Failed to setup Interfaces");
 	}
 
-	if (!SetupDepthStencil(device, 720, 560, dsTexture, dsView))
+	if (!SetupDepthStencil(device, width, height, dsTexture, dsView))
 	{
 		throw std::runtime_error("Failed to setup Depth Stencil View");
 	}
