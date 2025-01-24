@@ -135,6 +135,7 @@ bool SetupHelper::SetupDepthStencil(MW::ComPtr<ID3D11Device>& device, const UINT
 	HRESULT hr = device->CreateDepthStencilView(dsTextureCpy, 0, &dsViewCpy);
 
 	dsTexture.Attach(dsTextureCpy);
+
 	dsView.Attach(dsViewCpy);
 
 	return !(FAILED(hr));

@@ -3,10 +3,9 @@
 
 //Setup function handling all initialisation of resources
 void Application::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain, 
-	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height)
+	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height, HWND &window)
 {
 	SetupHelper setup;
-	HWND window;
 
 	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 
@@ -24,12 +23,13 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11DepthStencilView> dsView;
 	MW::ComPtr<ID3D11RenderTargetView> rtv;
 
+	HWND window;
 	D3D11_VIEWPORT viewport;
 
 	int initWidth = 1280;
 	int initHeight = 720;
 
-	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight);
+	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight, window);
 
 	ShaderResourceTexture toe(device.Get(), "../Application/Resources/Toe.png");
 
@@ -59,5 +59,5 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 		swapChain->Present(0, 0);
 	}
 
-
+	DestroyWindow(window);
 }
