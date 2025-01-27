@@ -4,6 +4,7 @@ Makefile
 .vscode/
 .idea/
 Build/
+Generated/
 
 **.make
 **.vcxproj.filters
