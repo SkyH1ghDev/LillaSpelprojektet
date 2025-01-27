@@ -5,7 +5,7 @@ project "Application"
 
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
-    files {"src/**.cpp", "src/**.hpp", "src/**.h"}
+    files {"src/**.cpp", "src/**.hpp", "src/**.h", "src/**.hlsl"}
     includedirs{
         "../Libraries/include/**",
         "../Libraries/include/",
