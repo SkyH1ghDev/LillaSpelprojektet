@@ -151,6 +151,19 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 	viewport.MaxDepth = 1;
 }
 
+bool SetupHelper::LoadShaders(MW::ComPtr<ID3D11Device>& device, Shader& pShader)
+{
+	pShader.Initialize(device.Get(), ShaderType::PIXEL_SHADER, "hlsl/PixelShader.cso");
+
+	if (pShader.GetShaderByteData() == nullptr)
+	{
+		std::cerr << "Failed to create pixel shader!" << std::endl;
+		return false;
+	}
+
+	return true;
+}
+
 bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
                         MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, const UINT &width, const UINT &height)
 {
