@@ -43,6 +43,7 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 	//May want to change the condition to a bool variable
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
 	{
+
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -57,6 +58,7 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 		spriteBatch->End();
 
 		swapChain->Present(0, 0);
+
 	}
 
 	DestroyWindow(window);
