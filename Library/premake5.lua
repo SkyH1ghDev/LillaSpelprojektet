@@ -6,14 +6,14 @@ project "Library"
     dependson{"DirectXTK"}
 
     files {
-        "src/**.cpp", 
+        "src/**.cpp",
         "include/**.hpp",
         "include/**.h"
     }
 
     includedirs{
-        "include/**", 
+        "include/**",
         "include/",
-        "../External/stb/",
+        "../External/",
         targetBuildPath .. "/External/include/"
     }

@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
+#include <stb/stb_image.h>
 
 ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath)
 {

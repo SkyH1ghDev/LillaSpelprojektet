@@ -6,7 +6,6 @@ project "Application"
     files {"src/**.cpp", "src/**.hpp", "src/**.h", "src/**.hlsl"}
 
     includedirs{
-        "../Library/include/**",
         "../Library/include/",
         "src/**",
         "src/",
