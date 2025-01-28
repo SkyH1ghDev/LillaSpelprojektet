@@ -4,6 +4,7 @@ mouseInput::mouseInput(HWND hWnd)
 {
 	this->hWnd = hWnd;
 	ZeroMemory(this->buttons, sizeof(this->buttons));
+	GetCursorPos(&this->mousePos);
 }
 
 void mouseInput::update()

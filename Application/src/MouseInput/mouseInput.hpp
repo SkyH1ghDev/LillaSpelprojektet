@@ -1,9 +1,11 @@
 #pragma once
-#include "SetupHelper.hpp"
+#include <Windows.h>
+#include <d3d11.h>
+#include <wrl/client.h>
 class mouseInput {
 public:
 	mouseInput(HWND hWnd);
-	~mouseInput();
+	~mouseInput() = default;
 
 	void update();
 	float getMousePositionX();
