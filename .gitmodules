@@ -4,3 +4,6 @@
 [submodule "External/DirectXTK"]
 	path = External/DirectXTK
 	url = https://github.com/microsoft/DirectXTK.git
+[submodule "External/stb"]
+	path = External/stb
+	url = https://github.com/nothings/stb.git

@@ -26,6 +26,6 @@ workspace "LillaSpelprojektet"
     objBuildPath = path.getdirectory(_SCRIPT) .. "/Build/obj"
 
 include "External"
-include "Libraries"
+include "Library"
 include "Application"
 include "Tests" 
