@@ -1,10 +1,10 @@
 #pragma once
-#include "SetupHelper.hpp"
+#include <SpEngine/Setup/SetupHelper.hpp>
 #include <directxtk/SpriteBatch.h>
 
 namespace DX = DirectX;
 
-class Application
+class GameLoop
 {
 public:
     void Run(HINSTANCE hInstance, int nCmdShow);

@@ -3,7 +3,7 @@
 
 #include <crtdbg.h>
 #include <Windows.h>
-#include "Application.hpp"
+#include <SpEngine/Game/GameLoop.hpp>
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
@@ -14,11 +14,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// Braces to let the application go out of scope before checking memory leaks
 	{
-		Application application;
+		GameLoop application;
 		application.Run(hInstance, nCmdShow);
 	}
 
 
 
 	return 0;
-}         
+}

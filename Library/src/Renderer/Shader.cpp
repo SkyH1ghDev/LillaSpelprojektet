@@ -1,5 +1,7 @@
 #include <fstream>
 #include <vector>
+#include <d3dcompiler.h>
+#include <iostream>
 
 #include "Shader.hpp"
 

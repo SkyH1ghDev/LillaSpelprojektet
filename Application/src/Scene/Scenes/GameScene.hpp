@@ -1,6 +1,6 @@
-#include "Scene.hpp"
+#include <SpEngine/Assets/IScene.hpp>
 
-class GameScene : public Scene {
+class GameScene : public IScene {
 public:
 	void display() override;
 };

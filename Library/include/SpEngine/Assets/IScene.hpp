@@ -5,8 +5,8 @@
 #include <stdexcept>
 
 // Base Scene class (for polymorphism)
-class Scene {
+class IScene {
 public:
     virtual void display() = 0; 
-    virtual ~Scene() = default;
+    virtual ~IScene() = default;
 };

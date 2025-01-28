@@ -1,12 +1,11 @@
 #pragma once
 #include <memory>
-#include <string>
 #include "IAttack.hpp"
 #include "IMove.hpp"
 #include "IVisible.hpp"
 #include "ITakeDamage.hpp"
 #include "IUseCard.hpp"
-#include "IGameObject.hpp"
+#include <SpEngine/Assets/IGameObject.hpp>
 
 #include "PlayerAttack.hpp"
 #include "PlayerMove.hpp"
