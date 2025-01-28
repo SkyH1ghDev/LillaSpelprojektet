@@ -11,10 +11,18 @@ public:
 	Renderer() = default;
 	~Renderer();
 
-	void InitializeBlendState(MW::ComPtr<ID3D11Device>& device);
+	void InitializeRenderer(MW::ComPtr<ID3D11Device>& device);
 	void SetBlendState(MW::ComPtr<ID3D11DeviceContext>& immediateContext);
 	MW::ComPtr<ID3D11BlendState> GetBlendState();
 
+public:
+
 private:
-	MW::ComPtr<ID3D11BlendState> r_blendState;
+
+	void InitializeBlendState(MW::ComPtr<ID3D11Device>& device);
+	void InitializeSamplerState(MW::ComPtr<ID3D11Device>& device);
+
+private:
+	MW::ComPtr<ID3D11BlendState> m_blendState;
+	MW::ComPtr<ID3D11SamplerState> m_samplerState;
 };
