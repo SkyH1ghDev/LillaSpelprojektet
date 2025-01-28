@@ -1,6 +1,5 @@
 #include "Application.hpp"
 #include <SpriteBatch.h>
-#include "Entity.hpp"
 
 //Setup function handling all initialisation of resources
 void Application::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain, 
@@ -23,17 +22,6 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11Texture2D> dsTexture;
 	MW::ComPtr<ID3D11DepthStencilView> dsView;
 	MW::ComPtr<ID3D11RenderTargetView> rtv;
-
-	Entity player(EntityType::Player);
-	Entity enemy(EntityType::Enemy);
-
-	player.performMove();
-	player.performAttack();
-	player.performVisible();
-
-	enemy.performMove();
-	enemy.performAttack();
-	enemy.performVisible();
 
 	HWND window;
 	D3D11_VIEWPORT viewport;
