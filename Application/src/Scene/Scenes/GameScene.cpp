@@ -1,4 +1,9 @@
 #include "GameScene.hpp"
-void GameScene::display() {
-    std::cout << "Menu Scene" << std::endl;
+
+// Constructor implementation
+GameScene::GameScene(int level) : level(level) {}
+
+// display() method implementation
+void GameScene::display() const {
+    std::cout << "Game Scene - Level: " << level << std::endl;
 }

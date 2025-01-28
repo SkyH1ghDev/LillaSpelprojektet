@@ -1,12 +1,10 @@
-#include <iostream>
-#include <unordered_map>
-#include <functional>
-#include <memory>
-#include <stdexcept>
+#ifndef SCENE_HPP
+#define SCENE_HPP
 
-// Base Scene class (for polymorphism)
 class Scene {
 public:
-    virtual void display() = 0; 
+    virtual void display() const = 0; // Add const
     virtual ~Scene() = default;
 };
+
+#endif // SCENE_HPP

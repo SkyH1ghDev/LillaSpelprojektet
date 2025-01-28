@@ -1,6 +1,7 @@
 #include "Scene.hpp"
+#include <iostream>
 
 class MenuScene : public Scene {
 public:
-    void display() override;
+    void display() const override;
 };
