@@ -23,8 +23,6 @@ void Application::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11DepthStencilView> dsView;
 	MW::ComPtr<ID3D11RenderTargetView> rtv;
 
-	Shader pShader;
-
 	HWND window;
 	D3D11_VIEWPORT viewport;
 

@@ -35,12 +35,6 @@ public:
 	 */
 	void SetViewport(const UINT& width, const UINT& height, D3D11_VIEWPORT& viewport);
 
-	/**
-	* Loads the shaders, create a cso that can be used in pipeline
-	* @return True on Success, false on Fail
-	*/
-	bool LoadShaders(MW::ComPtr<ID3D11Device>& device, Shader& pShader);
-
 private:
 
 	/**
