@@ -3,14 +3,22 @@ project "Tests"
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
     files {"src/**"}
-    includedirs{"../Libraries/include/**", 
-        "../Libraries/include/", 
+
+    includedirs{
+        "../Library/include/**", 
+        "../Library/include/", 
         "../External/googletest/googletest/include/",
-        "../Application/src/",
-        "../Application/src/**"}
-    libdirs{targetBuildPath .. "/External/lib/"}
+        targetBuildPath .. "/External/include/"
+    }
 
     -- Although this consoleApp does not link to the "googletest" project per say, it is still dependant on its build to finish
     dependson{"googletest"}
 
-    links{"Libraries", "d3d11", "DXGI", "d3dcompiler", "gtest"}
+    links{
+        "Library",
+        "d3d11", 
+        "DXGI", 
+        "d3dcompiler",
+        targetBuildPath .. "/External/lib/gtest",
+        targetBuildPath .. "/External/lib/DirectXTK"
+    }

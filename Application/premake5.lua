@@ -1,23 +1,21 @@
 project "Application"
     kind "WindowedApp"
-    staticruntime "off"
-    runtime "Debug"
 
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
     files {"src/**.cpp", "src/**.hpp", "src/**.h"}
+
     includedirs{
-        "../Libraries/include/**",
-        "../Libraries/include/",
+        "../Library/include/**",
+        "../Library/include/",
         "src/**",
         "src/",
-        targetBuildPath .. "External/include/"
+        targetBuildPath .. "/External/include/"
     }
-
-    dependson{"DirectXTK"}
-
-    links{
-        "Libraries", 
+    
+    links
+    {
+        "Library",
         "d3d11",
         "d3dcompiler",
         "DXGI",
