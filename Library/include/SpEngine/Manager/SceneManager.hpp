@@ -1,12 +1,11 @@
-#ifndef SCENEMANAGER_HPP
-#define SCENEMANAGER_HPP
+#pragma once
 
-#include "Scene.hpp"
 #include <unordered_map>
 #include <string>
 #include <functional>
 #include <memory>
 #include <stdexcept>
+#include <SpEngine/Assets/IScene.hpp>
 
 // SceneManager class
 class SceneManager {
@@ -21,5 +20,3 @@ public:
     // Creates a scene based on its ID
     std::unique_ptr<IScene> createScene(const std::string& id) const;
 };
-
-#endif // SCENEMANAGER_HPP

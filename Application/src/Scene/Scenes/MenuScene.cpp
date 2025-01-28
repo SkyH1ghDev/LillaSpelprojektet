@@ -1,3 +1,4 @@
+#include <iostream>
 #include "MenuScene.hpp"
 
 void MenuScene::display() const {

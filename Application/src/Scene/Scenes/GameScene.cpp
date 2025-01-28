@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GameScene.hpp"
 
 // Constructor implementation

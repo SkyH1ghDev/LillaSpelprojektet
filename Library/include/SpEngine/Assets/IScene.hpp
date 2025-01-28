@@ -1,10 +1,9 @@
-#ifndef SCENE_HPP
-#define SCENE_HPP
+#pragma once
 
-class Scene {
+class IScene {
 public:
     virtual void display() const = 0; // Add const
-    virtual ~Scene() = default;
+    virtual ~IScene() = default;
 };
 
-#endif // SCENE_HPP
+
