@@ -1,5 +1,5 @@
 #include "MenuScene.hpp"
 
-void MenuScene::display() {
-    std::cout << "Menu Scene" << std::endl;
+void MenuScene::display() const {
+    std::cout << "Menu Scene: Main Menu" << std::endl;
 }

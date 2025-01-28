@@ -1,18 +1,12 @@
 #ifndef SCENEMANAGER_HPP
 #define SCENEMANAGER_HPP
 
+#include "Scene.hpp"
 #include <unordered_map>
 #include <string>
 #include <functional>
 #include <memory>
 #include <stdexcept>
-
-// Base Scene class
-class IScene {
-public:
-    virtual void display() const = 0;  // Example method to display scene info
-    virtual ~IScene() = default;
-};
 
 // SceneManager class
 class SceneManager {

@@ -1,6 +1,8 @@
 #include "GameLoop.hpp"
 #include <directxtk/SpriteBatch.h>
 #include "texture.hpp"
+#include "SceneManager.hpp"
+#include "GameSceneFactory.hpp"
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -23,6 +25,26 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11Texture2D> dsTexture;
 	MW::ComPtr<ID3D11DepthStencilView> dsView;
 	MW::ComPtr<ID3D11RenderTargetView> rtv;
+
+	// Step 1: Create a SceneManager instance
+	SceneManager sceneManager;
+
+	// Step 2: Register factories for scenes
+	sceneManager.registerScene("game_level_1", GameSceneFactory(1)); // Level 1
+	sceneManager.registerScene("game_level_2", GameSceneFactory(2)); // Level 2
+
+	try {
+		// Step 3: Create and use scenes
+		auto scene1 = sceneManager.createScene("game_level_1");
+		scene1->display(); // Output: Game Scene - Level: 1
+
+		auto scene2 = sceneManager.createScene("game_level_2");
+		scene2->display(); // Output: Game Scene - Level: 2
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
+
 
 	HWND window;
 	D3D11_VIEWPORT viewport;

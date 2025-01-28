@@ -1,6 +1,8 @@
-#include <SpEngine/Assets/IScene.hpp>
+
+#include "Scene.hpp"
+#include <iostream>
 
 class MenuScene : public IScene {
 public:
-    void display() override;
+    void display() const override;
 };
