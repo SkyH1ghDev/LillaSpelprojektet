@@ -6,5 +6,5 @@
 // Factory class for creating GameScene instances
 class GameSceneFactory {
 public:
-    static std::unique_ptr<IScene> CreateScene(float level);
+    static std::unique_ptr<IScene> CreateScene(int level);
 };
