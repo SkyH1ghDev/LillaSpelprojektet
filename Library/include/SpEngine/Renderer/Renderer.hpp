@@ -33,8 +33,22 @@ public:
 	void DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
 private:
+	/**
+	 * Sets up the blend state
+	 * @param[IN] device DirectX11 device
+	 */
 	void InitializeBlendState(MW::ComPtr<ID3D11Device>& device);
+
+	/**
+	 * Sets up the sampler state
+	 * @param[IN] device DirectX11 device
+	 */
 	void InitializeSamplerState(MW::ComPtr<ID3D11Device>& device);
+
+	/**
+	 * Sets up the raster state
+	 * @param[IN] device DirectX11 device
+	 */
 	void InitializeRasterState(MW::ComPtr<ID3D11Device>& device);
 
 private:
