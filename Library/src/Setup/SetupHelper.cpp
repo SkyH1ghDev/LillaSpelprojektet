@@ -145,8 +145,8 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 {
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
-	viewport.Width = width;
-	viewport.Height = height;
+	viewport.Width = FLOAT(width);
+	viewport.Height = FLOAT(height);
 	viewport.MinDepth = 0;
 	viewport.MaxDepth = 1;
 }
