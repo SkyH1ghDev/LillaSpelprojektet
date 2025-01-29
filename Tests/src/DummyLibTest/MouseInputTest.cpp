@@ -47,7 +47,7 @@ TEST(Mouse, setupMouse)
 
     mouseInput mouse(window);
     
-    ASSERT_EQ(device.Get(), nullptr);
+    ASSERT_NE(device.Get(), nullptr);
 }
 
 TEST(Mouse, anybutton)
@@ -93,3 +93,4 @@ TEST(Mouse, pressbutton)
     bool testvalue = mouse.IsButtonPressed(0);
     ASSERT_EQ(testvalue, false);
 }
+
