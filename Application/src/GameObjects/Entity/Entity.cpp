@@ -8,8 +8,9 @@ std::unique_ptr<IAttack> CreateAttackComponent(EntityType type) {
         return std::make_unique<PlayerAttack>();
     case EntityType::Enemy:
         return std::make_unique<EnemyAttack>();
+    default:
+        throw std::invalid_argument("Unknown EntityType in CreateAttackComponent");
     }
-    return nullptr;
 }
 
 std::unique_ptr<IMove> CreateMoveComponent(EntityType type) {
@@ -18,8 +19,9 @@ std::unique_ptr<IMove> CreateMoveComponent(EntityType type) {
         return std::make_unique<PlayerMove>();
     case EntityType::Enemy:
         return std::make_unique<EnemyMove>();
+    default:
+        throw std::invalid_argument("Unknown EntityType in CreateMoveComponent");
     }
-    return nullptr;
 }
 
 std::unique_ptr<ITakeDamage> CreateTakeDamageComponent(EntityType type) {
@@ -28,8 +30,9 @@ std::unique_ptr<ITakeDamage> CreateTakeDamageComponent(EntityType type) {
         return std::make_unique<PlayerTakeDamage>();
     case EntityType::Enemy:
         return std::make_unique<EnemyTakeDamage>();
+    default:
+        throw std::invalid_argument("Unknown EntityType in CreateTakeDamageComponent");
     }
-    return nullptr;
 }
 
 std::unique_ptr<IUseCard> CreateUseCardComponent(EntityType type) {
@@ -38,8 +41,10 @@ std::unique_ptr<IUseCard> CreateUseCardComponent(EntityType type) {
         return std::make_unique<PlayerUseCard>();
     case EntityType::Enemy:
         return std::make_unique<EnemyUseCard>();
+    default:
+        throw std::invalid_argument("Unknown EntityType in CreateUseCardComponent");
     }
-    return nullptr;
+    
 }
 
 std::unique_ptr<IVisible> CreateVisibleComponent(EntityType type) {
@@ -48,8 +53,9 @@ std::unique_ptr<IVisible> CreateVisibleComponent(EntityType type) {
         return std::make_unique<PlayerVisible>();
     case EntityType::Enemy:
         return std::make_unique<EnemyVisible>();
+    default:
+        throw std::invalid_argument("Unknown EntityType in CreateVisibleComponent");
     }
-    return nullptr;
 }
 
 // Constructor: Decides behavior based on entity type
