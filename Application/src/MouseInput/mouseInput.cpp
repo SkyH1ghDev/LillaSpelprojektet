@@ -11,6 +11,7 @@ void mouseInput::update()
 {
 	float point = GetCursorPos(&this->mousePos);
 	ScreenToClient(this->hWnd, &this->mousePos);
+	UpdateButtons();
 }
 
 float mouseInput::getMousePositionX()
@@ -25,7 +26,8 @@ float mouseInput::getMousePositionY()
 
 bool mouseInput::IsButtonPressed(int buttonIndex) const
 {
-	if (buttonIndex < 0 || buttonIndex > 5) {
+	if (buttonIndex < 0 || buttonIndex > 5)
+	{
 		return false;
 	}
 	return this->buttons[buttonIndex];
@@ -38,4 +40,17 @@ void mouseInput::UpdateButtons()
 	this->buttons[2] = (GetAsyncKeyState(VK_MBUTTON) & 0x8000) != 0;
 	this->buttons[3] = (GetAsyncKeyState(VK_XBUTTON1) & 0x8000) != 0;
 	this->buttons[4] = (GetAsyncKeyState(VK_XBUTTON2) & 0x8000) != 0;
+}
+
+int mouseInput::Anybutton()
+{
+	int buttonIndex = -1;
+	for (int i = 0; i < 5; i++)
+	{
+		if (this->buttons[i])
+		{
+			buttonIndex = i;
+		}
+	}
+	return buttonIndex;
 }

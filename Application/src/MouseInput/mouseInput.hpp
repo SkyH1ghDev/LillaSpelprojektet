@@ -11,6 +11,7 @@ public:
 	float getMousePositionX();
 	float getMousePositionY();
 	bool IsButtonPressed(int button) const;
+	int Anybutton();
 	
 private:
 	POINT mousePos;
@@ -18,4 +19,5 @@ private:
 	bool buttons[5];
 	
 	void UpdateButtons();
+	
 };
