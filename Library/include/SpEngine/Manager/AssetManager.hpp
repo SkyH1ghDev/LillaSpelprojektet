@@ -1,10 +1,6 @@
 #pragma once
-#include <vector>
-#include <wrl/client.h>
-#include <string>
 #include <filesystem>
-#include <iostream>
-#include <d3d11.h>
+#include <map>
 #include "Texture.hpp"
 
 namespace FS = std::filesystem;
@@ -18,13 +14,13 @@ public:
 	~AssetManager();
 
 	bool ReadFolder(MW::ComPtr<ID3D11Device>& device, std::string path);
-
+	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV(std::string filename) 
+	{
+		return m_textureMap[filename].GetSRV();
+	}
 private:
 
-	std::vector<ShaderResourceTexture> textures;
-
-	//Temporary asset tracking vector
-	std::vector<std::string> textureNames;
+	std::map<std::string, ShaderResourceTexture> m_textureMap;
 };
 
 

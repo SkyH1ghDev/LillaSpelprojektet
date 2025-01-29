@@ -11,9 +11,15 @@ namespace DX = DirectX;
 class ShaderResourceTexture
 {
 public:
+	ShaderResourceTexture() = default;
 	ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath);
 	~ShaderResourceTexture();
 	void DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position);
+
+	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV() 
+	{
+		return this->srv;
+	}
 
 private:
 	int width = 0;
