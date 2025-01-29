@@ -1,7 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include <d3d11.h>
-#include <wrl/client.h>
+
 class mouseInput {
 public:
 	mouseInput(HWND hWnd);
@@ -10,7 +9,7 @@ public:
 	void update();
 	float getMousePositionX();
 	float getMousePositionY();
-	bool IsButtonPressed(int button) const;
+	bool IsButtonPressed(int buttonIndex) const;
 	int Anybutton();
 	
 private:
