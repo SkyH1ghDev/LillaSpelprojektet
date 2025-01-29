@@ -10,15 +10,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_ LPWSTR    lpCmdLine,
                       _In_ int       nCmdShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	// Braces to let the application go out of scope before checking memory leaks
 	{
 		GameLoop application;
 		application.Run(hInstance, nCmdShow);
 	}
-
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtDumpMemoryLeaks();
 
 	return 0;
 }
