@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include <filesystem>
 #include <map>
 #include "Texture.hpp"
@@ -15,11 +14,13 @@ public:
 	~AssetManager();
 
 	bool ReadFolder(MW::ComPtr<ID3D11Device>& device, std::string path);
-
+	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV(std::string filename) 
+	{
+		return m_textureMap[filename].GetSRV();
+	}
 private:
 
-	std::vector<ShaderResourceTexture> m_textures;
-	std::map<std::string, int> m_indexMap;
+	std::map<std::string, ShaderResourceTexture> m_textureMap;
 };
 
 

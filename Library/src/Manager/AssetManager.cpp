@@ -20,12 +20,11 @@ bool AssetManager::ReadFolder(MW::ComPtr<ID3D11Device> &device, std::string path
 		int folderIndex = filepath.find_last_of('/');
 		std::string filename = filepath.substr(folderIndex + 1, filepath.length() - folderIndex);
 		std::string extension = filename.substr(filename.find_last_of('.'), 4);
+
 		if (extension == ".jpg" || extension == ".png") 
 		{
-
 			ShaderResourceTexture texture(device, filepath);
-			m_textures.push_back(texture);
-			this->m_indexMap[filename] = assetIndex;
+			this->m_textureMap[filename] = texture;
 		}
 
 		assetIndex++;
