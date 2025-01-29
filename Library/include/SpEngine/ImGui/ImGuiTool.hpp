@@ -1,15 +1,15 @@
 #pragma once
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_win32.h>
+#include <imgui/imgui_impl_dx11.h>
+
 #include <d3d11.h>
 #include <wrl/client.h>
 
-#include <ImGui/imgui.h>
-//#include <ImGui/backends/imgui_impl_win32.h>
-//#include <ImGui/backends/imgui_impl_dx11.h>
-
 namespace MW = Microsoft::WRL;
 
-class ImGuiTool 
+class ImGuiTool
 {
 public:
 	void Initialize(HWND hWnd, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
