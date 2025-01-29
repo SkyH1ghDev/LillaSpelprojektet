@@ -1,6 +1,10 @@
 #include <iostream>
 #include "MenuScene.hpp"
 
-void MenuScene::display() const {
-    std::cout << "Menu Scene: Main Menu" << std::endl;
+// Constructor implementation
+MenuScene::MenuScene(int level) : m_level(level) {}
+
+// display() method implementation
+void MenuScene::Display() const {
+    std::cout << "Game Scene - Level: " << m_level << std::endl;
 }

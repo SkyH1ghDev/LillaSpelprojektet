@@ -4,8 +4,8 @@
 
 class GameScene : public IScene {
 private:
-    int level; // Store the level for this scene
+    int m_level; // Store the level for this scene
 public:
     explicit GameScene(int level); // Constructor declaration
-    void display() const override;      // Overriding display method
+    void Display() const override;      // Overriding display method
 };
