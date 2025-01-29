@@ -11,7 +11,7 @@
 class SceneManager {
 private:
     std::unordered_map<std::string, std::function<std::unique_ptr<IScene>()>> sceneFactories;
-    std::unique_ptr<IScene> currentScene;
+    std::unique_ptr<IScene> m_currentScene;
 
 public:
     void RegisterScene(const std::string& id, std::function<std::unique_ptr<IScene>()> factory);

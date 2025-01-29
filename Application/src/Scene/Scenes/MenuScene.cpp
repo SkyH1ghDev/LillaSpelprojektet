@@ -2,9 +2,9 @@
 #include "MenuScene.hpp"
 
 // Constructor implementation
-MenuScene::MenuScene() {}
+MenuScene::MenuScene(int level) : m_level(level) {}
 
 // display() method implementation
 void MenuScene::Display() const {
-    std::cout << "Menu Scene " << std::endl;
+    std::cout << "Menu Scene - Level: " << m_level << std::endl;
 }

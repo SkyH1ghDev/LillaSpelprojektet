@@ -9,7 +9,7 @@ void SceneManager::RegisterScene(const std::string& id, std::function<std::uniqu
 void SceneManager::LoadScene(const std::string& id) {
     auto it = sceneFactories.find(id);
     if (it != sceneFactories.end()) {
-        currentScene = it->second(); // Call the factory function to create the scene
+        m_currentScene = it->second(); // Call the factory function to create the scene
         std::cout << "Loaded scene: " << id << std::endl;
     }
     else {
@@ -19,8 +19,8 @@ void SceneManager::LoadScene(const std::string& id) {
 
 // Call update (or display) on the current scene
 void SceneManager::Update() {
-    if (currentScene) {
-        currentScene->Display();
+    if (m_currentScene) {
+        m_currentScene->Display();
     }
     else {
         std::cout << "No scene loaded!" << std::endl;
