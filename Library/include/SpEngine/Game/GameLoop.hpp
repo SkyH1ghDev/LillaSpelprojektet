@@ -1,6 +1,7 @@
 #pragma once
 #include <SpEngine/Setup/SetupHelper.hpp>
 #include <directxtk/SpriteBatch.h>
+#include <Renderer.hpp>
 
 namespace DX = DirectX;
 

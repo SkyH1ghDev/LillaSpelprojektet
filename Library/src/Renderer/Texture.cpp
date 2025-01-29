@@ -16,8 +16,15 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 
 	rgbaChannels = 4;
 
-	this->height = textureHeight;
-	this->width = textureWidth;
+	this->m_height = textureHeight;
+	this->m_width = textureWidth;
+
+	RECT* rectCpy = new RECT();
+	rectCpy->left = 0;
+	rectCpy->right = this->m_width;
+	rectCpy->top = 0;
+	rectCpy->bottom = this->m_height;
+	this->m_rect.Attach(rectCpy);
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
 	texture2DDesc.Width = textureWidth;
@@ -45,7 +52,7 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 	HRESULT hr = device->CreateShaderResourceView(texture, nullptr, &srvCpy);
 
 	stbi_image_free(imageData);
-	this->srv.Attach(srvCpy);
+	this->m_srv.Attach(srvCpy);
 
 	texture->Release();
 
@@ -55,9 +62,4 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 
 ShaderResourceTexture::~ShaderResourceTexture()
 {
-}
-
-void ShaderResourceTexture::DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position)
-{
-	spriteBatch->Draw(this->srv.Get(), DX::XMFLOAT2(position.x - this->width / 2, position.y - this->height / 2));
 }

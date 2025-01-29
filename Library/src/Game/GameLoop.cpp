@@ -33,6 +33,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight, window);
 
+	Renderer renderer = Renderer(device);
+
 	ShaderResourceTexture toe(device.Get(), "../Application/Resources/Toe.png");
 
 	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
@@ -55,8 +57,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->RSSetViewports(1, &viewport);
 		immediateContext->OMSetRenderTargets(1, &rtvCpy, dsView.Get());
 
-		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, nullptr, nullptr, nullptr, nullptr, nullptr, DX::XMMatrixIdentity());
-		toe.DrawTexture(spriteBatch, DX::XMFLOAT2(initWidth / 2,  initHeight / 2));
+		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		spriteBatch->End();
 
 		swapChain->Present(0, 0);
