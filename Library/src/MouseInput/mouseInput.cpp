@@ -24,7 +24,7 @@ float mouseInput::getMousePositionY()
 	return this->mousePos.y;
 }
 
-bool mouseInput::IsButtonPressed(int buttonIndex) const
+bool mouseInput::IsButtonPressed(int buttonIndex) const //check for a specific button that is pressed
 {
 	if (buttonIndex < 0 || buttonIndex > 5)
 	{
@@ -35,6 +35,7 @@ bool mouseInput::IsButtonPressed(int buttonIndex) const
 
 void mouseInput::UpdateButtons()
 {
+	//updates the button array and change value if button is pressed
 	this->buttons[0] = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
 	this->buttons[1] = (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0;
 	this->buttons[2] = (GetAsyncKeyState(VK_MBUTTON) & 0x8000) != 0;
