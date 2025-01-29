@@ -32,6 +32,11 @@ void Renderer::DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11
 	spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
 }
 
+void Renderer::DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
+{
+	spriteBatch->Draw(texture, position, color);
+}
+
 void Renderer::InitializeBlendState(MW::ComPtr<ID3D11Device>& device)
 {
 	//Creating blendstate with default stuff

@@ -17,13 +17,13 @@ public:
 
 	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV() 
 	{
-		return this->srv;
+		return this->m_srv;
 	}
 
 private:
 	int m_width = 0;
 	int m_height = 0;
-	MW::ComPtr<RECT> m_rect;
+	RECT m_rect;
 	MW::ComPtr<ID3D11ShaderResourceView> m_srv;
 };
 

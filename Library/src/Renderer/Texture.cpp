@@ -1,5 +1,5 @@
 #pragma once
-#include "Texture.hpp"
+#include <SpEngine/Renderer/Texture.hpp>
 #include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -19,12 +19,10 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 	this->m_height = textureHeight;
 	this->m_width = textureWidth;
 
-	RECT* rectCpy = new RECT();
-	rectCpy->left = 0;
-	rectCpy->right = this->m_width;
-	rectCpy->top = 0;
-	rectCpy->bottom = this->m_height;
-	this->m_rect.Attach(rectCpy);
+	m_rect.left = 0;
+	m_rect.right = this->m_width;
+	m_rect.top = 0;
+	m_rect.bottom = this->m_height;
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
 	texture2DDesc.Width = textureWidth;

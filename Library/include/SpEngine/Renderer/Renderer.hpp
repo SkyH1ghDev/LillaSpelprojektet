@@ -29,6 +29,9 @@ public:
 						DX::DX11::SpriteEffects effects = DX::DX11::SpriteEffects_None, 
 						float layerDepth = 0.0f);
 
+
+	void DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
+
 private:
 	void InitializeBlendState(MW::ComPtr<ID3D11Device>& device);
 	void InitializeSamplerState(MW::ComPtr<ID3D11Device>& device);

@@ -1,7 +1,7 @@
 #pragma once
 #include <filesystem>
 #include <map>
-#include "Texture.hpp"
+#include <SpEngine/Renderer/Texture.hpp>
 
 namespace FS = std::filesystem;
 namespace MW = Microsoft::WRL;

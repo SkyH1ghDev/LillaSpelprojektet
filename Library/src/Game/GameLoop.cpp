@@ -1,7 +1,6 @@
 #include <directxtk/SpriteBatch.h>
-#include "GameLoop.hpp"
-#include "texture.hpp"
-#include "SceneManager.hpp"
+#include <GameLoop.hpp>
+#include <SceneManager.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -36,8 +35,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Renderer renderer = Renderer(device);
 
-	ShaderResourceTexture toe(device.Get(), "../Application/Resources/Toe.png");
-
+	AssetManager ass;
+	ass.ReadFolder(device, "../Application/Resources");
+	
 	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
 	spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
 
@@ -59,6 +59,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->OMSetRenderTargets(1, &rtvCpy, dsView.Get());
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
+		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(initWidth / 2, initHeight / 2), DX::Colors::White);
 		spriteBatch->End();
 
 		swapChain->Present(0, 0);
