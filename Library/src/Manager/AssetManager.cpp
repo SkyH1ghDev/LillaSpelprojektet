@@ -12,19 +12,23 @@ AssetManager::~AssetManager()
 //Reads all png and jpg files in folder specified by path string
 bool AssetManager::ReadFolder(MW::ComPtr<ID3D11Device> &device, std::string path)
 {
+	int assetIndex = 0;
 	for (const auto& entry : FS::directory_iterator(path)) 
 	{
 		std::string filepath = entry.path().string();
-		std::string extension = filepath.substr(filepath.find_last_of('.'), 4);
+		filepath.at(filepath.find('\\')) = '/';
+		int folderIndex = filepath.find_last_of('/');
+		std::string filename = filepath.substr(folderIndex + 1, filepath.length() - folderIndex);
+		std::string extension = filename.substr(filename.find_last_of('.'), 4);
 		if (extension == ".jpg" || extension == ".png") 
 		{
-			filepath.at(filepath.find('\\')) = '/';
 
 			ShaderResourceTexture texture(device, filepath);
-			textures.push_back(texture);
-
-			textureNames.push_back(filepath);
+			m_textures.push_back(texture);
+			this->m_indexMap[filename] = assetIndex;
 		}
+
+		assetIndex++;
 	}
 
 	return true;

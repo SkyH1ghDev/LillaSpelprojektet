@@ -1,10 +1,7 @@
 #pragma once
 #include <vector>
-#include <wrl/client.h>
-#include <string>
 #include <filesystem>
-#include <iostream>
-#include <d3d11.h>
+#include <map>
 #include "Texture.hpp"
 
 namespace FS = std::filesystem;
@@ -21,10 +18,8 @@ public:
 
 private:
 
-	std::vector<ShaderResourceTexture> textures;
-
-	//Temporary asset tracking vector
-	std::vector<std::string> textureNames;
+	std::vector<ShaderResourceTexture> m_textures;
+	std::map<std::string, int> m_indexMap;
 };
 
 
