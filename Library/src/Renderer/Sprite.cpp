@@ -5,7 +5,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath, int frameCount)
+Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath)
 {
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
@@ -16,15 +16,13 @@ Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath, int frameC
 
 	rgbaChannels = 4;
 
-	this->m_frameCount = frameCount;
-	this->m_frameWidth = textureWidth;
+	m_sourceRect = new RECT();
+	m_sourceRect->left = 0;
+	m_sourceRect->right = textureWidth;
+	m_sourceRect->top = 0;
+	m_sourceRect->bottom = textureHeight;
 
-	m_sourceRect.left = 0;
-	m_sourceRect.right = textureWidth / this->m_frameCount;
-	m_sourceRect.top = 0;
-	m_sourceRect.bottom = textureHeight;
-
-	this->m_origin = DX::XMFLOAT2(textureWidth / this->m_frameCount / 2, textureHeight / 2);
+	this->m_origin = DX::XMFLOAT2(textureWidth / 2, textureHeight / 2);
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
 	texture2DDesc.Width = textureWidth;
@@ -60,20 +58,35 @@ Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath, int frameC
 		throw("Failed to create Texture Shader Resource View");
 }
 
+Sprite::Sprite(const Sprite& other)
+{
+	RECT* cpyRect = new RECT();
+	cpyRect->left = other.m_sourceRect->left;
+	cpyRect->right = other.m_sourceRect->right;
+	cpyRect->top = other.m_sourceRect->top;
+	cpyRect->bottom = other.m_sourceRect->bottom;
+
+	this->m_sourceRect = cpyRect;
+	this->m_origin = other.m_origin;
+	this->m_srv = other.m_srv;
+}
+
+Sprite& Sprite::operator=(const Sprite& other)
+{
+	RECT* cpyRect = new RECT();
+	cpyRect->left = other.m_sourceRect->left;
+	cpyRect->right = other.m_sourceRect->right;
+	cpyRect->top = other.m_sourceRect->top;
+	cpyRect->bottom = other.m_sourceRect->bottom;
+
+	this->m_sourceRect = cpyRect;
+	this->m_origin = other.m_origin;
+	this->m_srv = other.m_srv;
+
+	return *this;
+}
+
 Sprite::~Sprite() 
 {
-}
-
-//Offsets target rectangle of the sprite with a given frame number, accepted values are [1,m_frameCount]
-RECT Sprite::GetSourceRectangle(int frameIndex)
-{
-	m_sourceRect.left = m_frameWidth * (frameIndex - 1);
-	m_sourceRect.right = m_frameWidth * frameIndex;
-	return m_sourceRect;
-}
-
-void Sprite::ResetRectangle() 
-{
-	m_sourceRect.left = 0;
-	m_sourceRect.right = m_frameWidth;
+	delete this->m_sourceRect;
 }

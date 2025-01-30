@@ -12,19 +12,18 @@ class Sprite
 {
 public:
 	Sprite() = default;
-	Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath, int frameCount = 1);
+	Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath);
+	Sprite(const Sprite& other);
+	Sprite& operator=(const Sprite& other);
 	~Sprite();
 
 	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV();
 	inline DX::XMFLOAT2 GetOrigin();
-	RECT GetSourceRectangle(int frameIndex);
-	void ResetRectangle();
+	RECT* GetSourceRectangle();
 
 private:
-	int m_frameWidth;
-	int m_frameCount = 1;
 	DX::XMFLOAT2 m_origin;
-	RECT m_sourceRect;
+	RECT* m_sourceRect;
 	MW::ComPtr<ID3D11ShaderResourceView> m_srv;
 };
 
@@ -37,4 +36,10 @@ inline DX::XMFLOAT2 Sprite::GetOrigin()
 {
 	return this->m_origin;
 }
+
+inline RECT* Sprite::GetSourceRectangle()
+{
+	return this->m_sourceRect;
+}
+
 

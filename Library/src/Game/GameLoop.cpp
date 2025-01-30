@@ -51,6 +51,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
@@ -68,11 +69,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
-		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
+		//Temporary sprite drawing code goes here
+
+		//
 		spriteBatch->End();
 
-		swapChain->Present(0, 0);
 
+		swapChain->Present(0, 0);
 	}
 
 	DestroyWindow(window);
