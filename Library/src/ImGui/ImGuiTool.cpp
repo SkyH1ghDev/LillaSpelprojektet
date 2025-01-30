@@ -1,8 +1,5 @@
 #include <SpEngine/ImGui/ImGuiTool.hpp>
 
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_win32.h>
-#include <imgui/imgui_impl_dx11.h>
 
 ImGuiTool::ImGuiTool()
 {
@@ -25,6 +22,7 @@ void ImGuiTool::Start()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
 }
 
 void ImGuiTool::End() 

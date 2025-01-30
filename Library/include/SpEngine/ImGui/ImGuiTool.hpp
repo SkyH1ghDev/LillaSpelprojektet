@@ -4,6 +4,10 @@
 #include <wrl/client.h>
 #include <SpEngine/Input/Mouse.hpp>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_win32.h>
+#include <imgui/imgui_impl_dx11.h>
+
 namespace MW = Microsoft::WRL;
 
 class ImGuiTool
@@ -22,7 +26,7 @@ public:
 	void Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv, const Mouse& mi);
 	void Shutdown();
 
-private:
+private: 
 	void Initialized(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
 	void MouseUpdate(const Mouse& mi);
 	void Test(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv);
