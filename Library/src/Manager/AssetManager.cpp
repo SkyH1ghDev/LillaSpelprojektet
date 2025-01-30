@@ -10,6 +10,7 @@ AssetManager::~AssetManager()
 }
 
 //Reads all png and jpg files in folder specified by path string
+//All read files are added to the instance of the asset manager
 bool AssetManager::ReadFolder(MW::ComPtr<ID3D11Device> &device, std::string path)
 {
 	int assetIndex = 0;
