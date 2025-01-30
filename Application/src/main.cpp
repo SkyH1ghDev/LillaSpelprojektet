@@ -18,7 +18,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		application.Run(hInstance, nCmdShow);
 	}
 
-
-
 	return 0;
 }

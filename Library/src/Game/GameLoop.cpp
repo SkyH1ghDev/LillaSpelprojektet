@@ -1,7 +1,11 @@
 #include <directxtk/SpriteBatch.h>
-#include "GameLoop.hpp"
-#include "texture.hpp"
-#include "SceneManager.hpp"
+#include <SpEngine/Game/GameLoop.hpp>
+#include <SpEngine/Manager/SceneManager.hpp>
+#include <SpEngine/Input/Mouse.hpp>
+#include <SpEngine/ImGui/ImGuiTool.hpp>
+#include <SpEngine/Manager/AssetManager.hpp>
+#include <GameLoop.hpp>
+#include <SceneManager.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -28,35 +32,43 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	HWND window;
 	D3D11_VIEWPORT viewport;
 
-	int initWidth = 1280;
-	int initHeight = 720;
+	int initWidth = 640;
+	int initHeight = 360;
 
 	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight, window);
 
-	ShaderResourceTexture toe(device.Get(), "../Application/Resources/Toe.png");
+	Renderer renderer = Renderer(device);
+
+	AssetManager ass;
+	ass.ReadFolder(device, "../Application/Resources");
 
 	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
 	spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
 
 	MSG msg = {};
 
-	ID3D11RenderTargetView* rtvCpy = rtv.Get();
+	Mouse mi;
+
+	float clearColour[4] = { 0, 0, 0, 0 };
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
 	{
+		mi.Update(window);
+
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-
 		immediateContext->RSSetViewports(1, &viewport);
-		immediateContext->OMSetRenderTargets(1, &rtvCpy, dsView.Get());
+		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
+		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
-		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, nullptr, nullptr, nullptr, nullptr, nullptr, DX::XMMatrixIdentity());
-		toe.DrawTexture(spriteBatch, DX::XMFLOAT2(initWidth / 2,  initHeight / 2));
+		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
+		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 		spriteBatch->End();
 
 		swapChain->Present(0, 0);

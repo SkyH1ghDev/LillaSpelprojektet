@@ -1,11 +1,11 @@
 #pragma once
-#include "Texture.hpp"
+#include <SpEngine/Renderer/Sprite.hpp>
 #include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
+#include <stb_image.h>
 
-ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath)
+Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath, int frameCount)
 {
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
@@ -16,8 +16,15 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 
 	rgbaChannels = 4;
 
-	this->height = textureHeight;
-	this->width = textureWidth;
+	this->m_frameCount = frameCount;
+	this->m_frameWidth = textureWidth;
+
+	m_sourceRect.left = 0;
+	m_sourceRect.right = textureWidth / this->m_frameCount;
+	m_sourceRect.top = 0;
+	m_sourceRect.bottom = textureHeight;
+
+	this->m_origin = DX::XMFLOAT2(textureWidth / this->m_frameCount / 2, textureHeight / 2);
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
 	texture2DDesc.Width = textureWidth;
@@ -45,7 +52,7 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 	HRESULT hr = device->CreateShaderResourceView(texture, nullptr, &srvCpy);
 
 	stbi_image_free(imageData);
-	this->srv.Attach(srvCpy);
+	this->m_srv.Attach(srvCpy);
 
 	texture->Release();
 
@@ -53,11 +60,20 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 		throw("Failed to create Texture Shader Resource View");
 }
 
-ShaderResourceTexture::~ShaderResourceTexture()
+Sprite::~Sprite() 
 {
 }
 
-void ShaderResourceTexture::DrawTexture(std::unique_ptr<DX::SpriteBatch> &spriteBatch, DX::XMFLOAT2 position)
+//Offsets target rectangle of the sprite with a given frame number, accepted values are [1,m_frameCount]
+RECT Sprite::GetSourceRectangle(int frameIndex)
 {
-	spriteBatch->Draw(this->srv.Get(), DX::XMFLOAT2(position.x - this->width / 2, position.y - this->height / 2));
+	m_sourceRect.left = m_frameWidth * (frameIndex - 1);
+	m_sourceRect.right = m_frameWidth * frameIndex;
+	return m_sourceRect;
+}
+
+void Sprite::ResetRectangle() 
+{
+	m_sourceRect.left = 0;
+	m_sourceRect.right = m_frameWidth;
 }

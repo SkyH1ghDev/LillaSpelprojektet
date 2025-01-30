@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MenuScene.hpp"
 
-void MenuScene::display() const {
-    std::cout << "Menu Scene: Main Menu" << std::endl;
+
+// display() method implementation
+void MenuScene::Display() const {
+    std::cout << "Menu Scene" << std::endl;
 }

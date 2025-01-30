@@ -5,18 +5,16 @@
 #include <functional>
 #include <memory>
 #include <stdexcept>
+#include <iostream>
 #include <SpEngine/Assets/IScene.hpp>
 
-// SceneManager class
 class SceneManager {
 private:
-    // Maps scene IDs to factory functions that create scenes
     std::unordered_map<std::string, std::function<std::unique_ptr<IScene>()>> sceneFactories;
+    std::unique_ptr<IScene> m_currentScene;
 
 public:
-    // Registers a scene creation function with a given ID
-    void registerScene(const std::string& id, std::function<std::unique_ptr<IScene>()> factory);
-
-    // Creates a scene based on its ID
-    std::unique_ptr<IScene> createScene(const std::string& id) const;
+    bool RegisterScene(const std::string& id, std::function<std::unique_ptr<IScene>()> factory);
+    bool LoadScene(const std::string& id);
+    bool Update();
 };

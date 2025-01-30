@@ -21,22 +21,23 @@ enum class EntityType {
 
 class Entity
 {
-private:
-    std::unique_ptr<IMove> move;
-    std::unique_ptr<IVisible> visible;
-    std::unique_ptr<IAttack> attack;
-    std::unique_ptr<ITakeDamage> takeDamage;
-    std::unique_ptr<IUseCard> useCard;
-    EntityType type;
-
 public:
     Entity(EntityType entityType);
 
-    void performMove() { if (move) move->Move(); }
-    void performVisible() { if (visible) visible->Visible(); }
-    void performAttack() { if (attack) attack->Attack(); }
-    void performTakeDamage() { if (takeDamage) takeDamage->TakeDamage(); }
-    void performUseCard() { if (useCard) useCard->UseCard(); }
+    void PerformMove() { if (m_move) m_move->Move(); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(); }
+    void RerformAttack() { if (m_attack) m_attack->Attack(); }
+    void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
+    void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
 
-    EntityType getType() const { return type; }
+    EntityType GetType() const { return m_type; }
+
+private:
+    std::unique_ptr<IMove> m_move;
+    std::unique_ptr<IVisible> m_visible;
+    std::unique_ptr<IAttack> m_attack;
+    std::unique_ptr<ITakeDamage> m_takeDamage;
+    std::unique_ptr<IUseCard> m_useCard;
+    EntityType m_type;
+
 };

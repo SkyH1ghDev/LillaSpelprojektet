@@ -4,5 +4,5 @@
 
 class MenuScene : public IScene {
 public:
-    void display() const override;
+    void Display() const override;      // Overriding display method
 };

@@ -32,7 +32,7 @@ bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HW
 
 	RegisterClass(&wc);
 
-	window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPEDWINDOW,
+	window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
 		CW_USEDEFAULT, 0, width, height, nullptr, nullptr, instance, nullptr);
 
 	if (window == nullptr)
@@ -145,8 +145,8 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 {
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
-	viewport.Width = width;
-	viewport.Height = height;
+	viewport.Width = FLOAT(width);
+	viewport.Height = FLOAT(height);
 	viewport.MinDepth = 0;
 	viewport.MaxDepth = 1;
 }
