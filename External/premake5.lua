@@ -59,8 +59,8 @@ project "ImGui"
         "ImGui/backends/"
     }
 
-    mkdirPath = "'" .. targetBuildPath .. "/External/include/%{prj.name}'"
-    copyPath = "'" .. targetBuildPath .. "/External/include/%{prj.name}'"
+    mkdirPath = "\"" .. targetBuildPath .. "/External/include/%{prj.name}\""
+    copyPath = "\"" .. targetBuildPath .. "/External/include/%{prj.name}\""
     
     prebuildcommands{
         "{MKDIR} " .. mkdirPath,
