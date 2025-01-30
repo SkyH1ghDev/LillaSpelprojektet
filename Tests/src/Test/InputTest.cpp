@@ -4,7 +4,7 @@
 #include <SetupHelper.hpp>
 #include <Mouse.hpp>
 
-TEST(Mouse, GetPosition) 
+TEST(Mouse, GetPosition)
 {
     UINT height = 1080;
     UINT width = 1920;

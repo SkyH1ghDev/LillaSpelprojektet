@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 
-class  Mouse {
+class Mouse {
 public:
 	Mouse();
 	~Mouse() = default;
@@ -11,23 +11,23 @@ public:
 	inline float GetMousePositionY();
 	bool IsButtonPressed(int buttonIndex) const;
 	int AnyButton();
-	
+
 private:
-	POINT MousePos;
-	bool Buttons[5];
-	
+	POINT m_mousePos;
+	bool m_buttons[5];
+
 	void UpdateButtons();
-	
+
 };
 
 inline float Mouse::GetMousePositionX()
 {
-	GetCursorPos(&this->MousePos);
-	return this->MousePos.x;
+	GetCursorPos(&this->m_mousePos);
+	return this->m_mousePos.x;
 }
 
 inline float Mouse::GetMousePositionY()
 {
-	GetCursorPos(&this->MousePos);
-	return this->MousePos.y;
+	GetCursorPos(&this->m_mousePos);
+	return this->m_mousePos.y;
 }
