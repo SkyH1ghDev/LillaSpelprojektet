@@ -27,7 +27,7 @@ TEST(AssetManagement, HashMap)
     ASSERT_NE(as.GetSRV(filename), nullptr);
 }
 
-TEST(Texture, FileRead) 
+TEST(Sprites, FileRead) 
 {
     UINT height = 1080;
     UINT width = 1920;
@@ -44,8 +44,8 @@ TEST(Texture, FileRead)
     SetupHelper setup;
     setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-    ShaderResourceTexture srt1(device, "../Tests/src/Resources/testTile.png");
-    ShaderResourceTexture srt2 = srt1;
+    Sprite srt1(device, "../Tests/src/Resources/testTile.png");
+    Sprite srt2 = srt1;
 
     ASSERT_EQ(srt1.GetSRV().Get(), srt2.GetSRV().Get());
 }

@@ -24,7 +24,7 @@ bool AssetManager::ReadFolder(MW::ComPtr<ID3D11Device> &device, std::string path
 
 		if (extension == ".jpg" || extension == ".png") 
 		{
-			ShaderResourceTexture texture(device, filepath);
+			Sprite texture(device, filepath);
 			this->m_textureMap[filename] = texture;
 		}
 
