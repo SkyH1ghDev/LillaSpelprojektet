@@ -4,8 +4,9 @@
 #include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
-#include <GameLoop.hpp>
-#include <SceneManager.hpp>
+#include <../../Application/src/Scene/Factories/GameSceneFactories/GameSceneFactory.hpp>
+#include <../../Application/src/Scene/Scenes/GameScene.hpp>
+#include <vector>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -16,6 +17,7 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 
 	setup.SetViewport(width, height, viewport);
+
 }
 
 //Extension of Main
@@ -31,6 +33,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	HWND window;
 	D3D11_VIEWPORT viewport;
+
+	SceneManager sceneManager;
+
+	sceneManager.RegisterScene("game_level_1", []() { return GameSceneFactory::CreateScene(1); });
+	sceneManager.LoadScene("game_level_1");
 
 	int initWidth = 640;
 	int initHeight = 360;
@@ -56,8 +63,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
 	{
 		mi.Update();
-
-
+    	sceneManager.Update();
+		GameScene* currentScene = dynamic_cast<GameScene*>(sceneManager.GetCurrentScene());
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -68,6 +75,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
+
 		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 		spriteBatch->End();
 

@@ -14,9 +14,20 @@ private:
 
 public:
     explicit TestScene(int level) : m_level(level) {}
-
     void Display() const override {
+        // Implement display logic
+    }
 
+    void Update(float deltaTime) override {
+        // Implement update logic
+    }
+
+    void OnEnter() override {
+        // Implement enter logic
+    }
+
+    void OnExit() override {
+        // Implement exit logic
     }
 };
 
