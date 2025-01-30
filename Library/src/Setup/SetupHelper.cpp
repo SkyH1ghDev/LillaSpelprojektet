@@ -32,7 +32,7 @@ bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HW
 
 	RegisterClass(&wc);
 
-	window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPEDWINDOW,
+	window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
 		CW_USEDEFAULT, 0, width, height, nullptr, nullptr, instance, nullptr);
 
 	if (window == nullptr)
