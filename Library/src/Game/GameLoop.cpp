@@ -1,9 +1,12 @@
+#include "GameLoop.hpp"
+
 #include <directxtk/SpriteBatch.h>
-#include <SpEngine/Game/GameLoop.hpp>
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Input/Mouse.hpp>
-#include <SpEngine/ImGui/ImGuiTool.hpp>
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
+#include <SpEngine/Input/Keyboard.hpp>
+#include <SpEngine/Input/Actions/ExitHandler.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -48,12 +51,19 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
+	Keyboard keyboard;
+
+	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
+
+	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
-	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
+	while (!exitHandler->ShouldExit())
 	{
 		mi.Update(window);
 
+		keyboard.HandleInput();
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
