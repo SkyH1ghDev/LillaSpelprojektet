@@ -58,10 +58,13 @@ project "ImGui"
         "ImGui/",
         "ImGui/backends/"
     }
+
+    mkdirPath = "'" .. targetBuildPath .. "/External/include/%{prj.name}'"
+    copyPath = "'" .. targetBuildPath .. "/External/include/%{prj.name}'"
     
     prebuildcommands{
-        "{MKDIR} " .. targetBuildPath .. "/External/include/%{prj.name}",
-        "{COPY} ../External/ImGui/*.h " .. targetBuildPath .. "/External/include/%{prj.name}",
-        "{COPY} ../External/ImGui/backends/imgui_impl_dx11.h " .. targetBuildPath .. "/External/include/%{prj.name}",
-        "{COPY} ../External/ImGui/backends/imgui_impl_win32.h " .. targetBuildPath .. "/External/include/%{prj.name}"
+        "{MKDIR} " .. mkdirPath,
+        "{COPY} ../External/ImGui/*.h " .. copyPath,
+        "{COPY} ../External/ImGui/backends/imgui_impl_dx11.h " .. copyPath,
+        "{COPY} ../External/ImGui/backends/imgui_impl_win32.h " .. copyPath
     }
