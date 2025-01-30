@@ -3,6 +3,7 @@
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/ImGui/ImGuiTool.hpp>
+#include <SpEngine/Manager/AssetManager.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
