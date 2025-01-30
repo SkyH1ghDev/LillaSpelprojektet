@@ -1,7 +1,7 @@
 #include <directxtk/SpriteBatch.h>
 #include <GameLoop.hpp>
 #include <SceneManager.hpp>
-#include <MouseInput/mouseInput.hpp>
+#include <MouseInput/Mouse.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -29,8 +29,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	HWND window;
 	D3D11_VIEWPORT viewport;
 
-	int initWidth = 1280;
-	int initHeight = 720;
+	int initWidth = 640;
+	int initHeight = 360;
 
 	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight, window);
 
@@ -44,7 +44,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	MSG msg = {};
 
-	mouseInput mi(window);
+	Mouse mi(window);
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
@@ -52,7 +52,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	//May want to change the condition to a bool variable
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
 	{
-		mi.update();
+		mi.Update();
 
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -65,7 +65,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
-		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(mi.getMousePositionX(), mi.getMousePositionY()), DX::Colors::White);
+		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 		spriteBatch->End();
 
 		swapChain->Present(0, 0);

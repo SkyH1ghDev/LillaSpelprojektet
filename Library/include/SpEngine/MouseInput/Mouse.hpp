@@ -20,3 +20,15 @@ private:
 	void UpdateButtons();
 	
 };
+
+inline float Mouse::GetMousePositionX()
+{
+	GetCursorPos(&this->MousePos);
+	return this->MousePos.x;
+}
+
+inline float Mouse::GetMousePositionY()
+{
+	GetCursorPos(&this->MousePos);
+	return this->MousePos.y;
+}
