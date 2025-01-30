@@ -20,5 +20,6 @@ project "Tests"
         "DXGI",
         "d3dcompiler",
         targetBuildPath .. "/External/lib/gtest",
-        targetBuildPath .. "/External/lib/DirectXTK"
+        targetBuildPath .. "/External/lib/DirectXTK",
+	targetBuildPath .. "/External/lib/ImGui"
     }

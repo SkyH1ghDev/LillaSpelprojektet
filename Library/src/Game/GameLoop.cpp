@@ -4,18 +4,15 @@
 #include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
-#include <GameLoop.hpp>
-#include <SceneManager.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
 	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height, HWND &window)
 {
-	SetupHelper setup;
+	this->setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
+	this->setup.SetViewport(width, height, viewport);
 
-	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
-
-	setup.SetViewport(width, height, viewport);
+	this->imGui = ImGuiTool(window, device, immediateContext);
 }
 
 //Extension of Main
@@ -51,7 +48,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
-
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
@@ -68,6 +64,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
+		//Running ImGui and all their windows
+		imGui.Start();
+		imGui.Run(immediateContext, rtv, mi);
+		imGui.End();
+
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		//Temporary sprite drawing code goes here
 
@@ -78,5 +79,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		swapChain->Present(0, 0);
 	}
 
+	imGui.Shutdown();
 	DestroyWindow(window);
 }
