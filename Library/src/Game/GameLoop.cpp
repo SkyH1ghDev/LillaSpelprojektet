@@ -13,9 +13,6 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 
 	setup.SetViewport(width, height, viewport);
-
-	ImGuiTool imGuiTool;
-	imGuiTool.Initialize(window, device, immediateContext);
 }
 
 //Extension of Main
@@ -33,8 +30,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	HWND window;
 	D3D11_VIEWPORT viewport;
 
-	int initWidth = 1280;
-	int initHeight = 720;
+	int initWidth = 640;
+	int initHeight = 360;
 
 	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight, window);
 

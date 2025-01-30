@@ -7,8 +7,8 @@ public:
 	~Mouse() = default;
 
 	void Update();
-	float GetMousePositionX();
-	float GetMousePositionY();
+	inline float GetMousePositionX();
+	inline float GetMousePositionY();
 	bool IsButtonPressed(int buttonIndex) const;
 	int AnyButton();
 	
@@ -20,3 +20,15 @@ private:
 	void UpdateButtons();
 	
 };
+
+inline float Mouse::GetMousePositionX()
+{
+	GetCursorPos(&this->MousePos);
+	return this->MousePos.x;
+}
+
+inline float Mouse::GetMousePositionY()
+{
+	GetCursorPos(&this->MousePos);
+	return this->MousePos.y;
+}

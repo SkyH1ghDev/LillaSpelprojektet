@@ -3,6 +3,8 @@
 #include <directxtk/SpriteBatch.h>
 #include <SpEngine/Renderer/Renderer.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
+#include <SpEngine/MouseInput/Mouse.hpp>
+
 
 namespace DX = DirectX;
 

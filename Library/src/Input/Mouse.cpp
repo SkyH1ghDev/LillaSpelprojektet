@@ -14,15 +14,7 @@ void Mouse::Update()
 	UpdateButtons();
 }
 
-float Mouse::GetMousePositionX()
-{
-	return this->MousePos.x;
-}
 
-float Mouse::GetMousePositionY()
-{
-	return this->MousePos.y;
-}
 
 bool Mouse::IsButtonPressed(int ButtonIndex) const
 {
