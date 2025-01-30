@@ -1,6 +1,4 @@
 #include <gtest/gtest.h>
-#include "Texture.hpp"
-#include "SetupHelper.hpp"
 
 int main(int argc, char **argv)
 {

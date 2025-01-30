@@ -1,10 +1,9 @@
 #pragma once
 #include <gtest/gtest.h>
-#include <Texture.hpp>
 #include <SetupHelper.hpp>
 #include <Mouse.hpp>
 
-TEST(Mouse, GetPosition) 
+TEST(Mouse, GetPosition)
 {
     UINT height = 1080;
     UINT width = 1920;
@@ -22,7 +21,7 @@ TEST(Mouse, GetPosition)
     setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
     POINT p;
     GetCursorPos(&p);
-    Mouse mouse(window);
+    Mouse mouse;
     ASSERT_EQ(p.x, mouse.GetMousePositionX());
 
     ASSERT_EQ(p.y, mouse.GetMousePositionY());
@@ -45,8 +44,8 @@ TEST(Mouse, setupMouse)
     SetupHelper setup;
     setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-    Mouse mouse(window);
-    
+    Mouse mouse;
+
     ASSERT_NE(device.Get(), nullptr);
 }
 
@@ -67,7 +66,7 @@ TEST(Mouse, anybutton)
     SetupHelper setup;
     setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-    Mouse mouse(window);
+    Mouse mouse;
     int testvalue = mouse.AnyButton();
     ASSERT_EQ(testvalue, -1);
 }
@@ -89,7 +88,7 @@ TEST(Mouse, pressbutton)
     SetupHelper setup;
     setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-    Mouse mouse(window);
+    Mouse mouse;
     bool testvalue = mouse.IsButtonPressed(0);
     ASSERT_EQ(testvalue, false);
 }

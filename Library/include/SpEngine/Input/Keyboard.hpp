@@ -15,10 +15,21 @@ public:
     Keyboard(Keyboard&& other) noexcept = default;
     Keyboard& operator=(Keyboard&& other) noexcept = default;
 
-    [nodiscard]
-    MSG ReadWindowsMessage();
-
+    /**
+     * Handles the input from the keyboard
+     */
     void HandleInput();
+
+private:
+
+    /**
+     * Reads the states of key inputs from the keyboard
+     *
+     * @remark [[nodiscard]]
+     * @return Input message from the windows event system
+     */
+    [[nodiscard]]
+    MSG ReadWindowsMessage();
 
 private:
     std::map<int, Key> m_keys;

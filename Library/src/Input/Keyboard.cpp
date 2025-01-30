@@ -1,5 +1,7 @@
 ﻿#include "Keyboard.hpp"
 
+#define KEY_PRESSED 0x80
+
 Keyboard::Keyboard()
 {
     this->m_keys =
@@ -30,5 +32,21 @@ MSG Keyboard::ReadWindowsMessage()
 void Keyboard::HandleInput()
 {
 	MSG msg = ReadWindowsMessage();
+
+	if (msg.message == WM_QUIT)
+	{
+		this->m_keys[VK_ESCAPE].Notify();
+	}
+
+	BYTE keyStates[256];
+	GetKeyboardState(keyStates);
+
+	for (int i = 0; i < 256; ++i)
+	{
+		if (keyStates[i] & KEY_PRESSED)
+		{
+			this->m_keys[i].Notify();
+		}
+	}
 }
 

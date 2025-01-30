@@ -1,9 +1,8 @@
 #pragma once
 #include <gtest/gtest.h>
-#include "Texture.hpp"
 #include "SetupHelper.hpp"
 
-TEST(DirectX11, DeviceSetup) 
+TEST(DirectX11, DeviceSetup)
 {
     UINT height = 1080;
     UINT width = 1920;
@@ -123,7 +122,7 @@ TEST(DirectX11, rtvSetup)
     ASSERT_NE(rtv.Get(), nullptr);
 }
 
-TEST(Viewport, ViewportSetup) 
+TEST(Viewport, ViewportSetup)
 {
     const UINT height = 1080;
     const UINT width = 1920;
