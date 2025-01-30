@@ -1,5 +1,10 @@
 #include <SpEngine/ImGui/ImGuiTool.hpp>
 
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_win32.h>
+#include <imgui/imgui_impl_dx11.h>
+
 void ImGuiTool::Initialize(HWND hWnd, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext)
 {
 	// Setup Dear ImGui context

@@ -14,13 +14,15 @@ public:
 	~AssetManager();
 
 	bool ReadFolder(MW::ComPtr<ID3D11Device>& device, std::string path);
-	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV(std::string filename) 
-	{
-		return m_textureMap[filename].GetSRV();
-	}
+	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV(std::string filename);
+
 private:
 
 	std::map<std::string, ShaderResourceTexture> m_textureMap;
 };
 
+inline MW::ComPtr<ID3D11ShaderResourceView> AssetManager::GetSRV(std::string filename)
+{
+	return m_textureMap[filename].GetSRV();
+}
 
