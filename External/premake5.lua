@@ -48,7 +48,9 @@ project "ImGui"
     objdir(objBuildPath .. "/%{prj.name}")
     
     files {
-        "ImGui/imgui*.cpp"
+        "ImGui/imgui*.cpp",
+        "ImGui/backends/imgui_impl_dx11.cpp",
+        "ImGui/backends/imgui_impl_win32.cpp"
         --"ImGui/*.h",
         --"ImGui/backends/imgui_impl_dx11.*",
         --"ImGui/backends/imgui_impl_win32.*"
