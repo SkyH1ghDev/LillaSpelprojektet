@@ -7,7 +7,6 @@ project "Application"
 
     includedirs{
         "../Library/include/",
-        "src/**",
         "src/",
         targetBuildPath .. "/External/include/"
     }
