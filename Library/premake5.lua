@@ -4,6 +4,7 @@ project "Library"
     objdir(objBuildPath .. "/%{prj.name}")
 
     dependson{"DirectXTK"}
+    dependson{"ImGui"}
 
     files {
         "src/**.cpp",
@@ -14,6 +15,6 @@ project "Library"
     includedirs{
         "include/**",
         "include/",
-        "../External/",
+        "../External/stb",
         targetBuildPath .. "/External/include/"
     }

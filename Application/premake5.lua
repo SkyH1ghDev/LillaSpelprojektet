@@ -18,7 +18,8 @@ project "Application"
         "d3d11",
         "d3dcompiler",
         "DXGI",
-        targetBuildPath .. "/External/lib/DirectXTK"
+        targetBuildPath .. "/External/lib/DirectXTK",
+        targetBuildPath .. "/External/lib/ImGui"
     }
 
     filter {"files:**.hlsl"}
