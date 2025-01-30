@@ -1,7 +1,8 @@
 #include <directxtk/SpriteBatch.h>
-#include <GameLoop.hpp>
-#include <SceneManager.hpp>
-#include <Mouse.hpp>
+#include <SpEngine/Game/GameLoop.hpp>
+#include <SpEngine/Manager/SceneManager.hpp>
+#include <SpEngine/Input/Mouse.hpp>
+#include <SpEngine/ImGui/ImGuiTool.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -12,6 +13,9 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 
 	setup.SetViewport(width, height, viewport);
+
+	ImGuiTool imGuiTool;
+	imGuiTool.Initialize(window, device, immediateContext);
 }
 
 //Extension of Main
