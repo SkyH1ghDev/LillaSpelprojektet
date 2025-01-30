@@ -14,7 +14,7 @@ private:
     std::unique_ptr<IScene> m_currentScene;
 
 public:
-    void RegisterScene(const std::string& id, std::function<std::unique_ptr<IScene>()> factory);
-    void LoadScene(const std::string& id);
-    void Update();
+    bool RegisterScene(const std::string& id, std::function<std::unique_ptr<IScene>()> factory);
+    bool LoadScene(const std::string& id);
+    bool Update();
 };
