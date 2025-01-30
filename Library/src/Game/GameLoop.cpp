@@ -4,6 +4,8 @@
 #include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
+#include <../../Application/src/Scene/Scenes/GameScene.hpp>
+#include <../../Application/src/Scene/Factories/GameSceneFactories/GameSceneFactory.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -45,6 +47,10 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	MSG msg = {};
 
 	Mouse mi;
+	SceneManager sceneManager;
+	sceneManager.RegisterScene("game_level_1", []() { return GameSceneFactory::CreateScene(1); });
+	sceneManager.LoadScene("game_level_1");
+
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
@@ -53,7 +59,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
 	{
 		mi.Update(window);
-
+		sceneManager.Update();
+		
+		std::shared_ptr<IScene> currentScene = sceneManager.GetCurrentScene();
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{

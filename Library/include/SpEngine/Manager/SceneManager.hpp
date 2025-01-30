@@ -15,10 +15,10 @@ public:
     bool LoadScene(const std::string& id);
     bool Update();
 
-    IScene* GetCurrentScene() { return m_currentScene.get(); }
+    std::shared_ptr<IScene> GetCurrentScene() { return m_currentScene; }
 
 private:
     std::unordered_map<std::string, std::function<std::unique_ptr<IScene>()>> sceneFactories;
-    std::unique_ptr<IScene> m_currentScene;
+    std::shared_ptr<IScene> m_currentScene;
 
 };
