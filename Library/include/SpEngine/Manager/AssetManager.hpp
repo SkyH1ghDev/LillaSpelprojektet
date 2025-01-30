@@ -10,19 +10,20 @@ namespace MW = Microsoft::WRL;
 class AssetManager
 {
 public:
-	AssetManager();
-	~AssetManager();
+	AssetManager() = default;
+	~AssetManager() = default;
 
 	bool ReadFolder(MW::ComPtr<ID3D11Device>& device, std::string path);
-	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV(std::string filename);
+	Sprite GetSprite(std::string filename);
 
 private:
 
 	std::map<std::string, Sprite> m_textureMap;
 };
 
-inline MW::ComPtr<ID3D11ShaderResourceView> AssetManager::GetSRV(std::string filename)
+//Returns Sprite with the matching filename in the hash map
+inline Sprite AssetManager::GetSprite(std::string filename)
 {
-	return m_textureMap[filename].GetSRV();
+	return m_textureMap[filename];
 }
 
