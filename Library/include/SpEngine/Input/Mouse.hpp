@@ -3,10 +3,10 @@
 
 class  Mouse {
 public:
-	Mouse(HWND hWnd);
+	Mouse();
 	~Mouse() = default;
 
-	void Update();
+	void Update(HWND &hWnd);
 	inline float GetMousePositionX();
 	inline float GetMousePositionY();
 	bool IsButtonPressed(int buttonIndex) const;
@@ -14,7 +14,6 @@ public:
 	
 private:
 	POINT MousePos;
-	HWND hWnd;
 	bool Buttons[5];
 	
 	void UpdateButtons();

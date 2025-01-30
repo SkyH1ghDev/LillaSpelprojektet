@@ -1,20 +1,17 @@
 #include "Mouse.hpp"
 
-Mouse::Mouse(HWND hWnd)
+Mouse::Mouse()
 {
-	this->hWnd = hWnd;
 	ZeroMemory(this->Buttons, sizeof(this->Buttons));
 	GetCursorPos(&this->MousePos);
 }
 
-void Mouse::Update()
+void Mouse::Update(HWND &hWnd)
 {
 	GetCursorPos(&this->MousePos);
-	ScreenToClient(this->hWnd, &this->MousePos);
+	ScreenToClient(hWnd, &this->MousePos);
 	UpdateButtons();
 }
-
-
 
 bool Mouse::IsButtonPressed(int ButtonIndex) const
 {
