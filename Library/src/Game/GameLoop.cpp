@@ -1,7 +1,7 @@
 #include <directxtk/SpriteBatch.h>
 #include <GameLoop.hpp>
 #include <SceneManager.hpp>
-#include <MouseInput/mouseInput.hpp>
+#include <Mouse.hpp>
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -24,7 +24,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11Texture2D> dsTexture;
 	MW::ComPtr<ID3D11DepthStencilView> dsView;
 	MW::ComPtr<ID3D11RenderTargetView> rtv;
-	
+
 
 	HWND window;
 	D3D11_VIEWPORT viewport;
@@ -38,13 +38,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	AssetManager ass;
 	ass.ReadFolder(device, "../Application/Resources");
-	
+
 	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
 	spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
 
 	MSG msg = {};
 
-	mouseInput mi(window);
+	Mouse mi(window);
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
