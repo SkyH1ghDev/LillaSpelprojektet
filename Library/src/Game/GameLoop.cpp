@@ -47,7 +47,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	MSG msg = {};
 
-	Mouse mi(window);
+	Mouse mi;
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
@@ -55,7 +55,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	//May want to change the condition to a bool variable
 	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000) && msg.message != WM_QUIT)
 	{
-		mi.Update();
+		mi.Update(window);
 
 
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
