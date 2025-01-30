@@ -7,8 +7,8 @@ public:
 	~Mouse() = default;
 
 	void Update();
-	float GetMousePositionX();
-	float GetMousePositionY();
+	inline float GetMousePositionX();
+	inline float GetMousePositionY();
 	bool IsButtonPressed(int buttonIndex) const;
 	int AnyButton();
 	
