@@ -65,6 +65,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
+		//Running ImGui and all their windows
 		imGui.Start();
 		imGui.Run(immediateContext, rtv, mi);
 		imGui.End();
