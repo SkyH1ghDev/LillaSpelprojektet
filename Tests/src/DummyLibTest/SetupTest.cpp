@@ -1,6 +1,6 @@
 #pragma once
 #include <gtest/gtest.h>
-#include "Texture.hpp"
+#include "Sprite.hpp"
 #include "SetupHelper.hpp"
 
 TEST(DirectX11, DeviceSetup) 
