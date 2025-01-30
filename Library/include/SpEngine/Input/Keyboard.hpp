@@ -20,6 +20,14 @@ public:
      */
     void HandleInput();
 
+    /**
+     * Gets key based on windows virtual key
+     *
+     * @param virtualKey Windows virtual key that represents what key object to return
+     * @return Key object
+     */
+    std::shared_ptr<Key> GetKey(const int& virtualKey);
+
 private:
 
     /**
@@ -32,6 +40,11 @@ private:
     MSG ReadWindowsMessage();
 
 private:
-    std::map<int, Key> m_keys;
+    std::map<int, std::shared_ptr<Key>> m_keys;
 
 };
+
+inline std::shared_ptr<Key> Keyboard::GetKey(const int& virtualKey)
+{
+    return this->m_keys[virtualKey];
+}

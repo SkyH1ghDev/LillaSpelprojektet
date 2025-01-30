@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <any>
+#include <optional>
 
 class IObserver
 {
@@ -11,5 +12,10 @@ public:
     IObserver(IObserver&& other) noexcept = default;
     IObserver& operator=(IObserver&& other) noexcept = default;
 
-    virtual void Update(std::any data) = 0;
+    /**
+     * Updates the observer with relevant data
+     *
+     * @param[Optional, In] data Data that could be relevant for the update
+     */
+    virtual void Update(std::optional<std::any> data = std::nullopt) = 0;
 };

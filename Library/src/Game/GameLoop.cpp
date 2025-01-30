@@ -7,6 +7,8 @@
 #include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Input/Keyboard.hpp>
 
+#include "Actions/ExitHandler.hpp"
+
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
 	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height, HWND &window)
@@ -53,9 +55,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Keyboard keyboard;
 
+	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
+
+	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
-	while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000))
+	while (!exitHandler->ShouldExit())
 	{
 		mi.Update(window);
 
