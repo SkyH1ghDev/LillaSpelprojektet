@@ -1,11 +1,11 @@
 #pragma once
-#include <SpEngine/Renderer/Texture.hpp>
+#include <SpEngine/Renderer/Sprite.hpp>
 #include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, std::string filepath)
+Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath, int frameCount)
 {
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
@@ -16,13 +16,15 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 
 	rgbaChannels = 4;
 
-	this->m_height = textureHeight;
-	this->m_width = textureWidth;
+	this->m_frameCount = frameCount;
+	this->m_frameWidth = textureWidth;
 
-	m_rect.left = 0;
-	m_rect.right = this->m_width;
-	m_rect.top = 0;
-	m_rect.bottom = this->m_height;
+	m_sourceRect.left = 0;
+	m_sourceRect.right = textureWidth / this->m_frameCount;
+	m_sourceRect.top = 0;
+	m_sourceRect.bottom = textureHeight;
+
+	this->m_origin = DX::XMFLOAT2(textureWidth / this->m_frameCount / 2, textureHeight / 2);
 
 	D3D11_TEXTURE2D_DESC texture2DDesc;
 	texture2DDesc.Width = textureWidth;
@@ -58,6 +60,20 @@ ShaderResourceTexture::ShaderResourceTexture(MW::ComPtr<ID3D11Device> device, st
 		throw("Failed to create Texture Shader Resource View");
 }
 
-ShaderResourceTexture::~ShaderResourceTexture()
+Sprite::~Sprite() 
 {
+}
+
+//Offsets target rectangle of the sprite with a given frame number, accepted values are [1,m_frameCount]
+RECT Sprite::GetSourceRectangle(int frameIndex)
+{
+	m_sourceRect.left = m_frameWidth * (frameIndex - 1);
+	m_sourceRect.right = m_frameWidth * frameIndex;
+	return m_sourceRect;
+}
+
+void Sprite::ResetRectangle() 
+{
+	m_sourceRect.left = 0;
+	m_sourceRect.right = m_frameWidth;
 }

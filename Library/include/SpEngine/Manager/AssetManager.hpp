@@ -1,7 +1,7 @@
 #pragma once
 #include <filesystem>
 #include <map>
-#include <SpEngine/Renderer/Texture.hpp>
+#include <SpEngine/Renderer/Sprite.hpp>
 
 namespace FS = std::filesystem;
 namespace MW = Microsoft::WRL;
@@ -18,7 +18,7 @@ public:
 
 private:
 
-	std::map<std::string, ShaderResourceTexture> m_textureMap;
+	std::map<std::string, Sprite> m_textureMap;
 };
 
 inline MW::ComPtr<ID3D11ShaderResourceView> AssetManager::GetSRV(std::string filename)
