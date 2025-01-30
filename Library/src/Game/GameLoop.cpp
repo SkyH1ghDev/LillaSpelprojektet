@@ -9,14 +9,10 @@
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
 	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height, HWND &window)
 {
-	SetupHelper setup;
+	this->setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
+	this->setup.SetViewport(width, height, viewport);
 
-	setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
-
-	setup.SetViewport(width, height, viewport);
-
-	ImGuiTool imGuiTool;
-	imGuiTool.Initialize(window, device, immediateContext);
+	this->imGui = ImGuiTool(window, device, immediateContext);
 }
 
 //Extension of Main
@@ -69,13 +65,19 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
+		imGui.Start();
+		imGui.Run(immediateContext, rtv, mi);
+		imGui.End();
+
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		renderer.DrawTexture(spriteBatch, ass.GetSRV("Toe.png").Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 		spriteBatch->End();
+
 
 		swapChain->Present(0, 0);
 
 	}
 
+	imGui.Shutdown();
 	DestroyWindow(window);
 }
