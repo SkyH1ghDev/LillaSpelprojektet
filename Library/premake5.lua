@@ -15,6 +15,7 @@ project "Library"
     includedirs{
         "include/**",
         "include/",
+        "../Application/src/Game/",
         "../External/stb",
         targetBuildPath .. "/External/include/"
     }

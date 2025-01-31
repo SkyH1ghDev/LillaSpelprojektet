@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 
+#include <SpEngine/Assets/IGameObject.hpp>
+
 #include "PlayerAttack.hpp"
 #include "PlayerMove.hpp"
 #include "PlayerTakeDamage.hpp"
@@ -19,9 +21,17 @@ enum class EntityType {
     Enemy
 };
 
-class Entity
+class Entity : public IGameObject
 {
 public:
+
+    Entity() = default;
+    ~Entity() override = default;
+    Entity(const Entity& other) = default;
+    Entity& operator=(const Entity& other) = default;
+    Entity(Entity&& other) noexcept = default;
+    Entity& operator=(Entity&& other) noexcept = default;
+
     Entity(EntityType entityType);
 
     void PerformMove() { if (m_move) m_move->Move(); }
@@ -30,14 +40,17 @@ public:
     void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
 
+    void Update() override;
+    void OnStart() override;
+
     EntityType GetType() const { return m_type; }
 
 private:
-    std::unique_ptr<IMove> m_move;
-    std::unique_ptr<IVisible> m_visible;
-    std::unique_ptr<IAttack> m_attack;
-    std::unique_ptr<ITakeDamage> m_takeDamage;
-    std::unique_ptr<IUseCard> m_useCard;
+    std::shared_ptr<IMove> m_move;
+    std::shared_ptr<IVisible> m_visible;
+    std::shared_ptr<IAttack> m_attack;
+    std::shared_ptr<ITakeDamage> m_takeDamage;
+    std::shared_ptr<IUseCard> m_useCard;
     EntityType m_type;
 
 };

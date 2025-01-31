@@ -45,7 +45,10 @@ void Keyboard::HandleInput()
 	{
 		if (keyStates[i] & KEY_PRESSED)
 		{
-			this->m_keys[i]->Notify();
+			if (m_keys.contains(keyStates[i]))
+			{
+				this->m_keys[i]->Notify();
+			}
 		}
 	}
 }

@@ -1,12 +1,20 @@
 #include "GameLoop.hpp"
+#include "Game.hpp"
 
 #include <directxtk/SpriteBatch.h>
+
 #include <SpEngine/Manager/SceneManager.hpp>
-#include <SpEngine/Input/Mouse.hpp>
-#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
+#include <SpEngine/Manager/GameObjectManager.hpp>
+
+#include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/Input/Keyboard.hpp>
 #include <SpEngine/Input/Actions/ExitHandler.hpp>
+
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
+
+#include <SpEngine/Renderer/Renderer.hpp>
+
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -42,10 +50,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	AssetManager ass;
 	ass.ReadFolder(device, "../Application/Resources");
 
-	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
-	spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
+	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
 
-	MSG msg = {};
+	Game game;
 
 	Mouse mi;
 
@@ -57,6 +64,15 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
+	// OnStart for all GameObjects
+
+	size_t testSize = GameObjectManager::GetGameObjects().size();
+
+	for (const auto& gameObject : GameObjectManager::GetGameObjects())
+	{
+		gameObject->OnStart();
+	}
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!exitHandler->ShouldExit())
@@ -65,11 +81,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		keyboard.HandleInput();
 
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			gameObject->Update();
 		}
+
 		immediateContext->RSSetViewports(1, &viewport);
 		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
