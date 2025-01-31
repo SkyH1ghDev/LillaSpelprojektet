@@ -11,12 +11,29 @@ public:
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
 
+    /**
+     * Function that gets called every frame
+     */
+    virtual void Update() = 0;
 
-	virtual void Update() = 0;
-	virtual void OnStart() = 0;
+    /**
+     * Function that gets called when the game starts
+     */
+    virtual void OnStart() = 0;
 
-	bool IsActive() const;
-	void SetActive(bool activeState);
+    /**
+     * Returns the active state of the game object
+     *
+     * @return True if yes, False if not
+     */
+    bool IsActive() const;
+
+    /**
+     * Sets the active state of the game object
+     *
+     * @param activeState The state to set the object to
+     */
+    void SetActive(bool activeState);
 
 private:
 	bool m_isActive = true;

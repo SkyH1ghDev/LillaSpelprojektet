@@ -74,11 +74,11 @@ Entity::Entity(EntityType entityType) :
 
 void Entity::Update()
 {
-    std::cout << "Entity updated\n";
+
 }
 
 void Entity::OnStart()
 {
-    std::cout << "Entity started\n";
+
 }
 

@@ -33,10 +33,8 @@ private:
     /**
      * Reads the states of key inputs from the keyboard
      *
-     * @remark [[nodiscard]]
      * @return Input message from the windows event system
      */
-    [[nodiscard]]
     MSG ReadWindowsMessage();
 
 private:
