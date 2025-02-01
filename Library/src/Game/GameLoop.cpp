@@ -14,6 +14,8 @@
 
 #include <SpEngine/Renderer/Renderer.hpp>
 
+#include <SpEngine/Clock/Clock.hpp>
+
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -57,6 +59,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Keyboard keyboard;
 
+	Clock clock;
+
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
 	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
@@ -72,9 +76,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	//May want to change the condition to a bool variable
 	while (!exitHandler->ShouldExit())
 	{
+		clock.Start();
+
 		mi.Update(window);
 
 		keyboard.HandleInput();
+
+		// Update for all GameObjects
 
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
@@ -98,6 +106,10 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 
 		swapChain->Present(0, 0);
+
+		clock.End();
+
+		std::cout << clock.GetFrameRate() << " FPS\n";
 	}
 
 	m_imGui.Shutdown();
