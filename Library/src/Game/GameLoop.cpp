@@ -1,7 +1,5 @@
 #include "GameLoop.hpp"
 
-#include <directxtk/SpriteBatch.h>
-
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Manager/GameObjectManager.hpp>
@@ -9,8 +7,6 @@
 #include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/Input/Keyboard.hpp>
 #include <SpEngine/Input/KeyAction/ExitHandler.hpp>
-
-#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 
 #include <SpEngine/Renderer/Renderer.hpp>
 
