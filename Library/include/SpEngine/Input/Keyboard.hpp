@@ -44,5 +44,12 @@ private:
 
 inline std::shared_ptr<Key> Keyboard::GetKey(const int& virtualKey)
 {
-    return m_keys[virtualKey];
+    int key = virtualKey;
+
+    if (key >= 'a' && key <= 'z')
+    {
+        key -= 32;
+    }
+
+    return m_keys[key];
 }
