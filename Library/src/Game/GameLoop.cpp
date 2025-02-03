@@ -57,10 +57,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
-	
-	std::vector<std::shared_ptr<IGameObject>> gameObjectsVec = mainScene->GetGameObjectVec();
-
-	gameObjectsVec.at(0)->GetPosition();
 
 	// OnStart for all GameObjects
 
