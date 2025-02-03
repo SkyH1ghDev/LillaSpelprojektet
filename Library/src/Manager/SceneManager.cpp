@@ -1,41 +1,39 @@
 #include "SceneManager.hpp"
 
-// Register a scene factory function
-bool SceneManager::RegisterScene(const std::string& id, std::function<std::unique_ptr<IScene>()> factory) {
-    if (id.empty()) {
-        std::cerr << "Error: Cannot register scene with an empty ID!" << std::endl;
+#include <iostream>
+
+std::unordered_map<std::string, std::shared_ptr<IScene>> SceneManager::m_scenes = {};
+std::shared_ptr<IScene> SceneManager::m_currentScene = {};
+
+
+bool SceneManager::RegisterScene(const std::string& id, const std::shared_ptr<IScene>& scene)
+{
+    if (id.empty())
+    {
         return false;
     }
 
-    if (!factory) { // Check if the factory function is valid
-        std::cerr << "Error: Factory function for scene '" << id << "' is invalid!" << std::endl;
+    if (scene == nullptr)
+    {
         return false;
     }
 
-    if (sceneFactories.find(id) != sceneFactories.end()) {
-        std::cerr << "Error: Scene with ID '" << id << "' is already registered!" << std::endl;
+    if (m_scenes.contains(id))
+    {
         return false;
     }
 
-    sceneFactories[id] = factory;
-    return true; // Indicate success
+    m_scenes[id] = scene;
+    return true;
 }
+
 
 
 // Load a scene by ID
-bool SceneManager::LoadScene(const std::string& id) {
-    auto it = sceneFactories.find(id);
-    if (it != sceneFactories.end()) {
-        m_currentScene = it->second(); // Call the factory function to create the scene
-        return true;
-    }
-    else {
-        return false;
-    }
-}
+
 
 // Call update (or display) on the current scene
-bool SceneManager::Update() {
+/*bool SceneManager::Update() {
     if (m_currentScene) {
         m_currentScene->Display();
         return true;
@@ -43,4 +41,4 @@ bool SceneManager::Update() {
     else {
         return false;
     }
-}
+}*/

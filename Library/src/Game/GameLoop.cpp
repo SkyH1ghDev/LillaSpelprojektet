@@ -1,21 +1,30 @@
 #include "GameLoop.hpp"
 
 #include <directxtk/SpriteBatch.h>
+
 #include <SpEngine/Manager/SceneManager.hpp>
-#include <SpEngine/Input/Mouse.hpp>
-#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
+#include <SpEngine/Manager/GameObjectManager.hpp>
+
+#include <SpEngine/Input/Mouse.hpp>
 #include <SpEngine/Input/Keyboard.hpp>
-#include <SpEngine/Input/Actions/ExitHandler.hpp>
+#include <SpEngine/Input/KeyAction/ExitHandler.hpp>
+
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
+
+#include <SpEngine/Renderer/Renderer.hpp>
+
+#include <SpEngine/Clock/Clock.hpp>
+
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
 	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height, HWND &window)
 {
-	this->setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
-	this->setup.SetViewport(width, height, viewport);
+	m_setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
+	m_setup.SetViewport(width, height, viewport);
 
-	this->imGui = ImGuiTool(window, device, immediateContext);
+	m_imGui = ImGuiTool(window, device, immediateContext);
 }
 
 //Extension of Main
@@ -42,10 +51,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	AssetManager ass;
 	ass.ReadFolder(device, "../Application/Resources");
 
-	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch;
-	spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
-
-	MSG msg = {};
+	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
 
 	Mouse mi;
 
@@ -53,31 +59,46 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Keyboard keyboard;
 
+	Clock clock;
+
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
 	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+
+	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
+
+	// OnStart for all GameObjects
+
+	for (const auto& gameObject : GameObjectManager::GetGameObjects())
+	{
+		gameObject->OnStart();
+	}
 
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!exitHandler->ShouldExit())
 	{
+		clock.Start();
+
 		mi.Update(window);
 
 		keyboard.HandleInput();
 
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		// Update for all GameObjects
+
+		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			gameObject->Update();
 		}
+
 		immediateContext->RSSetViewports(1, &viewport);
 		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
 		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
 
 		//Running ImGui and all their windows
-		imGui.Start();
-		imGui.Run(immediateContext, rtv, mi);
-		imGui.End();
+		m_imGui.Start();
+		m_imGui.Run(immediateContext, rtv, mi);
+		m_imGui.End();
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		//Temporary sprite drawing code goes here
@@ -87,8 +108,12 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 
 		swapChain->Present(0, 0);
+
+		clock.End();
+
+		std::cout << clock.GetFrameRate() << " FPS\n";
 	}
 
-	imGui.Shutdown();
+	m_imGui.Shutdown();
 	DestroyWindow(window);
 }

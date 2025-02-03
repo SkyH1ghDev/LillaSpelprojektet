@@ -1,9 +1,50 @@
 #pragma once
-class IGameObject 
+class IGameObject
 {
-	
-public:
-	virtual void Update() = 0;
-	virtual void OnStart() = 0;
 
+public:
+
+    IGameObject() = default;
+	virtual ~IGameObject() { }
+    IGameObject(const IGameObject& other) = default;
+    IGameObject& operator=(const IGameObject& other) = default;
+    IGameObject(IGameObject&& other) noexcept = default;
+    IGameObject& operator=(IGameObject&& other) noexcept = default;
+
+    /**
+     * Function that gets called every frame
+     */
+    virtual void Update() = 0;
+
+    /**
+     * Function that gets called when the game starts
+     */
+    virtual void OnStart() = 0;
+
+    /**
+     * Returns the active state of the game object
+     *
+     * @return True if yes, False if not
+     */
+    bool IsActive() const;
+
+    /**
+     * Sets the active state of the game object
+     *
+     * @param activeState The state to set the object to
+     */
+    void SetActive(bool activeState);
+
+private:
+	bool m_isActive = true;
 };
+
+inline bool IGameObject::IsActive() const
+{
+	return m_isActive;
+}
+
+inline void IGameObject::SetActive(bool activeState)
+{
+	m_isActive = activeState;
+}

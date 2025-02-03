@@ -1,7 +1,11 @@
 #pragma once
 #include <gtest/gtest.h>
-#include <SpEngine/ImGui/ImGuiTool.hpp>
-#include <Mouse.hpp>
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_win32.h>
+#include <imgui/imgui_impl_dx11.h>
+
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 
 class ImGuiToolTest : public ::testing::Test {
 protected:
