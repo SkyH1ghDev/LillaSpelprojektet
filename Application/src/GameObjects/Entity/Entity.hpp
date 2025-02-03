@@ -1,5 +1,7 @@
 #pragma once
 #include <memory>
+#include <d3d11.h>
+#include <DirectXMath.h>
 
 #include <SpEngine/Assets/IGameObject.hpp>
 
@@ -15,6 +17,8 @@
 #include "EnemyUseCard.hpp"
 #include "EnemyVisible.hpp"
 
+
+namespace DX = DirectX;
 // Define an enum for the entity type
 enum class EntityType {
     Player,
@@ -33,10 +37,9 @@ public:
     Entity& operator=(Entity&& other) noexcept = default;
 
     Entity(EntityType entityType);
-
-    void PerformMove() { if (m_move) m_move->Move(); }
+    void PerformMove() { if (m_move) m_move->Move(this->m_position); }
     void PerformVisible() { if (m_visible) m_visible->Visible(); }
-    void RerformAttack() { if (m_attack) m_attack->Attack(); }
+    void PerformAttack() { if (m_attack) m_attack->Attack(); }
     void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
 
@@ -45,12 +48,15 @@ public:
 
     EntityType GetType() const { return m_type; }
 
+    const DX::XMFLOAT2& GetPosition() const { return this->m_position; }
 private:
     std::shared_ptr<IMove> m_move;
     std::shared_ptr<IVisible> m_visible;
     std::shared_ptr<IAttack> m_attack;
     std::shared_ptr<ITakeDamage> m_takeDamage;
     std::shared_ptr<IUseCard> m_useCard;
+    DX::XMFLOAT2 m_position = { 0, 0 };
+
     EntityType m_type;
 
 };
