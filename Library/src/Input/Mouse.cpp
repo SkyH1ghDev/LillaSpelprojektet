@@ -6,14 +6,14 @@ Mouse::Mouse()
 	GetCursorPos(&this->m_mousePos);
 }
 
-void Mouse::Update(HWND &hWnd)
+void Mouse::Update(HWND &hWnd) //update the mouse 
 {
 	GetCursorPos(&this->m_mousePos);
 	ScreenToClient(hWnd, &this->m_mousePos);
 	UpdateButtons();
 }
 
-bool Mouse::IsButtonPressed(int ButtonIndex) const
+bool Mouse::IsButtonPressed(int ButtonIndex) const //looks for a specific button press, left mouseclick, right mouseclick etc.
 {
 	if (ButtonIndex < 0 || ButtonIndex > 5)
 	{
@@ -22,7 +22,7 @@ bool Mouse::IsButtonPressed(int ButtonIndex) const
 	return this->m_buttons[ButtonIndex];
 }
 
-void Mouse::UpdateButtons()
+void Mouse::UpdateButtons() //Resets button state to false
 {
 	this->m_buttons[0] = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
 	this->m_buttons[1] = (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0;
@@ -31,7 +31,7 @@ void Mouse::UpdateButtons()
 	this->m_buttons[4] = (GetAsyncKeyState(VK_XBUTTON2) & 0x8000) != 0;
 }
 
-int Mouse::AnyButton()
+int Mouse::AnyButton() //look for any button press
 {
 	int ButtonIndex = -1;
 	for (int i = 0; i < 5; i++)
