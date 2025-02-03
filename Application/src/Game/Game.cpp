@@ -16,13 +16,9 @@ Game::Game()
 
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
 
-<<<<<<< Updated upstream
-    testScene->AddGameObject(std::make_shared<PlayerController>());
-=======
     std::shared_ptr<IGameObject> testGameObject = std::make_shared<Entity>(EntityType::Player);
     std::shared_ptr<IGameObject> testGameObject2 = std::make_shared<PlayerController>(testGameObject);
 
     testScene->AddGameObject(testGameObject);
     testScene->AddGameObject(testGameObject2);
->>>>>>> Stashed changes
 }

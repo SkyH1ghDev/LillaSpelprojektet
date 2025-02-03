@@ -17,24 +17,36 @@ private:
 };
 
 class LeftAction : public IObserver {
+public:
+	LeftAction(std::shared_ptr<Entity> player) : m_player(player) {}
 
 	void Update(std::optional<std::any> data) override {
 		std::cerr << "Move Left";
 	}
+private:
+	std::shared_ptr<Entity> m_player;
 };
 
 class RightAction : public IObserver {
+public:
+	RightAction(std::shared_ptr<Entity> player) : m_player(player) {}
 
 	void Update(std::optional<std::any> data) override {
 		std::cerr << "Move Right";
 	}
+private:
+	std::shared_ptr<Entity> m_player;
 };
 
 class BackAction : public IObserver {
+public:
+	BackAction(std::shared_ptr<Entity> player) : m_player(player) {}
 
 	void Update(std::optional<std::any> data) override {
 		std::cerr << "Move Back";
-     	}
+    }
+private:
+	std::shared_ptr<Entity> m_player;
 };
 
 class PlayerController : public IGameObject
