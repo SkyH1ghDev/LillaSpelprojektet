@@ -2,9 +2,8 @@
 
 #define KEY_PRESSED 0x80
 
-Keyboard::Keyboard()
-{
-    this->m_keys =
+
+std::unordered_map<int, std::shared_ptr<Key>> Keyboard::m_keys =
     {
         {VK_ESCAPE, std::make_shared<Key>()}, {VK_TAB, std::make_shared<Key>()}, {VK_CAPITAL, std::make_shared<Key>()}, {VK_LSHIFT, std::make_shared<Key>()}, {VK_LCONTROL, std::make_shared<Key>()}, {VK_SPACE, std::make_shared<Key>()},
 		{VK_F1, std::make_shared<Key>()}, {VK_F2, std::make_shared<Key>()}, {VK_F3, std::make_shared<Key>()}, {VK_F4, std::make_shared<Key>()}, {VK_F5, std::make_shared<Key>()}, {VK_F6, std::make_shared<Key>()}, {VK_F7, std::make_shared<Key>()}, {VK_F8, std::make_shared<Key>()}, {VK_F9, std::make_shared<Key>()}, {VK_F10, std::make_shared<Key>()}, {VK_F11, std::make_shared<Key>()}, {VK_F12, std::make_shared<Key>()},
@@ -14,7 +13,6 @@ Keyboard::Keyboard()
         {'A', std::make_shared<Key>()}, {'S', std::make_shared<Key>()}, {'D', std::make_shared<Key>()}, {'F', std::make_shared<Key>()}, {'G', std::make_shared<Key>()}, {'H', std::make_shared<Key>()}, {'J', std::make_shared<Key>()}, {'K', std::make_shared<Key>()}, {'L', std::make_shared<Key>()}, {'Ö', std::make_shared<Key>()}, {'Ä', std::make_shared<Key>()},
         {'Z', std::make_shared<Key>()}, {'X', std::make_shared<Key>()}, {'C', std::make_shared<Key>()}, {'V', std::make_shared<Key>()}, {'B', std::make_shared<Key>()}, {'N', std::make_shared<Key>()}, {'M', std::make_shared<Key>()}
     };
-}
 
 MSG Keyboard::ReadWindowsMessage()
 {
@@ -35,7 +33,7 @@ void Keyboard::HandleInput()
 
 	if (msg.message == WM_QUIT)
 	{
-		this->m_keys[VK_ESCAPE]->Notify();
+		m_keys[VK_ESCAPE]->Notify();
 	}
 
 	BYTE keyStates[256];
@@ -47,7 +45,7 @@ void Keyboard::HandleInput()
 		{
 			if (m_keys.contains(i))
 			{
-				this->m_keys[i]->Notify();
+				m_keys[i]->Notify();
 			}
 		}
 	}

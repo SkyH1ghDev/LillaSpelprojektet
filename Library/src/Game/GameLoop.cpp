@@ -53,13 +53,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
-	Keyboard keyboard;
-
 	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	Keyboard::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
 
@@ -78,7 +76,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		mi.Update(window);
 
-		keyboard.HandleInput();
+		Keyboard::HandleInput();
 
 		// Update for all GameObjects
 
@@ -98,7 +96,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		//Temporary sprite drawing code goes here
-		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionX()), DX::Colors::White);
+		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 		//
 		spriteBatch->End();
 

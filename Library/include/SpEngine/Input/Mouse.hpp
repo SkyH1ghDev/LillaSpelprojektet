@@ -13,21 +13,19 @@ public:
 	int AnyButton();
 
 private:
-	POINT m_mousePos;
+	POINT m_mousePos = POINT(0, 0);
 	bool m_buttons[5];
 
 	void UpdateButtons();
 
 };
 
-inline float Mouse::GetMousePositionX()
+inline float Mouse::GetMousePositionX() //gets the x cordinate of the mouse
 {
-	GetCursorPos(&this->m_mousePos);
 	return this->m_mousePos.x;
 }
 
 inline float Mouse::GetMousePositionY()
 {
-	GetCursorPos(&this->m_mousePos);
 	return this->m_mousePos.y;
 }
