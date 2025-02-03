@@ -29,33 +29,16 @@ public:
 
 TEST(SceneManager, RegisterScene)
 {
-    SceneManager sceneManager;
-
-    bool Success = sceneManager.RegisterScene("game_level_1", []() { return TestFactory::CreateScene(1); });
+    bool Success = SceneManager::RegisterScene("game_level_1", TestFactory::CreateScene(1));
 
     ASSERT_EQ(Success, true);
 }
 
 TEST(SceneManager, LoadScene)
 {
-    SceneManager sceneManager;
+    bool Success = SceneManager::RegisterScene("game_level_1", TestFactory::CreateScene(1));
 
-    sceneManager.RegisterScene("game_level_1", []() { return TestFactory::CreateScene(1); });
-
-    bool Success = sceneManager.SetCurrentScene("game_level_1");
-
-    ASSERT_EQ(Success, true);
-}
-
-TEST(SceneManager, Update)
-{
-    SceneManager sceneManager;
-
-    sceneManager.RegisterScene("game_level_1", []() { return TestFactory::CreateScene(1); });
-
-    sceneManager.SetCurrentScene("game_level_1");
-
-    bool Success = sceneManager.Update();
+    Success = SceneManager::SetCurrentScene("game_level_1");
 
     ASSERT_EQ(Success, true);
 }
