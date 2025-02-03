@@ -4,9 +4,8 @@
 #include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Manager/GameObjectManager.hpp>
 
-#include <SpEngine/Input/Mouse.hpp>
-#include <SpEngine/Input/Keyboard.hpp>
-#include <SpEngine/Input/KeyAction/ExitHandler.hpp>
+#include <SpEngine/Input/Input.hpp>
+#include <SpEngine/Input/Action/ExitHandler.hpp>
 
 #include <SpEngine/Renderer/Renderer.hpp>
 
@@ -49,15 +48,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
 
-	Mouse mi;
-
 	float clearColour[4] = { 0, 0, 0, 0 };
 
 	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	Keyboard::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
 
@@ -74,9 +71,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		clock.Start();
 
-		mi.Update(window);
-
-		Keyboard::HandleInput();
+		Input::HandleInput(window);
 
 		// Update for all GameObjects
 
@@ -91,12 +86,12 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		//Running ImGui and all their windows
 		m_imGui.Start();
-		m_imGui.Run(immediateContext, rtv, mi);
+		m_imGui.Run(immediateContext, rtv);
 		m_imGui.End();
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		//Temporary sprite drawing code goes here
-		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
+		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()), DX::Colors::White);
 		//
 		spriteBatch->End();
 

@@ -28,6 +28,6 @@ public:
     /**
      * Execute key action
      */
-    void Notify() override;
+    void Notify(std::optional<std::any> data = std::nullopt) override;
 
 };

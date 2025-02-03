@@ -3,8 +3,6 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 
-#include <SpEngine/Input/Mouse.hpp>
-
 
 namespace MW = Microsoft::WRL;
 
@@ -21,12 +19,12 @@ public:
 
 	void Start();
 	void End();
-	void Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv, const Mouse& mi);
+	void Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv);
 	void Shutdown();
 
 private:
 	void Initialized(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
-	void MouseUpdate(const Mouse& mi);
+	void MouseUpdate();
 	void Test(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv);
 
 private:

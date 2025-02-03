@@ -18,7 +18,7 @@ void Key::Detach(const std::shared_ptr<IObserver>& observer)
     }
 }
 
-void Key::Notify()
+void Key::Notify(std::optional<std::any> data)
 {
     for (const auto& observer : m_observers)
     {

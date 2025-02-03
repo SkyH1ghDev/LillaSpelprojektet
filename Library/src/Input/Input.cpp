@@ -1,9 +1,10 @@
-﻿#include "Keyboard.hpp"
+﻿#include "Input.hpp"
 
 #define KEY_PRESSED 0x80
 
+POINT Input::m_cursorPosition = { 0, 0 };
 
-std::unordered_map<int, std::shared_ptr<Key>> Keyboard::m_keys =
+std::unordered_map<int, std::shared_ptr<Key>> Input::m_bindableKeys =
     {
 		// KEYBOARD
         {VK_ESCAPE, std::make_shared<Key>()}, {VK_TAB, std::make_shared<Key>()}, {VK_CAPITAL, std::make_shared<Key>()}, {VK_LSHIFT, std::make_shared<Key>()}, {VK_LCONTROL, std::make_shared<Key>()}, {VK_SPACE, std::make_shared<Key>()},
@@ -18,7 +19,7 @@ std::unordered_map<int, std::shared_ptr<Key>> Keyboard::m_keys =
 		{VK_LBUTTON, std::make_shared<Key>()}, {VK_RBUTTON, std::make_shared<Key>()}, {VK_MBUTTON, std::make_shared<Key>()}, {VK_XBUTTON1, std::make_shared<Key>()}, {VK_XBUTTON2, std::make_shared<Key>()}
     };
 
-MSG Keyboard::ReadWindowsMessage()
+MSG Input::ReadWindowsMessage()
 {
 	MSG msg;
 
@@ -31,13 +32,20 @@ MSG Keyboard::ReadWindowsMessage()
 	return msg;
 }
 
-void Keyboard::HandleInput()
+void Input::HandleInput(const HWND& hWnd)
 {
 	MSG msg = ReadWindowsMessage();
 
+	// MOUSE
+
+	GetCursorPos(&m_cursorPosition);
+	ScreenToClient(hWnd, &m_cursorPosition);
+
+	// KEYBOARD
+
 	if (msg.message == WM_QUIT)
 	{
-		m_keys[VK_ESCAPE]->Notify();
+		m_bindableKeys[VK_ESCAPE]->Notify();
 	}
 
 	BYTE keyStates[256];
@@ -47,9 +55,9 @@ void Keyboard::HandleInput()
 	{
 		if (keyStates[i] & KEY_PRESSED)
 		{
-			if (m_keys.contains(i))
+			if (m_bindableKeys.contains(i))
 			{
-				m_keys[i]->Notify();
+				m_bindableKeys[i]->Notify();
 			}
 		}
 	}

@@ -2,6 +2,8 @@
 #include <any>
 #include <optional>
 
+#include "IGameObject.hpp"
+
 class IObserver
 {
 public:
