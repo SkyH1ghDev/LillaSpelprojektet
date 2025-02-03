@@ -151,14 +151,14 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 	viewport.MaxDepth = 1;
 }
 
-bool SetupHelper::Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
+bool SetupHelper::Setup(HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
                         MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, const UINT &width, const UINT &height)
 {
 	
-	if (!SetupWindow(hInstance, nCmdShow, window, width, height))
+	/*if (!SetupWindow(hInstance, nCmdShow, window, width, height))
 	{
 		throw std::runtime_error("Failed to setup Window");
-	}
+	}*/
 
 	if (!SetupInterfaces(immediateContext, width, height, window, device, swapChain))
 	{

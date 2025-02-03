@@ -22,7 +22,7 @@ public:
 	 * @param[OUT] rtv DirectX11 render target view
 	 * @return 0 on Success, -1 on Fail
 	 */
-	bool Setup(const HINSTANCE& hInstance, const int& nCmdShow, HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
+	bool Setup(HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
 	           MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, const UINT &width, const UINT &height);
 
 	/**

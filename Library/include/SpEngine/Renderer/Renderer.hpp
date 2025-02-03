@@ -13,7 +13,7 @@ namespace DX = DirectX;
 class Renderer
 {
 public:
-	Renderer(HINSTANCE hInstance, int nCmdShow, HWND& window);
+	Renderer(HWND& window);
 	~Renderer();
 
 	MW::ComPtr<ID3D11BlendState> GetBlendState();
@@ -44,7 +44,7 @@ private:
 	void InitializeRasterState();
 
 	void FinalBindings();
-	void SetupPipeline(HINSTANCE hInstance, int nCmdShow, HWND& window);
+	void SetupPipeline(HWND& window);
 
 private:
 	MW::ComPtr<ID3D11BlendState> m_blendState;

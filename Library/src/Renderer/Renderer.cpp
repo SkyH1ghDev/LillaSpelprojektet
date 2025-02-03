@@ -1,9 +1,9 @@
 #include <iostream>
 #include "Renderer.hpp"
 
-Renderer::Renderer(HINSTANCE hInstance, int nCmdShow, HWND& window)
+Renderer::Renderer(HWND& window)
 {
-	SetupPipeline(hInstance, nCmdShow, window);
+	SetupPipeline(window);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
 	this->InitializeBlendState();
 	this->InitializeSamplerState();
@@ -148,8 +148,8 @@ void Renderer::FinalBindings()
 	this->m_immediateContext->ClearRenderTargetView(this->m_rtv.Get(), clearColor);
 }
 
-void Renderer::SetupPipeline(HINSTANCE hInstance, int nCmdShow, HWND& window)
+void Renderer::SetupPipeline(HWND& window)
 {
-	this->m_setup.Setup(hInstance, nCmdShow, window, this->m_device, this->m_immediateContext, this->m_swapChain, this->m_dsTexture, this->m_dsView, this->m_rtv, this->m_width, this->m_height);
+	this->m_setup.Setup(window, this->m_device, this->m_immediateContext, this->m_swapChain, this->m_dsTexture, this->m_dsView, this->m_rtv, this->m_width, this->m_height);
 	this->m_setup.SetViewport(this->m_width, this->m_height, this->m_viewport);
 }

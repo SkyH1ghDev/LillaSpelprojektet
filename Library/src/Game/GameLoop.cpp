@@ -15,7 +15,7 @@
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
 	MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width, const UINT &height, HWND &window)
 {
-	m_setup.Setup(hInstance, nCmdShow, window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
+	m_setup.Setup(window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 	m_setup.SetViewport(width, height, viewport);
 
 	m_imGui = ImGuiTool(window, device, immediateContext);
@@ -26,7 +26,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
 	HWND window;
 
-	Renderer renderer = Renderer(hInstance, nCmdShow, window);
+	Renderer renderer = Renderer(window);
 	MW::ComPtr<ID3D11Device> device = renderer.GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> immediateContext = renderer.GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> rtv = renderer.GetRTV();
@@ -36,13 +36,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Mouse mi;
 
-	//Keyboard keyboard;
+	Keyboard keyboard;
 
 	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	//keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
 
@@ -61,7 +61,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		mi.Update(window);
 
-		//keyboard.HandleInput();
+		keyboard.HandleInput();
 
 		// Update for all GameObjects
 
