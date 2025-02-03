@@ -98,7 +98,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
 		//Temporary sprite drawing code goes here
-		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionX()), DX::Colors::White);
+		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 		//
 		spriteBatch->End();
 
