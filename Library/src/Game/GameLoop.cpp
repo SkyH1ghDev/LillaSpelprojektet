@@ -65,6 +65,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
+	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
+
 	// OnStart for all GameObjects
 
 	for (const auto& gameObject : GameObjectManager::GetGameObjects())

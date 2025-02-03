@@ -42,7 +42,7 @@ TEST(SceneManager, LoadScene)
 
     sceneManager.RegisterScene("game_level_1", []() { return TestFactory::CreateScene(1); });
 
-    bool Success = sceneManager.LoadScene("game_level_1");
+    bool Success = sceneManager.SetCurrentScene("game_level_1");
 
     ASSERT_EQ(Success, true);
 }
@@ -53,7 +53,7 @@ TEST(SceneManager, Update)
 
     sceneManager.RegisterScene("game_level_1", []() { return TestFactory::CreateScene(1); });
 
-    sceneManager.LoadScene("game_level_1");
+    sceneManager.SetCurrentScene("game_level_1");
 
     bool Success = sceneManager.Update();
 
