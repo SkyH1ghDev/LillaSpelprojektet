@@ -16,7 +16,7 @@ Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath)
 
 	rgbaChannels = 4;
 
-	m_sourceRect = new RECT();
+	m_sourceRect = std::make_shared<RECT>();
 	m_sourceRect->left = 0;
 	m_sourceRect->right = textureWidth;
 	m_sourceRect->top = 0;
@@ -60,33 +60,16 @@ Sprite::Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath)
 
 Sprite::Sprite(const Sprite& other)
 {
-	RECT* cpyRect = new RECT();
-	cpyRect->left = other.m_sourceRect->left;
-	cpyRect->right = other.m_sourceRect->right;
-	cpyRect->top = other.m_sourceRect->top;
-	cpyRect->bottom = other.m_sourceRect->bottom;
-
-	this->m_sourceRect = cpyRect;
+	this->m_sourceRect = other.m_sourceRect;
 	this->m_origin = other.m_origin;
 	this->m_srv = other.m_srv;
 }
 
 Sprite& Sprite::operator=(const Sprite& other)
 {
-	RECT* cpyRect = new RECT();
-	cpyRect->left = other.m_sourceRect->left;
-	cpyRect->right = other.m_sourceRect->right;
-	cpyRect->top = other.m_sourceRect->top;
-	cpyRect->bottom = other.m_sourceRect->bottom;
-
-	this->m_sourceRect = cpyRect;
+	this->m_sourceRect = other.m_sourceRect;
 	this->m_origin = other.m_origin;
 	this->m_srv = other.m_srv;
 
 	return *this;
-}
-
-Sprite::~Sprite() 
-{
-	delete this->m_sourceRect;
 }

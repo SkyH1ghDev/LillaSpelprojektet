@@ -15,15 +15,15 @@ public:
 	Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath);
 	Sprite(const Sprite& other);
 	Sprite& operator=(const Sprite& other);
-	~Sprite();
+	~Sprite() = default;
 
 	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV();
 	inline DX::XMFLOAT2 GetOrigin();
-	RECT* GetSourceRectangle();
+	std::shared_ptr<RECT> GetSourceRectangle();
 
 private:
 	DX::XMFLOAT2 m_origin;
-	RECT* m_sourceRect;
+	std::shared_ptr<RECT> m_sourceRect;
 	MW::ComPtr<ID3D11ShaderResourceView> m_srv;
 };
 
@@ -37,7 +37,7 @@ inline DX::XMFLOAT2 Sprite::GetOrigin()
 	return this->m_origin;
 }
 
-inline RECT* Sprite::GetSourceRectangle()
+inline std::shared_ptr<RECT> Sprite::GetSourceRectangle()
 {
 	return this->m_sourceRect;
 }
