@@ -3,6 +3,12 @@
 #include <SpEngine/Input/Keyboard.hpp>
 
 
+
+PlayerController::PlayerController(std::shared_ptr<Entity> player)
+{
+	this->m_player = player;
+}
+
 void PlayerController::OnStart()
 {
 	Keyboard::GetKey('w')->Attach(std::static_pointer_cast<IObserver, ForwardAction>(m_forward));
@@ -13,5 +19,5 @@ void PlayerController::OnStart()
 
 void PlayerController::Update()
 {
-
+	
 }
