@@ -5,7 +5,7 @@
 
 #include "Key.hpp"
 
-class Keyboard
+static class Keyboard
 {
 public:
     Keyboard() = default;
