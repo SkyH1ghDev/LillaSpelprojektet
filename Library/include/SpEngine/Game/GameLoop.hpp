@@ -1,8 +1,8 @@
 #pragma once
 #include "Game.hpp"
 
-#include <SpEngine/Setup/SetupHelper.hpp>
 #include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
+#include <SpEngine/Renderer/Renderer.hpp>
 
 #include <directxtk/SpriteBatch.h>
 

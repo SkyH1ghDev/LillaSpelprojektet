@@ -8,8 +8,6 @@
 #include <SpEngine/Input/Keyboard.hpp>
 #include <SpEngine/Input/KeyAction/ExitHandler.hpp>
 
-#include <SpEngine/Renderer/Renderer.hpp>
-
 #include <SpEngine/Clock/Clock.hpp>
 
 
@@ -26,40 +24,25 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 //Extension of Main
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
-	MW::ComPtr<ID3D11Device> device;
-	MW::ComPtr<ID3D11DeviceContext> immediateContext;
-	MW::ComPtr<IDXGISwapChain> swapChain;
-
-	MW::ComPtr<ID3D11Texture2D> dsTexture;
-	MW::ComPtr<ID3D11DepthStencilView> dsView;
-	MW::ComPtr<ID3D11RenderTargetView> rtv;
-
 	HWND window;
-	D3D11_VIEWPORT viewport;
 
-	int initWidth = 640;
-	int initHeight = 360;
-
-	Setup(hInstance, nCmdShow, device, immediateContext, swapChain, dsTexture, dsView, rtv, viewport, initWidth, initHeight, window);
-
-	Renderer renderer = Renderer(device);
+	Renderer renderer = Renderer(hInstance, nCmdShow, window);
+	MW::ComPtr<ID3D11Device> device = renderer.GetDevice();
+	MW::ComPtr<ID3D11DeviceContext> immediateContext = renderer.GetContext();
+	MW::ComPtr<ID3D11RenderTargetView> rtv = renderer.GetRTV();
 
 	AssetManager ass;
 	ass.ReadFolder(device, "../Application/Resources");
 
-	std::unique_ptr<DX::DX11::SpriteBatch> spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(immediateContext.Get());
-
 	Mouse mi;
 
-	float clearColour[4] = { 0, 0, 0, 0 };
-
-	Keyboard keyboard;
+	//Keyboard keyboard;
 
 	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	//keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
 
@@ -78,7 +61,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		mi.Update(window);
 
-		keyboard.HandleInput();
+		//keyboard.HandleInput();
 
 		// Update for all GameObjects
 
@@ -87,29 +70,18 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 			gameObject->Update();
 		}
 
-		immediateContext->RSSetViewports(1, &viewport);
-		immediateContext->OMSetRenderTargets(1, rtv.GetAddressOf(), dsView.Get());
-		immediateContext->ClearRenderTargetView(rtv.Get(), clearColour);
-
 		//Running ImGui and all their windows
-		m_imGui.Start();
-		m_imGui.Run(immediateContext, rtv, mi);
-		m_imGui.End();
+		//m_imGui.Start();
+		//m_imGui.Run(immediateContext, rtv, mi);
+		//m_imGui.End();
 
-		spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, renderer.GetBlendState().Get(), renderer.GetSamplerState().Get(), nullptr, renderer.GetRasterState().Get(), nullptr, DX::XMMatrixIdentity());
-		//Temporary sprite drawing code goes here
-		renderer.DrawTexture(spriteBatch, ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
-		//
-		spriteBatch->End();
-
-
-		swapChain->Present(0, 0);
+		renderer.DrawTexture(ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 
 		clock.End();
 
 		std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 
-	m_imGui.Shutdown();
+	//m_imGui.Shutdown();
 	DestroyWindow(window);
 }
