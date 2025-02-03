@@ -1,7 +1,5 @@
 #pragma once
 #include <memory>
-#include <d3d11.h>
-#include <DirectXMath.h>
 
 #include <SpEngine/Assets/IGameObject.hpp>
 
@@ -18,7 +16,6 @@
 #include "EnemyVisible.hpp"
 
 
-namespace DX = DirectX;
 // Define an enum for the entity type
 enum class EntityType {
     Player,
