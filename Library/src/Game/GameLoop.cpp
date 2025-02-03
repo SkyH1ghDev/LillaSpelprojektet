@@ -53,13 +53,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	float clearColour[4] = { 0, 0, 0, 0 };
 
-	Keyboard keyboard;
-
 	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	keyboard.GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	Keyboard::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
 
@@ -78,7 +76,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		mi.Update(window);
 
-		keyboard.HandleInput();
+		Keyboard::HandleInput();
 
 		// Update for all GameObjects
 
