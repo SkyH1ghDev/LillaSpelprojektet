@@ -3,6 +3,7 @@
 
 #include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Renderer/Renderer.hpp>
+#include <SpEngine/Renderer/Window.hpp>
 
 #include <directxtk/SpriteBatch.h>
 

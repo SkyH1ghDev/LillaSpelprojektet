@@ -24,9 +24,9 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 //Extension of Main
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
-	HWND window;
+	Window window = Window(hInstance, nCmdShow, 640, 360);
 
-	Renderer renderer = Renderer(window);
+	Renderer renderer = Renderer(window.GetWindowHandle());
 	MW::ComPtr<ID3D11Device> device = renderer.GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> immediateContext = renderer.GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> rtv = renderer.GetRTV();
@@ -57,7 +57,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		clock.Start();
 
-		mi.Update(window);
+		mi.Update(window.GetWindowHandle());
 
 		Keyboard::HandleInput();
 
@@ -73,7 +73,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		//m_imGui.Run(immediateContext, rtv, mi);
 		//m_imGui.End();
 
-		renderer.DrawTexture(ass.GetSprite("Toe.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
+		renderer.DrawTexture(ass.GetSprite("mouse.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 
 		clock.End();
 
@@ -81,5 +81,5 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	}
 
 	//m_imGui.Shutdown();
-	DestroyWindow(window);
+	DestroyWindow(window.GetWindowHandle());
 }
