@@ -1,6 +1,6 @@
 #pragma once
 #include <SpEngine/Manager/GameObjectManager.hpp>
-#include "IGameObject.hpp"
+
 
 class IScene
 {
@@ -10,7 +10,10 @@ public:
 
     void AddGameObject(const std::shared_ptr<IGameObject>& gameObject);
 
-private:
+    std::vector<std::shared_ptr<IGameObject>> GetGameObjectVec();
+
+
+protected:
     std::vector<std::shared_ptr<IGameObject>> m_gameObjects;
 };
 
@@ -20,3 +23,7 @@ inline void IScene::AddGameObject(const std::shared_ptr<IGameObject>& gameObject
     m_gameObjects.push_back(gameObject);
 }
 
+inline std::vector<std::shared_ptr<IGameObject>> IScene::GetGameObjectVec()
+{
+    return m_gameObjects;
+}

@@ -72,13 +72,15 @@ Entity::Entity(EntityType entityType) :
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
 
+void Entity::OnStart()
+{
+
+}
+
 void Entity::Update()
 {
 
 }
 
-void Entity::OnStart()
-{
 
-}
 

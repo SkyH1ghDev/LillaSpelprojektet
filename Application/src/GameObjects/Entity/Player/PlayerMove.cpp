@@ -1,7 +1,7 @@
 #include "PlayerMove.hpp"
+#include <iostream>
 
-void PlayerMove::Move()
-{
-    std::cerr << "Chester hasar sig frammåt" << std::endl;
+
+void PlayerMove::Move(DX::XMFLOAT2& m_position, DX::XMFLOAT2& m_direction) {
+	
 }
-

@@ -1,11 +1,9 @@
 #pragma once
 #include "IMove.hpp"
-#include <iostream>
 
 class PlayerMove : public IMove
 {
 public:
-
-    void Move() override;
-
+    void Move(DX::XMFLOAT2& m_position, DX::XMFLOAT2& m_direction) override;
 };
+
