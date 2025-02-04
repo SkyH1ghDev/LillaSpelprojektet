@@ -1,70 +1,88 @@
 #pragma once
 #include <gtest/gtest.h>
 #include <Renderer.hpp>
-#include "SetupHelper.hpp"
+#include <Window.hpp>
 
-TEST(Renderer, BlendStateSetup) 
+TEST(Renderer, BlendStateSetup)
 {
-    UINT height = 1080;
-    UINT width = 1920;
-
     HINSTANCE hInstance;
-    HWND window;
-    MW::ComPtr<ID3D11Device> device;
-    MW::ComPtr<ID3D11DeviceContext> deviceContext;
-    MW::ComPtr<IDXGISwapChain> swapChain;
-    MW::ComPtr<ID3D11Texture2D> texture;
-    MW::ComPtr<ID3D11DepthStencilView> dsView;
-    MW::ComPtr<ID3D11RenderTargetView> rtv;
+    UINT width = 1920;
+    UINT height = 1080;
 
-    SetupHelper setup;
-    setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
-
-    Renderer renderer = Renderer(device);
-
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
+    
     ASSERT_NE(renderer.GetBlendState().Get(), nullptr);
 }
 
 TEST(Renderer, SamplerStateSetup)
 {
-    UINT height = 1080;
-    UINT width = 1920;
-
     HINSTANCE hInstance;
-    HWND window;
-    MW::ComPtr<ID3D11Device> device;
-    MW::ComPtr<ID3D11DeviceContext> deviceContext;
-    MW::ComPtr<IDXGISwapChain> swapChain;
-    MW::ComPtr<ID3D11Texture2D> texture;
-    MW::ComPtr<ID3D11DepthStencilView> dsView;
-    MW::ComPtr<ID3D11RenderTargetView> rtv;
+    UINT width = 1920;
+    UINT height = 1080;
 
-    SetupHelper setup;
-    setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
-
-    Renderer renderer = Renderer(device);
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
 
     ASSERT_NE(renderer.GetSamplerState().Get(), nullptr);
 }
 
 TEST(Renderer, RasterStateSetup)
 {
-    UINT height = 1080;
-    UINT width = 1920;
-
     HINSTANCE hInstance;
-    HWND window;
-    MW::ComPtr<ID3D11Device> device;
-    MW::ComPtr<ID3D11DeviceContext> deviceContext;
-    MW::ComPtr<IDXGISwapChain> swapChain;
-    MW::ComPtr<ID3D11Texture2D> texture;
-    MW::ComPtr<ID3D11DepthStencilView> dsView;
-    MW::ComPtr<ID3D11RenderTargetView> rtv;
+    UINT width = 1920;
+    UINT height = 1080;
 
-    SetupHelper setup;
-    setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
-
-    Renderer renderer = Renderer(device);
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
 
     ASSERT_NE(renderer.GetRasterState().Get(), nullptr);
+}
+
+TEST(Renderer, PipelineDevice)
+{
+    HINSTANCE hInstance;
+    UINT width = 1920;
+    UINT height = 1080;
+
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
+
+    ASSERT_NE(renderer.GetDevice().Get(), nullptr);
+}
+
+TEST(Renderer, PipelineDeviceContext)
+{
+    HINSTANCE hInstance;
+    UINT width = 1920;
+    UINT height = 1080;
+
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
+
+    ASSERT_NE(renderer.GetContext().Get(), nullptr);
+}
+
+TEST(Renderer, PipelineRendertarget)
+{
+    HINSTANCE hInstance;
+    UINT width = 1920;
+    UINT height = 1080;
+
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
+
+    ASSERT_NE(renderer.GetRTV().Get(), nullptr);
+}
+
+TEST(Renderer, PipelineSwapchain)
+{
+    HINSTANCE hInstance;
+    UINT width = 1920;
+    UINT height = 1080;
+
+    Window window = Window(hInstance, SW_SHOW, width, height);
+    Renderer renderer = Renderer(window.GetWindowHandle());
+
+    ASSERT_NE(renderer.GetSwapChain().Get(), nullptr);
 }
