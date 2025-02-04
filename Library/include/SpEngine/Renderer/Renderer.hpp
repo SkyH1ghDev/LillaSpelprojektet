@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SpEngine/Setup/SetupHelper.hpp>
+
 #include <d3d11.h>
 #include <directxtk/SpriteBatch.h>
 #include <DirectXMath.h>
@@ -11,48 +13,54 @@ namespace DX = DirectX;
 class Renderer
 {
 public:
-	Renderer(MW::ComPtr<ID3D11Device>& device);
+	Renderer(HWND& window);
 	~Renderer();
 
 	MW::ComPtr<ID3D11BlendState> GetBlendState();
 	MW::ComPtr<ID3D11SamplerState> GetSamplerState();
 	MW::ComPtr<ID3D11RasterizerState> GetRasterState();
 
-	void DrawTexture(	std::unique_ptr<DX::SpriteBatch>& spriteBatch, 
-						ID3D11ShaderResourceView* texture, 
-						const DX::XMFLOAT2& position, 
-						const RECT* sourceRectangle, 
-						DX::FXMVECTOR color = DX::Colors::White, 
-						float rotation = 0.0f, 
-						const DX::XMFLOAT2& origin = DX::XMFLOAT2(0, 0),
-						float scale = 1.0f,
-						DX::DX11::SpriteEffects effects = DX::DX11::SpriteEffects_None, 
-						float layerDepth = 0.0f);
+	MW::ComPtr<ID3D11Device> GetDevice();
+	MW::ComPtr<ID3D11DeviceContext> GetContext();
+	MW::ComPtr<ID3D11RenderTargetView> GetRTV();
+
+	void DrawTexture(
+		ID3D11ShaderResourceView* texture,
+		const DX::XMFLOAT2& position,
+		const RECT* sourceRectangle,
+		DX::FXMVECTOR color = DX::Colors::White,
+		float rotation = 0.0f,
+		const DX::XMFLOAT2& origin = DX::XMFLOAT2(0, 0),
+		float scale = 1.0f,
+		DX::DX11::SpriteEffects effects = DX::DX11::SpriteEffects_None,
+		float layerDepth = 0.0f);
 
 
-	void DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
+	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
 private:
-	/**
-	 * Sets up the blend state
-	 * @param[IN] device DirectX11 device
-	 */
-	void InitializeBlendState(MW::ComPtr<ID3D11Device>& device);
+	void InitializeBlendState();
+	void InitializeSamplerState();
+	void InitializeRasterState();
 
-	/**
-	 * Sets up the sampler state
-	 * @param[IN] device DirectX11 device
-	 */
-	void InitializeSamplerState(MW::ComPtr<ID3D11Device>& device);
-
-	/**
-	 * Sets up the raster state
-	 * @param[IN] device DirectX11 device
-	 */
-	void InitializeRasterState(MW::ComPtr<ID3D11Device>& device);
+	void FinalBindings();
+	void SetupPipeline(HWND& window);
 
 private:
 	MW::ComPtr<ID3D11BlendState> m_blendState;
 	MW::ComPtr<ID3D11SamplerState> m_samplerState;
 	MW::ComPtr<ID3D11RasterizerState> m_rasterState;
+
+	MW::ComPtr<ID3D11Device> m_device;
+	MW::ComPtr<ID3D11DeviceContext> m_immediateContext;
+	MW::ComPtr<IDXGISwapChain> m_swapChain;
+	MW::ComPtr<ID3D11Texture2D> m_dsTexture;
+	MW::ComPtr<ID3D11DepthStencilView> m_dsView;
+	MW::ComPtr<ID3D11RenderTargetView> m_rtv;
+	D3D11_VIEWPORT m_viewport;
+
+	int m_width = 640;
+	int m_height = 360;
+	SetupHelper m_setup;
+	std::unique_ptr<DX::DX11::SpriteBatch> m_spriteBatch;
 };
