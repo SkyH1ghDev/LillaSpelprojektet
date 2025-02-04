@@ -13,8 +13,8 @@ public:
 	AssetManager() = default;
 	~AssetManager() = default;
 
-	bool ReadFolder(MW::ComPtr<ID3D11Device>& device, std::string path);
-	Sprite GetSprite(std::string filename);
+	bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
+	Sprite GetSprite(const std::string& filename);
 
 private:
 
@@ -22,7 +22,7 @@ private:
 };
 
 //Returns Sprite with the matching filename in the hash map
-inline Sprite AssetManager::GetSprite(std::string filename)
+inline Sprite AssetManager::GetSprite(const std::string& filename)
 {
 	return m_textureMap[filename];
 }
