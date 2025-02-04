@@ -22,6 +22,10 @@ enum class EntityType {
     Enemy
 };
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 class Entity : public IGameObject
 {
