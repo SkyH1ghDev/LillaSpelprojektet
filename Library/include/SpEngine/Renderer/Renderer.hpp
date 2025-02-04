@@ -26,6 +26,9 @@ public:
 	MW::ComPtr<ID3D11DeviceContext> GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> GetRTV();
 
+	void DrawScene(const std::shared_ptr<IScene>& mainScene);
+
+private:
 	void DrawTexture(
 		ID3D11ShaderResourceView* texture,
 		const DX::XMFLOAT2& position,
@@ -37,12 +40,8 @@ public:
 		DX::DX11::SpriteEffects effects = DX::DX11::SpriteEffects_None,
 		float layerDepth = 0.0f);
 
-
 	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
-	void DrawScene(const std::shared_ptr<IScene>& mainScene);
-
-private:
 	void InitializeBlendState();
 	void InitializeSamplerState();
 	void InitializeRasterState();
