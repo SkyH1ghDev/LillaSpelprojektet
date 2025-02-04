@@ -21,5 +21,4 @@ Game::Game()
 
     testScene->AddGameObject(player);
     testScene->AddGameObject(playerController);
-
 }

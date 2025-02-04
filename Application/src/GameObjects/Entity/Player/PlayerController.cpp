@@ -18,11 +18,5 @@ void PlayerController::OnStart()
 
 void PlayerController::Update()
 {
-	DX::XMVECTOR finalMoveDirection = DX::XMVector2Normalize(DX::XMVectorAdd(DX::XMVectorAdd(m_up->GetMoveDirection(), m_left->GetMoveDirection()), DX::XMVectorAdd( m_down->GetMoveDirection(), m_right->GetMoveDirection())));
-
-	DX::XMVectorScale(finalMoveDirection, Clock::GetDeltaTime());
-	DX::XMFLOAT2 test;
-	DX::XMStoreFloat2(&test, finalMoveDirection);
-
-	this->m_player->PerformMove(test);
+	m_player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
 }

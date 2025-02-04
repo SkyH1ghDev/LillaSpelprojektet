@@ -1,15 +1,17 @@
 #include "PlayerMove.hpp"
-#include <iostream>
 
+#include <SpEngine/Clock/Clock.hpp>
 
-void PlayerMove::Move(DX::XMFLOAT2& m_position, DX::XMFLOAT2& m_direction) {
-    DX::XMVECTOR position = XMLoadFloat2(&m_position);
-    DX::XMVECTOR direction = XMLoadFloat2(&m_direction);
+DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction) {
+    DX::XMVECTOR positionXMVector = XMLoadFloat2(&position);
+    DX::XMVECTOR directionXMVector = XMLoadFloat2(&direction);
 
     // Perform the movement operation
-    DX::XMVECTOR movement = DX::XMVectorScale(direction, 0.2f);
-    position = DX::XMVectorAdd(position, movement);
+    const DX::XMVECTOR movement = DX::XMVectorScale(directionXMVector, 250.0f * Clock::GetDeltaTime());
+    positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
 
-    // Store the result back into m_position
-    XMStoreFloat2(&m_position, position);
+    DX::XMFLOAT2 newPosition;
+    DX::XMStoreFloat2(&newPosition, positionXMVector);
+
+    return newPosition;
 }
