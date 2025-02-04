@@ -74,7 +74,7 @@ Entity::Entity(EntityType entityType) :
 
 void Entity::OnStart()
 {
-    PerformVisible();
+    PerformVisible(EntityState::WalkDown);
     this->m_toRender = true;
 }
 

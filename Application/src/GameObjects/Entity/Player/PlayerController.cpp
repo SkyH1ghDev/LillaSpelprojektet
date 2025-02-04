@@ -22,6 +22,18 @@ void PlayerController::Update()
 
 	DX::XMFLOAT2 test;
 	DX::XMStoreFloat2(&test, finalMoveDirection);
-
 	this->m_player->PerformMove(test);
+	if (test.x == 0 && test.y == -1)
+	{
+		this->m_player->PerformVisible(EntityState::WalkUp);
+	}
+	else if (test.x == 0 && test.y == 1)
+	{
+		this->m_player->PerformVisible(EntityState::WalkDown);
+	}
+	else if (test.x == 1 && test.y == 0)
+	{
+		this->m_player->PerformVisible(EntityState::WalkRight);
+	}
+	
 }
