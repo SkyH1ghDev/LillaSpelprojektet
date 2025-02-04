@@ -74,7 +74,7 @@ Entity::Entity(EntityType entityType) :
 
 void Entity::OnStart()
 {
-
+    PerformVisible();
 }
 
 void Entity::Update()

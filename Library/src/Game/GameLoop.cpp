@@ -70,7 +70,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		m_imGui.Start();
 		m_imGui.Run(immediateContext, rtv);
 		m_imGui.End();
-
+		std::vector<std::shared_ptr<IGameObject>> ObjectVec = mainScene->GetGameObjectVec();
 
 		renderer.DrawScene(mainScene);
 

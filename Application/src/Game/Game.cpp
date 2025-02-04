@@ -16,10 +16,10 @@ Game::Game()
 
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
 
-    std::shared_ptr<IGameObject> testGameObject = std::make_shared<Entity>(EntityType::Player);
-    std::shared_ptr<IGameObject> testGameObject2 = std::make_shared<PlayerController>(std::static_pointer_cast<Entity, IGameObject>(testGameObject));
+    std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player);
+    std::shared_ptr<IGameObject> playerController = std::make_shared<PlayerController>(std::static_pointer_cast<Entity, IGameObject>(player));
 
-    testScene->AddGameObject(testGameObject);
-    testScene->AddGameObject(testGameObject2);
+    testScene->AddGameObject(player);
+    testScene->AddGameObject(playerController);
 
 }

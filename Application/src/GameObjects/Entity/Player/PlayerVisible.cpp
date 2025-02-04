@@ -1,6 +1,6 @@
 #include "PlayerVisible.hpp"
 
-void PlayerVisible::Visible()
+void PlayerVisible::Visible(std::string& texture)
 {
-    std::cerr << "Player is visible!" << std::endl;
+    texture = "chesster_forwards_v1.png";
 }
