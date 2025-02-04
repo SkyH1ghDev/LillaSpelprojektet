@@ -3,10 +3,10 @@
 
 //Reads all png and jpg files in folder specified by path string
 //All read files are added to the instance of the asset manager
-bool AssetManager::ReadFolder(MW::ComPtr<ID3D11Device> &device, std::string path)
+bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path)
 {
 	int assetIndex = 0;
-	for (const auto& entry : FS::directory_iterator(path)) 
+	for (const auto& entry : FS::directory_iterator(path))
 	{
 		std::string filepath = entry.path().string();
 		filepath.at(filepath.find('\\')) = '/';
@@ -14,7 +14,7 @@ bool AssetManager::ReadFolder(MW::ComPtr<ID3D11Device> &device, std::string path
 		std::string filename = filepath.substr(folderIndex + 1, filepath.length() - folderIndex);
 		std::string extension = filename.substr(filename.find_last_of('.'), 4);
 
-		if (extension == ".jpg" || extension == ".png") 
+		if (extension == ".jpg" || extension == ".png")
 		{
 			Sprite sprite(device, filepath);
 			this->m_textureMap[filename] = sprite;

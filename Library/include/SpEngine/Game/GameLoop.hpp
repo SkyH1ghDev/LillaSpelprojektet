@@ -48,7 +48,7 @@ private:
      * @param[In] immediateContext DirectX11 DeviceContext
      * @param[In] window Window handle
      */
-    void SetupImGui(MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, HWND& window);
+    void SetupImGui(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const HWND& window);
 
 private:
     SetupHelper m_setup;
