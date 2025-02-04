@@ -6,11 +6,13 @@
 
 #include <SpEngine/Input/Input.hpp>
 
+#include <iostream>
+
 ImGuiTool::ImGuiTool()
 {
 }
 
-ImGuiTool::ImGuiTool(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext)
+ImGuiTool::ImGuiTool(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext)
 {
 	if (!this->initialized) {
 		Initialized(window, device, immediateContext);
@@ -27,16 +29,17 @@ void ImGuiTool::Start()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-
+	ImGui::ShowDemoWindow();
 }
 
 void ImGuiTool::End()
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	std::cerr << "ImGui Render Draw Data called.\n";
 }
 
-void ImGuiTool::Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv)
+void ImGuiTool::Run(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv)
 {
 	MouseUpdate();
 	Test(immediateContext, rtv);
@@ -51,7 +54,7 @@ void ImGuiTool::Shutdown()
 }
 
 //Initializes the ImGui
-void ImGuiTool::Initialized(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext)
+void ImGuiTool::Initialized(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -69,15 +72,14 @@ void ImGuiTool::MouseUpdate()
 {
 
 	// TODO: MAKE BETTER :)
-
 	ImGuiIO& io = ImGui::GetIO();
-	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x80 ? true : false;
-	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x80 ? true : false;
+	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x8000 ? true : false;
+	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x8000 ? true : false;
 
 }
 
 //Creates a window with a text toggle and a background color changer
-void ImGuiTool::Test(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv)
+void ImGuiTool::Test(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10));  //Window Position
 	ImGui::SetNextWindowSize(ImVec2(400, 200));  //Window Size

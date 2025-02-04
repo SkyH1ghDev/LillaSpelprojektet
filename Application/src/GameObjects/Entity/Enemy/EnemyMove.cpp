@@ -1,7 +1,7 @@
 #include "EnemyMove.hpp"
 
-void EnemyMove::Move(DX::XMFLOAT2& m_position, DX::XMFLOAT2& m_direction)
+DX::XMFLOAT2 EnemyMove::Move(const DX::XMFLOAT2& m_position, const DX::XMFLOAT2& m_direction)
 {
-    std::cerr << "Enemy jonas rör på sig" << std::endl;
+    return {};
 }
 

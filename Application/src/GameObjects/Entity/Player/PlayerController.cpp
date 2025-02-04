@@ -10,10 +10,10 @@ PlayerController::PlayerController(std::shared_ptr<Entity> player)
 
 void PlayerController::OnStart()
 {
-	Input::GetKey('w')->Attach(std::static_pointer_cast<IObserver, MoveUp>(m_up));
-	Input::GetKey('a')->Attach(std::static_pointer_cast<IObserver, MoveLeft>(m_left));
-	Input::GetKey('s')->Attach(std::static_pointer_cast<IObserver, MoveDown>(m_down));
-	Input::GetKey('d')->Attach(std::static_pointer_cast<IObserver, MoveRight>(m_right));
+	Input::GetKey('W')->Attach(std::static_pointer_cast<IObserver, MoveUp>(m_up));
+	Input::GetKey('A')->Attach(std::static_pointer_cast<IObserver, MoveLeft>(m_left));
+	Input::GetKey('S')->Attach(std::static_pointer_cast<IObserver, MoveDown>(m_down));
+	Input::GetKey('D')->Attach(std::static_pointer_cast<IObserver, MoveRight>(m_right));
 }
 
 void PlayerController::Update()
@@ -22,7 +22,7 @@ void PlayerController::Update()
 
 	DX::XMFLOAT2 test;
 	DX::XMStoreFloat2(&test, finalMoveDirection);
-	this->m_player->PerformMove(test);
+	m_player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
 	if (test.x == 0 && test.y == -1)
 	{
 		this->m_player->PerformVisible(EntityState::WalkUp);
@@ -39,5 +39,5 @@ void PlayerController::Update()
 	{
 		this->m_player->PerformVisible(EntityState::WalkLeft);
 	}
-	
+
 }

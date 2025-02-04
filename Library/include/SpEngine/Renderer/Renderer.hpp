@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SpEngine/Setup/SetupHelper.hpp>
+
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Assets/IScene.hpp>
 
@@ -25,8 +27,11 @@ public:
 	MW::ComPtr<ID3D11Device> GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> GetRTV();
+	MW::ComPtr<IDXGISwapChain> GetSwapChain();
 
 	void DrawScene(const std::shared_ptr<IScene>& mainScene);
+
+	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
 private:
 	void DrawTexture(
@@ -48,6 +53,7 @@ private:
 
 	void FinalBindings();
 	void SetupPipeline(HWND& window);
+	void ImGui();
 
 private:
 	MW::ComPtr<ID3D11BlendState> m_blendState;
@@ -67,4 +73,6 @@ private:
 	SetupHelper m_setup;
 	AssetManager m_assetMan;
 	std::unique_ptr<DX::DX11::SpriteBatch> m_spriteBatch;
+
+	ImGuiTool m_imGui;
 };
