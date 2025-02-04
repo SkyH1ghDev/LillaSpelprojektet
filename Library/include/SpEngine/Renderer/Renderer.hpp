@@ -32,6 +32,8 @@ public:
 	void DrawScene(const std::shared_ptr<IScene>& mainScene);
 
 	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
+	void ImGui();
+
 
 private:
 	void DrawTexture(
@@ -47,7 +49,6 @@ private:
 
 	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
-	
 
 private:
 

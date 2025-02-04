@@ -19,7 +19,7 @@ std::unordered_map<int, std::shared_ptr<Key>> Input::m_bindableKeys =
 		{VK_LBUTTON, std::make_shared<Key>()}, {VK_RBUTTON, std::make_shared<Key>()}, {VK_MBUTTON, std::make_shared<Key>()}, {VK_XBUTTON1, std::make_shared<Key>()}, {VK_XBUTTON2, std::make_shared<Key>()}
     };
 
-MSG Input::ReadWindowsMessage()
+MSG Input::ReadWindowsMessage() 
 {
 	MSG msg;
 
@@ -41,7 +41,7 @@ void Input::HandleInput(const HWND& hWnd)
 	GetCursorPos(&m_cursorPosition);
 	ScreenToClient(hWnd, &m_cursorPosition);
 
-	// KEYBOARD
+	// KEYBOARD 
 
 	BYTE keyStates[256];
 	GetKeyboardState(keyStates);
