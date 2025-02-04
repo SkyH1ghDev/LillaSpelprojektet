@@ -2,6 +2,11 @@
 
 #include <SpEngine/Input/Input.hpp>
 
+PlayerController::PlayerController(std::shared_ptr<Entity> player)
+{
+	this->m_player = player;
+}
+
 void PlayerController::OnStart()
 {
 	Input::GetKey('w')->Attach(std::static_pointer_cast<IObserver, MoveUp>(m_up));
@@ -17,5 +22,5 @@ void PlayerController::Update()
 	DX::XMFLOAT2 test;
 	DX::XMStoreFloat2(&test, finalMoveDirection);
 
-	std::cout << "(" << test.x << ", " << test.y << ")\n";
+	this->m_player->PerformMove(test);
 }

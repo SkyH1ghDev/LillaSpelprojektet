@@ -12,8 +12,8 @@
 class PlayerController : public IGameObject
 {
 public:
-	PlayerController() = default;
-	//PlayerController(std::shared_ptr<Entity> player);
+	//PlayerController() = default;
+	PlayerController(std::shared_ptr<Entity> player);
 
 	void OnStart() override;
 	void Update() override;

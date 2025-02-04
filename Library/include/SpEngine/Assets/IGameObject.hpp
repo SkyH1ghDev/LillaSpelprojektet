@@ -43,7 +43,7 @@ public:
 
 
 protected:
-    DX::XMFLOAT2 m_position;
+    DX::XMFLOAT2 m_position = { 0, 0 };
     bool m_isActive = true;
 
 };
