@@ -1,6 +1,8 @@
 #pragma once
 #include "IMoveBase.hpp"
 #include <SpEngine/Dev/Pattern/Observer/IObserver.hpp>
+#include <SpEngine/Input/KeyState.hpp>
+#include <bitset>
 
 class MoveRight : public IMoveBase, public IObserver
 {
@@ -17,5 +19,5 @@ public:
 
 inline void MoveRight::Update(std::optional<std::any> data)
 {
-    m_moveDirection = DX::XMVectorScale({1, 0}, std::any_cast<bool>(data.value()));
+    m_moveDirection = DX::XMVectorScale({1, 0}, (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any());
 }

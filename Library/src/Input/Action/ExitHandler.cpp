@@ -1,5 +1,8 @@
 #include "ExitHandler.hpp"
 
+#include <SpEngine/Input/KeyState.hpp>
+#include <bitset>
+
 void ExitHandler::Update(std::optional<std::any> data)
 {
 
@@ -12,7 +15,7 @@ void ExitHandler::Update(std::optional<std::any> data)
 
     if (data.has_value())
     {
-        m_shouldExit = std::any_cast<bool>(data.value());
+        m_shouldExit = (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any();
     }
 }
 

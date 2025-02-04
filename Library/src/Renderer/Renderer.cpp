@@ -1,11 +1,13 @@
 #include <iostream>
 #include "Renderer.hpp"
 
-Renderer::Renderer(MW::ComPtr<ID3D11Device>& device)
+Renderer::Renderer(HWND& window)
 {
-	this->InitializeBlendState(device);
-	this->InitializeSamplerState(device);
-	this->InitializeRasterState(device);
+	SetupPipeline(window);
+	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
+	this->InitializeBlendState();
+	this->InitializeSamplerState();
+	this->InitializeRasterState();
 }
 
 Renderer::~Renderer()
@@ -27,17 +29,42 @@ MW::ComPtr<ID3D11RasterizerState> Renderer::GetRasterState()
 	return this->m_rasterState;
 }
 
-void Renderer::DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
+MW::ComPtr<ID3D11Device> Renderer::GetDevice()
 {
-	spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
+	return this->m_device;
 }
 
-void Renderer::DrawTexture(std::unique_ptr<DX::SpriteBatch>& spriteBatch, ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
+MW::ComPtr<ID3D11DeviceContext> Renderer::GetContext()
 {
-	spriteBatch->Draw(texture, position, color);
+	return this->m_immediateContext;
 }
 
-void Renderer::InitializeBlendState(MW::ComPtr<ID3D11Device>& device)
+MW::ComPtr<ID3D11RenderTargetView> Renderer::GetRTV()
+{
+	return this->m_rtv;
+}
+
+void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
+{
+	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
+	this->FinalBindings();
+	this->m_spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
+	this->m_spriteBatch->End();
+
+	this->m_swapChain->Present(0, 0);
+}
+
+void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
+{
+	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
+	this->FinalBindings();
+	this->m_spriteBatch->Draw(texture, position, color);
+	this->m_spriteBatch->End();
+
+	this->m_swapChain->Present(0, 0);
+}
+
+void Renderer::InitializeBlendState()
 {
 	//Creating blendstate with default stuff
 	ID3D11BlendState* blendStateCpy;
@@ -53,7 +80,7 @@ void Renderer::InitializeBlendState(MW::ComPtr<ID3D11Device>& device)
 	BlendState.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	BlendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	HRESULT hr = device->CreateBlendState(&BlendState, &blendStateCpy);
+	HRESULT hr = this->m_device->CreateBlendState(&BlendState, &blendStateCpy);
 	if (FAILED(hr))
 	{
 		throw std::runtime_error("Failed to create blend state!");
@@ -62,7 +89,7 @@ void Renderer::InitializeBlendState(MW::ComPtr<ID3D11Device>& device)
 	this->m_blendState.Attach(blendStateCpy);
 }
 
-void Renderer::InitializeSamplerState(MW::ComPtr<ID3D11Device>& device)
+void Renderer::InitializeSamplerState()
 {
 	//Creating samplerstate with default stuff
 	ID3D11SamplerState* samplerStateCpy;
@@ -82,7 +109,7 @@ void Renderer::InitializeSamplerState(MW::ComPtr<ID3D11Device>& device)
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	HRESULT hr = device->CreateSamplerState(&samplerDesc, &samplerStateCpy);
+	HRESULT hr = this->m_device->CreateSamplerState(&samplerDesc, &samplerStateCpy);
 	if (FAILED(hr))
 	{
 		throw std::runtime_error("Failed to create sampler state!");
@@ -91,7 +118,7 @@ void Renderer::InitializeSamplerState(MW::ComPtr<ID3D11Device>& device)
 	this->m_samplerState.Attach(samplerStateCpy);
 }
 
-void Renderer::InitializeRasterState(MW::ComPtr<ID3D11Device>& device)
+void Renderer::InitializeRasterState()
 {
 	//Creating rasterstate with default stuff
 	ID3D11RasterizerState* rasterStateCpy;
@@ -104,11 +131,25 @@ void Renderer::InitializeRasterState(MW::ComPtr<ID3D11Device>& device)
 	rasterDesc.DepthClipEnable = true;	//Clip pixels outside depth range
 	rasterDesc.ScissorEnable = false;	//Set TRUE if using scissor rectangles (we dont)
 
-	HRESULT hr = device->CreateRasterizerState(&rasterDesc, &rasterStateCpy);
+	HRESULT hr = this->m_device->CreateRasterizerState(&rasterDesc, &rasterStateCpy);
 	if (FAILED(hr))
 	{
 		throw std::runtime_error("Failed to create raster state!");
 	}
 
 	this->m_rasterState.Attach(rasterStateCpy);
+}
+
+void Renderer::FinalBindings()
+{
+	float clearColor[4] = { 0, 0, 0, 0 };
+	this->m_immediateContext->RSSetViewports(1, &this->m_viewport);
+	this->m_immediateContext->OMSetRenderTargets(1, this->m_rtv.GetAddressOf(), this->m_dsView.Get());
+	this->m_immediateContext->ClearRenderTargetView(this->m_rtv.Get(), clearColor);
+}
+
+void Renderer::SetupPipeline(HWND& window)
+{
+	this->m_setup.Setup(window, this->m_device, this->m_immediateContext, this->m_swapChain, this->m_dsTexture, this->m_dsView, this->m_rtv, this->m_width, this->m_height);
+	this->m_setup.SetViewport(this->m_width, this->m_height, this->m_viewport);
 }

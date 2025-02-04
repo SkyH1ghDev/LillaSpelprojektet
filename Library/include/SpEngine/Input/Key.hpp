@@ -1,5 +1,9 @@
 ﻿#pragma once
+
 #include <SpEngine/Dev/Pattern/Observer/IObservable.hpp>
+#include <bitset>
+#include <SpEngine/Input/KeyState.hpp>
+
 
 class Key : public IObservable
 {
@@ -30,4 +34,26 @@ public:
      */
     void Notify(std::optional<std::any> data = std::nullopt) override;
 
+    /**
+     * Returns the state of the key. Possible values:
+     *
+     * 0 0 0 1 - NotPressed \n
+     * 0 0 1 1 - Released \n
+     * 0 1 0 0 - Pressed \n
+     * 1 1 0 0 - Held \n
+     *
+     * @return Key State
+     */
+    std::bitset<4> GetKeyState() const;
+
+    void ChangeKeyState(bool isPressed);
+
+private:
+    std::bitset<4> m_keyState = KeyState_NotPressed;
+
 };
+
+inline std::bitset<4> Key::GetKeyState() const
+{
+    return m_keyState;
+}

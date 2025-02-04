@@ -1,8 +1,9 @@
 #pragma once
 #include "Game.hpp"
 
-#include <SpEngine/Setup/SetupHelper.hpp>
 #include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
+#include <SpEngine/Renderer/Renderer.hpp>
+#include <SpEngine/Renderer/Window.hpp>
 
 #include <directxtk/SpriteBatch.h>
 
@@ -39,6 +40,15 @@ private:
     void Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
                MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width,
                const UINT &height, HWND &window);
+
+    /**
+     * Sets up the necessities for imGui
+     *
+     * @param[In] device DirectX11 Device
+     * @param[In] immediateContext DirectX11 DeviceContext
+     * @param[In] window Window handle
+     */
+    void SetupImGui(MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, HWND& window);
 
 private:
     SetupHelper m_setup;
