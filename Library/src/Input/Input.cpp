@@ -50,14 +50,14 @@ void Input::HandleInput(const HWND& hWnd)
 	{
 		if (m_bindableKeys.contains(i))
 		{
-			bool keyPressed = keyStates[i] & KEY_PRESSED ? true : false;
-			m_bindableKeys[i]->Notify(keyPressed);
+			m_bindableKeys[i]->ChangeKeyState(keyStates[i] & KEY_PRESSED ? true : false);
+			m_bindableKeys[i]->Notify(m_bindableKeys[i]->GetKeyState());
 		}
 	}
 
 	if (msg.message == WM_QUIT)
 	{
-		m_bindableKeys[VK_ESCAPE]->Notify(true);
+		m_bindableKeys[VK_ESCAPE]->Notify(std::bitset<4>(KeyState_Pressed));
 	}
 }
 

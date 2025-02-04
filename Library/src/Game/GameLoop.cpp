@@ -100,7 +100,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		clock.End();
 
-		std::cerr << clock.GetFrameRate() << " FPS\n";
+		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 
 	m_imGui.Shutdown();
