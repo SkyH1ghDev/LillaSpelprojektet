@@ -35,7 +35,7 @@ public:
 
     Entity(EntityType entityType);
     const void PerformMove(DX::XMFLOAT2& m_direction) { if (m_move) m_move->Move(this->m_position, m_direction); }
-    const void PerformVisible(){ if (m_visible) m_visible->Visible(); }
+    const void PerformVisible(){ if (m_visible) m_visible->Visible(this->m_texture); }
     const void PerformAttack() { if (m_attack) m_attack->Attack(); }
     const void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     const void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }

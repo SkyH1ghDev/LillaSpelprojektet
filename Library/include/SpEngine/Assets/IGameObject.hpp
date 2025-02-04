@@ -1,7 +1,7 @@
 #pragma once
 
 #include <DirectXMath.h>
-
+#include <iostream>
 namespace DX = DirectX;
 
 class IGameObject
@@ -15,7 +15,8 @@ public:
     IGameObject& operator=(const IGameObject& other) = default;
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
-    DX::XMFLOAT2 GetPosition();
+    DX::XMFLOAT2 GetPosition() const;
+    std::string GetTextureString() const;
 
     /**
      * Function that gets called every frame
@@ -45,7 +46,7 @@ public:
 protected:
     DX::XMFLOAT2 m_position = { 0, 0 };
     bool m_isActive = true;
-
+    std::string m_texture;
 };
 
 inline bool IGameObject::IsActive() const
@@ -58,7 +59,11 @@ inline void IGameObject::SetActive(bool activeState)
 	m_isActive = activeState;
 }
 
-inline DX::XMFLOAT2 IGameObject::GetPosition()
+inline DX::XMFLOAT2 IGameObject::GetPosition() const
 {
     return m_position;
+}
+inline std::string IGameObject::GetTextureString() const
+{
+    return m_texture;
 }

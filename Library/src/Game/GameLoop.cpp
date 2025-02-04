@@ -74,9 +74,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		m_imGui.Start();
 		m_imGui.Run(immediateContext, rtv);
 		m_imGui.End();
+		std::vector<std::shared_ptr<IGameObject>> ObjectVec = mainScene->GetGameObjectVec();
 
-
-		renderer.DrawTexture(ass.GetSprite("mouse.png").GetSRV().Get(), DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()), DX::Colors::White);
+		renderer.DrawTexture(ass.GetSprite(ObjectVec.at(0)->GetTextureString()).GetSRV().Get(), DX::XMFLOAT2(ObjectVec.at(0)->GetPosition().x, ObjectVec.at(0)->GetPosition().y), DX::Colors::White);
 
 		clock.End();
 
