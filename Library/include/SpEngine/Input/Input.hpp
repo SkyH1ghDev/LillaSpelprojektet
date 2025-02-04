@@ -58,7 +58,14 @@ private:
 
 inline std::shared_ptr<Key> Input::GetKey(const int& virtualKey)
 {
-    return m_bindableKeys[virtualKey];
+    int key = virtualKey;
+
+    if (key >= 'a' && key <= 'z')
+    {
+        key -= 32;
+    }
+
+    return m_bindableKeys[key];
 }
 
 inline long Input::GetMousePositionX()

@@ -24,7 +24,7 @@ public:
      *
      * @return True if yes, False if not
      */
-    bool ShouldExit();
+    bool ShouldExit() const;
 
 private:
     bool m_shouldExit = false;

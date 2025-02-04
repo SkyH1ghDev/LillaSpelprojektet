@@ -22,6 +22,6 @@ void Key::Notify(std::optional<std::any> data)
 {
     for (const auto& observer : m_observers)
     {
-        observer->Update();
+        observer->Update(data);
     }
 }

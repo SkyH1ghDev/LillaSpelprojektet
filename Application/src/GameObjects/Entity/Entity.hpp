@@ -15,6 +15,7 @@
 #include "EnemyUseCard.hpp"
 #include "EnemyVisible.hpp"
 
+
 // Define an enum for the entity type
 enum class EntityType {
     Player,
@@ -33,12 +34,11 @@ public:
     Entity& operator=(Entity&& other) noexcept = default;
 
     Entity(EntityType entityType);
-
-    void PerformMove() { if (m_move) m_move->Move(); }
-    void PerformVisible() { if (m_visible) m_visible->Visible(); }
-    void RerformAttack() { if (m_attack) m_attack->Attack(); }
-    void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
-    void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
+    const void PerformMove(DX::XMFLOAT2& m_direction) { if (m_move) m_move->Move(this->m_position, m_direction); }
+    const void PerformVisible(){ if (m_visible) m_visible->Visible(); }
+    const void PerformAttack() { if (m_attack) m_attack->Attack(); }
+    const void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
+    const void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
 
     void Update() override;
     void OnStart() override;
@@ -52,5 +52,5 @@ private:
     std::shared_ptr<ITakeDamage> m_takeDamage;
     std::shared_ptr<IUseCard> m_useCard;
     EntityType m_type;
-
+    std::shared_ptr<IGameObject> m_playerController;
 };

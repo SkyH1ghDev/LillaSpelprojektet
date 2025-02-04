@@ -1,16 +1,21 @@
 #pragma once
 
+#include <DirectXMath.h>
+
+namespace DX = DirectX;
+
 class IGameObject
 {
 
 public:
 
     IGameObject() = default;
-	virtual ~IGameObject() { }
+    virtual ~IGameObject() {}
     IGameObject(const IGameObject& other) = default;
     IGameObject& operator=(const IGameObject& other) = default;
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
+    DX::XMFLOAT2 GetPosition();
 
     /**
      * Function that gets called every frame
@@ -36,8 +41,11 @@ public:
      */
     void SetActive(bool activeState);
 
-private:
-	bool m_isActive = true;
+
+protected:
+    DX::XMFLOAT2 m_position = { 0, 0 };
+    bool m_isActive = true;
+
 };
 
 inline bool IGameObject::IsActive() const
@@ -48,4 +56,9 @@ inline bool IGameObject::IsActive() const
 inline void IGameObject::SetActive(bool activeState)
 {
 	m_isActive = activeState;
+}
+
+inline DX::XMFLOAT2 IGameObject::GetPosition()
+{
+    return m_position;
 }
