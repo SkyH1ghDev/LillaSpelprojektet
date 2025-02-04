@@ -17,8 +17,8 @@ public:
     IGameObject& operator=(IGameObject&& other) noexcept = default;
     DX::XMFLOAT2 GetPosition() const;
     std::string GetTextureString() const;
-
-    /**
+    bool ToRender() const;
+    /** 
      * Function that gets called every frame
      */
     virtual void Update() = 0;
@@ -47,6 +47,7 @@ protected:
     DX::XMFLOAT2 m_position = { 0, 0 };
     bool m_isActive = true;
     std::string m_texture;
+    bool m_toRender = false;
 };
 
 inline bool IGameObject::IsActive() const
@@ -66,4 +67,8 @@ inline DX::XMFLOAT2 IGameObject::GetPosition() const
 inline std::string IGameObject::GetTextureString() const
 {
     return m_texture;
+}
+inline bool IGameObject::ToRender() const
+{
+    return m_toRender;
 }

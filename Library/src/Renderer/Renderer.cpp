@@ -55,7 +55,10 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 	for (int i = 0; i < len; i++)
 	{
-		this->DrawTexture(this->m_assetMan.GetSprite("Toe.png").GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
+		if (ObjectVec.at(i)->ToRender())
+		{
+			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
+		}
 	}
 
 	this->m_spriteBatch->End();
