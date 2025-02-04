@@ -32,7 +32,13 @@ public:
     /**
      * Notifies the observers that something has occured
      */
-    virtual void Notify() = 0;
+    virtual void Notify(std::optional<std::any> data = std::nullopt) = 0;
+
+    /**
+     * Returns data to be sent to the IObserver objects
+     *
+     * @return Data
+     */
 
 protected:
     std::vector<std::shared_ptr<IObserver>> m_observers;

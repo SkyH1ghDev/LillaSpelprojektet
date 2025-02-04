@@ -21,4 +21,5 @@ Game::Game()
 
     testScene->AddGameObject(testGameObject);
     testScene->AddGameObject(testGameObject2);
+
 }

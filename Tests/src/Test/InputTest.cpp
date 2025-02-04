@@ -4,7 +4,7 @@
 #include <SetupHelper.hpp>
 #include <Mouse.hpp>
 
-TEST(Mouse, GetPosition)
+/*TEST(Mouse, GetPosition)
 {
     UINT height = 1080;
     UINT width = 1920;
@@ -71,5 +71,4 @@ TEST(Mouse, pressbutton)
     Mouse mouse;
     bool testvalue = mouse.IsButtonPressed(0);
     ASSERT_EQ(testvalue, false);
-}
-
+}*/

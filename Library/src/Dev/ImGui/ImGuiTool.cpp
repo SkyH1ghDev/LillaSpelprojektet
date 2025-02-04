@@ -4,6 +4,8 @@
 #include <imgui/imgui_impl_win32.h>
 #include <imgui/imgui_impl_dx11.h>
 
+#include <SpEngine/Input/Input.hpp>
+
 ImGuiTool::ImGuiTool()
 {
 }
@@ -34,9 +36,9 @@ void ImGuiTool::End()
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void ImGuiTool::Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv, const Mouse& mi)
+void ImGuiTool::Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv)
 {
-	MouseUpdate(mi);
+	MouseUpdate();
 	Test(immediateContext, rtv);
 }
 
@@ -63,11 +65,14 @@ void ImGuiTool::Initialized(HWND window, MW::ComPtr<ID3D11Device>& device, MW::C
 }
 
 //Updates the mouses presses together with ImGui
-void ImGuiTool::MouseUpdate(const Mouse& mi)
+void ImGuiTool::MouseUpdate()
 {
+
+	// TODO: MAKE BETTER :)
+
 	ImGuiIO& io = ImGui::GetIO();
-	io.MouseDown[0] = mi.IsButtonPressed(0);
-	io.MouseDown[1] = mi.IsButtonPressed(1);
+	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x80 ? true : false;
+	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x80 ? true : false;
 
 }
 
