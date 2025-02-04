@@ -2,6 +2,8 @@
 
 #include <DirectXMath.h>
 #include <iostream>
+#include <SpEngine/Input/Input.hpp>
+
 namespace DX = DirectX;
 
 class IGameObject
