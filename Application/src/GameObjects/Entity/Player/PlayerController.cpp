@@ -35,5 +35,9 @@ void PlayerController::Update()
 	{
 		this->m_player->PerformVisible(EntityState::WalkRight);
 	}
+	else if (test.x == -1 && test.y == 0)
+	{
+		this->m_player->PerformVisible(EntityState::WalkLeft);
+	}
 	
 }
