@@ -1,6 +1,12 @@
 #include "PlayerController.hpp"
 
 #include <SpEngine/Input/Input.hpp>
+#include <SpEngine/Clock/Clock.hpp>
+
+PlayerController::PlayerController(std::shared_ptr<Entity> player)
+{
+	this->m_player = player;
+}
 
 void PlayerController::OnStart()
 {
@@ -17,5 +23,5 @@ void PlayerController::Update()
 	DX::XMFLOAT2 test;
 	DX::XMStoreFloat2(&test, finalMoveDirection);
 
-	std::cout << "(" << test.x << ", " << test.y << ")\n";
+	this->m_player->PerformMove(test);
 }

@@ -5,6 +5,7 @@ Renderer::Renderer(HWND& window)
 {
 	SetupPipeline(window);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
+	this->m_assetMan.ReadFolder(this->m_device, "../Application/Resources");
 	this->InitializeBlendState();
 	this->InitializeSamplerState();
 	this->InitializeRasterState();
@@ -45,18 +46,51 @@ MW::ComPtr<ID3D11RenderTargetView> Renderer::GetRTV()
 	return this->m_rtv;
 }
 
-void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
+MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain()
+{
+	return this->m_swapChain;
+}
+
+void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
+{
+	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
+	std::vector<std::shared_ptr<IGameObject>> ObjectVec = sceneToRender->GetGameObjectVec();
+	int len = ObjectVec.size();
+
+	this->FinalBindings();
+
+	for (int i = 0; i < len; i++)
+	{
+		if (ObjectVec.at(i)->ToRender())
+		{
+			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
+		}
+	}
+
+	this->m_spriteBatch->End();
+	this->m_swapChain->Present(0, 0);
+}
+
+void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
 {
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
 	this->FinalBindings();
-	this->m_spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
+	this->DrawTexture(this->m_assetMan.GetSprite(textureString).GetSRV().Get(), position, color);
 	this->m_spriteBatch->End();
 
 	//this->m_swapChain->Present(0, 0);
+
+}
+
+void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
+{
+	this->m_spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
+
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
 {
+
 
 
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
@@ -67,18 +101,6 @@ void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2
 	//this->m_swapChain->Present(0, 0);
 }
 
-void Renderer::ImGui()
-{
-	//ImGui function
-	m_imGui.Start();
-	m_imGui.Run(this->m_immediateContext, this->m_rtv);
-	m_imGui.End();
-}
-
-MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain() const
-{
-	return this->m_swapChain;
-}
 
 void Renderer::InitializeBlendState()
 {

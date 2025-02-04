@@ -35,7 +35,7 @@ public:
 
     Entity(EntityType entityType);
     const void PerformMove(DX::XMFLOAT2& m_direction) { if (m_move) m_move->Move(this->m_position, m_direction); }
-    const void PerformVisible(){ if (m_visible) m_visible->Visible(); }
+    const void PerformVisible(){ if (m_visible) m_visible->Visible(this->m_texture); }
     const void PerformAttack() { if (m_attack) m_attack->Attack(); }
     const void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     const void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
@@ -45,14 +45,12 @@ public:
 
     EntityType GetType() const { return m_type; }
 
-    const DX::XMFLOAT2& GetPosition() const { return this->m_position; }
 private:
     std::shared_ptr<IMove> m_move;
     std::shared_ptr<IVisible> m_visible;
     std::shared_ptr<IAttack> m_attack;
     std::shared_ptr<ITakeDamage> m_takeDamage;
     std::shared_ptr<IUseCard> m_useCard;
-    DX::XMFLOAT2 m_position = { 0, 0 };
     EntityType m_type;
     std::shared_ptr<IGameObject> m_playerController;
 };

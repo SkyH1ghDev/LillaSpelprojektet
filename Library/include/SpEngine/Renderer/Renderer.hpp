@@ -1,7 +1,10 @@
 #pragma once
 
 #include <SpEngine/Setup/SetupHelper.hpp>
+
 #include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
+#include <SpEngine/Manager/AssetManager.hpp>
+#include <SpEngine/Assets/IScene.hpp>
 
 #include <d3d11.h>
 #include <directxtk/SpriteBatch.h>
@@ -24,7 +27,13 @@ public:
 	MW::ComPtr<ID3D11Device> GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> GetRTV();
+	MW::ComPtr<IDXGISwapChain> GetSwapChain();
 
+	void DrawScene(const std::shared_ptr<IScene>& mainScene);
+
+	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
+
+private:
 	void DrawTexture(
 		ID3D11ShaderResourceView* texture,
 		const DX::XMFLOAT2& position,
@@ -36,14 +45,12 @@ public:
 		DX::DX11::SpriteEffects effects = DX::DX11::SpriteEffects_None,
 		float layerDepth = 0.0f);
 
-
 	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
-
-	void ImGui();
 
 	
 
 private:
+
 	void InitializeBlendState();
 	void InitializeSamplerState();
 	void InitializeRasterState();
@@ -67,6 +74,7 @@ private:
 	int m_width = 640;
 	int m_height = 360;
 	SetupHelper m_setup;
+	AssetManager m_assetMan;
 	std::unique_ptr<DX::DX11::SpriteBatch> m_spriteBatch;
 
 	ImGuiTool m_imGui;

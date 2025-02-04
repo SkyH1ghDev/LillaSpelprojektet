@@ -5,5 +5,5 @@
 class EnemyVisible : public IVisible
 {
 public:
-    void Visible() override;
+    void Visible(std::string& texture) override;
 };

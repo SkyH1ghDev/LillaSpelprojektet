@@ -1,7 +1,6 @@
 #include "GameLoop.hpp"
 
 #include <SpEngine/Manager/SceneManager.hpp>
-#include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Manager/GameObjectManager.hpp>
 
 #include <SpEngine/Input/Input.hpp>
@@ -29,9 +28,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11Device> device = renderer.GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> immediateContext = renderer.GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> rtv = renderer.GetRTV();
-
-	AssetManager ass;
-	ass.ReadFolder(device, "../Application/Resources");
 
 	Clock clock;
 
@@ -64,8 +60,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		}
 
 
-		renderer.DrawTexture(ass.GetSprite("mouse.png").GetSRV().Get(), DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()), DX::Colors::White);
-		//Running ImGui and all their windows
+
+		renderer.DrawScene(mainScene);
 
 	
 		clock.End();

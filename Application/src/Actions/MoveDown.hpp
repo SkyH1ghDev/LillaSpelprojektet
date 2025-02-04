@@ -20,4 +20,5 @@ public:
 inline void MoveDown::Update(std::optional<std::any> data)
 {
     m_moveDirection = DX::XMVectorScale({0, 1}, (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any());
+
 }
