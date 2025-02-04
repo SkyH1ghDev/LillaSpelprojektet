@@ -25,8 +25,11 @@ public:
 	MW::ComPtr<ID3D11Device> GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> GetRTV();
+	MW::ComPtr<IDXGISwapChain> GetSwapChain();
 
 	void DrawScene(const std::shared_ptr<IScene>& mainScene);
+
+	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
 private:
 	void DrawTexture(
