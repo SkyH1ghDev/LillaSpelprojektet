@@ -8,6 +8,6 @@ namespace DX = DirectX;
 class IMove
 {
 public:
-    virtual void Move(DX::XMFLOAT2& position, DX::XMFLOAT2& m_direction) = 0;
+    virtual DX::XMFLOAT2 Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction) = 0;
     virtual ~IMove() = default;
 };

@@ -19,7 +19,7 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	m_imGui = ImGuiTool(window, device, immediateContext);
 }
 
-void GameLoop::SetupImGui(MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, HWND& window)
+void GameLoop::SetupImGui(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const HWND& window)
 {
 	m_imGui = ImGuiTool(window, device, immediateContext);
 }
@@ -28,15 +28,12 @@ void GameLoop::SetupImGui(MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11Dev
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
 	Window window = Window(hInstance, nCmdShow, 640, 360);
-
 	Renderer renderer = Renderer(window.GetWindowHandle());
-	MW::ComPtr<ID3D11Device> device = renderer.GetDevice();
-	MW::ComPtr<ID3D11DeviceContext> immediateContext = renderer.GetContext();
-	MW::ComPtr<ID3D11RenderTargetView> rtv = renderer.GetRTV();
 
-	SetupImGui(device, immediateContext, window.GetWindowHandle());
+	SetupImGui(renderer.GetDevice(), renderer.GetContext(), window.GetWindowHandle());
 
-	Clock clock;
+	AssetManager ass;
+	ass.ReadFolder(renderer.GetDevice(), "../Application/Resources");
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
@@ -55,8 +52,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	//May want to change the condition to a bool variable
 	while (!exitHandler->ShouldExit())
 	{
-		clock.Start();
-
+		Clock::Start();
 		Input::HandleInput(window.GetWindowHandle());
 
 		// Update for all GameObjects
@@ -68,14 +64,12 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		//Running ImGui and all their windows
 		m_imGui.Start();
-		m_imGui.Run(immediateContext, rtv);
+		m_imGui.Run(renderer.GetContext(), renderer.GetRTV());
 		m_imGui.End();
 
 		renderer.DrawScene(mainScene);
 
-		clock.End();
-
-		//std::cerr << clock.GetFrameRate() << " FPS\n";
+		Clock::End();
 	}
 
 	m_imGui.Shutdown();

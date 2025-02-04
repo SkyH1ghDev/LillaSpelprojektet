@@ -19,5 +19,6 @@ public:
 
 inline void MoveLeft::Update(std::optional<std::any> data)
 {
-    m_moveDirection = DX::XMVectorScale({-1, 0}, (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any());
+    const float scale = (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any();
+    m_moveDirection = {-1 * scale, 0};
 }

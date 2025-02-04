@@ -7,19 +7,18 @@ namespace Chrono = std::chrono;
 class Clock
 {
 public:
-    Clock() = default;
 
-    void Start();
-    void End();
-    double GetDeltaTime() const;
-    double GetFrameRate() const;
+    static void Start();
+    static void End();
+    static float GetDeltaTime();
+    static int GetFrameRate();
 
 private:
-    Chrono::time_point<Chrono::high_resolution_clock> m_startTime;
-    Chrono::time_point<Chrono::high_resolution_clock> m_endTime;
+    static Chrono::time_point<Chrono::high_resolution_clock> m_startTime;
+    static Chrono::time_point<Chrono::high_resolution_clock> m_endTime;
 
-    int m_maxFrames = 30;
-    std::queue<double> m_frameTimeQueue;
+    static int m_maxFrames;
+    static std::queue<float> m_frameTimeQueue;
 };
 
 /**
@@ -38,7 +37,7 @@ inline void Clock::End()
     m_endTime = Chrono::high_resolution_clock::now();
     const Chrono::duration<double> timeDiff = m_endTime - m_startTime;
 
-    m_frameTimeQueue.push(timeDiff.count());
+    m_frameTimeQueue.push(static_cast<float>(timeDiff.count()));
 
     if (m_frameTimeQueue.size() > m_maxFrames)
     {
@@ -51,7 +50,7 @@ inline void Clock::End()
  *
  * @return Delta Time
  */
-inline double Clock::GetDeltaTime() const
+inline float Clock::GetDeltaTime()
 {
     return m_frameTimeQueue.back();
 }
@@ -61,9 +60,9 @@ inline double Clock::GetDeltaTime() const
  *
  * @return Frame Rate
  */
-inline double Clock::GetFrameRate() const
+inline int Clock::GetFrameRate()
 {
-    std::queue<double> timeQueue = m_frameTimeQueue;
+    std::queue<float> timeQueue = m_frameTimeQueue;
 
     double timeSum = 0;
     size_t numFrames = timeQueue.size();
@@ -76,7 +75,5 @@ inline double Clock::GetFrameRate() const
 
     double average = timeSum / m_maxFrames;
 
-    double frameTime = std::round(1 / average);
-
-    return std::round(1 / average);
+    return static_cast<int>(std::round(1 / average));
 }

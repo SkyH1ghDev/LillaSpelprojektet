@@ -10,7 +10,7 @@ class ImGuiTool
 {
 public:
 	ImGuiTool();
-	ImGuiTool(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
+	ImGuiTool(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext);
 	~ImGuiTool();
 	ImGuiTool(const ImGuiTool& other) = delete;
 	ImGuiTool& operator=(const ImGuiTool& other) = delete;
@@ -19,13 +19,13 @@ public:
 
 	void Start();
 	void End();
-	void Run(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv);
+	void Run(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv);
 	void Shutdown();
 
 private:
-	void Initialized(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
+	void Initialized(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext);
 	void MouseUpdate();
-	void Test(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv);
+	void Test(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv);
 
 private:
 	bool initialized = false;
