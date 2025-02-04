@@ -43,23 +43,21 @@ void Input::HandleInput(const HWND& hWnd)
 
 	// KEYBOARD
 
-	if (msg.message == WM_QUIT)
-	{
-		m_bindableKeys[VK_ESCAPE]->Notify();
-	}
-
 	BYTE keyStates[256];
 	GetKeyboardState(keyStates);
 
 	for (int i = 0; i < 256; ++i)
 	{
-		if (keyStates[i] & KEY_PRESSED)
+		if (m_bindableKeys.contains(i))
 		{
-			if (m_bindableKeys.contains(i))
-			{
-				m_bindableKeys[i]->Notify();
-			}
+			m_bindableKeys[i]->ChangeKeyState(keyStates[i] & KEY_PRESSED ? true : false);
+			m_bindableKeys[i]->Notify(m_bindableKeys[i]->GetKeyState());
 		}
+	}
+
+	if (msg.message == WM_QUIT)
+	{
+		m_bindableKeys[VK_ESCAPE]->Notify(std::bitset<4>(KeyState_Pressed));
 	}
 }
 

@@ -22,6 +22,52 @@ void Key::Notify(std::optional<std::any> data)
 {
     for (const auto& observer : m_observers)
     {
-        observer->Update();
+        observer->Update(data);
+    }
+}
+
+void Key::ChangeKeyState(bool isPressed)
+{
+    if (isPressed)
+    {
+        switch (m_keyState.to_ulong())
+        {
+            case KeyState_Pressed:
+                m_keyState = KeyState_Held;
+                break;
+            case KeyState_NotPressed:
+                m_keyState = KeyState_Pressed;
+                break;
+            case KeyState_Held:
+                m_keyState = KeyState_Held;
+                break;
+            case KeyState_Released:
+                m_keyState = KeyState_Pressed;
+                break;
+
+            default:
+                break;
+        }
+    }
+    else
+    {
+        switch (m_keyState.to_ulong())
+        {
+            case KeyState_Pressed:
+                m_keyState = KeyState_Released;
+                break;
+            case KeyState_NotPressed:
+                m_keyState = KeyState_NotPressed;
+                break;
+            case KeyState_Held:
+                m_keyState = KeyState_Released;
+                break;
+            case KeyState_Released:
+                m_keyState = KeyState_NotPressed;
+                break;
+
+            default:
+                break;
+        }
     }
 }
