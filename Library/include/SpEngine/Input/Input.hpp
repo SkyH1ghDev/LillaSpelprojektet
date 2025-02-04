@@ -60,6 +60,7 @@ inline std::shared_ptr<Key> Input::GetKey(const int& virtualKey)
 {
     int key = virtualKey;
 
+    // ASCII lower to upper
     if (key >= 'a' && key <= 'z')
     {
         key -= 32;

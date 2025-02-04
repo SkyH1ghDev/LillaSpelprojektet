@@ -1,5 +1,7 @@
 ﻿#include "Input.hpp"
 
+#include <iostream>
+
 #define KEY_PRESSED 0x80
 
 POINT Input::m_cursorPosition = { 0, 0 };
@@ -52,6 +54,7 @@ void Input::HandleInput(const HWND& hWnd)
 		{
 			m_bindableKeys[i]->ChangeKeyState(keyStates[i] & KEY_PRESSED ? true : false);
 			m_bindableKeys[i]->Notify(m_bindableKeys[i]->GetKeyState());
+
 		}
 	}
 

@@ -98,7 +98,6 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction)
     if (m_move != nullptr)
     {
         m_position = m_move->Move(m_position, direction);
-        std::cout << "Direction: (" << direction.x << ", " << direction.y << ")" << "\n";
     }
 }
 
