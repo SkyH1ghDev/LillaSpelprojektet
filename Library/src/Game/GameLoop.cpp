@@ -21,6 +21,11 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	m_imGui = ImGuiTool(window, device, immediateContext);
 }
 
+void GameLoop::SetupImGui(MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, HWND& window)
+{
+	m_imGui = ImGuiTool(window, device, immediateContext);
+}
+
 //Extension of Main
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
@@ -30,6 +35,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	MW::ComPtr<ID3D11Device> device = renderer.GetDevice();
 	MW::ComPtr<ID3D11DeviceContext> immediateContext = renderer.GetContext();
 	MW::ComPtr<ID3D11RenderTargetView> rtv = renderer.GetRTV();
+
+	SetupImGui(device, immediateContext, window.GetWindowHandle());
 
 	AssetManager ass;
 	ass.ReadFolder(device, "../Application/Resources");
@@ -69,9 +76,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		}
 
 		//Running ImGui and all their windows
-		//m_imGui.Start();
-		//m_imGui.Run(immediateContext, rtv, mi);
-		//m_imGui.End();
+		m_imGui.Start();
+		m_imGui.Run(immediateContext, rtv, mi);
+		m_imGui.End();
 
 		renderer.DrawTexture(ass.GetSprite("mouse.png").GetSRV().Get(), DX::XMFLOAT2(mi.GetMousePositionX(), mi.GetMousePositionY()), DX::Colors::White);
 
@@ -80,6 +87,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 
-	//m_imGui.Shutdown();
+	m_imGui.Shutdown();
 	DestroyWindow(window.GetWindowHandle());
 }
