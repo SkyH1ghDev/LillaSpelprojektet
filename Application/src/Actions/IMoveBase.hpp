@@ -14,14 +14,14 @@ public:
     IMoveBase(IMoveBase&& other) noexcept = default;
     IMoveBase& operator=(IMoveBase&& other) noexcept = default;
 
-    DX::XMVECTOR GetMoveDirection() const;
+    DX::XMFLOAT2 GetMoveDirection() const;
 
 protected:
-    DX::XMVECTOR m_moveDirection;
+    DX::XMFLOAT2 m_moveDirection;
 
 };
 
-inline DX::XMVECTOR IMoveBase::GetMoveDirection() const
+inline DX::XMFLOAT2 IMoveBase::GetMoveDirection() const
 {
     return m_moveDirection;
 }

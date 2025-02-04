@@ -3,6 +3,17 @@
 
 #include <memory>
 
+#include "EnemyAttack.hpp"
+#include "EnemyMove.hpp"
+#include "EnemyTakeDamage.hpp"
+#include "EnemyUseCard.hpp"
+#include "EnemyVisible.hpp"
+#include "PlayerAttack.hpp"
+#include "PlayerMove.hpp"
+#include "PlayerTakeDamage.hpp"
+#include "PlayerUseCard.hpp"
+#include "PlayerVisible.hpp"
+
 // Factory function to create appropriate components
 std::shared_ptr<IAttack> CreateAttackComponent(EntityType type) {
     switch (type) {
@@ -82,5 +93,12 @@ void Entity::Update()
 
 }
 
-
+void Entity::PerformMove(const DX::XMFLOAT2& direction)
+{
+    if (m_move != nullptr)
+    {
+        m_position = m_move->Move(m_position, direction);
+        std::cout << "Direction: (" << direction.x << ", " << direction.y << ")" << "\n";
+    }
+}
 
