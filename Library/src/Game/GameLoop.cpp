@@ -36,9 +36,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	SetupImGui(device, immediateContext, window.GetWindowHandle());
 
-	AssetManager ass;
-	ass.ReadFolder(device, "../Application/Resources");
-
 	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
@@ -75,7 +72,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		m_imGui.End();
 
 
-		renderer.DrawTexture(ass.GetSprite("mouse.png").GetSRV().Get(), DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()), DX::Colors::White);
+		renderer.DrawScene(mainScene);
 
 		clock.End();
 

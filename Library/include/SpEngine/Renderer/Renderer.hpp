@@ -2,6 +2,7 @@
 
 #include <SpEngine/Setup/SetupHelper.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
+#include <SpEngine/Assets/IScene.hpp>
 
 #include <d3d11.h>
 #include <directxtk/SpriteBatch.h>
@@ -39,7 +40,7 @@ public:
 
 	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
-	void DrawTexture();
+	void DrawScene(const std::shared_ptr<IScene>& mainScene);
 
 private:
 	void InitializeBlendState();
