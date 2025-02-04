@@ -32,8 +32,6 @@ public:
 	void DrawScene(const std::shared_ptr<IScene>& mainScene);
 
 	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
-	void ImGui();
-
 
 private:
 	void DrawTexture(
@@ -49,15 +47,13 @@ private:
 
 	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
-
-private:
-
 	void InitializeBlendState();
 	void InitializeSamplerState();
 	void InitializeRasterState();
 
 	void FinalBindings();
 	void SetupPipeline(HWND& window);
+	void ImGui();
 
 private:
 	MW::ComPtr<ID3D11BlendState> m_blendState;

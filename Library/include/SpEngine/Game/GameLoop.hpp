@@ -40,18 +40,8 @@ private:
                MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width,
                const UINT &height, HWND &window);
 
-    /**
-     * Sets up the necessities for imGui
-     *
-     * @param[In] device DirectX11 Device
-     * @param[In] immediateContext DirectX11 DeviceContext
-     * @param[In] window Window handle
-     */
-    void SetupImGui(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const HWND& window);
-
 private:
     SetupHelper m_setup;
     Game m_game;
-
 };
 

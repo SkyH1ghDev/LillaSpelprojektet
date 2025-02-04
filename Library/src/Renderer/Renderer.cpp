@@ -80,28 +80,17 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 	this->m_spriteBatch->End();
 
 	//this->m_swapChain->Present(0, 0);
-
-}
-
-void Renderer::ImGui()
-{
-	m_imGui.Start();
-	m_imGui.Run(this->m_immediateContext, this->m_rtv);
-	m_imGui.End();
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
 {
 	this->m_spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
-
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
 {
 	this->m_spriteBatch->Draw(texture, position, color);
-	//this->m_swapChain->Present(0, 0);
 }
-
 
 void Renderer::InitializeBlendState()
 {
@@ -193,4 +182,11 @@ void Renderer::SetupPipeline(HWND& window)
 	this->m_setup.SetViewport(this->m_width, this->m_height, this->m_viewport);
 
 	this->m_imGui = ImGuiTool(window, this->m_device, this->m_immediateContext);
+}
+
+void Renderer::ImGui()
+{
+	m_imGui.Start();
+	m_imGui.Run(this->m_immediateContext, this->m_rtv);
+	m_imGui.End();
 }

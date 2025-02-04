@@ -15,7 +15,6 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 {
 	m_setup.Setup(window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 	m_setup.SetViewport(width, height, viewport);
-
 }
 
 //Extension of Main
@@ -57,15 +56,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		Clock::End();
 
-
-		renderer.DrawScene(mainScene);
-
-	
-		clock.End();
-
 		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
-
-
 	DestroyWindow(window.GetWindowHandle());
 }
