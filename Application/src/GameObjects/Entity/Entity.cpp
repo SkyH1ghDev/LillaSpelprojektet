@@ -4,57 +4,57 @@
 #include <memory>
 
 // Factory function to create appropriate components
-std::unique_ptr<IAttack> CreateAttackComponent(EntityType type) {
+std::shared_ptr<IAttack> CreateAttackComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
-        return std::make_unique<PlayerAttack>();
+        return std::make_shared<PlayerAttack>();
     case EntityType::Enemy:
-        return std::make_unique<EnemyAttack>();
+        return std::make_shared<EnemyAttack>();
     default:
         throw std::invalid_argument("Unknown EntityType in CreateAttackComponent");
     }
 }
 
-std::unique_ptr<IMove> CreateMoveComponent(EntityType type) {
+std::shared_ptr<IMove> CreateMoveComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
-        return std::make_unique<PlayerMove>();
+        return std::make_shared<PlayerMove>();
     case EntityType::Enemy:
-        return std::make_unique<EnemyMove>();
+        return std::make_shared<EnemyMove>();
     default:
         throw std::invalid_argument("Unknown EntityType in CreateMoveComponent");
     }
 }
 
-std::unique_ptr<ITakeDamage> CreateTakeDamageComponent(EntityType type) {
+std::shared_ptr<ITakeDamage> CreateTakeDamageComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
-        return std::make_unique<PlayerTakeDamage>();
+        return std::make_shared<PlayerTakeDamage>();
     case EntityType::Enemy:
-        return std::make_unique<EnemyTakeDamage>();
+        return std::make_shared<EnemyTakeDamage>();
     default:
         throw std::invalid_argument("Unknown EntityType in CreateTakeDamageComponent");
     }
 }
 
-std::unique_ptr<IUseCard> CreateUseCardComponent(EntityType type) {
+std::shared_ptr<IUseCard> CreateUseCardComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
-        return std::make_unique<PlayerUseCard>();
+        return std::make_shared<PlayerUseCard>();
     case EntityType::Enemy:
-        return std::make_unique<EnemyUseCard>();
+        return std::make_shared<EnemyUseCard>();
     default:
         throw std::invalid_argument("Unknown EntityType in CreateUseCardComponent");
     }
 
 }
 
-std::unique_ptr<IVisible> CreateVisibleComponent(EntityType type) {
+std::shared_ptr<IVisible> CreateVisibleComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
-        return std::make_unique<PlayerVisible>();
+        return std::make_shared<PlayerVisible>();
     case EntityType::Enemy:
-        return std::make_unique<EnemyVisible>();
+        return std::make_shared<EnemyVisible>();
     default:
         throw std::invalid_argument("Unknown EntityType in CreateVisibleComponent");
     }
@@ -72,13 +72,15 @@ Entity::Entity(EntityType entityType) :
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
 
+void Entity::OnStart()
+{
+
+}
+
 void Entity::Update()
 {
 
 }
 
-void Entity::OnStart()
-{
 
-}
 
