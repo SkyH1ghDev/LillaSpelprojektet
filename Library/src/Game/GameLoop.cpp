@@ -1,7 +1,6 @@
 #include "GameLoop.hpp"
 
 #include <SpEngine/Manager/SceneManager.hpp>
-#include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Manager/GameObjectManager.hpp>
 
 #include <SpEngine/Input/Input.hpp>
