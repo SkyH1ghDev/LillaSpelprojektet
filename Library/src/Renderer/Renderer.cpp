@@ -45,15 +45,17 @@ MW::ComPtr<ID3D11RenderTargetView> Renderer::GetRTV()
 	return this->m_rtv;
 }
 
-void Renderer::DrawScene(const std::shared_ptr<IScene>& mainScene)
+void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 {
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
-	int lenght = mainScene.get()->GetGameObjectVec().size();
+	std::vector<std::shared_ptr<IGameObject>> ObjectVec = sceneToRender->GetGameObjectVec();
+	int len = ObjectVec.size();
+
 	this->FinalBindings();
 
-	for (int i = 0; i < lenght; i++)
+	for (int i = 0; i < len; i++)
 	{
-		this->DrawTexture(this->m_assetMan.GetSprite("Toe.png").GetSRV().Get(), mainScene->GetGameObjectVec()[i]->GetPosition(), DX::Colors::White);
+		this->DrawTexture(this->m_assetMan.GetSprite("Toe.png").GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
 	}
 
 	this->m_spriteBatch->End();
