@@ -1,7 +1,6 @@
 #pragma once
 #include "Game.hpp"
 
-#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Renderer/Renderer.hpp>
 #include <SpEngine/Renderer/Window.hpp>
 
@@ -52,7 +51,7 @@ private:
 
 private:
     SetupHelper m_setup;
-    ImGuiTool m_imGui;
     Game m_game;
+
 };
 

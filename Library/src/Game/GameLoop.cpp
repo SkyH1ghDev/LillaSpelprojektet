@@ -16,12 +16,6 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	m_setup.Setup(window, device, immediateContext, swapChain, dsTexture, dsView, rtv, width, height);
 	m_setup.SetViewport(width, height, viewport);
 
-	m_imGui = ImGuiTool(window, device, immediateContext);
-}
-
-void GameLoop::SetupImGui(const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const HWND& window)
-{
-	m_imGui = ImGuiTool(window, device, immediateContext);
 }
 
 //Extension of Main
@@ -30,10 +24,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	Window window = Window(hInstance, nCmdShow, 640, 360);
 	Renderer renderer = Renderer(window.GetWindowHandle());
 
-	SetupImGui(renderer.GetDevice(), renderer.GetContext(), window.GetWindowHandle());
-
-	AssetManager ass;
-	ass.ReadFolder(renderer.GetDevice(), "../Application/Resources");
+	Clock clock;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
@@ -62,16 +53,19 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 			gameObject->Update();
 		}
 
-		//Running ImGui and all their windows
-		m_imGui.Start();
-		m_imGui.Run(renderer.GetContext(), renderer.GetRTV());
-		m_imGui.End();
-
 		renderer.DrawScene(mainScene);
 
 		Clock::End();
+
+
+		renderer.DrawScene(mainScene);
+
+	
+		clock.End();
+
+		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 
-	m_imGui.Shutdown();
+
 	DestroyWindow(window.GetWindowHandle());
 }

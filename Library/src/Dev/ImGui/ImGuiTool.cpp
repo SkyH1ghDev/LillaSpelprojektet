@@ -6,6 +6,8 @@
 
 #include <SpEngine/Input/Input.hpp>
 
+#include <iostream>
+
 ImGuiTool::ImGuiTool()
 {
 }
@@ -27,13 +29,14 @@ void ImGuiTool::Start()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-
+	ImGui::ShowDemoWindow();
 }
 
 void ImGuiTool::End()
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	std::cerr << "ImGui Render Draw Data called.\n";
 }
 
 void ImGuiTool::Run(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv)
@@ -69,10 +72,9 @@ void ImGuiTool::MouseUpdate()
 {
 
 	// TODO: MAKE BETTER :)
-
 	ImGuiIO& io = ImGui::GetIO();
-	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x80 ? true : false;
-	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x80 ? true : false;
+	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x8000 ? true : false;
+	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x8000 ? true : false;
 
 }
 
