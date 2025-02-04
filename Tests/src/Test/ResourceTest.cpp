@@ -1,15 +1,15 @@
 #pragma once
 #include <gtest/gtest.h>
+#include <Window.hpp>
 #include "AssetManager.hpp"
 #include "SetupHelper.hpp"
 
 TEST(AssetManagement, HashMap)
 {
-    UINT height = 1080;
-    UINT width = 1920;
-
     HINSTANCE hInstance;
-    HWND window;
+    UINT width = 1920;
+    UINT height = 1080;
+
     MW::ComPtr<ID3D11Device> device;
     MW::ComPtr<ID3D11DeviceContext> deviceContext;
     MW::ComPtr<IDXGISwapChain> swapChain;
@@ -17,8 +17,10 @@ TEST(AssetManagement, HashMap)
     MW::ComPtr<ID3D11DepthStencilView> dsView;
     MW::ComPtr<ID3D11RenderTargetView> rtv;
 
+    Window window = Window(hInstance, SW_SHOW, width, height);
+
     SetupHelper setup;
-    setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
+    setup.Setup(window.GetWindowHandle(), device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
 	AssetManager as;
 	as.ReadFolder(device, "../Tests/src/Resources");
@@ -29,11 +31,10 @@ TEST(AssetManagement, HashMap)
 
 TEST(Sprites, CopyAssignment) 
 {
-    UINT height = 1080;
-    UINT width = 1920;
-
     HINSTANCE hInstance;
-    HWND window;
+    UINT width = 1920;
+    UINT height = 1080;
+
     MW::ComPtr<ID3D11Device> device;
     MW::ComPtr<ID3D11DeviceContext> deviceContext;
     MW::ComPtr<IDXGISwapChain> swapChain;
@@ -41,8 +42,10 @@ TEST(Sprites, CopyAssignment)
     MW::ComPtr<ID3D11DepthStencilView> dsView;
     MW::ComPtr<ID3D11RenderTargetView> rtv;
 
+    Window window = Window(hInstance, SW_SHOW, width, height);
+
     SetupHelper setup;
-    setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
+    setup.Setup(window.GetWindowHandle(), device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
     Sprite srt1(device, "../Tests/src/Resources/testTile.png");
     Sprite srt2 = srt1;
@@ -52,11 +55,10 @@ TEST(Sprites, CopyAssignment)
 
 TEST(Sprites, Copy)
 {
-    UINT height = 1080;
-    UINT width = 1920;
-
     HINSTANCE hInstance;
-    HWND window;
+    UINT width = 1920;
+    UINT height = 1080;
+
     MW::ComPtr<ID3D11Device> device;
     MW::ComPtr<ID3D11DeviceContext> deviceContext;
     MW::ComPtr<IDXGISwapChain> swapChain;
@@ -64,8 +66,10 @@ TEST(Sprites, Copy)
     MW::ComPtr<ID3D11DepthStencilView> dsView;
     MW::ComPtr<ID3D11RenderTargetView> rtv;
 
+    Window window = Window(hInstance, SW_SHOW, width, height);
+
     SetupHelper setup;
-    setup.Setup(hInstance, SW_SHOW, window, device, deviceContext, swapChain, texture, dsView, rtv, width, height);
+    setup.Setup(window.GetWindowHandle(), device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
     Sprite srt1(device, "../Tests/src/Resources/testTile.png");
     Sprite srt2(srt1);
