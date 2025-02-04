@@ -73,9 +73,8 @@ void ImGuiTool::MouseUpdate()
 
 	// TODO: MAKE BETTER :)
 	ImGuiIO& io = ImGui::GetIO();
-	//Input::GetKey(TPM_LEFTBUTTON);
-	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x80 ? true : false;
-	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x80 ? true : false;
+	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x8000 ? true : false;
+	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x8000 ? true : false;
 
 }
 
