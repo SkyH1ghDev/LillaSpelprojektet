@@ -10,7 +10,7 @@ class ImGuiTool
 {
 public:
 	ImGuiTool();
-	ImGuiTool(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
+	ImGuiTool(HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
 	~ImGuiTool();
 	ImGuiTool(const ImGuiTool& other) = delete;
 	ImGuiTool& operator=(const ImGuiTool& other) = delete;
@@ -23,7 +23,7 @@ public:
 	void Shutdown();
 
 private:
-	void Initialized(HWND window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
+	void Initialized(HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext);
 	void MouseUpdate();
 	void Test(MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<ID3D11RenderTargetView> rtv);
 

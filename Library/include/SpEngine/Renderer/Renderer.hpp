@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SpEngine/Setup/SetupHelper.hpp>
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 
 #include <d3d11.h>
 #include <directxtk/SpriteBatch.h>
@@ -38,6 +39,10 @@ public:
 
 	void DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
+	void ImGui();
+
+	
+
 private:
 	void InitializeBlendState();
 	void InitializeSamplerState();
@@ -63,4 +68,6 @@ private:
 	int m_height = 360;
 	SetupHelper m_setup;
 	std::unique_ptr<DX::DX11::SpriteBatch> m_spriteBatch;
+
+	ImGuiTool m_imGui;
 };

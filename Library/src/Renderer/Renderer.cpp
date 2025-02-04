@@ -12,6 +12,7 @@ Renderer::Renderer(HWND& window)
 
 Renderer::~Renderer()
 {
+	m_imGui.Shutdown();
 }
 
 MW::ComPtr<ID3D11BlendState> Renderer::GetBlendState()
@@ -51,17 +52,32 @@ void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2
 	this->m_spriteBatch->Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, layerDepth);
 	this->m_spriteBatch->End();
 
-	this->m_swapChain->Present(0, 0);
+	//this->m_swapChain->Present(0, 0);
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
 {
+
+
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
 	this->FinalBindings();
 	this->m_spriteBatch->Draw(texture, position, color);
 	this->m_spriteBatch->End();
 
-	this->m_swapChain->Present(0, 0);
+	//this->m_swapChain->Present(0, 0);
+}
+
+void Renderer::ImGui()
+{
+	//ImGui function
+	m_imGui.Start();
+	m_imGui.Run(this->m_immediateContext, this->m_rtv);
+	m_imGui.End();
+}
+
+MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain() const
+{
+	return this->m_swapChain;
 }
 
 void Renderer::InitializeBlendState()
@@ -152,4 +168,6 @@ void Renderer::SetupPipeline(HWND& window)
 {
 	this->m_setup.Setup(window, this->m_device, this->m_immediateContext, this->m_swapChain, this->m_dsTexture, this->m_dsView, this->m_rtv, this->m_width, this->m_height);
 	this->m_setup.SetViewport(this->m_width, this->m_height, this->m_viewport);
+
+	this->m_imGui = ImGuiTool(window, this->m_device, this->m_immediateContext);
 }
