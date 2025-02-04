@@ -18,24 +18,20 @@ void PlayerController::OnStart()
 
 void PlayerController::Update()
 {
-	DX::XMVECTOR finalMoveDirection = DX::XMVector2Normalize(DX::XMVectorAdd(DX::XMVectorAdd(m_up->GetMoveDirection(), m_left->GetMoveDirection()), DX::XMVectorAdd( m_down->GetMoveDirection(), m_right->GetMoveDirection())));
-
-	DX::XMFLOAT2 test;
-	DX::XMStoreFloat2(&test, finalMoveDirection);
 	m_player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
-	if (test.x == 0 && test.y == -1)
+	if (m_up->GetMoveDirection().y == -1)
 	{
 		this->m_player->PerformVisible(EntityState::WalkUp);
 	}
-	else if (test.x == 0 && test.y == 1)
+	else if (m_down->GetMoveDirection().y == 1)
 	{
 		this->m_player->PerformVisible(EntityState::WalkDown);
 	}
-	else if (test.x == 1 && test.y == 0)
+	else if (m_right->GetMoveDirection().x == 1)
 	{
 		this->m_player->PerformVisible(EntityState::WalkRight);
 	}
-	else if (test.x == -1 && test.y == 0)
+	else if (m_left->GetMoveDirection().x == -1)
 	{
 		this->m_player->PerformVisible(EntityState::WalkLeft);
 	}
