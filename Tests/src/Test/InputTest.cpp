@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <Sprite.hpp>
 #include <SetupHelper.hpp>
-#include <Mouse.hpp>
+//#include <Mouse.hpp>
 
 /*TEST(Mouse, GetPosition)
 {

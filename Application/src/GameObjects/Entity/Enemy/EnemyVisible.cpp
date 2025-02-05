@@ -1,6 +1,6 @@
 #include "EnemyVisible.hpp"
 
-void EnemyVisible::Visible(std::string& texture)
+void EnemyVisible::Visible(std::string& texture, EntityState entityState)
 {
     std::cerr << "ENEMY FINNS!" << std::endl;
 }

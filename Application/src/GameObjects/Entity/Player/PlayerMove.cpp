@@ -6,8 +6,6 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     DX::XMVECTOR positionXMVector = XMLoadFloat2(&position);
     DX::XMVECTOR directionXMVector = XMLoadFloat2(&direction);
 
-    // Perform the movement operation
-
     DX::XMVECTOR movement = DX::XMVectorScale(DX::XMVector2Normalize(directionXMVector), 250.0f * Clock::GetDeltaTime());
     positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
 

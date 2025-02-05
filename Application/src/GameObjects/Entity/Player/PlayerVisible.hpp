@@ -5,5 +5,5 @@
 class PlayerVisible : public IVisible
 {
 public:
-    void Visible(std::string& texture) override;
+    void Visible(std::string& texture, EntityState entityState) override;
 };

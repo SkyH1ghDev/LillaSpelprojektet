@@ -27,8 +27,9 @@ public:
     Entity& operator=(Entity&& other) noexcept = default;
 
     Entity(EntityType entityType);
+
     void PerformMove(const DX::XMFLOAT2& direction);
-    void PerformVisible(){ if (m_visible) m_visible->Visible(this->m_textureName); }
+    void PerformVisible(EntityState entityState) { if (m_visible) m_visible->Visible(m_texture, entityState); }
     void PerformAttack() { if (m_attack) m_attack->Attack(); }
     void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
