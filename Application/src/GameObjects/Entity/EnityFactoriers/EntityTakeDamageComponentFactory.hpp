@@ -4,4 +4,4 @@
 #include "PlayerTakeDamage.hpp"
 #include "EnemyTakeDamage.hpp"
 
-std::shared_ptr<ITakeDamage> CreateTakeDamageComponent(EntityType type);
+std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent(EntityType type);

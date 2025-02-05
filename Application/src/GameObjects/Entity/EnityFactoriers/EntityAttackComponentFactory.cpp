@@ -1,7 +1,7 @@
-#include "AttackComponentFactory.hpp"
+#include "EntityAttackComponentFactory.hpp"
 #include <stdexcept>
 
-std::shared_ptr<IAttack> CreateAttackComponent(EntityType type) {
+std::shared_ptr<IEntityAttack> CreateAttackComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
         return std::make_shared<PlayerAttack>();

@@ -1,7 +1,7 @@
-#include "VisibleComponentFactory.hpp"
+#include "EntityVisibleComponentFactory.hpp"
 #include <stdexcept>
 
-std::shared_ptr<IVisible> CreateVisibleComponent(EntityType type) {
+std::shared_ptr<IEntityVisible> CreateVisibleComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
         return std::make_shared<PlayerVisible>();

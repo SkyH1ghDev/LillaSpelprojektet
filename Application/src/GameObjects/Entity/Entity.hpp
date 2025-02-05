@@ -9,11 +9,11 @@ enum class EntityType {
     Enemy
 };
 
-#include "IMove.hpp"
-#include "IVisible.hpp"
-#include "IAttack.hpp"
-#include "ITakeDamage.hpp"
-#include "IUseCard.hpp"
+#include "IEntityMove.hpp"
+#include "IEntityVisible.hpp"
+#include "IEntityAttack.hpp"
+#include "IEntityTakeDamage.hpp"
+#include "IEntityUseCard.hpp"
 
 class Entity : public IGameObject
 {
@@ -40,10 +40,10 @@ public:
     EntityType GetType() const { return m_type; }
 
 private:
-    std::shared_ptr<IMove> m_move;
-    std::shared_ptr<IVisible> m_visible;
-    std::shared_ptr<IAttack> m_attack;
-    std::shared_ptr<ITakeDamage> m_takeDamage;
-    std::shared_ptr<IUseCard> m_useCard;
+    std::shared_ptr<IEntityMove> m_move;
+    std::shared_ptr<IEntityVisible> m_visible;
+    std::shared_ptr<IEntityAttack> m_attack;
+    std::shared_ptr<IEntityTakeDamage> m_takeDamage;
+    std::shared_ptr<IEntityUseCard> m_useCard;
     EntityType m_type;
 };

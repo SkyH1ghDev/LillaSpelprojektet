@@ -1,8 +1,8 @@
 #pragma once
-#include "ITakeDamage.hpp"
+#include "IEntityTakeDamage.hpp"
 #include <iostream>
 
-class EnemyTakeDamage : public ITakeDamage
+class EnemyTakeDamage : public IEntityTakeDamage
 {
 public:
     void TakeDamage() override;

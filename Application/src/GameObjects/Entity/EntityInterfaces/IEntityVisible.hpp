@@ -8,9 +8,9 @@ enum class EntityState {
     WalkLeft
 };
 
-class IVisible
+class IEntityVisible
 {
 public:
 	virtual void Visible(std::string& texture, EntityState entityState) = 0;
-	virtual ~IVisible() = default;
+	virtual ~IEntityVisible() = default;
 };

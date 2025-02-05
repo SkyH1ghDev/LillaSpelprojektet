@@ -4,4 +4,4 @@
 #include "PlayerAttack.hpp"
 #include "EnemyAttack.hpp"
 
-std::shared_ptr<IAttack> CreateAttackComponent(EntityType type);
+std::shared_ptr<IEntityAttack> CreateAttackComponent(EntityType type);

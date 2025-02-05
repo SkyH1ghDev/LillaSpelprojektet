@@ -1,8 +1,8 @@
 #pragma once
-#include "IAttack.hpp"
+#include "IEntityAttack.hpp"
 #include <iostream>
 
-class PlayerAttack : public IAttack
+class PlayerAttack : public IEntityAttack
 {
 public:
     void Attack() override;

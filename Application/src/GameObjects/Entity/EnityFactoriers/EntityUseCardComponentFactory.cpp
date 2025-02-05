@@ -1,7 +1,7 @@
-#include "UseCardComponentFactory.hpp"
+#include "EntityUseCardComponentFactory.hpp"
 #include <stdexcept>
 
-std::shared_ptr<IUseCard> CreateUseCardComponent(EntityType type) {
+std::shared_ptr<IEntityUseCard> CreateUseCardComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
         return std::make_shared<PlayerUseCard>();

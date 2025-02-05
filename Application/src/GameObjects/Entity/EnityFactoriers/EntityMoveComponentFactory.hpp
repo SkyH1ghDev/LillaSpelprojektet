@@ -5,4 +5,4 @@
 #include "PlayerMove.hpp"
 #include "EnemyMove.hpp"
 
-std::shared_ptr<IMove> CreateMoveComponent(EntityType type);
+std::shared_ptr<IEntityMove> CreateMoveComponent(EntityType type);
