@@ -1,9 +1,9 @@
 #pragma once
-#include "IVisible.hpp"
+#include "IClicked.hpp"
 #include <iostream>
 
-class ContinueVisible : public IVisible
+class ContinueClicked : public IClicked
 {
 public:
-    void Visible(std::string& texture) override;
+    void Clicked() override;
 };

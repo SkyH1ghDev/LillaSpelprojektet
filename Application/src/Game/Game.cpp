@@ -19,8 +19,9 @@ Game::Game()
 
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player);
     std::shared_ptr<IGameObject> playerController = std::make_shared<PlayerController>(std::static_pointer_cast<Entity, IGameObject>(player));
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>();
+    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
 
     testScene->AddGameObject(player);
     testScene->AddGameObject(playerController);
+    testScene->AddGameObject(exitButton);
 }

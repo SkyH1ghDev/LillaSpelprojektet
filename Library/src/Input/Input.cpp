@@ -57,7 +57,7 @@ void Input::HandleInput(const HWND& hWnd)
 
 		}
 	}
-
+	 
 	if (msg.message == WM_QUIT)
 	{
 		m_bindableKeys[VK_ESCAPE]->Notify(std::bitset<4>(KeyState_Pressed));

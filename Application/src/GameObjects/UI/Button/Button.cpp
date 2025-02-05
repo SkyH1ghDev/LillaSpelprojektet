@@ -6,6 +6,11 @@
 #include "MenuVisible.hpp"
 #include "ContinueVisible.hpp"
 #include "ExitMenuVisible.hpp"
+#include "PlayClicked.hpp"
+#include "ExitClicked.hpp"
+#include "MenuClicked.hpp"
+#include "ContinueClicked.hpp"
+#include "ExitMenuClicked.hpp"
 
 std::shared_ptr<IVisible> CreateVisibleComponent(ButtonType type) {
     switch (type) {
@@ -24,29 +29,54 @@ std::shared_ptr<IVisible> CreateVisibleComponent(ButtonType type) {
     }
 }
 
+std::shared_ptr<IClicked> CreateClickComponent(ButtonType type) {
+    switch (type) {
+    case ButtonType::Play:
+        return std::make_shared<PlayClicked>();
+    case ButtonType::Exit:
+        return std::make_shared<ExitClicked>();
+    case ButtonType::Menu:
+        return std::make_shared<MenuClicked>();
+    case ButtonType::Continue:
+        return std::make_shared<ContinueClicked>();
+    case ButtonType::ExitMenu:
+        return std::make_shared<ExitMenuClicked>();
+    default:
+        throw std::invalid_argument("Invalid ButtonType");
+    }
+}
+
 Button::Button(ButtonType type) :
     m_visible(CreateVisibleComponent(type)),
+    m_clicked(CreateClickComponent(type)),
     m_type(type)
 {
     std::cout << "Button created" << std::endl;
 }
 
+void Button::PerformClicked()
+{
+    //Mouse over Button
+    if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 100 &&
+        Input::GetMousePositionY() > this->m_position.y && Input::GetMousePositionY() < this->m_position.y + 100)
+    {
+        if (Input::GetKey(VK_LBUTTON).get()) {
+            m_clicked->Clicked();
+        }
+    }
+
+    //Keyboard bindings
+
+}
+
 void Button::Update()
 {
-    Clicked();
+    PerformClicked();
 }
 
 void Button::OnStart()
 {
-	this->m_position = { 0, 0 };
-}
-
-void Button::Clicked()
-{
-
-	if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + width &&
-		Input::GetMousePositionY() > this->m_position.y && Input::GetMousePositionY() < this->m_position.y + height)
-		ClickEvent();
-
-
+	this->m_position = { 200, 100 };
+    PerformVisible();
+    this->m_toRender = true;
 }

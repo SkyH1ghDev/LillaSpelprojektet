@@ -36,7 +36,6 @@ void ImGuiTool::End()
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	std::cerr << "ImGui Render Draw Data called.\n";
 }
 
 void ImGuiTool::Run(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv)

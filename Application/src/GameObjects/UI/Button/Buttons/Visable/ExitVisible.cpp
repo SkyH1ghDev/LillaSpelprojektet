@@ -2,4 +2,5 @@
 
 void ExitVisible::Visible(std::string& texture)
 {
+	texture = "exit.png";
 }

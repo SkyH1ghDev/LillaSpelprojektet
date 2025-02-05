@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "IVisible.hpp"
+#include "IClicked.hpp"
 
 // Define an enum for the entity type
 enum class ButtonType {
@@ -25,19 +26,17 @@ public:
 
     Button(ButtonType type);
     void PerformVisible() { if (m_visible) m_visible->Visible(this->m_texture); }
+    void PerformClicked();
 
 
     void Update() override;
     void OnStart() override;
 
-
-private:
-    virtual void ClickEvent() = 0;
-    void Clicked();
-
 private:
     std::shared_ptr<IVisible> m_visible;
+    std::shared_ptr<IClicked> m_clicked;
     ButtonType m_type;
+
     float width;
     float height;
 };
