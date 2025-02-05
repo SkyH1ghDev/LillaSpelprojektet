@@ -8,14 +8,21 @@ TEST(GameObjStartValues, TextureName)
 {
     DummyGameObject dummyGameObject;
 
-    ASSERT_TRUE(dummyGameObject.GetTextureString());
+    ASSERT_TRUE(dummyGameObject.GetTextureString().empty());
 }
 
-TEST(GameObjStartValues, Position)
+TEST(GameObjStartValues, PositionX)
 {
     DummyGameObject dummyGameObject;
 
-    ASSERT_EQ(dummyGameObject.GetPosition(), DX::XMFLOAT2(0, 0));
+    ASSERT_EQ(dummyGameObject.GetPosition().x, DX::XMFLOAT2(0, 0).x);
+}
+
+TEST(GameObjectStartValues, PositionY)
+{
+    DummyGameObject dummyGameObject;
+
+    ASSERT_EQ(dummyGameObject.GetPosition().y, DX::XMFLOAT2(0, 0).y);
 }
 
 TEST(GameObjStartValues, IsActive)
@@ -43,21 +50,21 @@ TEST(GameObjFunc, SetActive)
 
 TEST(GameObjFunc, AttachScript)
 {
-    DummyGameObject dummyGameObject;
-    std::shared_ptr<DummyScript> dummyScript;
+    std::shared_ptr<DummyGameObject> dummyGameObject = std::make_shared<DummyGameObject>();
+    std::shared_ptr<DummyScript> dummyScript = std::make_shared<DummyScript>();
 
-    dummyGameObject.AttachScript(std::static_pointer_cast<IScript, DummyScript>(dummyScript));
+    dummyGameObject->AttachScript(std::static_pointer_cast<IScript, DummyScript>(dummyScript));
 
-    ASSERT_EQ(dummyGameObject.GetAttachedScripts().size(), 1);
+    ASSERT_EQ(dummyGameObject->GetAttachedScripts().size(), 1);
 }
 
 TEST(GameObjFunc, DetachScript)
 {
-    DummyGameObject dummyGameObject;
-    std::shared_ptr<DummyScript> dummyScript;
+    std::shared_ptr<DummyGameObject> dummyGameObject = std::make_shared<DummyGameObject>();
+    std::shared_ptr<DummyScript> dummyScript = std::make_shared<DummyScript>();
 
-    dummyGameObject.AttachScript(std::static_pointer_cast<IScript, DummyScript>(dummyScript));
-    dummyGameObject.DetachScript(std::static_pointer_cast<IScript, DummyScript>(dummyScript));
+    dummyGameObject->AttachScript(std::static_pointer_cast<IScript, DummyScript>(dummyScript));
+    dummyGameObject->DetachScript(std::static_pointer_cast<IScript, DummyScript>(dummyScript));
 
-    ASSERT_EQ(dummyGameObject.GetAttachedScripts().size(), 0);
+    ASSERT_EQ(dummyGameObject->GetAttachedScripts().size(), 0);
 }

@@ -13,23 +13,23 @@ void PlayerController::OnStart()
 
 void PlayerController::Update()
 {
-	std::weak_ptr<Entity> player = std::static_pointer_cast<Entity>(m_GameObject.lock());
-	player.lock()->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
+	std::shared_ptr<Entity> player = std::static_pointer_cast<Entity>(m_gameObject);
+	player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
 
 	if (m_up->GetMoveDirection().y == -1)
 	{
-		m_player->PerformVisible(EntityState::WalkUp);
+		player->PerformVisible(EntityState::WalkUp);
 	}
 	else if (m_down->GetMoveDirection().y == 1)
 	{
-		m_player->PerformVisible(EntityState::WalkDown);
+		player->PerformVisible(EntityState::WalkDown);
 	}
 	else if (m_right->GetMoveDirection().x == 1)
 	{
-		m_player->PerformVisible(EntityState::WalkRight);
+		player->PerformVisible(EntityState::WalkRight);
 	}
 	else if (m_left->GetMoveDirection().x == -1)
 	{
-		m_player->PerformVisible(EntityState::WalkLeft);
+		player->PerformVisible(EntityState::WalkLeft);
 	}
 }

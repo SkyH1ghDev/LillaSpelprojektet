@@ -102,6 +102,7 @@ inline void IGameObject::DetachScript(const std::shared_ptr<IScript>& script)
     if (const auto it = std::ranges::find(m_scripts, script); it != m_scripts.end())
     {
         m_scripts.erase(it);
+        script->SetGameObject(nullptr);
     }
 }
 
