@@ -79,7 +79,7 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 	this->DrawTexture(this->m_assetMan.GetSprite(textureString).GetSRV().Get(), position, color);
 	this->m_spriteBatch->End();
 
-	//this->m_swapChain->Present(0, 0);
+	this->m_swapChain->Present(0, 0);
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
