@@ -2,5 +2,5 @@
 
 void BackgroundVisible::Visible(std::string& texture)
 {
-	texture = "";
+	texture = "arena_v1.png";
 }

@@ -8,7 +8,7 @@ Mesh::Mesh(MeshType meshType) :
     m_visible(CreateVisibleComponent(meshType)),
     m_type(meshType)
 {
-    std::cout << "Entity created of type: " << ("Background") << "\n";
+    std::cout << "Entity created of type: " << (m_type == MeshType::Background ? "Background" : "Enemy") << "\n";
 }
 
 void Mesh::OnStart() {
