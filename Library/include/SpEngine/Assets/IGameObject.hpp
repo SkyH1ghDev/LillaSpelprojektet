@@ -33,7 +33,7 @@ public:
     /**
      * Returns the active state of the game object
      *
-     * @return True if yes, False if not
+     * @return True if yes, False if nota
      */
     bool IsActive() const;
 
