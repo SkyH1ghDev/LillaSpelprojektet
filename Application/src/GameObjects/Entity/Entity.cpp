@@ -86,7 +86,7 @@ Entity::Entity(EntityType entityType) :
 void Entity::OnStart()
 {
     PerformVisible();
-    this->m_toRender = true;
+    this->m_shouldRender = true;
 }
 
 void Entity::Update()

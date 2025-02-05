@@ -23,8 +23,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	Window window = Window(hInstance, nCmdShow, 640, 360);
 	Renderer renderer = Renderer(window.GetWindowHandle());
 
-	Clock clock;
-
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
 	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
@@ -50,6 +48,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
 			gameObject->Update();
+			gameObject->UpdateScripts();
 		}
 
 		renderer.DrawScene(mainScene);

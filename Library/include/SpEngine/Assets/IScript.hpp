@@ -1,0 +1,32 @@
+#pragma once
+
+#include <memory>
+
+class IGameObject;
+
+class IScript
+{
+public:
+    IScript() = default;
+    virtual ~IScript() = default;
+    IScript(const IScript& other) = default;
+    IScript& operator=(const IScript& other) = default;
+    IScript(IScript&& other) noexcept = default;
+    IScript& operator=(IScript&& other) noexcept = default;
+
+    virtual void OnStart() = 0;
+
+    virtual void Update() = 0;
+
+    void SetGameObject(const std::weak_ptr<IGameObject>& gameObject);
+
+protected:
+
+    std::weak_ptr<IGameObject> m_GameObject;
+};
+
+inline void IScript::SetGameObject(const std::weak_ptr<IGameObject>& gameObject)
+{
+    this->m_GameObject = gameObject;
+}
+

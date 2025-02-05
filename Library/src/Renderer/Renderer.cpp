@@ -61,7 +61,7 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 	for (int i = 0; i < len; i++)
 	{
-		if (ObjectVec.at(i)->ToRender())
+		if (ObjectVec.at(i)->ShouldRender())
 		{
 			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
 		}
