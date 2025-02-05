@@ -26,7 +26,7 @@ public:
     Mesh(MeshType meshType);
 
     void PerformStatic() { if (m_static) m_static->Static(); }
-    void PerformVisible() { if (m_visible) m_visible->Visible(this->m_texture); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(this->m_textureName); }
 
     void Update() override;
     void OnStart() override;

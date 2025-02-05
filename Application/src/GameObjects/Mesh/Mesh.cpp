@@ -13,7 +13,7 @@ Mesh::Mesh(MeshType meshType) :
 
 void Mesh::OnStart() {
     PerformVisible();
-    this->m_toRender = true;
+    this->m_shouldRender = true;
 }
 
 void Mesh::Update() {}
