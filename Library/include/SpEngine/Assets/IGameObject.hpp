@@ -70,11 +70,18 @@ public:
     std::string GetTextureString() const;
 
     /**
-     * Gets the float value for the game object
+     * Gets the layer float value for the game object
      *
      * @return a float between 0 and 1
      */
     float GetLayerFloat() const;
+
+    /**
+    * Gets the scale float value for the game object
+    *
+    * @return a float between 0 and 1
+    */
+    float GetScaleFloat() const;
 
     /**
      * Returns whether the GameObject should be rendered
@@ -87,6 +94,7 @@ protected:
     std::string m_textureName;
     DX::XMFLOAT2 m_position = { 0, 0 };
     float m_layerFloat = 0.0;
+    float m_scaleFloat = 1.0;
 
     bool m_isActive = true;
     bool m_shouldRender = false;
@@ -144,7 +152,10 @@ inline float IGameObject::GetLayerFloat() const
 {
     return m_layerFloat;
 }
-
+inline float IGameObject::GetScaleFloat() const
+{
+    return m_scaleFloat;
+}
 inline bool IGameObject::ShouldRender() const
 {
     return m_shouldRender;
