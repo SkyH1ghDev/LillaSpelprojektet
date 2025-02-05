@@ -1,8 +1,8 @@
 #pragma once
-#include "IVisible.hpp"
+#include "IEntityVisible.hpp"
 #include <iostream>
 
-class EnemyVisible : public IVisible
+class EnemyVisible : public IEntityVisible
 {
 public:
     void Visible(std::string& texture, EntityState entityState) override;

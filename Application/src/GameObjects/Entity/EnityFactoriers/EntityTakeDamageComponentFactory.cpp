@@ -1,7 +1,7 @@
-#include "TakeDamageComponentFactory.hpp"
+#include "EntityTakeDamageComponentFactory.hpp"
 #include <stdexcept>
 
-std::shared_ptr<ITakeDamage> CreateTakeDamageComponent(EntityType type) {
+std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
         return std::make_shared<PlayerTakeDamage>();

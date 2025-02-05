@@ -1,8 +1,8 @@
 #pragma once
-#include "IUseCard.hpp"
+#include "IEntityUseCard.hpp"
 #include <iostream>
 
-class PlayerUseCard : public IUseCard
+class PlayerUseCard : public IEntityUseCard
 {
 public:
     void UseCard() override;

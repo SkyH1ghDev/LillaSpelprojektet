@@ -1,7 +1,7 @@
-#include "MoveComponentFactory.hpp"
+#include "EntityMoveComponentFactory.hpp"
 #include <stdexcept>
 
-std::shared_ptr<IMove> CreateMoveComponent(EntityType type) {
+std::shared_ptr<IEntityMove> CreateMoveComponent(EntityType type) {
     switch (type) {
     case EntityType::Player:
         return std::make_shared<PlayerMove>();

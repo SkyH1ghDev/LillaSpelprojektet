@@ -1,9 +1,9 @@
 #include "Entity.hpp"
-#include "AttackComponentFactory.hpp"
-#include "MoveComponentFactory.hpp"
-#include "TakeDamageComponentFactory.hpp"
-#include "UseCardComponentFactory.hpp"
-#include "VisibleComponentFactory.hpp"
+#include "EntityAttackComponentFactory.hpp"
+#include "EntityMoveComponentFactory.hpp"
+#include "EntityTakeDamageComponentFactory.hpp"
+#include "EntityUseCardComponentFactory.hpp"
+#include "EntityVisibleComponentFactory.hpp"
 #include <iostream>
 
 Entity::Entity(EntityType entityType) :

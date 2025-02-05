@@ -4,4 +4,4 @@
 #include "PlayerVisible.hpp"
 #include "EnemyVisible.hpp"
 
-std::shared_ptr<IVisible> CreateVisibleComponent(EntityType type);
+std::shared_ptr<IEntityVisible> CreateVisibleComponent(EntityType type);
