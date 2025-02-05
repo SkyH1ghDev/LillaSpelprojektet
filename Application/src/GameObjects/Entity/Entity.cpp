@@ -21,6 +21,7 @@ void Entity::OnStart()
 {
     PerformVisible(EntityState::WalkDown);
     this->m_shouldRender = true;
+    this->m_layerFloat = 1.0;
 }
 
 void Entity::Update()
