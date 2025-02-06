@@ -22,7 +22,7 @@ public:
     IGameObject& operator=(const IGameObject& other) = default;
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
-
+    
 
 
     /**
@@ -89,6 +89,13 @@ public:
      * @return True if yes, False if no
      */
     bool ShouldRender() const;
+
+    /**
+     * Sets object position.
+     *
+     * 
+     */
+    void SetPosition(DX::XMFLOAT2 position);
 
 protected:
     std::string m_textureName;
@@ -159,4 +166,8 @@ inline float IGameObject::GetScaleFloat() const
 inline bool IGameObject::ShouldRender() const
 {
     return m_shouldRender;
+}
+inline void IGameObject::SetPosition(DX::XMFLOAT2 position)
+{
+    m_position = position;
 }

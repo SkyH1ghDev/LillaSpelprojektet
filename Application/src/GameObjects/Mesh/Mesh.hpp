@@ -5,7 +5,8 @@
 
 // Define an enum for the entity type
 enum class MeshType {
-    Background
+    Background,
+    Mouse
 };
 
 #include "IMeshStatic.hpp"

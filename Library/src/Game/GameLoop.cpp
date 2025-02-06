@@ -44,13 +44,13 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		Input::HandleInput(window.GetWindowHandle());
 
 		// Update for all GameObjects
-
+		
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
 			gameObject->Update();
 			gameObject->UpdateScripts();
 		}
-
+		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()));
 		renderer.DrawScene(mainScene);
 
 		Clock::End();
