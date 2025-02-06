@@ -1,7 +1,9 @@
 #include "PlayerVisible.hpp"
 
-void PlayerVisible::Visible(std::string& texture, EntityState entityState)
+void PlayerVisible::Visible(std::string& texture, EntityState entityState, float& layer, float& scale)
 {
+    layer = 0.5;
+    scale = 0.25;
     switch (entityState) {
     case EntityState::WalkUp:
         texture = "chesster_backwards_v2.png";

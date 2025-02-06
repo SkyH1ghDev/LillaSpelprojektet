@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <SpEngine/Input/Input.hpp>
 
 namespace DX = DirectX;
 
