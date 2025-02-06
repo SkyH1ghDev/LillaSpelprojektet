@@ -53,7 +53,7 @@ MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain()
 
 void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 {
-	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
+	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_FrontToBack, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
 	std::vector<std::shared_ptr<IGameObject>> ObjectVec = sceneToRender->GetGameObjectVec();
 	int len = ObjectVec.size();
 
