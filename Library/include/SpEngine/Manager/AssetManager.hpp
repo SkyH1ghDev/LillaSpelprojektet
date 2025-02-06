@@ -15,6 +15,7 @@ public:
 
 	bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
 	Sprite GetSprite(const std::string& filename);
+	std::shared_ptr<RECT> getSourceRect(const std::string& filename);
 
 private:
 
@@ -25,5 +26,11 @@ private:
 inline Sprite AssetManager::GetSprite(const std::string& filename)
 {
 	return m_textureMap[filename];
+}
+
+//Returns Rect from the matching filename in the hash map
+inline std::shared_ptr<RECT> AssetManager::getSourceRect(const std::string& filename)
+{
+	return m_textureMap[filename].GetSourceRectangle();
 }
 
