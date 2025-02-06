@@ -16,4 +16,6 @@ void Mesh::OnStart() {
     this->m_shouldRender = true;
 }
 
-void Mesh::Update() {}
+void Mesh::Update() {
+
+}

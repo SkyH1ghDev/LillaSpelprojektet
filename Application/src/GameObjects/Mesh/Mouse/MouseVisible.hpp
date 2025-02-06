@@ -5,5 +5,5 @@
 class MouseVisible : public IMeshVisible
 {
 public:
-    void Visible(std::string& texture) override;
+    void Visible(std::string& texture, float& layer, float& scale) override;
 };
