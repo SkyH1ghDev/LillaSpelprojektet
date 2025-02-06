@@ -24,7 +24,7 @@ Game::Game()
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background);
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse);
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
+    //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
 
     player->AttachScript(playerController);
 
@@ -33,6 +33,6 @@ Game::Game()
     testScene->AddGameObject(mouse);
 
 
-    testScene->AddGameObject(exitButton);
+    //testScene->AddGameObject(exitButton);
 
 }

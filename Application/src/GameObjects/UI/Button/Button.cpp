@@ -1,6 +1,5 @@
 #include "Button.hpp"
 
-
 #include "PlayVisible.hpp"
 #include "ExitVisible.hpp"
 #include "MenuVisible.hpp"
@@ -65,7 +64,6 @@ void Button::PerformClicked()
         }
     }
 
-
     //Keyboard bindings
 
 }
@@ -78,9 +76,8 @@ void Button::Update()
 void Button::OnStart()
 {
     Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
-      //Input::GetKey(VK_LBUTTON)->Attach(std::static_pointer_cast<IObserver, OnMouseClick>(m_mouseClick));
 
-	this->m_position = { 200, 100 };
+	this->m_position = { 0, 0 };
     PerformVisible();
-    this->m_toRender = true;
+    this->m_shouldRender = true;
 }
