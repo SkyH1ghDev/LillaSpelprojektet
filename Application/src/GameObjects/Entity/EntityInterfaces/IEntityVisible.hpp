@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-
+#include <string>
 enum class EntityState {
     WalkUp,
     WalkDown,
