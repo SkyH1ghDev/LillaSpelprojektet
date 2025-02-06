@@ -1,5 +1,6 @@
 #pragma once
 #include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Input/Action/OnMouseClick.hpp>
 #include <iostream>
 
 #include "IVisible.hpp"
@@ -35,6 +36,8 @@ public:
 private:
     std::shared_ptr<IVisible> m_visible;
     std::shared_ptr<IClicked> m_clicked;
+
+    std::shared_ptr<OnMouseClick> m_mouseClick = std::make_shared<OnMouseClick>();
     ButtonType m_type;
 
     float width;

@@ -54,7 +54,6 @@ void Input::HandleInput(const HWND& hWnd)
 		{
 			m_bindableKeys[i]->ChangeKeyState(keyStates[i] & KEY_PRESSED ? true : false);
 			m_bindableKeys[i]->Notify(m_bindableKeys[i]->GetKeyState());
-
 		}
 	}
 	 

@@ -60,10 +60,11 @@ void Button::PerformClicked()
     if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 100 &&
         Input::GetMousePositionY() > this->m_position.y && Input::GetMousePositionY() < this->m_position.y + 100)
     {
-        if (Input::GetKey(VK_LBUTTON).get()) {
+        if (m_mouseClick->VL_Click()) {
             m_clicked->Clicked();
         }
     }
+
 
     //Keyboard bindings
 
@@ -76,6 +77,9 @@ void Button::Update()
 
 void Button::OnStart()
 {
+    Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
+      //Input::GetKey(VK_LBUTTON)->Attach(std::static_pointer_cast<IObserver, OnMouseClick>(m_mouseClick));
+
 	this->m_position = { 200, 100 };
     PerformVisible();
     this->m_toRender = true;
