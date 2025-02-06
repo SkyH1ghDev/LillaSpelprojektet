@@ -20,7 +20,8 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 //Extension of Main
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
-	Window window = Window(hInstance, nCmdShow, 640, 360);
+	Window window = Window(hInstance, nCmdShow, 1920, 1080);
+	ShowCursor(FALSE);
 	Renderer renderer = Renderer(window.GetWindowHandle());
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
@@ -50,7 +51,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 			gameObject->Update();
 			gameObject->UpdateScripts();
 		}
-		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()));
+		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX() * 640 / GetSystemMetrics(SM_CXSCREEN), Input::GetMousePositionY() * 360 / GetSystemMetrics(SM_CYSCREEN)));
 		renderer.DrawScene(mainScene);
 
 		Clock::End();
