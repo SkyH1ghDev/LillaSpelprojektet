@@ -1,50 +1,6 @@
 #include "SetupHelper.hpp"
 #include <iostream>
 
-LRESULT CALLBACK SetupHelper::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	// sort through and find what code to run for the message given
-	switch (message)
-	{
-		// this message is read when the window is closed
-	case WM_DESTROY:
-	{
-		// close the application entirely
-		PostQuitMessage(0);
-		return 0;
-	}
-	default:
-		break;
-	}
-
-	// Handle any messages the switch statement didn't by using default methodology
-	return DefWindowProc(hWnd, message, wParam, lParam);
-}
-
-bool SetupHelper::SetupWindow(const HINSTANCE& instance, const int& nCmdShow, HWND &window, const UINT &width, const UINT &height) {
-	const wchar_t CLASS_NAME[] = L"Test Window Class";
-
-	WNDCLASS wc = { };
-
-	wc.lpfnWndProc = WindowProc;
-	wc.hInstance = instance;
-	wc.lpszClassName = CLASS_NAME;
-
-	RegisterClass(&wc);
-
-	window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
-		CW_USEDEFAULT, 0, width, height, nullptr, nullptr, instance, nullptr);
-
-	if (window == nullptr)
-	{
-		std::cerr << "HWND was nullptr, last error: " << GetLastError() << "\n";
-		return false;
-	}
-
-	ShowWindow(window, nCmdShow);
-	return true;
-}
-
 bool SetupHelper::SetupInterfaces(MW::ComPtr<ID3D11DeviceContext>& immediateContext, const UINT& width, const UINT& height, const HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain)
 {
 	UINT flags = 0;
@@ -154,11 +110,6 @@ void SetupHelper::SetViewport(const UINT& width, const UINT& height, D3D11_VIEWP
 bool SetupHelper::Setup(HWND &window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext,
                         MW::ComPtr<IDXGISwapChain>& swapChain, MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, const UINT &width, const UINT &height)
 {
-	
-	/*if (!SetupWindow(hInstance, nCmdShow, window, width, height))
-	{
-		throw std::runtime_error("Failed to setup Window");
-	}*/
 
 	if (!SetupInterfaces(immediateContext, width, height, window, device, swapChain))
 	{
