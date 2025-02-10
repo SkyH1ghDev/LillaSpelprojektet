@@ -38,10 +38,3 @@ inline std::vector<Sprite> AssetManager::GetAnimatedSprite(const std::string& fi
 {
 	return m_textureMap[filename];
 }
-
-//Returns Rect from the matching filename in the hash map
-inline std::shared_ptr<RECT> AssetManager::getSourceRect(const std::string& filename)
-{
-	return m_textureMap[filename].GetSourceRectangle();
-}
-
