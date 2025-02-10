@@ -2,7 +2,7 @@
 #include "IMeshStatic.hpp"
 #include <iostream>
 
-class MouseStatic : public IMeshStatic
+class CursorMeshStatic : public IMeshStatic
 {
 public:
     void Static() override;
