@@ -43,6 +43,8 @@ void Input::HandleInput(const HWND& hWnd)
 	GetCursorPos(&m_cursorPosition);
 	ScreenToClient(hWnd, &m_cursorPosition);
 
+	// std::cout << GetMousePositionX() << ", " << GetMousePositionY() << std::endl;
+
 	// KEYBOARD
 
 	BYTE keyStates[256];

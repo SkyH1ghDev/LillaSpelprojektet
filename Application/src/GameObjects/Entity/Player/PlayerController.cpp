@@ -13,7 +13,7 @@ void PlayerController::OnStart()
 
 void PlayerController::Update()
 {
-	std::shared_ptr<Entity> player = std::static_pointer_cast<Entity>(m_gameObject);
+	std::shared_ptr<Entity> player = std::static_pointer_cast<Entity>(m_gameObject.lock());
 	player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
 
 	if (m_up->GetMoveDirection().y == -1)

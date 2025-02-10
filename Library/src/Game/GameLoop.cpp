@@ -45,7 +45,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		Input::HandleInput(window.GetWindowHandle());
 
 		// Update for all GameObjects
-		
+
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
 			gameObject->Update();

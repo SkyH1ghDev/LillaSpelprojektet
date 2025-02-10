@@ -23,7 +23,7 @@ public:
     IGameObject& operator=(const IGameObject& other) = default;
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
-    
+
 
 
     /**
@@ -94,7 +94,7 @@ public:
     /**
      * Sets object position.
      *
-     * 
+     *
      */
     void SetPosition(DX::XMFLOAT2 position);
 
@@ -126,7 +126,6 @@ inline void IGameObject::DetachScript(const std::shared_ptr<IScript>& script)
     if (const auto it = std::ranges::find(m_scripts, script); it != m_scripts.end())
     {
         m_scripts.erase(it);
-        script->SetGameObject(nullptr);
     }
 }
 

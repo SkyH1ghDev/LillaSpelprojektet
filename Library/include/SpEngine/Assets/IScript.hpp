@@ -18,14 +18,14 @@ public:
 
     virtual void Update() = 0;
 
-    void SetGameObject(const std::shared_ptr<IGameObject>& gameObject);
+    void SetGameObject(const std::weak_ptr<IGameObject>& gameObject);
 
 protected:
 
-    std::shared_ptr<IGameObject> m_gameObject;
+    std::weak_ptr<IGameObject> m_gameObject;
 };
 
-inline void IScript::SetGameObject(const std::shared_ptr<IGameObject>& gameObject)
+inline void IScript::SetGameObject(const std::weak_ptr<IGameObject>& gameObject)
 {
     this->m_gameObject = gameObject;
 }
