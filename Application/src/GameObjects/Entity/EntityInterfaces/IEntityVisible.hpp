@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-
+#include <string>
 enum class EntityState {
     WalkUp,
     WalkDown,
@@ -11,6 +10,6 @@ enum class EntityState {
 class IEntityVisible
 {
 public:
-	virtual void Visible(std::string& texture, EntityState entityState) = 0;
+	virtual void Visible(std::string& texture, EntityState entityState, float& layer, float& scale) = 0;
 	virtual ~IEntityVisible() = default;
 };

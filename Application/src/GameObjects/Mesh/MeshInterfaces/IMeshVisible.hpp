@@ -4,6 +4,6 @@
 class IMeshVisible
 {
 public:
-	virtual void Visible(std::string& texture) = 0;
+	virtual void Visible(std::string& texture, float& layer, float& scale) = 0;
 	virtual ~IMeshVisible() = default;
 };

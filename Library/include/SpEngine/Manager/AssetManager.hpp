@@ -16,6 +16,7 @@ public:
 	static Sprite GetSprite(const std::string& filename);
 	static std::vector<Sprite> GetAnimatedSprite(const std::string& filename);
 
+
 private:
 
 	static std::unordered_map<std::string, std::vector<Sprite>> m_textureMap;
@@ -36,5 +37,11 @@ inline Sprite AssetManager::GetSprite(const std::string& filename)
 inline std::vector<Sprite> AssetManager::GetAnimatedSprite(const std::string& filename)
 {
 	return m_textureMap[filename];
+}
+
+//Returns Rect from the matching filename in the hash map
+inline std::shared_ptr<RECT> AssetManager::getSourceRect(const std::string& filename)
+{
+	return m_textureMap[filename].GetSourceRectangle();
 }
 

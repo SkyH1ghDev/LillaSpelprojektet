@@ -53,20 +53,18 @@ MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain()
 
 void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 {
-	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
+	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_FrontToBack, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
 	std::vector<std::shared_ptr<IGameObject>> ObjectVec = sceneToRender->GetGameObjectVec();
 	int len = ObjectVec.size();
 
 	this->FinalBindings();
-
-	RECT rect = { 0, 0, 640, 360 };
 
 	for (int i = 0; i < len; i++)
 	{
 		if (ObjectVec.at(i)->ShouldRender())
 		{
 			//this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
-			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), &rect, DX::Colors::White, 0.0f, DX::XMFLOAT2(0, 0), ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
+			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.getSourceRect(ObjectVec.at(i)->GetTextureString()).get(), DX::Colors::White, 0.0f, DX::XMFLOAT2(0, 0), ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
 		}
 	}
 

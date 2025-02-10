@@ -30,12 +30,12 @@ Window::Window(const HINSTANCE& instance, const int& nCmdShow, const UINT& width
 	wc.hInstance = instance;
 	wc.lpszClassName = CLASS_NAME;
 
-	m_width = width;
-	m_height = height;
+	this->m_width = width;
+	this->m_height = height;
 
 	RegisterClass(&wc);
 
-	this->m_window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+	this->m_window = CreateWindowEx(0, CLASS_NAME, L"Jonas Krymp", WS_OVERLAPPED /* | WS_CAPTION*/ | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP,
 		CW_USEDEFAULT, 0, m_width, m_height, nullptr, nullptr, instance, nullptr);
 
 	if (this->m_window == nullptr)
