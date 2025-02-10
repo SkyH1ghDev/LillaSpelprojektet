@@ -30,8 +30,8 @@ Window::Window(const HINSTANCE& instance, const int& nCmdShow, const UINT& width
 	wc.hInstance = instance;
 	wc.lpszClassName = CLASS_NAME;
 
-	m_width = width;
-	m_height = height;
+	this->m_width = width;
+	this->m_height = height;
 
 	RegisterClass(&wc);
 
