@@ -81,7 +81,7 @@ project "APNGLoader"
 
     prebuildcommands{
         "{MKDIR} " .. mkdirPath,
-        "{COPY} ../External/APNGLoader/uc_apng_loader.h " .. copyPath,
+        "{COPY} ../External/APNGLoader/*.h " .. copyPath,
     }
 
     files {

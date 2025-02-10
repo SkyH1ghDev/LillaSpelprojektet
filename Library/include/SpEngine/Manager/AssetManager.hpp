@@ -1,6 +1,5 @@
 #pragma once
 #include <filesystem>
-#include <map>
 #include <SpEngine/Renderer/Sprite.hpp>
 
 namespace FS = std::filesystem;
@@ -13,16 +12,28 @@ public:
 	AssetManager() = default;
 	~AssetManager() = default;
 
-	bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
-	Sprite GetSprite(const std::string& filename);
+	static bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
+	static Sprite GetSprite(const std::string& filename);
+	static std::vector<Sprite> GetAnimatedSprite(const std::string& filename);
 
 private:
 
-	std::map<std::string, Sprite> m_textureMap;
+	static std::unordered_map<std::string, std::vector<Sprite>> m_textureMap;
+	static std::unordered_map<std::string, int> m_extensionIndex;
+	enum fileFormat : std::uint8_t;
+
 };
+
+
+/* TODO: Måste fixa så att GetSprite och GetAnimatedSprite returnerar saker som faktiskt finns i m_textureMap. Ingen fault checking just nu. */
 
 //Returns Sprite with the matching filename in the hash map
 inline Sprite AssetManager::GetSprite(const std::string& filename)
+{
+	return m_textureMap[filename].at(0);
+}
+
+inline std::vector<Sprite> AssetManager::GetAnimatedSprite(const std::string& filename)
 {
 	return m_textureMap[filename];
 }

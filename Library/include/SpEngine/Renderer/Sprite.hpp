@@ -2,7 +2,7 @@
 #include <string>
 #include <directxtk/SpriteBatch.h>
 #include <wrl/client.h>
-#include <iostream>
+#include <APNGLoader/uc_apng_loader.h>
 
 namespace MW = Microsoft::WRL;
 namespace DX = DirectX;
@@ -12,7 +12,8 @@ class Sprite
 {
 public:
 	Sprite() = default;
-	Sprite(MW::ComPtr<ID3D11Device> device, std::string filepath);
+	Sprite(const MW::ComPtr<ID3D11Device>& device, const std::string& filepath);
+	Sprite(const MW::ComPtr<ID3D11Device>& device, const uc::apng::frame& frame);
 	Sprite(const Sprite& other);
 	Sprite& operator=(const Sprite& other);
 	~Sprite() = default;
@@ -29,17 +30,17 @@ private:
 
 inline MW::ComPtr<ID3D11ShaderResourceView> Sprite::GetSRV()
 {
-	return this->m_srv;
+	return m_srv;
 }
 
 inline DX::XMFLOAT2 Sprite::GetOrigin()
 {
-	return this->m_origin;
+	return m_origin;
 }
 
 inline std::shared_ptr<RECT> Sprite::GetSourceRectangle()
 {
-	return this->m_sourceRect;
+	return m_sourceRect;
 }
 
 
