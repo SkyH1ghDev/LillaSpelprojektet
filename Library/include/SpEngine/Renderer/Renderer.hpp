@@ -33,6 +33,8 @@ public:
 
 	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
+	void DrawImGui();
+
 private:
 	void DrawTexture(
 		ID3D11ShaderResourceView* texture,
@@ -53,6 +55,7 @@ private:
 
 	void FinalBindings();
 	void SetupPipeline(HWND& window);
+	void SetupImGui(HWND& window);
 	void ImGui();
 
 private:

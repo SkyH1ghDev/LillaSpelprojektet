@@ -4,6 +4,7 @@
 Renderer::Renderer(HWND& window)
 {
 	SetupPipeline(window);
+	SetupImGui(window);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
 	this->m_assetMan.ReadFolder(this->m_device, "../Application/Resources");
 	this->InitializeBlendState();
@@ -68,7 +69,6 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 		}
 	}
 
-	ImGui();
 	this->m_spriteBatch->End();
 	this->m_swapChain->Present(0, 0);
 }
@@ -81,6 +81,11 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 	this->m_spriteBatch->End();
 
 	this->m_swapChain->Present(0, 0);
+}
+
+void Renderer::DrawImGui()
+{
+	ImGui();
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
@@ -181,7 +186,10 @@ void Renderer::SetupPipeline(HWND& window)
 {
 	this->m_setup.Setup(window, this->m_device, this->m_immediateContext, this->m_swapChain, this->m_dsTexture, this->m_dsView, this->m_rtv, this->m_width, this->m_height);
 	this->m_setup.SetViewport(this->m_width, this->m_height, this->m_viewport);
+}
 
+void Renderer::SetupImGui(HWND& window)
+{
 	this->m_imGui = ImGuiTool(window, this->m_device, this->m_immediateContext);
 }
 
