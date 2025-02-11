@@ -5,5 +5,5 @@
 class EnemyAttack : public IEntityAttack
 {
 public:
-    void Attack() override;
+    void Attack(DX::XMFLOAT2 direction) override;
 };

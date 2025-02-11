@@ -3,5 +3,6 @@
 #include "Mesh.hpp"
 #include "BackgroundVisible.hpp"
 #include "MouseVisible.hpp"
+#include "WeaponVisible.hpp"
 
 std::shared_ptr<IMeshVisible> CreateVisibleComponent(MeshType type);

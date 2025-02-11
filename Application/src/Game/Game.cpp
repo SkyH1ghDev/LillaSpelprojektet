@@ -27,10 +27,14 @@ Game::Game()
     //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
 
     player->AttachScript(playerController);
-
+    
     testScene->AddGameObject(player);
+    player->CenterOrigin(true);
     testScene->AddGameObject(background);
     testScene->AddGameObject(mouse);
+    testScene->AddGameObject(std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject());
+    mouse->CenterOrigin(true);
+    std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject()->CenterOrigin(true);
 
 
     //testScene->AddGameObject(exitButton);

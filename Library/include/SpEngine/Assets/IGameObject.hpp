@@ -85,6 +85,20 @@ public:
     float GetScaleFloat() const;
 
     /**
+    * Gets the rotation float value for the game object
+    *
+    * @return a float value
+    */
+    float GetRotationFloat() const;
+
+    /**
+     * Returns whether the sprite of the object is centered or not
+     *
+     * @return True if yes, False if no
+     */
+    bool IsOriginCentered() const;
+
+    /**
      * Returns whether the GameObject should be rendered
      *
      * @return True if yes, False if no
@@ -98,12 +112,28 @@ public:
      */
     void SetPosition(DX::XMFLOAT2 position);
 
+    /**
+     * Sets object rotation.
+     *
+     *
+     */
+    void SetRotation(float rotation);
+
+    /**
+     * Sets object origin, false if top left = (0,0), true if centered.
+     *
+     *
+     */
+    void CenterOrigin(bool centerOrigin);
+
 protected:
     std::string m_textureName;
     DX::XMFLOAT2 m_position = { 0, 0 };
     float m_layerFloat = 0.0;
     float m_scaleFloat = 1.0;
+    float m_rotationFloat = 0.0;
 
+    bool m_centerOrigin = false;
     bool m_isActive = true;
     bool m_shouldRender = false;
 
@@ -149,7 +179,7 @@ inline void IGameObject::SetActive(bool activeState)
 
 inline DX::XMFLOAT2 IGameObject::GetPosition() const
 {
-    return m_position;
+    return DX::XMFLOAT2(m_position.x, m_position.y);
 }
 inline std::string IGameObject::GetTextureString() const
 {
@@ -163,6 +193,14 @@ inline float IGameObject::GetScaleFloat() const
 {
     return m_scaleFloat;
 }
+inline float IGameObject::GetRotationFloat() const 
+{
+    return m_rotationFloat;
+}
+inline bool IGameObject::IsOriginCentered() const
+{
+    return m_centerOrigin;
+}
 inline bool IGameObject::ShouldRender() const
 {
     return m_shouldRender;
@@ -170,4 +208,12 @@ inline bool IGameObject::ShouldRender() const
 inline void IGameObject::SetPosition(DX::XMFLOAT2 position)
 {
     m_position = position;
+}
+inline void IGameObject::SetRotation(float rotation) 
+{
+    m_rotationFloat = rotation;
+}
+inline void IGameObject::CenterOrigin(bool centerOrigin)
+{
+    this->m_centerOrigin = centerOrigin;
 }

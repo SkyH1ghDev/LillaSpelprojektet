@@ -1,7 +1,6 @@
 
 #include "PlayerAttack.hpp"
 
-void PlayerAttack::Attack()
+void PlayerAttack::Attack(DX::XMFLOAT2 direction)
 {
-    std::cerr << "Chester Börjar veva!" << std::endl;
 }
