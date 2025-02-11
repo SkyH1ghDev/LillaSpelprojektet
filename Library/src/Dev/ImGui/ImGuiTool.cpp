@@ -98,7 +98,7 @@ void ImGuiTool::Test(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, co
 	static float color[3] = { 0.0f, 0.0f, 0.0f };
 	ImGui::ColorEdit3("Background Color", color);
 
-	immediateContext->ClearRenderTargetView(rtv.Get(), color);
+	//immediateContext->ClearRenderTargetView(rtv.Get(), color);
 	ImGui::End();
 
 }

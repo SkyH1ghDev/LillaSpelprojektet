@@ -11,7 +11,8 @@ public:
 	GamePhysics() = default;
 	~GamePhysics() = default;
 
-	DX::XMFLOAT2 WallEntityCollision(const DX::XMFLOAT2& position);
+	bool WallEntityCollision(const DX::XMFLOAT2& position);
+	bool ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2);
 
 private:
 	int m_leftWall = 20;
