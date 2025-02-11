@@ -56,7 +56,6 @@ private:
 	void FinalBindings();
 	void SetupPipeline(HWND& window);
 	void SetupImGui(HWND& window);
-	void ImGui();
 
 private:
 	MW::ComPtr<ID3D11BlendState> m_blendState;

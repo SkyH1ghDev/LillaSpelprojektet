@@ -85,7 +85,9 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 
 void Renderer::DrawImGui()
 {
-	ImGui();
+	m_imGui.Start(this->m_immediateContext, this->m_blendState);
+	m_imGui.Run(this->m_immediateContext, this->m_rtv);
+	m_imGui.End();
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
@@ -111,7 +113,7 @@ void Renderer::InitializeBlendState()
 	BlendState.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;	//Add source and destination
 	BlendState.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;    // No blending for alpha
 	BlendState.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;  // Keep alpha as is
-	BlendState.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendState.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX; /* Changed from D3D11_BLEND_OP_ADD */
 	BlendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	HRESULT hr = this->m_device->CreateBlendState(&BlendState, &blendStateCpy);
@@ -191,11 +193,4 @@ void Renderer::SetupPipeline(HWND& window)
 void Renderer::SetupImGui(HWND& window)
 {
 	this->m_imGui = ImGuiTool(window, this->m_device, this->m_immediateContext);
-}
-
-void Renderer::ImGui()
-{
-	m_imGui.Start();
-	m_imGui.Run(this->m_immediateContext, this->m_rtv);
-	m_imGui.End();
 }

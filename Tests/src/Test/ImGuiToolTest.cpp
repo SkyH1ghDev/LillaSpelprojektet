@@ -44,12 +44,12 @@ TEST(ImGuiTool, TestInitialize)
     ASSERT_NE(ImGui::GetCurrentContext(), nullptr);
 }
 TEST_F(ImGuiToolTest, TestStart) {
-    imGui.Start();
+    imGui.Start(TODO, TODO);
     ASSERT_NE(ImGui::GetCurrentContext(), nullptr);
 }
 
 TEST_F(ImGuiToolTest, TestEnd) {
-    imGui.Start();
+    imGui.Start(TODO, TODO);
     imGui.End();
     ASSERT_NE(ImGui::GetDrawData(), nullptr);
 }
