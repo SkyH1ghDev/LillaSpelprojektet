@@ -9,11 +9,9 @@ enum class CardType {
     Passive
 };
 
-#include "IEntityMove.hpp"
-#include "IEntityVisible.hpp"
-#include "IEntityAttack.hpp"
-#include "IEntityTakeDamage.hpp"
-#include "IEntityUseCard.hpp"
+#include "ICardActivated.hpp"
+#include "ICardAvailability.hpp"
+#include "ICardVisible.hpp"
 
 class Card : public IGameObject
 {
@@ -29,10 +27,9 @@ public:
 
 
 private:
-    std::shared_ptr<IEntityMove> m_move;
-    std::shared_ptr<IEntityVisible> m_visible;
-    std::shared_ptr<IEntityAttack> m_attack;
-    std::shared_ptr<IEntityTakeDamage> m_takeDamage;
-    std::shared_ptr<IEntityUseCard> m_useCard;
+    std::shared_ptr<ICardAvailability> m_available;
+    std::shared_ptr<ICardActivated> m_activated;
+    std::shared_ptr<ICardVisible> m_visible;
+
     CardType m_type;
 };
