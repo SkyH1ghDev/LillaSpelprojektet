@@ -70,6 +70,12 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 	}
 
 	this->m_spriteBatch->End();
+}
+
+void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
+{
+	DrawScene(mainScene);
+	DrawImGui();
 	this->m_swapChain->Present(0, 0);
 }
 

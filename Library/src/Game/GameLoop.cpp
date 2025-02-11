@@ -52,8 +52,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 			gameObject->UpdateScripts();
 		}
 		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX() * 640 / GetSystemMetrics(SM_CXSCREEN), Input::GetMousePositionY() * 360 / GetSystemMetrics(SM_CYSCREEN)));
-		renderer.DrawScene(mainScene);
-		renderer.DrawImGui();
+		renderer.Draw(mainScene);
 
 		Clock::End();
 
