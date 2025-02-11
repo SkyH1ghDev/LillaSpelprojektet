@@ -5,8 +5,8 @@
 
 // Define an enum for the entity type
 enum class CardType {
-    Active,
-    Passive
+    Shotgun,
+    Shield
 };
 
 #include "ICardActivated.hpp"

@@ -1,9 +1,9 @@
 #pragma once
-#include "IEntityMove.hpp"
+#include "ICardActivated.hpp"
 #include <iostream>
 
-class EnemyMove : public IEntityMove
+class ShotgunActivated : public ICardActivated
 {
 public:
-    DX::XMFLOAT2 Move(const DX::XMFLOAT2& m_position, const DX::XMFLOAT2& m_direction) override;
+    void Activate() override;
 };

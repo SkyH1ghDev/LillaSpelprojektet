@@ -1,7 +1,7 @@
-#include "EnemyMove.hpp"
+#include "ShieldAvailable.hpp"
 
-DX::XMFLOAT2 EnemyMove::Move(const DX::XMFLOAT2& m_position, const DX::XMFLOAT2& m_direction)
+void ShieldAvailablility::Available()
 {
-    return {};
+    std::cerr << "Shield kort är  available!" << std::endl;
 }
 

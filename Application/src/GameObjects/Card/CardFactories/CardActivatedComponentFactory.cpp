@@ -3,9 +3,11 @@
 
 std::shared_ptr<ICardActivated> CreateActivatedComponent(CardType type) {
     switch (type) {
-    case CardType::Active:
+    case CardType::Shotgun:
+        return std::make_shared<ShotgunActivated>();
         break;
-    case CardType::Passive:
+    case CardType::Shield:
+        return std::make_shared<ShieldActivated>();
         break;
     default:
         throw std::invalid_argument("Unknown Cardtype in CreateActivatedComponent");

@@ -1,6 +1,6 @@
-#include "EnemyAttack.hpp"
+#include "ShieldActivated.hpp"
 
-void EnemyAttack::Attack()
+void ShieldActivated::Activate()
 {
-    std::cerr << "Enemy jonas brappar" << std::endl;
+    std::cerr << "Activera shield kortet" << std::endl;
 }

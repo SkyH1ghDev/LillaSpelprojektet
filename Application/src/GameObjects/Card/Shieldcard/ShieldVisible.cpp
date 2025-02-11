@@ -1,6 +1,6 @@
-#include "EnemyVisible.hpp"
+#include "ShieldVisible.hpp"
 
-void EnemyVisible::Visible(std::string& texture, EntityState entityState, float& layer, float& scale)
+void ShieldVisible::Visible(std::string& texture, CardState cardState, float& layer, float& scale)
 {
-    std::cerr << "ENEMY FINNS!" << std::endl;
+    std::cerr << "visa kort effekt" << std::endl;
 }

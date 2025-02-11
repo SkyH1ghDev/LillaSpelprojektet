@@ -1,9 +1,9 @@
 #pragma once
-#include "IEntityAttack.hpp"
+#include "ICardAvailability.hpp"
 #include <iostream>
 
-class EnemyAttack : public IEntityAttack
+class ShotgunAvailable : public ICardAvailability
 {
 public:
-    void Attack() override;
+    void Available() override;
 };

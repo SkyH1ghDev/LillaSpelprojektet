@@ -1,9 +1,9 @@
 #pragma once
-#include "IEntityVisible.hpp"
+#include "ICardVisible.hpp"
 #include <iostream>
 
-class EnemyVisible : public IEntityVisible
+class ShotgunVisible : public ICardVisible
 {
 public:
-    void Visible(std::string& texture, EntityState entityState, float& layer, float& scale) override;
+    void Visible(std::string& texture, CardState cardState, float& layer, float& scale) override;
 };

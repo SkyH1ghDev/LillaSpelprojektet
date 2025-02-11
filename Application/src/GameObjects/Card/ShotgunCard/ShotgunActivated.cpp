@@ -1,7 +1,7 @@
-#include "EnemyMove.hpp"
+#include "ShotgunActivated.hpp"
 
-DX::XMFLOAT2 EnemyMove::Move(const DX::XMFLOAT2& m_position, const DX::XMFLOAT2& m_direction)
+void ShotgunActivated:: Activate()
 {
-    return {};
+    std::cerr << "Kort aktiverat" << std::endl;
 }
 

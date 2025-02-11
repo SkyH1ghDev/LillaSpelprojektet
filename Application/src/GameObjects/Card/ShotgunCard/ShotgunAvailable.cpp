@@ -1,6 +1,6 @@
-#include "EnemyAttack.hpp"
+#include "ShotgunAvailable.hpp"
 
-void EnemyAttack::Attack()
+void ShotgunAvailable::Available()
 {
-    std::cerr << "Enemy jonas brappar" << std::endl;
+    std::cerr << "Kort är available" << std::endl;
 }
