@@ -1,6 +1,6 @@
 #pragma  once
 #include <memory>
-#include "card.hpp"
+#include "Card.hpp"
 
 
-std::shared_ptr<IEntityAttack> CreateActivatedComponent(CardType type);
+std::shared_ptr<ICardActivated> CreateActivatedComponent(CardType type);

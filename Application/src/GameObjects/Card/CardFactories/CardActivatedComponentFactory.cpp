@@ -1,4 +1,4 @@
-#include "CardActivatedFactory.hpp"
+#include "CardActivatedComponentFactory.hpp"
 #include <stdexcept>
 
 std::shared_ptr<ICardActivated> CreateActivatedComponent(CardType type) {

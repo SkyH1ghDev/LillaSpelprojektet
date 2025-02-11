@@ -1,5 +1,5 @@
 #pragma  once
 #include <memory>
-#include "card.hpp"
+#include "Card.hpp"
 
-std::shared_ptr<IEntityAttack> CreateAttackComponent(EntityType type);
+std::shared_ptr<ICardAvailability> CreateAvailabilityComponent(CardType type);

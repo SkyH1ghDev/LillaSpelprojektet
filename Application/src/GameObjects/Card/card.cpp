@@ -1,7 +1,7 @@
-#include "card.hpp"
-#include "CardActivatedFactory.hpp"
-#include "CardAvailabilityFactory.hpp"
-#include "CardVisibleFactory.hpp"
+#include "Card.hpp"
+#include "CardActivatedComponentFactory.hpp"
+#include "CardAvailabilityComponentFactory.hpp"
+#include "CardVisibleComponentFactory.hpp"
 #include <iostream>
 
 

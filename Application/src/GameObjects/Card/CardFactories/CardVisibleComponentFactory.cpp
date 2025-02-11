@@ -1,4 +1,4 @@
-#include "CardVisibleFactory.hpp"
+#include "CardVisibleComponentFactory.hpp"
 #include <stdexcept>
 
 std::shared_ptr<ICardVisible> CreateVisibleComponent(CardType type) {

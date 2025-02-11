@@ -1,7 +1,5 @@
 #pragma  once
 #include <memory>
-#include "Entity.hpp"
-#include "PlayerAttack.hpp"
-#include "EnemyAttack.hpp"
+#include "Card.hpp"
 
-std::shared_ptr<IEntityAttack> CreateAttackComponent(EntityType type);
+std::shared_ptr<ICardVisible> CreateVisibleComponent(CardType type);
