@@ -3,6 +3,7 @@
 
 #include <SpEngine/Renderer/Renderer.hpp>
 #include <SpEngine/Renderer/Window.hpp>
+#include <SpEngine/Physics/GamePhysics.hpp>
 
 #include <directxtk/SpriteBatch.h>
 
