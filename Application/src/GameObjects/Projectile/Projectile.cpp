@@ -15,6 +15,8 @@ Projectile::Projectile(ProjectileType projectileType, DX::XMFLOAT2 position, DX:
     m_velocity(velocity),
     m_lifetime(lifetime)
 {
+    float length = sqrt(pow(direction.x, 2) + pow(direction.y, 2));
+    m_direction = DX::XMFLOAT2(direction.x / length, direction.y / length);
     std::cout << "Projectile created of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
 }
 

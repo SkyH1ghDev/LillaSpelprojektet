@@ -33,13 +33,11 @@ Game::Game()
     player->CenterOrigin(true);
     testScene->AddGameObject(background);
     testScene->AddGameObject(mouse);
-<<<<<<< Updated upstream
+
     testScene->AddGameObject(std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject());
     mouse->CenterOrigin(true);
     std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject()->CenterOrigin(true);
-=======
-    testScene->AddGameObject(enemy);
->>>>>>> Stashed changes
+    //testScene->AddGameObject(enemy);
 
 
     //testScene->AddGameObject(exitButton);

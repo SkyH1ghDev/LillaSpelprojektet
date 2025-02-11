@@ -34,7 +34,7 @@ void PlayerController::Update()
 	
 	if (m_attack->GetAttack())
 	{
-		player->PerformAttack(mousePos);
+		player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
 	}
 
 	if (m_up->GetMoveDirection().y == -1)
