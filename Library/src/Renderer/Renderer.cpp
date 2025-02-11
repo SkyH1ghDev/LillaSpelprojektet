@@ -1,10 +1,12 @@
 #include <iostream>
 #include "Renderer.hpp"
 
+#include "ImGuiNew.hpp"
+
 Renderer::Renderer(HWND& window)
 {
 	SetupPipeline(window);
-	SetupImGui(window);
+	SetupImGui(window, this->m_device, this->m_immediateContext);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
 	this->m_assetMan.ReadFolder(this->m_device, "../Application/Resources");
 	this->InitializeBlendState();
@@ -12,45 +14,7 @@ Renderer::Renderer(HWND& window)
 	this->InitializeRasterState();
 }
 
-Renderer::~Renderer()
-{
-	m_imGui.Shutdown();
-}
 
-MW::ComPtr<ID3D11BlendState> Renderer::GetBlendState()
-{
-	return this->m_blendState;
-}
-
-MW::ComPtr<ID3D11SamplerState> Renderer::GetSamplerState()
-{
-	return this->m_samplerState;
-}
-
-MW::ComPtr<ID3D11RasterizerState> Renderer::GetRasterState()
-{
-	return this->m_rasterState;
-}
-
-MW::ComPtr<ID3D11Device> Renderer::GetDevice()
-{
-	return this->m_device;
-}
-
-MW::ComPtr<ID3D11DeviceContext> Renderer::GetContext()
-{
-	return this->m_immediateContext;
-}
-
-MW::ComPtr<ID3D11RenderTargetView> Renderer::GetRTV()
-{
-	return this->m_rtv;
-}
-
-MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain()
-{
-	return this->m_swapChain;
-}
 
 void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 {
@@ -70,7 +34,6 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 	}
 
 	this->m_spriteBatch->End();
-	this->m_swapChain->Present(0, 0);
 }
 
 void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
@@ -81,13 +44,6 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 	this->m_spriteBatch->End();
 
 	this->m_swapChain->Present(0, 0);
-}
-
-void Renderer::DrawImGui()
-{
-	m_imGui.Start(this->m_immediateContext, this->m_blendState);
-	m_imGui.Run(this->m_immediateContext, this->m_rtv);
-	m_imGui.End();
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)
@@ -190,7 +146,7 @@ void Renderer::SetupPipeline(HWND& window)
 	this->m_setup.SetViewport(this->m_width, this->m_height, this->m_viewport);
 }
 
-void Renderer::SetupImGui(HWND& window)
+void Renderer::SetupImGui(HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context)
 {
-	this->m_imGui = ImGuiTool(window, this->m_device, this->m_immediateContext);
+	ImGuiNew::Initialize(window, device, context);
 }
