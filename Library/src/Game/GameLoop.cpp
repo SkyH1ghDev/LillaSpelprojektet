@@ -53,7 +53,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 			gameObject->UpdateScripts();
 		}
 		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX() * 640 / GetSystemMetrics(SM_CXSCREEN), Input::GetMousePositionY() * 360 / GetSystemMetrics(SM_CYSCREEN)));
-		GameObjectManager::GetGameObjects().at(0)->SetPosition(physics.WallEntityCollision(GameObjectManager::GetGameObjects().at(0)->GetPosition()));
 		renderer.DrawScene(mainScene);
 		renderer.DrawImGui();
 

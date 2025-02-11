@@ -12,5 +12,10 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     DX::XMFLOAT2 newPosition;
     DX::XMStoreFloat2(&newPosition, positionXMVector);
 
+    if (this->m_physics.WallEntityCollision(newPosition))
+    {
+        return position;
+    }
+
     return newPosition;
 }
