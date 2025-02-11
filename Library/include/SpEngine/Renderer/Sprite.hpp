@@ -12,6 +12,7 @@ class Sprite
 {
 public:
 	Sprite() = default;
+	Sprite(const MW::ComPtr<ID3D11Device>& device);
 	Sprite(const MW::ComPtr<ID3D11Device>& device, const std::string& filepath);
 	Sprite(const MW::ComPtr<ID3D11Device>& device, const uc::apng::frame& frame);
 	Sprite(const Sprite& other);
