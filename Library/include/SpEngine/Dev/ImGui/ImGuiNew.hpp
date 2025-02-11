@@ -9,12 +9,12 @@ namespace MW = Microsoft::WRL;
 class ImGuiNew
 {
 public:
-    ImGuiNew();
+    ImGuiNew() = default;
     ~ImGuiNew();
-    ImGuiNew(const ImGuiNew& other);
-    ImGuiNew& operator=(const ImGuiNew& other);
-    ImGuiNew(ImGuiNew&& other) noexcept;
-    ImGuiNew& operator=(ImGuiNew&& other) noexcept;
+    ImGuiNew(const ImGuiNew& other) = default;
+    ImGuiNew& operator=(const ImGuiNew& other) = default;
+    ImGuiNew(ImGuiNew&& other) noexcept = default;
+    ImGuiNew& operator=(ImGuiNew&& other) noexcept = default;
 
     static void Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context);
     static void Start();

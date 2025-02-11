@@ -38,8 +38,13 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
 {
+	ImGuiNew::Start();
+
 	DrawScene(mainScene);
-	DrawImGui();
+
+	ImGuiNew::Run();
+	ImGuiNew::End();
+
 	this->m_swapChain->Present(0, 0);
 }
 

@@ -52,11 +52,6 @@ public:
 	 */
 	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
-	/**
-	 * Draw imGui for debugg purposes
-	 */
-	void DrawImGui();
-
 private:
 	/**
 	 * Big draw function for a more detailed spritebatch draw call
