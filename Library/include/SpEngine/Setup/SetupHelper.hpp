@@ -11,8 +11,6 @@ public:
 	/**
 	 * Sets up the DirectX11 Components
 	 *
-	 * @param hInstance Instance handle
-	 * @param nCmdShow Window display value
 	 * @param[OUT] window Window handle
 	 * @param[OUT] device DirectX11 device
 	 * @param[OUT] immediateContext DirectX11 context

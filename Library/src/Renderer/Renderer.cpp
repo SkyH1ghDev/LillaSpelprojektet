@@ -36,6 +36,13 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 	this->m_spriteBatch->End();
 }
 
+void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
+{
+	DrawScene(mainScene);
+	DrawImGui();
+	this->m_swapChain->Present(0, 0);
+}
+
 void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
 {
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
