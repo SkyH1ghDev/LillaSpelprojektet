@@ -21,11 +21,13 @@ void Entity::OnStart()
 {
     PerformVisible(EntityState::WalkDown);
     this->m_shouldRender = true;
+    //PerformAttack();
+    
 }
 
 void Entity::Update()
 {
-
+    
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction) {

@@ -1,6 +1,6 @@
 #include "BaseHit.hpp"
 
-void BaseHit::Hit()
+bool BaseHit::Hit()
 {
-	std::cerr << "Projectile träffa nåt :I!" << std::endl;
+	return false;
 }

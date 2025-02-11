@@ -8,7 +8,7 @@ std::shared_ptr<IMeshStatic> CreateStaticComponent(MeshType type)
     case MeshType::Background:
         return std::make_shared<BackgroundStatic>();
         break;
-        case MeshType::Mouse:
+    case MeshType::Mouse:
         return std::make_shared<CursorMeshStatic>();
         break;
         case MeshType::Weapon:

@@ -48,8 +48,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
-			gameObject->Update();
-			gameObject->UpdateScripts();
+			if (gameObject->IsActive())
+			{
+				gameObject->Update();
+				gameObject->UpdateScripts();
+			}
 		}
 		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX() * 640 / GetSystemMetrics(SM_CXSCREEN), Input::GetMousePositionY() * 360 / GetSystemMetrics(SM_CYSCREEN)));
 		renderer.DrawScene(mainScene);
