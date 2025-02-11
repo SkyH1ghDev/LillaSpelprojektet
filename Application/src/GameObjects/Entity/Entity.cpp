@@ -28,8 +28,8 @@ void Entity::Update()
 
 }
 
-void Entity::PerformMove(const DX::XMFLOAT2& direction) {
+void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr) {
-        m_position = m_move->Move(m_position, direction);
+        m_position = m_move->Move(m_position, direction, dashing);
     }
 }
