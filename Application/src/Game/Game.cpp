@@ -8,6 +8,7 @@
 #include "GameScene.hpp"
 #include "Scene/Factories/GameSceneFactories/GameSceneFactory.hpp"
 #include "Player/PlayerController.hpp"
+#include "CardManager.hpp"
 
 Game::Game()
 {
@@ -17,20 +18,24 @@ Game::Game()
     {
         std::cerr << "Scene registration failed!\n";
     }
-
+    std::shared_ptr<CardManager> testDeck;
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
-
+    
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player);
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background);
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse);
+    std::shared_ptr<IGameObject> testKort = std::make_shared<Card>(CardType::Shield);
     //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
 
+    testDeck->AddCard(testKort);
     player->AttachScript(playerController);
 
+    testScene->AddGameObject(testKort);
     testScene->AddGameObject(player);
-    testScene->AddGameObject(background);
     testScene->AddGameObject(mouse);
+    testScene->AddGameObject(background);
+
 
 
     //testScene->AddGameObject(exitButton);
