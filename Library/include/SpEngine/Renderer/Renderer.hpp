@@ -17,7 +17,7 @@ class Renderer
 {
 public:
 	Renderer(HWND& window);
-	~Renderer() = default;
+	~Renderer();
 
 	MW::ComPtr<ID3D11BlendState> GetBlendState();
 	MW::ComPtr<ID3D11SamplerState> GetSamplerState();

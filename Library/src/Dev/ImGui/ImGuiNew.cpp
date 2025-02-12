@@ -10,9 +10,7 @@
 
 ImGuiNew::~ImGuiNew()
 {
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
+
 }
 
 
@@ -24,7 +22,7 @@ void ImGuiNew::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& de
     ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
+	io.WantCaptureMouse = true;
 
     RECT windowRect;
     GetClientRect(window, &windowRect);
@@ -35,9 +33,6 @@ void ImGuiNew::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& de
 
 	ImGui_ImplWin32_Init(window);
 	ImGui_ImplDX11_Init(device.Get(), context.Get());
-
-	io.DisplaySize = {640, 360};
-	io.WantSetMousePos = true;
 }
 
 void ImGuiNew::Start()
@@ -55,11 +50,8 @@ void ImGuiNew::Run()
 
 	ImGuiIO& io = ImGui::GetIO();
 
-	io.MousePos = ImVec2(Input::GetMousePositionX(), Input::GetMousePositionY());
 	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x8000;
 	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x8000;
-
-	std::cout << io.MousePos.x << ", " << io.MousePos.y << std::endl;
 }
 
 
@@ -67,4 +59,11 @@ void ImGuiNew::End()
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+void ImGuiNew::Shutdown()
+{
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 }

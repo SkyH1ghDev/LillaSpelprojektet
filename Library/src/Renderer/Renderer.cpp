@@ -14,6 +14,10 @@ Renderer::Renderer(HWND& window)
 	this->InitializeRasterState();
 }
 
+Renderer::~Renderer()
+{
+	ImGuiNew::Shutdown();
+}
 
 
 void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
