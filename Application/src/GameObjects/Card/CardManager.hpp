@@ -10,7 +10,6 @@
 class CardManager : public IScript
 {
 private:
-    std::shared_ptr<UseCard> m_use = std::make_shared<UseCard>();
     static std::vector<std::shared_ptr<IGameObject>> m_CardDeck;
     size_t m_currentindex = 0;
 public:

@@ -20,9 +20,7 @@ void CardManager::ChangeAbilitie()
 
     m_currentindex = (m_currentindex + 1) % m_CardDeck.size();
 
-    //Here we can also if we want cast the "card" abilitie before putting it last
-
-    
+    //Here we can also if we want cast the "card" abilitie before putting it last 
 }
 
 bool CardManager::HasCard() const

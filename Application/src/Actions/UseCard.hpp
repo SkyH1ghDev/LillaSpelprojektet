@@ -20,6 +20,10 @@ public:
 
 inline void UseCard::Update(std::optional<std::any> data)
 {
-    m_usecard = true;
+    const float scale = (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any();
+    if (scale == 1.0)
+    {
+        m_usecard = true;
+    }
 }
 
