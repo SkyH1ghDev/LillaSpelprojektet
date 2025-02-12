@@ -25,16 +25,23 @@ private:
 
 };
 
-
-/* TODO: Måste fixa så att GetSprite och GetAnimatedSprite returnerar saker som faktiskt finns i m_textureMap. Ingen fault checking just nu. */
-
 //Returns Sprite with the matching filename in the hash map
 inline Sprite AssetManager::GetSprite(const std::string& filename)
 {
-	return m_textureMap[filename].at(0);
+	if (m_textureMap.contains(filename))
+	{
+		return m_textureMap[filename].at(0);
+	}
+
+	return m_textureMap["default"].at(0);
 }
 
 inline std::vector<Sprite> AssetManager::GetAnimatedSprite(const std::string& filename)
 {
-	return m_textureMap[filename];
+	if (m_textureMap.contains(filename))
+	{
+		return m_textureMap[filename];
+	}
+
+	return m_textureMap["default"];
 }

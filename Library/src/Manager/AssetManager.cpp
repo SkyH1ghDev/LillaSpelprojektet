@@ -20,7 +20,10 @@ std::unordered_map<std::string, int> AssetManager::m_extensionIndex =
 //All read files are added to the instance of the asset manager
 bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path)
 {
-	int assetIndex = 0;
+	// Load default texture
+	m_textureMap["default"] = { Sprite(device) };
+
+	// Load all textures in the Application/Resources/ folder
 	for (const auto& entry : FS::directory_iterator(path))
 	{
 		std::string filepath = entry.path().string();
@@ -36,9 +39,7 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 					case FileFormat_JPG:
 					case FileFormat_PNG:
 					{
-						Sprite sprite(device, filepath);
-						m_textureMap[filename] = { sprite };
-						assetIndex++;
+						m_textureMap[filename] = { Sprite(device, filepath) };
 						break;
 					}
 
@@ -50,9 +51,7 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 						while (loader.has_frame())
 						{
 							uc::apng::frame frame = loader.next_frame();
-							Sprite sprite = Sprite(device, frame);
-
-							sprites.push_back(sprite);
+							sprites.push_back(Sprite(device, frame));
 						}
 
 						m_textureMap[filename] = sprites;
