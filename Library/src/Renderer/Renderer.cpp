@@ -60,12 +60,16 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 	this->FinalBindings();
 
+	DX::XMFLOAT2 origin;
 	for (int i = 0; i < len; i++)
 	{
 		if (ObjectVec.at(i)->ShouldRender())
 		{
 			//this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
-			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSourceRectangle().get(), DX::Colors::White, 0.0f, DX::XMFLOAT2(0, 0), ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
+			origin = DX::XMFLOAT2(0, 0);
+			if (ObjectVec.at(i)->IsOriginCentered())
+				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSourceRectangle().get(), DX::Colors::White, ObjectVec.at(i)->GetRotationFloat(), origin, ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
 		}
 	}
 

@@ -2,5 +2,7 @@
 
 void EnemyVisible::Visible(std::string& texture, EntityState entityState, float& layer, float& scale)
 {
-    std::cerr << "ENEMY FINNS!" << std::endl;
+    texture = "bishop.png";
+    layer = 0.5;
+    scale = 0.4;
 }

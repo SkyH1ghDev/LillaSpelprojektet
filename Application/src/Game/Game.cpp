@@ -25,12 +25,19 @@ Game::Game()
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background);
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse);
     //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
-
+    std::shared_ptr<IGameObject> enemy = std::make_shared<Entity>(EntityType::Enemy);
+    
     player->AttachScript(playerController);
-
+    
     testScene->AddGameObject(player);
+    player->CenterOrigin(true);
     testScene->AddGameObject(background);
     testScene->AddGameObject(mouse);
+
+    testScene->AddGameObject(std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject());
+    mouse->CenterOrigin(true);
+    std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject()->CenterOrigin(true);
+    //testScene->AddGameObject(enemy);
 
 
     //testScene->AddGameObject(exitButton);

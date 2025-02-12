@@ -10,6 +10,9 @@ std::shared_ptr<IMeshVisible> CreateVisibleComponent(MeshType type)
     case MeshType::Mouse:
         return std::make_shared<MouseVisible>();
         break;
+    case MeshType::Weapon:
+        return std::make_shared<WeaponVisible>();
+        break;
     default:
         throw std::invalid_argument("Unknown MeshType in CreateVisibleComponent");
         break;
