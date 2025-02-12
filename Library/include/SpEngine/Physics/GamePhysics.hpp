@@ -17,11 +17,11 @@ namespace DX = DirectX;
 * -Puntis :)
 */
 
-class GamePhysics
+class PhysicsEngine
 {
 public:
-	GamePhysics() = default;
-	~GamePhysics() = default;
+	PhysicsEngine() = default;
+	~PhysicsEngine() = default;
 
 	/**
 	 * Finds out if there is a collision between
@@ -33,7 +33,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool WallEntityXCollision(const float xPos, const float radius = 10.0f, const float ARM = 1.0f);
+	static bool WallEntityXCollision(const float xPos, const float radius = 10.0f, const float ARM = 1.0f);
 
 	/**
 	 * Finds out if there is a collision between
@@ -45,7 +45,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool WallEntityYCollision(const float yPos, const float radius = 10.0f, const float ARM = 1.65f);
+	static bool WallEntityYCollision(const float yPos, const float radius = 10.0f, const float ARM = 1.65f);
 
 	/**
 	 * Finds out if there is a collision between
@@ -58,7 +58,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2);
+	static bool ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2);
 
 	/**
 	 * Finds out if there is a collision between
@@ -70,7 +70,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool WallProjectileXCollision(const float xPos, const float radius = 1.0f, const float ARM = 1.0f);
+	static bool WallProjectileXCollision(const float xPos, const float radius = 1.0f, const float ARM = 1.0f);
 
 	/**
 	 * Finds out if there is a collision between
@@ -82,7 +82,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool WallProjectileYCollision(const float yPos, const float radius = 1.0f, const float ARM = 1.0f);
+	static bool WallProjectileYCollision(const float yPos, const float radius = 1.0f, const float ARM = 1.0f);
 
 	/**
 	 * Finds out if there is a collision between
@@ -97,11 +97,11 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool EntityEntityCollision(	const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radiusX1, const float radiusY1, const float radiusX2, const float radiusY2);
+	static bool EntityEntityCollision(	const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radiusX1, const float radiusY1, const float radiusX2, const float radiusY2);
 
 private:
-	int m_leftWall = 40;
-	int m_rightWall = 600;
-	int m_topWall = 17;
-	int m_bottomWall = 320;
+	static int m_leftWall;
+	static int m_rightWall;
+	static int m_topWall;
+	static int m_bottomWall;
 };
