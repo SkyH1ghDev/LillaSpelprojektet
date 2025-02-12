@@ -15,10 +15,11 @@ public:
     IMoveBase& operator=(IMoveBase&& other) noexcept = default;
 
     DX::XMFLOAT2 GetMoveDirection() const;
+    float IsDashing() const { return m_isDashing; };
 
 protected:
     DX::XMFLOAT2 m_moveDirection;
-
+    bool m_isDashing = false;
 };
 
 inline DX::XMFLOAT2 IMoveBase::GetMoveDirection() const
