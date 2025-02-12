@@ -22,6 +22,7 @@ void Entity::OnStart()
     PerformVisible(EntityState::WalkDown);
     this->m_shouldRender = true;
     this->m_position = DX::XMFLOAT2(100, 100);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
 }
 

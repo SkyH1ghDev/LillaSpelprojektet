@@ -92,6 +92,13 @@ public:
     float GetRotationFloat() const;
 
     /**
+    * Gets the origin offset value for the game object
+    *
+    * @return a XMFLOAT2 value
+    */
+    DX::XMFLOAT2 GetOriginOffset() const;
+
+    /**
      * Returns whether the sprite of the object is centered or not
      *
      * @return True if yes, False if no
@@ -132,6 +139,7 @@ protected:
     float m_layerFloat = 0.0;
     float m_scaleFloat = 1.0;
     float m_rotationFloat = 0.0;
+    DX::XMFLOAT2 m_origonOffset = { 0, 0 };
 
     bool m_centerOrigin = false;
     bool m_isActive = true;
@@ -196,6 +204,10 @@ inline float IGameObject::GetScaleFloat() const
 inline float IGameObject::GetRotationFloat() const 
 {
     return m_rotationFloat;
+}
+inline DX::XMFLOAT2 IGameObject::GetOriginOffset() const
+{
+    return m_origonOffset;
 }
 inline bool IGameObject::IsOriginCentered() const
 {

@@ -5,19 +5,103 @@
 
 namespace DX = DirectX;
 
+/**
+* This class will probably undergo changes in the future.
+* 
+* The plan is to send the objects needing collision
+* checks instead of just the raw data. That will make
+* the class easier to use. The raw data is currently used
+* right now because the right getters and stucture in
+* the program does not exist yet.
+* 
+* -Puntis :)
+*/
+
 class GamePhysics
 {
 public:
 	GamePhysics() = default;
 	~GamePhysics() = default;
 
-	bool WallEntityXCollision(const float xValue);
-	bool WallEntityYCollision(const float yValue);
+	/**
+	 * Finds out if there is a collision between
+	 * an entity and the outer most wall in the x-axis
+	 *
+	 * @param[IN] xPos float entityposition
+	 * @param[IN] radius float entityradius
+	 * @param[IN] ARM float aspectRatioModifier
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	bool WallEntityXCollision(const float xPos, const float radius = 10.0f, const float ARM = 1.0f);
+
+	/**
+	 * Finds out if there is a collision between
+	 * an entity and the outer most wall in the y-axis
+	 *
+	 * @param[IN] yPos float entityposition
+	 * @param[IN] radius float entityradius
+	 * @param[IN] ARM float aspectRatioModifier
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	bool WallEntityYCollision(const float yPos, const float radius = 10.0f, const float ARM = 1.65f);
+
+	/**
+	 * Finds out if there is a collision between
+	 * a projectile and a projectile
+	 *
+	 * @param[IN] projPos1 XMFLOAT2 first projectileposition
+	 * @param[IN] projPos2 XMFLOAT2 second projectileposition
+	 * @param[IN] radius1 float first projectileradius
+	 * @param[IN] radius2 float second projectileradius
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
 	bool ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2);
 
+	/**
+	 * Finds out if there is a collision between
+	 * a projectile and the outer most wall in the x-axis
+	 *
+	 * @param[IN] xPos float projectileposition
+	 * @param[IN] radius float projectileradius
+	 * @param[IN] ARM float aspectRatioModifier
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	bool WallProjectileXCollision(const float xPos, const float radius = 1.0f, const float ARM = 1.0f);
+
+	/**
+	 * Finds out if there is a collision between
+	 * a projectile and the outer most wall in the y-axis
+	 *
+	 * @param[IN] yPos float projectileposition
+	 * @param[IN] radius float projectileradius
+	 * @param[IN] ARM float aspectRatioModifier
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	bool WallProjectileYCollision(const float yPos, const float radius = 1.0f, const float ARM = 1.0f);
+
+	/**
+	 * Finds out if there is a collision between
+	 * a projectile and the outer most wall in the y-axis
+	 *
+	 * @param[IN] projPos1 XMFLOAT2 first projectileposition
+	 * @param[IN] projPos2 XMFLOAT2 second projectileposition
+	 * @param[IN] radiusX1 float "oval width"
+	 * @param[IN] radiusY1 float "oval height"
+	 * @param[IN] radiusX2 float "oval width"
+	 * @param[IN] radiusY2 float "oval height"
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	bool EntityEntityCollision(	const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radiusX1, const float radiusY1, const float radiusX2, const float radiusY2);
+
 private:
-	int m_leftWall = 20;
-	int m_rightWall = 560;
-	int m_topWall = -10;
-	int m_bottomWall = 260;
+	int m_leftWall = 40;
+	int m_rightWall = 600;
+	int m_topWall = 17;
+	int m_bottomWall = 320;
 };
