@@ -1,26 +1,26 @@
 #pragma once
-#include "IMoveBase.hpp"
-#include <SpEngine/Dev/Pattern/Observer/IObserver.hpp>
-#include <SpEngine/Input/KeyState.hpp>
-#include <bitset>
+//#include "IMoveBase.hpp"
+//#include <SpEngine/Dev/Pattern/Observer/IObserver.hpp>
+//#include <SpEngine/Input/KeyState.hpp>
+//#include <bitset>
 
-class UseCard : public IObserver
+class ICardBase
 {
 public:
-    UseCard() = default;
-    ~UseCard() override = default;
-    UseCard(const UseCard& other) = default;
-    UseCard& operator=(const UseCard& other) = default;
-    UseCard(UseCard&& other) noexcept = default;
-    UseCard& operator=(UseCard&& other) noexcept = default;
+    ICardBase() = default;
+    virtual ~ICardBase() = default;
+    ICardBase(const ICardBase& other) = default;
+    ICardBase& operator=(const ICardBase& other) = default;
+    ICardBase(ICardBase&& other) noexcept = default;
+    ICardBase& operator=(ICardBase&& other) noexcept = default;
 
     
     bool GetUseCard() const;
 protected:
-    bool m_usecard=true;
+    bool m_usecard;
 };
 
-inline bool UseCard::GetUseCard() const
+inline bool ICardBase::GetUseCard() const
 {
     return m_usecard;
 }

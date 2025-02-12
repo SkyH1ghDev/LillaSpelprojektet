@@ -1,10 +1,10 @@
 #pragma once
-#include "IMoveBase.hpp"
+#include "ICardBase.hpp"
 #include <SpEngine/Dev/Pattern/Observer/IObserver.hpp>
 #include <SpEngine/Input/KeyState.hpp>
 #include <bitset>
 
-class UseCard : public IObserver
+class UseCard : public ICardBase, public IObserver
 {
 public:
     UseCard() = default;
@@ -14,13 +14,12 @@ public:
     UseCard(UseCard&& other) noexcept = default;
     UseCard& operator=(UseCard&& other) noexcept = default;
 
-    
-    bool GetUseCard() const;
-protected:
-    bool m_usecard=true;
+    void Update(std::optional<std::any> data = std::nullopt)override;
+
 };
 
-inline bool UseCard::GetUseCard() const
+inline void UseCard::Update(std::optional<std::any> data = std::nullopt)
 {
-    return m_usecard;
+    m_usecard = true;
 }
+
