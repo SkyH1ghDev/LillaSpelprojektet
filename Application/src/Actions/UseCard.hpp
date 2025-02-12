@@ -18,7 +18,7 @@ public:
 
 };
 
-inline void UseCard::Update(std::optional<std::any> data = std::nullopt)
+inline void UseCard::Update(std::optional<std::any> data)
 {
     m_usecard = true;
 }

@@ -1,16 +1,18 @@
 #pragma once
 
-#include <queue>
+#include <vector>
 #include <string>
 #include <memory>
 #include <stdexcept>
 #include "Card.hpp"
+#include <SpEngine/Assets/IScript.hpp>
 
-class CardManager
+class CardManager : public IScript
 {
 private:
-
-    static std::queue<std::shared_ptr<IGameObject>> m_CardDeck;
+    std::shared_ptr<UseCard> m_use = std::make_shared<UseCard>();
+    static std::vector<std::shared_ptr<IGameObject>> m_CardDeck;
+    size_t m_currentindex = 0;
 public:
     /*
     * Function that adds a card to your deck
@@ -31,4 +33,6 @@ public:
     * Retreives the top card of deck
     */
     std::shared_ptr<IGameObject> GetTopCard();
+
+
 };

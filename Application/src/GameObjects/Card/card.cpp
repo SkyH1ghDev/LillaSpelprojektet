@@ -19,6 +19,11 @@ void Card::OnStart()
 
 }
 
+CardType Card::GetType()
+{
+    return m_type;
+}
+
 void Card::Update()
 {
 

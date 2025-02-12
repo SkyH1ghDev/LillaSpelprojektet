@@ -9,6 +9,7 @@ void PlayerController::OnStart()
 	Input::GetKey('A')->Attach(std::static_pointer_cast<IObserver, MoveLeft>(m_left));
 	Input::GetKey('S')->Attach(std::static_pointer_cast<IObserver, MoveDown>(m_down));
 	Input::GetKey('D')->Attach(std::static_pointer_cast<IObserver, MoveRight>(m_right));
+	Input::GetKey('E')->Attach(std::static_pointer_cast<IObserver, UseCard>(m_use));
 }
 
 void PlayerController::Update()
@@ -32,4 +33,6 @@ void PlayerController::Update()
 	{
 		player->PerformVisible(EntityState::WalkLeft);
 	}
+
+
 }

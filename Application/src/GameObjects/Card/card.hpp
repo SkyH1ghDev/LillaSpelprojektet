@@ -31,6 +31,7 @@ public:
     void PerformAvailable() { if (m_available) m_available->Available(); }
     void PerformActivated(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_activated) m_activated->Activate(position, direction); }
 
+    CardType GetType();
 private:
     std::shared_ptr<ICardAvailability> m_available;
     std::shared_ptr<ICardActivated> m_activated;

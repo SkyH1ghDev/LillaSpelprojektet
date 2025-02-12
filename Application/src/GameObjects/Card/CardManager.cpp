@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-std::queue<std::shared_ptr<IGameObject>> CardManager::m_CardDeck = {};
+std::vector<std::shared_ptr<IGameObject>> CardManager::m_CardDeck = {};
 
 void CardManager::AddCard(std::shared_ptr<IGameObject> Card)
 {
-    m_CardDeck.push(Card);
+    m_CardDeck.push_back(Card);
 }
 
 
@@ -18,12 +18,11 @@ void CardManager::ChangeAbilitie()
         return;
     }
 
-    std::shared_ptr<IGameObject> card = m_CardDeck.front();
-    m_CardDeck.pop();
+    m_currentindex = (m_currentindex + 1) % m_CardDeck.size();
 
     //Here we can also if we want cast the "card" abilitie before putting it last
 
-    m_CardDeck.push(card);
+    
 }
 
 bool CardManager::HasCard() const
@@ -37,8 +36,7 @@ std::shared_ptr<IGameObject> CardManager::GetTopCard()
     {
         std::cout << "Deck contains no card" << std::endl;
     }
-    std::shared_ptr<IGameObject> TopCard = m_CardDeck.front();
+    std::shared_ptr<IGameObject> TopCard = m_CardDeck.at(m_currentindex);
     return TopCard;
 }
-
 

@@ -5,6 +5,7 @@
 #include "Actions/MoveLeft.hpp"
 #include "Actions/MoveRight.hpp"
 #include "Actions/MoveDown.hpp"
+#include "Actions/UseCard.hpp"
 
 #include <SpEngine/Assets/IScript.hpp>
 
@@ -20,4 +21,5 @@ private:
 	std::shared_ptr<MoveLeft> m_left = std::make_shared<MoveLeft>();
 	std::shared_ptr<MoveRight> m_right = std::make_shared<MoveRight>();
 	std::shared_ptr<MoveDown> m_down = std::make_shared<MoveDown>();
+	std::shared_ptr<UseCard> m_use = std::make_shared<UseCard>();
 };
