@@ -10,6 +10,8 @@
 [submodule "External/ImGui"]
 	path = External/ImGui
 	url = https://github.com/ocornut/imgui.git
+	branch = docking
 [submodule "External/APNGLoader"]
 	path = External/APNGLoader
 	url = https://github.com/uctakeoff/uc_apng_loader.git
+	branch = master

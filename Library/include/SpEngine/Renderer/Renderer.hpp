@@ -2,7 +2,6 @@
 
 #include <SpEngine/Setup/SetupHelper.hpp>
 
-#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 #include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Assets/IScene.hpp>
 
@@ -53,11 +52,6 @@ public:
 	 */
 	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
-	/**
-	 * Draw imGui for debugg purposes
-	 */
-	void DrawImGui();
-
 private:
 	/**
 	 * Big draw function for a more detailed spritebatch draw call
@@ -101,8 +95,7 @@ private:
 	 */
 	void FinalBindings();
 	void SetupPipeline(HWND& window);
-	void SetupImGui(HWND& window);
-	void ImGui();
+	void SetupImGui(HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context);
 
 private:
 	MW::ComPtr<ID3D11BlendState> m_blendState;
@@ -122,6 +115,40 @@ private:
 	SetupHelper m_setup;
 	AssetManager m_assetMan;
 	std::unique_ptr<DX::DX11::SpriteBatch> m_spriteBatch;
-
-	ImGuiTool m_imGui;
 };
+
+
+inline MW::ComPtr<ID3D11BlendState> Renderer::GetBlendState()
+{
+	return this->m_blendState;
+}
+
+inline MW::ComPtr<ID3D11SamplerState> Renderer::GetSamplerState()
+{
+	return this->m_samplerState;
+}
+
+inline MW::ComPtr<ID3D11RasterizerState> Renderer::GetRasterState()
+{
+	return this->m_rasterState;
+}
+
+inline MW::ComPtr<ID3D11Device> Renderer::GetDevice()
+{
+	return this->m_device;
+}
+
+inline MW::ComPtr<ID3D11DeviceContext> Renderer::GetContext()
+{
+	return this->m_immediateContext;
+}
+
+inline MW::ComPtr<ID3D11RenderTargetView> Renderer::GetRTV()
+{
+	return this->m_rtv;
+}
+
+inline MW::ComPtr<IDXGISwapChain> Renderer::GetSwapChain()
+{
+	return this->m_swapChain;
+}
