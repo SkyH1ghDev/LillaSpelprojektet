@@ -26,10 +26,13 @@ void PlayerController::Update()
 	DX::XMVECTOR playerToMouse = DX::XMVectorSubtract(DX::XMLoadFloat2(&mousePos), DX::XMLoadFloat2(&pos));
 	DX::XMStoreFloat2(&wandPos, DX::XMVectorAdd(DX::XMVectorScale(DX::XMVector2Normalize(playerToMouse), 20), DX::XMLoadFloat2(&pos)));
 
+	if (m_attackTimer >= 0)
+		m_attackTimer -= Clock::GetDeltaTime();
 	
-	if (m_attack->GetAttack())
+	if (m_attack->GetAttack() && m_attackTimer <= 0)
 	{
 		player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
+		m_attackTimer = 0.25f;
 	}
 
 	if (m_up->GetMoveDirection().y == -1)
