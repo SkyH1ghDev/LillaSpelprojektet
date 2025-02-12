@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <memory>
-//#include <SpEngine/Utils/Random.hpp> // Assuming this exists
+#include <random>
 #include "Entity.hpp"
 #include "EnemyController.hpp"
 
