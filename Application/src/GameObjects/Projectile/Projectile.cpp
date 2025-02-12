@@ -36,6 +36,7 @@ void Projectile::Update()
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= Clock::GetDeltaTime();
+        m_rotationFloat += Clock::GetDeltaTime() * 20;
     }
     else
     {
