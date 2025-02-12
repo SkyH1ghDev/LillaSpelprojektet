@@ -49,13 +49,15 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
-			gameObject->Update();
-			gameObject->UpdateScripts();
+			if (gameObject->IsActive())
+			{
+				gameObject->Update();
+				gameObject->UpdateScripts();
+			}
 		}
 		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()));
 
 		renderer.Draw(mainScene);
-
 		Clock::End();
 
 		//std::cerr << clock.GetFrameRate() << " FPS\n";
