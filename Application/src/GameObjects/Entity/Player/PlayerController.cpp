@@ -21,7 +21,7 @@ void PlayerController::Update()
 
 	DX::XMFLOAT2 pos = player->GetPosition();
 
-	DX::XMFLOAT2 mousePos = DX::XMFLOAT2(Input::GetMousePositionX() * 640 / 1920, Input::GetMousePositionY() * 360 / 1080);
+	DX::XMFLOAT2 mousePos = DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY());
 
 	DX::XMFLOAT2 wandPos;
 

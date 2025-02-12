@@ -128,7 +128,7 @@ public:
 
 protected:
     std::string m_textureName;
-    DX::XMFLOAT2 m_position = { 0, 0 };
+    DX::XMFLOAT2 m_position = {0, 0};
     float m_layerFloat = 0.0;
     float m_scaleFloat = 1.0;
     float m_rotationFloat = 0.0;

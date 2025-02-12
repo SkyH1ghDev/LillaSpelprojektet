@@ -19,7 +19,7 @@ void WandScript::Update()
 	DX::XMFLOAT2 wandPos;
 	DX::XMFLOAT2 pos = this->player->GetPosition();
 
-	DX::XMFLOAT2 mousePos = DX::XMFLOAT2(Input::GetMousePositionX() * 640 / 1920, Input::GetMousePositionY() * 360 / 1080);
+	DX::XMFLOAT2 mousePos = DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY());
 
 	DX::XMVECTOR playerToMouse = DX::XMVectorSubtract(DX::XMLoadFloat2(&mousePos), DX::XMLoadFloat2(&pos));
 	DX::XMStoreFloat2(&wandPos, DX::XMVectorAdd(DX::XMVectorScale(DX::XMVector2Normalize(playerToMouse), 25), DX::XMLoadFloat2(&pos)));
