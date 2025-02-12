@@ -1,21 +1,26 @@
 #include <istream>
 #include "GamePhysics.hpp"
 
-bool GamePhysics::WallEntityCollision(const DX::XMFLOAT2& position)
+bool GamePhysics::WallEntityXCollision(const float xValue)
 {
-    if (position.x < this->m_leftWall)
+    if (xValue < this->m_leftWall)
     {
         return true;
     }
-    if (position.y < this->m_topWall)
+    if (xValue > this->m_rightWall)
     {
         return true;
     }
-    if (position.x > this->m_rightWall)
+    return false;
+}
+
+bool GamePhysics::WallEntityYCollision(const float yValue)
+{
+    if (yValue < this->m_topWall)
     {
         return true;
     }
-    if (position.y > this->m_bottomWall)
+    if (yValue > this->m_bottomWall)
     {
         return true;
     }
