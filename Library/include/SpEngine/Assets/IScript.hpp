@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <SpEngine/Physics/GamePhysics.hpp>
 
 class IGameObject;
 

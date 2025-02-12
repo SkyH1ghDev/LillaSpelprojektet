@@ -29,14 +29,18 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 	this->FinalBindings();
 
 	DX::XMFLOAT2 origin;
+	DX::XMFLOAT2 originOffset;
 	for (int i = 0; i < len; i++)
 	{
 		if (ObjectVec.at(i)->ShouldRender())
 		{
 			//this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
 			origin = DX::XMFLOAT2(0, 0);
+			originOffset = ObjectVec.at(i)->GetOriginOffset();
 			if (ObjectVec.at(i)->IsOriginCentered())
 				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+			origin.x += originOffset.x;
+			origin.y += originOffset.y;
 			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSourceRectangle().get(), DX::Colors::White, ObjectVec.at(i)->GetRotationFloat(), origin, ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
 		}
 	}

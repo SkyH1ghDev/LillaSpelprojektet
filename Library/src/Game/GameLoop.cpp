@@ -23,7 +23,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	Window window = Window(hInstance, nCmdShow, 1920, 1080);
 	ShowCursor(FALSE);
 	Renderer renderer = Renderer(window.GetWindowHandle());
-	GamePhysics physics;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
