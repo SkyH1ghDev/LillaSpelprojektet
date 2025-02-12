@@ -4,5 +4,5 @@ void EnemyVisible::Visible(std::string& texture, EntityState entityState, float&
 {
     texture = "bishop.png";
     layer = 0.5;
-    scale = 0.4;
+    scale = 0.2;
 }

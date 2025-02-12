@@ -29,9 +29,13 @@ void EnemyController::Update()
 
 	float distance = DX::XMVectorGetX(DX::XMVector3Length(enemyToPlayerVec));
 
-	if (distance < 200)
+	this->m_attackTimer += Clock::GetDeltaTime();
+
+	// Only attack if enough time has passed
+	if (distance < 200 && (this->m_attackTimer >= this->m_attackCooldown))
 	{
 		enemy->PerformAttack(enemyPos, direction);
+		this->m_attackTimer = 0;
 	}
 
-}
+}   

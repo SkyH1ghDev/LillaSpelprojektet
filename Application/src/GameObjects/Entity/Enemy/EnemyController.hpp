@@ -15,6 +15,6 @@ public:
 
 private:
 	std::shared_ptr<IGameObject> m_player;
-	float attackCooldown = 2.0f;
-	float attackTimer = 0.0f;
+	float m_attackCooldown = 0.7f;
+	float m_attackTimer = 0.0f;
 };
