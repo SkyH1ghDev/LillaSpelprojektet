@@ -32,7 +32,7 @@ void EnemyController::Update()
 	this->m_attackTimer += Clock::GetDeltaTime();
 
 	// Only attack if enough time has passed
-	if (distance < 200 && (this->m_attackTimer >= this->m_attackCooldown))
+	if (distance < 300 && (this->m_attackTimer >= this->m_attackCooldown))
 	{
 		enemy->PerformAttack(enemyPos, direction);
 		this->m_attackTimer = 0;

@@ -44,7 +44,7 @@ Game::Game()
 
     mouse->CenterOrigin(true);
 
-    EnemyManager::SpawnEnemies(player, 5);
+    EnemyManager::SpawnEnemies(player, 2);
 
 
     //testScene->AddGameObject(exitButton);
