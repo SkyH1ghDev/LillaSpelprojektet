@@ -27,7 +27,7 @@ public:
     void Update() override;
     void OnStart() override;
 
-    void PerformVisible() { if (m_visible) m_visible->Visible(this->m_textureName, CardState::stateOne, m_layerFloat, m_scaleFloat); }
+    void PerformVisible(CardState cardstate) { if (m_visible) m_visible->Visible(this->m_textureName, cardstate, m_layerFloat, m_scaleFloat); }
     void PerformAvailable() { if (m_available) m_available->Available(); }
     void PerformActivated(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_activated) m_activated->Activate(position, direction); }
 
