@@ -40,37 +40,41 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= deltaTime;
 
-        if (DirectX::XMVector2Length(directionXMVector).m128_f32[0] > 0.0f) {
-            // Apply acceleration when there's input
-            facingDirection = directionXMVector;
-            velocity = DX::XMVectorAdd(velocity, DX::XMVectorScale(DX::XMVector2Normalize(directionXMVector), acceleration * deltaTime));
+        float currentSpeed = DirectX::XMVector2Length(velocity).m128_f32[0];
+        DX::XMVECTOR newVelocity = velocity;
 
-            // Cap velocity to max speed
-            if (DirectX::XMVector2Length(velocity).m128_f32[0] > maxVelocity) {
-                velocity = DX::XMVectorScale(DX::XMVector2Normalize(velocity), maxVelocity);
+        if (DirectX::XMVector2Length(directionXMVector).m128_f32[0] > 0.0f) {
+            facingDirection = directionXMVector;
+
+
+            float dotProduct = DirectX::XMVectorGetX(DirectX::XMVector2Dot(directionXMVector, DX::XMVector2Normalize(velocity)));
+
+            if (dotProduct < 0.5f) {
+                newVelocity = DX::XMVectorSubtract(velocity, DX::XMVectorScale(velocity, deceleration * deltaTime));
+            }
+
+            newVelocity = DX::XMVectorAdd(newVelocity, DX::XMVectorScale(directionXMVector, acceleration * deltaTime));
+
+            float newSpeed = DirectX::XMVector2Length(newVelocity).m128_f32[0];
+            if (newSpeed > maxVelocity) {
+                newVelocity = DX::XMVectorScale(DX::XMVector2Normalize(newVelocity), maxVelocity);
             }
         }
         else {
-            // Deceleration when no input
-            if (DirectX::XMVector2Length(velocity).m128_f32[0] > 0.01f) {
-                velocity = DX::XMVectorSubtract(velocity, DX::XMVectorScale(DX::XMVector2Normalize(velocity), deceleration * deltaTime));
+            if (currentSpeed > 0.1f) {
+                newVelocity = DX::XMVectorSubtract(newVelocity, DX::XMVectorScale(DX::XMVector2Normalize(newVelocity), deceleration * deltaTime));
             }
-
-            // Clamp velocity to zero if it's very small
-            if (DirectX::XMVector2Length(velocity).m128_f32[0] < 0.01f) {
-                velocity = DX::XMVectorZero();
+            if (DirectX::XMVector2Length(newVelocity).m128_f32[0] < 0.01f) {
+                newVelocity = DX::XMVectorZero();
             }
         }
 
-        // Apply friction
-        velocity = DX::XMVectorScale(velocity, 1.0f - friction * deltaTime);
+        newVelocity = DX::XMVectorScale(newVelocity, 1.0f - friction * deltaTime);
+        velocity = newVelocity;
 
-        // Update position based on velocity
         DX::XMVECTOR movement = DX::XMVectorScale(velocity, deltaTime);
         positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
     }
-
-
 
     DX::XMFLOAT2 newPosition;
     DX::XMStoreFloat2(&newPosition, positionXMVector);

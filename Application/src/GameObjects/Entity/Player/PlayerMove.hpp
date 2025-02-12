@@ -8,18 +8,18 @@ public:
 
 private:
     DX::XMVECTOR velocity = { 0.0f, 0.0f };
-    float acceleration = 400.0f;
-	float deceleration = 600.0f;
-	float maxVelocity = 200.0f;
-    float friction = 0.3f;
+    DX::XMVECTOR dashDirection = { 0.0f, 0.0f };
+    DX::XMVECTOR facingDirection = { 0.0f, 1.0f };
+
+    float acceleration = 300.0f;
+	float deceleration = 200.0f;
+	float maxVelocity = 150.0f;
+    float friction = 0.4f;
 
     float dashSpeed = 400.0f; 
     float dashDuration = 0.1f;
-    float dashCooldownTimer = 0.0f;
     float dashCooldown = 0.1f;
+    float dashCooldownTimer = 0.0f;
     float dashTimer = 0.0f;
 	bool isDashing = false;
-
-    DX::XMVECTOR dashDirection = { 0.0f, 0.0f };
-	DX::XMVECTOR facingDirection = { 0.0f, 1.0f };
 };
