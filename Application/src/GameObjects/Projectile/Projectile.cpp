@@ -25,6 +25,7 @@ void Projectile::OnStart()
     PerformVisible(ProjectileState::Inactive);
     this->m_shouldRender = true;
     this->m_position = m_setPosition;
+    this->CenterOrigin(true);
 
 }
 

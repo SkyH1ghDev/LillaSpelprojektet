@@ -21,7 +21,9 @@ void Entity::OnStart()
 {
     PerformVisible(EntityState::WalkDown);
     this->m_shouldRender = true;
+    this->m_position = { 200, 150 };
     //PerformAttack();
+    this->CenterOrigin(true);
     
 }
 
