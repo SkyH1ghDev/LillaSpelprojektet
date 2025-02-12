@@ -1,5 +1,6 @@
 #pragma once
 #include "IEntityMove.hpp"
+#include <iostream> 
 
 class PlayerMove : public IEntityMove
 {
@@ -11,13 +12,17 @@ private:
     DX::XMVECTOR dashDirection = { 0.0f, 0.0f };
     DX::XMVECTOR facingDirection = { 0.0f, 1.0f };
 
-    float acceleration = 300.0f;
-	float deceleration = 200.0f;
-	float maxVelocity = 150.0f;
-    float friction = 0.4f;
+    float currentSpeed = 0.0f;
+    float maxSpeed = 200.0f;
+    float acceleration = 400.0f;
+	float deceleration = 600.0f;
 
-    float dashSpeed = 400.0f; 
-    float dashDuration = 0.1f;
+
+    float dashSpeed = 0.0f; 
+	float maxDashSpeed = 2000.0f;
+	float dashAcceleration = 4000.0f;
+
+    float dashDuration = 0.12f;
     float dashCooldown = 0.1f;
     float dashCooldownTimer = 0.0f;
     float dashTimer = 0.0f;
