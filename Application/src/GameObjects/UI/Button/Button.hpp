@@ -3,8 +3,8 @@
 #include <SpEngine/Input/Action/OnMouseClick.hpp>
 #include <iostream>
 
-#include "IVisible.hpp"
-#include "IClicked.hpp"
+#include "IUIVisible.hpp"
+#include "IUIClicked.hpp"
 
 // Define an enum for the entity type
 enum class ButtonType {
@@ -26,7 +26,7 @@ public:
     Button& operator=(Button&& other) noexcept = default;
 
     Button(ButtonType type);
-    void PerformVisible() { if (m_visible) m_visible->Visible(this->m_textureName); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_layerFloat, m_scaleFloat); };
     void PerformClicked();
 
 
@@ -34,12 +34,8 @@ public:
     void OnStart() override;
 
 private:
-    std::shared_ptr<IVisible> m_visible;
-    std::shared_ptr<IClicked> m_clicked;
-
+    std::shared_ptr<IUIVisible> m_visible;
+    std::shared_ptr<IUIClicked> m_clicked;
     std::shared_ptr<OnMouseClick> m_mouseClick = std::make_shared<OnMouseClick>();
     ButtonType m_type;
-
-    float width;
-    float height;
 };

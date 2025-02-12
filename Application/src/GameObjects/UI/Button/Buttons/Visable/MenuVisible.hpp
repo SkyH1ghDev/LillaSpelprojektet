@@ -1,9 +1,9 @@
 #pragma once
-#include "IVisible.hpp"
+#include "IUIVisible.hpp"
 #include <iostream>
 
-class MenuVisible: public IVisible
+class MenuVisible: public IUIVisible
 {
 public:
-    void Visible(std::string& texture) override;
+    void Visible(std::string& texture, float& layer, float& scale) override;
 };

@@ -11,7 +11,7 @@
 void ImGuiNew::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context)
 {
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
+    ImGui::CreateContext();  
 
     ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
