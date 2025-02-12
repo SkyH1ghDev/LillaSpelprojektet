@@ -9,13 +9,13 @@
 class CardManager
 {
 private:
-    
-    std::queue<std::shared_ptr<Card>> m_CardDeck;
+
+    static std::queue<std::shared_ptr<IGameObject>> m_CardDeck;
 public:
     /*
     * Function that adds a card to your deck
     */
-    void AddCard(std::shared_ptr<Card> Card);
+    void AddCard(std::shared_ptr<IGameObject> Card);
 
     /*
     * Call function after using a card, the top card goes to the bottom of the deck
@@ -30,9 +30,5 @@ public:
     /*
     * Retreives the top card of deck
     */
-    std::shared_ptr<Card> GetTopCard();
+    std::shared_ptr<IGameObject> GetTopCard();
 };
-
-
-
-

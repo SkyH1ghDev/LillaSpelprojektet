@@ -13,3 +13,13 @@ Card::Card(CardType cardType) :
 {
     std::cout << "Card created of type: " << (m_type == CardType::Shotgun ? "Shotgun" : "Shield") << "\n"; //implement switch case när vi har fler kort
 }
+
+void Card::OnStart()
+{
+
+}
+
+void Card::Update()
+{
+
+}
