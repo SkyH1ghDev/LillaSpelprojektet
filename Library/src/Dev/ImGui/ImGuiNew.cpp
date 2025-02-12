@@ -8,12 +8,6 @@
 #include <ImGui/imgui_impl_win32.h>
 
 
-ImGuiNew::~ImGuiNew()
-{
-
-}
-
-
 void ImGuiNew::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context)
 {
     IMGUI_CHECKVERSION();
@@ -22,7 +16,9 @@ void ImGuiNew::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& de
     ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-	io.WantCaptureMouse = true;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigViewportsNoAutoMerge = true;
 
     RECT windowRect;
     GetClientRect(window, &windowRect);
@@ -33,6 +29,8 @@ void ImGuiNew::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& de
 
 	ImGui_ImplWin32_Init(window);
 	ImGui_ImplDX11_Init(device.Get(), context.Get());
+
+	ImGuiPlatformIO& platformIO = ImGui::GetPlatformIO();
 }
 
 void ImGuiNew::Start()
@@ -40,6 +38,8 @@ void ImGuiNew::Start()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
+	ImGui::ShowDemoWindow();
 }
 
 void ImGuiNew::Run()
@@ -50,6 +50,15 @@ void ImGuiNew::Run()
 
 	ImGuiIO& io = ImGui::GetIO();
 
+	if (io.WantCaptureMouse)
+	{
+		io.MouseDrawCursor = true;
+	}
+	else
+	{
+		io.MouseDrawCursor = false;
+	}
+
 	io.MouseDown[0] = GetAsyncKeyState(VK_LBUTTON) & 0x8000;
 	io.MouseDown[1] = GetAsyncKeyState(VK_RBUTTON) & 0x8000;
 }
@@ -59,6 +68,10 @@ void ImGuiNew::End()
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+
+	ImGui::UpdatePlatformWindows();
+	ImGui::RenderPlatformWindowsDefault();
 }
 
 void ImGuiNew::Shutdown()

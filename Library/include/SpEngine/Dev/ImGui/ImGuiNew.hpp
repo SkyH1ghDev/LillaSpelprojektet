@@ -10,7 +10,7 @@ class ImGuiNew
 {
 public:
     ImGuiNew() = default;
-    ~ImGuiNew();
+    ~ImGuiNew() = default;
     ImGuiNew(const ImGuiNew& other) = default;
     ImGuiNew& operator=(const ImGuiNew& other) = default;
     ImGuiNew(ImGuiNew&& other) noexcept = default;
