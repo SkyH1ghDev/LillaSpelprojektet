@@ -18,5 +18,5 @@ void Mesh::OnStart() {
 }
 
 void Mesh::Update() {
-    PerformVisible();
+    this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
 }

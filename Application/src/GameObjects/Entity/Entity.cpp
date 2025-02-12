@@ -29,7 +29,7 @@ void Entity::OnStart()
 
 void Entity::Update()
 {
-    
+    this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction) {

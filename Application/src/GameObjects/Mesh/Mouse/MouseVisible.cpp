@@ -5,3 +5,5 @@ void MouseVisible::Visible(std::string& texture, DX::XMFLOAT2 position, float& l
 	layer = 1.0;
 	scale = 0.3;
 }
+
+void MouseVisible::UpdateLayer(DX::XMFLOAT2 position, float& layer) {}
