@@ -11,5 +11,5 @@ Card::Card(CardType cardType) :
     m_visible (CreateVisibleComponent(cardType)),
     m_available (CreateAvailabilityComponent(cardType))
 {
-    std::cout << "Card created of type: " << (m_type == CardType::Shotgun ? "Shotgun" : "Shield") << "\n";
+    std::cout << "Card created of type: " << (m_type == CardType::Shotgun ? "Shotgun" : "Shield") << "\n"; //implement switch case när vi har fler kort
 }

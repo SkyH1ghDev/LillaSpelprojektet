@@ -5,5 +5,5 @@
 class ShotgunActivated : public ICardActivated
 {
 public:
-    void Activate() override;
+    void Activate(const DX::XMFLOAT2& position, const DX::XMFLOAT2& Target) override;
 };

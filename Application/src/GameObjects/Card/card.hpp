@@ -3,7 +3,7 @@
 
 #include <SpEngine/Assets/IGameObject.hpp>
 
-// Define an enum for the entity type
+// Define an enum for the card 
 enum class CardType {
     Shotgun,
     Shield

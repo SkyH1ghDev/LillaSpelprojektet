@@ -35,7 +35,6 @@ std::shared_ptr<Card> CardManager::GetTopCard()
     if (m_CardDeck.empty())
     {
         std::cerr << "Deck contains no card" << std::endl;
-        return;
     }
     std::shared_ptr<Card> TopCard = m_CardDeck.front();
     return TopCard;
