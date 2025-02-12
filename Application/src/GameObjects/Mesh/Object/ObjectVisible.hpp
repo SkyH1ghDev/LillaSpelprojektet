@@ -1,8 +1,10 @@
 #pragma once
 #include "IMeshVisible.hpp"
-#include <iostream>
+#include <DirectXMath.h>
 
-class MouseVisible : public IMeshVisible
+namespace DX = DirectX;
+
+class ObjectVisible : public IMeshVisible
 {
 public:
     void Visible(std::string& texture, DX::XMFLOAT2 position, float& layer, float& scale) override;

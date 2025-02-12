@@ -18,7 +18,6 @@ void PlayerController::Update()
 	player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y });
 
 	DX::XMFLOAT2 pos = player->GetPosition();
-	DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
 
 	DX::XMFLOAT2 mousePos = DX::XMFLOAT2(Input::GetMousePositionX() * 640 / 1920, Input::GetMousePositionY() * 360 / 1080);
 
@@ -26,11 +25,7 @@ void PlayerController::Update()
 
 	DX::XMVECTOR playerToMouse = DX::XMVectorSubtract(DX::XMLoadFloat2(&mousePos), DX::XMLoadFloat2(&pos));
 	DX::XMStoreFloat2(&wandPos, DX::XMVectorAdd(DX::XMVectorScale(DX::XMVector2Normalize(playerToMouse), 20), DX::XMLoadFloat2(&pos)));
-	m_weapon->SetPosition(wandPos);
-	if (DX::XMVectorGetY(playerToMouse) > 0)
-		m_weapon->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(playerToMouse, DX::XMLoadFloat2(&zeroAngle))));
-	else
-		m_weapon->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(playerToMouse, DX::XMLoadFloat2(&zeroAngle))));
+
 	
 	if (m_attack->GetAttack())
 	{

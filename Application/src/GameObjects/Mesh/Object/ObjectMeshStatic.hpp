@@ -2,7 +2,7 @@
 #include "IMeshStatic.hpp"
 #include <iostream>
 
-class WeaponMeshStatic : public IMeshStatic
+class ObjectMeshStatic : public IMeshStatic
 {
 public:
     void Static() override;

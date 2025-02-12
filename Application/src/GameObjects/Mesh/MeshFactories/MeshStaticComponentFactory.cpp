@@ -1,6 +1,6 @@
 #include "MeshStaticComponentFactory.hpp"
 #include "CursorMeshStatic.hpp"
-#include "WeaponMeshStatic.hpp"
+#include "ObjectMeshStatic.hpp"
 
 std::shared_ptr<IMeshStatic> CreateStaticComponent(MeshType type)
 {
@@ -11,8 +11,8 @@ std::shared_ptr<IMeshStatic> CreateStaticComponent(MeshType type)
     case MeshType::Mouse:
         return std::make_shared<CursorMeshStatic>();
         break;
-        case MeshType::Weapon:
-        return std::make_shared<WeaponMeshStatic>();
+        case MeshType::Object:
+        return std::make_shared<ObjectMeshStatic>();
         break;
     default:
         throw std::invalid_argument("Unknown MeshType in CreateStaticComponent");

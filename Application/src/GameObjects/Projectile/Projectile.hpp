@@ -25,7 +25,7 @@ public:
     Projectile(ProjectileType projectileType, DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime);
 
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
-    void PerformVisible(ProjectileState projectileState) { if (m_visible) m_visible->Visible(m_textureName, projectileState, m_layerFloat, m_scaleFloat); }
+    void PerformVisible(ProjectileState projectileState) { if (m_visible) m_visible->Visible(m_textureName, m_position, projectileState, m_layerFloat, m_scaleFloat); }
     bool PerformHit() { if (m_hit) m_hit->Hit(); }
     
 

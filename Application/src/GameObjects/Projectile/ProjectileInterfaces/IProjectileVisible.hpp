@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <DirectXMath.h>
+namespace DX = DirectX;
+
 enum class ProjectileState {
     Active,
     Inactive
@@ -8,6 +11,6 @@ enum class ProjectileState {
 class IProjectileVisible
 {
 public:
-    virtual void Visible(std::string& texture, ProjectileState entityState, float& layer, float& scale) = 0;
+    virtual void Visible(std::string& texture, DX::XMFLOAT2 position, ProjectileState entityState, float& layer, float& scale) = 0;
     virtual ~IProjectileVisible() = default;
 };

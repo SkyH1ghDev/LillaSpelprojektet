@@ -33,6 +33,7 @@ void Projectile::Update()
 {
     if (m_lifetime > 0)
     {
+        PerformVisible(ProjectileState::Inactive);
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= 0.2 * Clock::GetDeltaTime();
     }

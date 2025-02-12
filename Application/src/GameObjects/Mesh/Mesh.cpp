@@ -3,11 +3,12 @@
 #include "MeshVisibleComponentFactory.hpp"
 #include <iostream>
 
-Mesh::Mesh(MeshType meshType) :
+Mesh::Mesh(MeshType meshType, std::string textureName) :
     m_static(CreateStaticComponent(meshType)),
     m_visible(CreateVisibleComponent(meshType)),
     m_type(meshType)
 {
+    this->m_textureName = textureName;
     std::cout << "Entity created of type: " << (m_type == MeshType::Background ? "Background" : "Enemy") << "\n";
 }
 
@@ -17,5 +18,5 @@ void Mesh::OnStart() {
 }
 
 void Mesh::Update() {
-
+    PerformVisible();
 }

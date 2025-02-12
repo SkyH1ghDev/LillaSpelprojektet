@@ -9,6 +9,7 @@
 #include "Scene/Factories/GameSceneFactories/GameSceneFactory.hpp"
 #include "Player/PlayerController.hpp"
 #include "Enemy/EnemyController.hpp"
+#include "GameObjects/Mesh/Scripts/wand.hpp"
 
 Game::Game()
 {
@@ -27,22 +28,25 @@ Game::Game()
     std::shared_ptr<IGameObject> enemy = std::make_shared<Entity>(EntityType::Enemy);
     std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>(player);
 
-
-    std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background);
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse);
-    //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     
-    player->AttachScript(playerController);
     enemy->AttachScript(enemyController);
 
+    std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "wood_arena_v1.png");
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "crosshair.png");
+    //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
+    std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "liosstav.png");
+    std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
+
+    player->AttachScript(playerController);
+    wand->AttachScript(wandScript);
+    wand->CenterOrigin(true);
     testScene->AddGameObject(player);
     player->CenterOrigin(true);
     testScene->AddGameObject(background);
     testScene->AddGameObject(mouse);
+    testScene->AddGameObject(wand);
 
-    testScene->AddGameObject(std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject());
     mouse->CenterOrigin(true);
-    std::static_pointer_cast<PlayerController>(playerController)->GetWeaponObject()->CenterOrigin(true);
     testScene->AddGameObject(enemy);
 
 
