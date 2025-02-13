@@ -1,6 +1,6 @@
 #include "ExitVisible.hpp"
 
-void ExitVisible::Visible(std::string& texture, float& layer, float& scale)
+void ExitVisible::Visible(std::string& texture, float& layer, float& scale, DirectX::XMFLOAT2& position)
 {
 	texture = "exit.png";
 }

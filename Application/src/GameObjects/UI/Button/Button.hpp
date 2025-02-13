@@ -26,7 +26,7 @@ public:
     Button& operator=(Button&& other) noexcept = default;
 
     Button(ButtonType type);
-    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_layerFloat, m_scaleFloat); };
+    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_layerFloat, m_scaleFloat, m_position); };
     void PerformClicked();
 
 

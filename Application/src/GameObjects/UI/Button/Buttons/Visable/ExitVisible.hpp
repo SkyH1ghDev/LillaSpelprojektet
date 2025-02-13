@@ -5,5 +5,5 @@
 class ExitVisible : public IUIVisible
 {
 public:
-    void Visible(std::string& texture, float& layer, float& scale) override;
+    void Visible(std::string& texture, float& layer, float& scale, DirectX::XMFLOAT2& position) override;
 };
