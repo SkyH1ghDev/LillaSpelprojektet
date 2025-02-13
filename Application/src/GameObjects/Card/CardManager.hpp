@@ -10,28 +10,13 @@
 class CardManager : public IScript
 {
 private:
-    static std::vector<std::shared_ptr<IGameObject>> m_CardDeck;
+    static std::vector<std::shared_ptr<ICard>> m_cardObjects;
     size_t m_currentindex = 0;
 public:
     /*
-    * Function that adds a card to your deck
+    * Function attaches a card
     */
-    void AddCard(std::shared_ptr<IGameObject> Card);
+    void AttachCard(std::shared_ptr<ICard> Card);
 
-    /*
-    * Call function after using a card, the top card goes to the bottom of the deck
-    */
-    void ChangeAbilitie();
-
-    /*
-    * Returns false if deck is empty, otherwise true
-    */
-    bool HasCard() const;
-
-    /*
-    * Retreives the top card of deck
-    */
-    std::shared_ptr<IGameObject> GetTopCard();
-
-
+    std::vector<std::shared_ptr<ICard>> GetCardObjects();
 };

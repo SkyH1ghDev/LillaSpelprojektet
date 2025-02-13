@@ -2,7 +2,7 @@
 #include <memory>
 
 #include <SpEngine/Assets/IGameObject.hpp>
-
+#include "ICard.hpp"
 // Define an enum for the card 
 enum class CardType {
     Shotgun,
@@ -13,7 +13,7 @@ enum class CardType {
 #include "ICardAvailability.hpp"
 #include "ICardVisible.hpp"
 
-class Card : public IGameObject
+class Card : public ICard
 {
 public:
     Card() = default;
@@ -24,9 +24,7 @@ public:
     Card& operator=(Card&& other) noexcept = default;
 
     Card(CardType cardtype);
-    void Update() override;
-    void OnStart() override;
-
+    
     void PerformVisible(CardState cardstate) { if (m_visible) m_visible->Visible(this->m_textureName, cardstate, m_layerFloat, m_scaleFloat); }
     void PerformAvailable() { if (m_available) m_available->Available(); }
     void PerformActivated(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_activated) m_activated->Activate(position, direction); }

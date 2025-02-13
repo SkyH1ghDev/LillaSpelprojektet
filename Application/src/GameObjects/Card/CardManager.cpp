@@ -2,39 +2,22 @@
 
 #include <iostream>
 
-std::vector<std::shared_ptr<IGameObject>> CardManager::m_CardDeck = {};
+std::vector<std::shared_ptr<ICard>> CardManager::m_cardObjects = {};
 
-void CardManager::AddCard(std::shared_ptr<IGameObject> Card)
+void CardManager::AttachCard(std::shared_ptr<ICard> Card)
 {
-    m_CardDeck.push_back(Card);
-}
-
-
-void CardManager::ChangeAbilitie()
-{
-    if (m_CardDeck.empty())
+    if (const auto& it = std::ranges::find(m_cardObjects, Card); it == m_cardObjects.end())
     {
-        std::cout << "No abilities available" << std::endl;
-        return;
+        m_cardObjects.push_back(Card);
     }
-
-    m_currentindex = (m_currentindex + 1) % m_CardDeck.size();
-
-    //Here we can also if we want cast the "card" abilitie before putting it last 
 }
 
-bool CardManager::HasCard() const
+std::vector<std::shared_ptr<ICard>> CardManager::GetCardObjects()
 {
-    return !m_CardDeck.empty();
+    return m_cardObjects;
 }
 
-std::shared_ptr<IGameObject> CardManager::GetTopCard()
-{
-    if (m_CardDeck.empty())
-    {
-        std::cout << "Deck contains no card" << std::endl;
-    }
-    std::shared_ptr<IGameObject> TopCard = m_CardDeck.at(m_currentindex);
-    return TopCard;
-}
+
+
+
 
