@@ -10,6 +10,7 @@
 #include "Player/PlayerController.hpp"
 #include "Enemy/EnemyController.hpp"
 #include "Enemy/EnemyManager.hpp"
+#include "Projectile/ProjectileManager.hpp"
 #include "GameObjects/Mesh/Scripts/wand.hpp"
 
 Game::Game()
@@ -46,6 +47,7 @@ Game::Game()
     mouse->CenterOrigin(true);
 
     EnemyManager::SpawnEnemies(player, 2);
+    ProjectileManager::Initialize(200);
 
 
     //testScene->AddGameObject(exitButton);
