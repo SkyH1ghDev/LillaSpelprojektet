@@ -28,9 +28,9 @@ public:
 
     Entity(EntityType entityType);
 
-    void PerformMove(const DX::XMFLOAT2& direction);
-    void PerformVisible(EntityState entityState) { if (m_visible) m_visible->Visible(m_textureName, entityState, m_layerFloat, m_scaleFloat); }
-    void PerformAttack() { if (m_attack) m_attack->Attack(); }
+    void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
+    void PerformVisible(EntityState entityState) { if (m_visible) m_visible->Visible(m_textureName, m_position, entityState, m_layerFloat, m_scaleFloat); }
+    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack) m_attack->Attack(position, direction); }
     void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
 

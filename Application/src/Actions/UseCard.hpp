@@ -14,16 +14,26 @@ public:
     UseCard(UseCard&& other) noexcept = default;
     UseCard& operator=(UseCard&& other) noexcept = default;
 
-    void Update(std::optional<std::any> data = std::nullopt)override;
+    bool GetUseCard() const;
+    void Update(std::optional<std::any> data) override;
+
+protected:
+    bool m_useCard;
 
 };
 
-inline void UseCard::Update(std::optional<std::any> data)
+//Returns if true if attack key is pressed, false if not
+inline bool UseCard::GetUseCard() const
 {
-    const float scale = (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any();
-    if (scale == 1.0)
-    {
-        m_usecard = true;
-    }
+    return this->m_useCard;
 }
 
+//Update bool for attack key
+inline void UseCard::Update(std::optional<std::any> data)
+{
+    float scale = (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any();
+    if (scale == 1)
+        this->m_useCard = true;
+    else
+        this->m_useCard = false;
+}

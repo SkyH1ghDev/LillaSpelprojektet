@@ -21,15 +21,18 @@ void Entity::OnStart()
 {
     PerformVisible(EntityState::WalkDown);
     this->m_shouldRender = true;
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    //PerformAttack();
 }
 
 void Entity::Update()
 {
-
+    this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
 }
 
-void Entity::PerformMove(const DX::XMFLOAT2& direction) {
+void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr) {
-        m_position = m_move->Move(m_position, direction);
+        m_position = m_move->Move(m_position, direction, dashing);
     }
 }

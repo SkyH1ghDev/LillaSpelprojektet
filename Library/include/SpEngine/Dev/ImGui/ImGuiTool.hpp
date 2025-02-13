@@ -17,10 +17,12 @@ public:
 	ImGuiTool(ImGuiTool&& other) = default;
 	ImGuiTool& operator=(ImGuiTool&& other) = default;
 
-	void Start();
+	void Start(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11BlendState>& blendState);
 	void End();
 	void Run(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv);
 	void Shutdown();
+
+	MW::ComPtr<ID3D11RenderTargetView> GetRenderTarget();
 
 private:
 	void Initialized(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext);
@@ -28,5 +30,12 @@ private:
 	void Test(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv);
 
 private:
-	bool initialized = false;
+	bool m_initialized = false;
+	MW::ComPtr<ID3D11RenderTargetView> m_rtv;
+	MW::ComPtr<ID3D11Texture2D> m_texture;
 };
+
+inline MW::ComPtr<ID3D11RenderTargetView> ImGuiTool::GetRenderTarget()
+{
+	return this->m_rtv;
+}
