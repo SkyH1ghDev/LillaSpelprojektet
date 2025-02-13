@@ -29,6 +29,7 @@ Game::Game()
     player->SetPosition({ 150, 150 });
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
 
+    //std::shared_ptr<IGameObject> testKort = std::make_shared<Card>(CardType::Shield);
 
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
     std::shared_ptr<IScript> playerCardScript = std::static_pointer_cast<IScript, PlayerCardScript>(std::make_shared<PlayerCardScript>());
