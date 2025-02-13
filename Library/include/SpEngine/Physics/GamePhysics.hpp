@@ -58,6 +58,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
+
 	static bool ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2);
 
 	/**
