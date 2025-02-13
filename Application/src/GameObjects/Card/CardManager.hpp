@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include <stdexcept>
-#include "Card.hpp"
+#include "CardDeck.hpp"
 #include <SpEngine/Assets/IScript.hpp>
 
 class CardManager : public IScript
