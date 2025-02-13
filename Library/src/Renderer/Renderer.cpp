@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Renderer.hpp"
 
-#include "ImGuiNew.hpp"
+#include "ImGuiTool.hpp"
 
 Renderer::Renderer(HWND& window)
 {
@@ -16,7 +16,7 @@ Renderer::Renderer(HWND& window)
 
 Renderer::~Renderer()
 {
-	ImGuiNew::Shutdown();
+	ImGuiTool::Shutdown();
 }
 
 
@@ -50,12 +50,12 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
 {
-	ImGuiNew::Start();
+	ImGuiTool::Start();
 
 	DrawScene(mainScene);
 
-	ImGuiNew::Run();
-	ImGuiNew::End();
+	ImGuiTool::Run();
+	ImGuiTool::End();
 
 	this->m_swapChain->Present(0, 0);
 }
@@ -172,5 +172,5 @@ void Renderer::SetupPipeline(HWND& window)
 
 void Renderer::SetupImGui(HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context)
 {
-	ImGuiNew::Initialize(window, device, context);
+	ImGuiTool::Initialize(window, device, context);
 }
