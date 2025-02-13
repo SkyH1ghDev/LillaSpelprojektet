@@ -23,7 +23,6 @@ Game::Game()
     {
         std::cerr << "Scene registration failed!\n";
     }
-    std::shared_ptr<CardManager> testDeck;
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
     
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player);
@@ -42,12 +41,10 @@ Game::Game()
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "liosstav.png");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
 
-    testDeck->AddCard(testKort);
     player->AttachScript(playerController);
     player->AttachScript(playerAttackScript);
     player->AttachScript(playerCardScript);
 
-    testScene->AddGameObject(testKort);
 
     wand->AttachScript(wandScript);
     wand->CenterOrigin(true);
