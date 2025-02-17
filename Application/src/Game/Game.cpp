@@ -13,6 +13,8 @@
 #include "Enemy/EnemyManager.hpp"
 #include "Projectile/ProjectileManager.hpp"
 #include "GameObjects/Mesh/Scripts/wand.hpp"
+#include "GameObjects/UI/Bar/HealthBarManager.hpp"
+
 
 Game::Game()
 {
@@ -28,7 +30,6 @@ Game::Game()
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player);
     player->SetPosition({ 150, 150 });
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
-	std::shared_ptr<IGameObject> healthBar = std::make_shared<Bar>(BarType::Health);
 
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "crosshair.png");
@@ -50,8 +51,7 @@ Game::Game()
 
     EnemyManager::SpawnEnemies(player, 2);
     ProjectileManager::Initialize(200);
-
-       
-    testScene->AddGameObject(healthBar);
+    HealthBarManager::Initialize(5);
+    HealthBarManager::RemoveHeart(2);
 
 }
