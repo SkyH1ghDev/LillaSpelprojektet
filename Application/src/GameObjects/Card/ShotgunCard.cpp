@@ -3,6 +3,14 @@
 
 
 
-void ShotgunCard::Activate() {
+void ShotgunCard::ActivateLvl1() {
     
+}
+
+void ShotgunCard::ActivateLvl2() {
+
+}
+
+void ShotgunCard::ActivateLvl3() {
+
 }

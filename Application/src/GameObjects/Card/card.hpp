@@ -11,7 +11,10 @@ class ShotgunCard : public ICard
 {
 public:
 
-    void Activate();
+    void ActivateLvl1();
+    void ActivateLvl2();
+    void ActivateLvl3();
+
     
 private:
     
@@ -21,7 +24,9 @@ private:
 class SpreadCard : public ICard
 {
 public:
-    void Activate();
+    void ActivateLvl1();
+    void ActivateLvl2();
+    void ActivateLvl3();
 
 private:
 
