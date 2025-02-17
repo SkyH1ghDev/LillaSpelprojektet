@@ -6,26 +6,54 @@ int PhysicsEngine::m_rightWall = 600;
 int PhysicsEngine::m_topWall = 17;
 int PhysicsEngine::m_bottomWall = 320;
 
-bool PhysicsEngine::WallEntityXCollision(const float xPos, const float radius, const float ARM)
+bool PhysicsEngine::WallEntityXCollision(const float xPos, const float radiusX)
 {
-    if (xPos - (ARM * radius) < m_leftWall)
+    if (xPos - radiusX < m_leftWall)
     {
         return true;
     }
-    if (xPos + (ARM * radius) > m_rightWall)
+    if (xPos + radiusX > m_rightWall)
     {
         return true;
     }
     return false;
 }
 
-bool PhysicsEngine::WallEntityYCollision(const float yPos, const float radius, const float ARM)
+bool PhysicsEngine::WallEntityYCollision(const float yPos, const float radiusY)
 {
-    if (yPos - (ARM * radius) < m_topWall)
+    if (yPos - radiusY < m_topWall)
     {
         return true;
     }
-    if (yPos + (ARM * radius) > m_bottomWall)
+    if (yPos + radiusY > m_bottomWall)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool PhysicsEngine::WallEntityXCollision(const Collider& entity)
+{
+    DX::XMFLOAT2 pos = entity.GetPosition();
+    if (pos.x - entity.GetRadiusX() < m_leftWall)
+    {
+        return true;
+    }
+    if (pos.y + entity.GetRadiusX() > m_rightWall)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool PhysicsEngine::WallEntityYCollision(const Collider& entity)
+{
+    DX::XMFLOAT2 pos = entity.GetPosition();
+    if (pos.y - entity.GetRadiusY() < m_topWall)
+    {
+        return true;
+    }
+    if (pos.y - entity.GetRadiusY() > m_bottomWall)
     {
         return true;
     }
@@ -43,26 +71,21 @@ bool PhysicsEngine::ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, 
     return false;
 }
 
-bool PhysicsEngine::WallProjectileXCollision(const float xPos, const float radius, const float ARM)
+bool PhysicsEngine::WallProjectileCollision(const DX::XMFLOAT2& projPos, const float radius)
 {
-    if (xPos - (ARM * radius) < m_leftWall)
+    if (projPos.x - radius < m_leftWall)
     {
         return true;
     }
-    if (xPos + (ARM * radius) > m_rightWall)
+    if (projPos.x + radius > m_rightWall)
     {
         return true;
     }
-    return false;
-}
-
-bool PhysicsEngine::WallProjectileYCollision(const float yPos, const float radius, const float ARM)
-{
-    if (yPos - (ARM * radius) < m_topWall)
+    if (projPos.y - radius < m_topWall)
     {
         return true;
     }
-    if (yPos + (ARM * radius) > m_bottomWall)
+    if (projPos.y + radius > m_bottomWall)
     {
         return true;
     }
