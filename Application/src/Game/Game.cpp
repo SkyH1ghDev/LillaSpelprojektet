@@ -48,7 +48,8 @@ Game::Game()
 
     EnemyManager::SpawnEnemies(player, 2);
     ProjectileManager::Initialize(ProjectileType::Base, 200);
-
+    ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
+    ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
 
     //testScene->AddGameObject(exitButton);
 
