@@ -5,8 +5,9 @@
 class HealthBarManager {
 public:
     static void Initialize(size_t heartNumber);
-    static void AddHeart(size_t healthIncrease);
+    static void RefillHeart(size_t healthIncrease);
     static void RemoveHeart(size_t healthDamage);
+    static void AddNewHeart(size_t heartNumber);
 
 private:
     static std::vector<std::shared_ptr<IGameObject>> health;
