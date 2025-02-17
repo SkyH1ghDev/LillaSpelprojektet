@@ -152,6 +152,7 @@ protected:
     bool m_centerOrigin = false;
     bool m_isActive = true;
     bool m_shouldRender = false;
+    Collider m_collider = Collider({0, 0}, 0, 0);
 
     std::vector<std::shared_ptr<IScript>> m_scripts;
 };

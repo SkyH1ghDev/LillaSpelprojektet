@@ -54,7 +54,6 @@ public:
 	float GetRadius() const;
 	float GetRadiusX() const;
 	float GetRadiusY() const;
-
 	CollisionLayer GetLayer() const;
 	CollisionLayer GetMask() const;
 	bool CanCollideWith(CollisionLayer otherLayer) const;
