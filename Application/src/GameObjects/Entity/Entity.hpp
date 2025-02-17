@@ -2,6 +2,7 @@
 #include <memory>
 
 #include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Physics/Collider.hpp>
 
 // Define an enum for the entity type
 enum class EntityType {
@@ -46,4 +47,5 @@ private:
     std::shared_ptr<IEntityTakeDamage> m_takeDamage;
     std::shared_ptr<IEntityUseCard> m_useCard;
     EntityType m_type;
+    Collider m_collider;
 };

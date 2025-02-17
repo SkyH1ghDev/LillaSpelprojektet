@@ -2,7 +2,7 @@
 
 #include <SpEngine/Clock/Clock.hpp>
 
-DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashInput) {
+DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashInput, Collider m_collider) {
     float deltaTime = Clock::GetDeltaTime();
     DX::XMVECTOR positionXMVector = XMLoadFloat2(&position);
     DX::XMVECTOR directionXMVector = DX::XMVector2Normalize(XMLoadFloat2(&direction));
@@ -66,10 +66,12 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
         positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
     }
 
-
+    
 
     DX::XMFLOAT2 newPosition;
     DX::XMStoreFloat2(&newPosition, positionXMVector);
+
+    m_collider.updatePosition(newPosition);
 
     if (PhysicsEngine::WallEntityXCollision(newPosition.x))
     {
@@ -79,6 +81,8 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     {
         newPosition.y = position.y;
     }
+
+    m_collider.updatePosition(newPosition);
 
     return newPosition;
 }

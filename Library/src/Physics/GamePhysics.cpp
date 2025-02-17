@@ -39,7 +39,7 @@ bool PhysicsEngine::WallEntityXCollision(const Collider& entity)
     {
         return true;
     }
-    if (pos.y + entity.GetRadiusX() > m_rightWall)
+    if (pos.x + entity.GetRadiusX() > m_rightWall)
     {
         return true;
     }

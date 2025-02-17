@@ -12,7 +12,8 @@ Entity::Entity(EntityType entityType) :
     m_attack(CreateAttackComponent(entityType)),
     m_takeDamage(CreateTakeDamageComponent(entityType)),
     m_useCard(CreateUseCardComponent(entityType)),
-    m_type(entityType)
+    m_type(entityType),
+    m_collider(Collider(this->m_position, 10.0f))
 {
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
@@ -33,6 +34,6 @@ void Entity::Update()
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr) {
-        m_position = m_move->Move(m_position, direction, dashing);
+        m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
     }
 }
