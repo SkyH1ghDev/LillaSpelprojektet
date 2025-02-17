@@ -3,6 +3,7 @@
 #include <memory>
 #include <SpEngine/Assets/IScript.hpp>
 #include <string>
+#include <iostream>
 #include <vector>
 
 
@@ -22,6 +23,7 @@ public:
     ICard(ICard&& other) noexcept = default;
     ICard& operator=(ICard&& other) noexcept = default;
     
+
     //void AttachScript(const std::shared_ptr<IScript>& script);
     virtual void ActivateLvl1() = 0;
     virtual void ActivateLvl2() = 0;
@@ -45,12 +47,6 @@ protected:
     std::vector<std::shared_ptr<IScript>> m_scripts;
 };
 
-//inline void ICard::AttachScript(const std::shared_ptr<IScript>& script) {
-//    if (const auto it = std::ranges::find(m_scripts, script); it == m_scripts.end())
-//    {
-//        m_scripts.push_back(script);
-//    }
-//}
 
 inline CardType ICard::GetType()
 {
