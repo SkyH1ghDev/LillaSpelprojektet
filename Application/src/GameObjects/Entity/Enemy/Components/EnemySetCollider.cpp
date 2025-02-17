@@ -2,7 +2,7 @@
 
 #include <SpEngine/Physics/Collider.hpp>
 
-Collider EnemySetCollider::CreateCollider(DX::XMFLOAT2 position, float radius, float aspectRatio)
+Collider EnemySetCollider::CreateCollider(DX::XMFLOAT2 position)
 {
-	return Collider(position, radius, aspectRatio);
+	return Collider(position, 10.0f);
 }

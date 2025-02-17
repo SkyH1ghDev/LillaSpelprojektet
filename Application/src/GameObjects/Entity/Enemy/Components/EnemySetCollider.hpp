@@ -8,5 +8,5 @@ namespace DX = DirectX;
 class EnemySetCollider : public IEntitySetCollider
 {
 public:
-	Collider CreateCollider(DX::XMFLOAT2 position, float radius, float aspectRatio = 1.0f) override;
+	Collider CreateCollider(DX::XMFLOAT2 position) override;
 };

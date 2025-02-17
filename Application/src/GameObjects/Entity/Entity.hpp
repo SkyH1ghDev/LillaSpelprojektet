@@ -35,6 +35,7 @@ public:
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack) m_attack->Attack(position, direction); }
     void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
+    void PerformSetCollider();
 
     void Update() override;
     void OnStart() override;

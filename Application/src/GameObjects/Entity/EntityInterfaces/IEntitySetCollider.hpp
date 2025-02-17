@@ -8,6 +8,6 @@ namespace DX = DirectX;
 class IEntitySetCollider
 {
 public:
-	virtual Collider CreateCollider(DX::XMFLOAT2 position, float radius, float aspectRatio) = 0;
+	virtual Collider CreateCollider(DX::XMFLOAT2 position) = 0;
 	virtual ~IEntitySetCollider() = default;
 };

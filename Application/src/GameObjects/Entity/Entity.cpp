@@ -26,6 +26,12 @@ void Entity::OnStart()
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
+    PerformSetCollider();
+}
+
+void Entity::PerformSetCollider()
+{
+    this->m_collider = this->m_setCollider->CreateCollider(this->m_position);
 }
 
 void Entity::Update()
