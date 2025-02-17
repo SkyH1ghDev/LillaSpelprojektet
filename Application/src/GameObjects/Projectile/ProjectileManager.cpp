@@ -30,9 +30,27 @@ void ProjectileManager::AddProjectile(DX::XMFLOAT2 position, DX::XMFLOAT2 direct
             return;
         }
     }
+    // If no inactive projectile is found, dynamically expand the pool by 1.5x
+    size_t newSize = static_cast<size_t>(projectiles.size() * 2);
+    size_t oldSize = projectiles.size();
+    if (newSize <= projectiles.size()) {
+        newSize = projectiles.size() + 1; // Ensure at least one new projectile is added
+    }
 
-    // If no inactive projectile is found, log a warning or expand the pool
-    // (Optional: Dynamically resize the pool if needed)
-    // projectiles.push_back(std::make_shared<Projectile>(ProjectileType::Base));
-    // AddProjectile(position, direction, speed, lifetime);
+    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
+    projectiles.reserve(newSize);
+
+    for (size_t i = oldSize; i < newSize; ++i) {
+        auto newProjectile = std::make_shared<Projectile>(ProjectileType::Base);
+        newProjectile->SetActive(false); // Start inactive
+        projectiles.push_back(newProjectile);
+        testScene->AddGameObject(newProjectile);
+    }
+
+    // Reuse the first newly added projectile
+    projectiles[oldSize]->Initialize(position, direction, speed, lifetime);
+    projectiles[oldSize]->SetActive(true);
+
+    // Update the lastInactiveIndex to the newly added projectile
+    lastInactiveIndex = oldSize;
 }
