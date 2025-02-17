@@ -1,56 +1,59 @@
 #include "ProjectileManager.hpp"
 #include <algorithm>
+#include <unordered_map>
 
 // Initialize static variable
-std::vector<std::shared_ptr<Projectile>> ProjectileManager::projectiles;
+std::unordered_map<ProjectileType, std::vector<std::shared_ptr<Projectile>>> ProjectileManager::projectilePools;
 
-void ProjectileManager::Initialize(size_t poolSize) {
-    projectiles.clear(); // Clear any existing projectiles
-    projectiles.reserve(poolSize); // Reserve memory upfront
+void ProjectileManager::Initialize(ProjectileType type, size_t poolSize) {
+    auto& projectiles = projectilePools[type]; // Get the pool for the given type
+    projectiles.clear();
+    projectiles.reserve(poolSize);
+
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
     for (size_t i = 0; i < poolSize; ++i) {
-        auto projectile = std::make_shared<Projectile>(ProjectileType::Base);
-        projectile->SetActive(false); // Ensure projectiles start inactive
+        auto projectile = std::make_shared<Projectile>(type);
+        projectile->SetActive(false);
         projectiles.push_back(projectile);
         testScene->AddGameObject(projectile);
     }
 }
 
-void ProjectileManager::AddProjectile(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float speed, float lifetime) {
-    // Use a static index to avoid searching from the beginning every time
-    static size_t lastInactiveIndex = 0;
-    // Start searching from the last inactive index
+void ProjectileManager::AddProjectile(ProjectileType type, DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float speed, float lifetime) {
+    static std::unordered_map<ProjectileType, size_t> lastInactiveIndexMap;
+
+    auto& projectiles = projectilePools[type];
+
+    if (projectiles.empty()) {
+        Initialize(type, 10); // Create an initial pool if none exists
+    }
+
+    size_t& lastInactiveIndex = lastInactiveIndexMap[type];
+
     for (size_t i = 0; i < projectiles.size(); ++i) {
-        size_t index = (lastInactiveIndex + i) % projectiles.size(); // Wrap around using modulo
+        size_t index = (lastInactiveIndex + i) % projectiles.size();
         if (!projectiles[index]->IsActive()) {
-            // Reuse the inactive projectile
             projectiles[index]->Initialize(position, direction, speed, lifetime);
-            //projectiles[index]->SetActive(true);
             lastInactiveIndex = (index + 1) % projectiles.size();
             return;
         }
     }
-    // If no inactive projectile is found, dynamically expand the pool by 1.5x
-    size_t newSize = static_cast<size_t>(projectiles.size() * 2);
+
+    // Expand the pool if no inactive projectile is found
     size_t oldSize = projectiles.size();
-    if (newSize <= projectiles.size()) {
-        newSize = projectiles.size() + 1; // Ensure at least one new projectile is added
-    }
+    size_t newSize = oldSize * 2;
 
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
     projectiles.reserve(newSize);
 
     for (size_t i = oldSize; i < newSize; ++i) {
-        auto newProjectile = std::make_shared<Projectile>(ProjectileType::Base);
-        newProjectile->SetActive(false); // Start inactive
+        auto newProjectile = std::make_shared<Projectile>(type);
+        newProjectile->SetActive(false);
         projectiles.push_back(newProjectile);
         testScene->AddGameObject(newProjectile);
     }
 
-    // Reuse the first newly added projectile
     projectiles[oldSize]->Initialize(position, direction, speed, lifetime);
     projectiles[oldSize]->SetActive(true);
-
-    // Update the lastInactiveIndex to the newly added projectile
     lastInactiveIndex = oldSize;
 }
