@@ -1,4 +1,5 @@
 #include "ImGuiTool.hpp"
+#include "ImGuiHelper.hpp"
 
 #include <psapi.h>
 #include <SpEngine/Clock/Clock.hpp>
@@ -30,8 +31,6 @@ void ImGuiTool::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& d
 
 	ImGui_ImplWin32_Init(window);
 	ImGui_ImplDX11_Init(device.Get(), context.Get());
-
-	ImGuiPlatformIO& platformIO = ImGui::GetPlatformIO();
 }
 
 void ImGuiTool::Start()
@@ -64,145 +63,135 @@ void ImGuiTool::Run()
 
 	ImGui::BeginTabBar("main", mainTabBarFlags);
 
-		if (ImGui::BeginTabItem("AssetManager"))
+	if (ImGui::BeginTabItem("AssetManager"))
+	{
+		AssetManagerTab();
+		ImGui::EndTabItem();
+	}
+
+	/*
+	 *
+	 * TODO: FIX THE REBINDING BUTTONS
+	 *
+	 */
+
+	if (ImGui::BeginTabItem("Keyboard & Mouse"))
+	{
+		static bool buttonWasPressed = false;
+		static std::string buttonText = "Default";
+
+		if (ImGui::Button(buttonText.c_str()))
 		{
-			AssetManagerTab();
-			ImGui::EndTabItem();
+			buttonWasPressed = true;
+			buttonText = "##xx";
 		}
 
-		/*
-		 *
-		 * TODO: FIX THE REBINDING BUTTONS
-		 *
-		 */
-
-		if (ImGui::BeginTabItem("Keyboard & Mouse"))
+		if (buttonWasPressed)
 		{
-			static bool buttonWasPressed = false;
-			static std::string buttonText = "Default";
-
-			if (ImGui::Button(buttonText.c_str()))
+			for (int i = ImGuiKey_NamedKey_BEGIN; i < ImGuiKey_NamedKey_END; ++i)
 			{
-				buttonWasPressed = true;
-				buttonText = "";
-			}
-
-			// If button was pressed, capture next key press
-			if (buttonWasPressed)
-			{
-				ImGuiIO& io = ImGui::GetIO();
-
-				// Check each key (you can modify which keys you want to capture)
-				if (ImGui::IsKeyPressed(ImGuiKey_Tab))
+				if (ImGuiHelper::GetBindableKeys().contains(i))
 				{
-					buttonText = "Tab";
-					buttonWasPressed = false;
+					if (ImGui::IsKeyPressed(static_cast<ImGuiKey>(i)))
+					{
+						buttonText = ImGuiHelper::GetKey(static_cast<ImGuiKey>(i)).GetString();
+						buttonWasPressed = false;
+					}
 				}
-				/*else if (io.KeysDownDuration[ImGuiKey_Space]) buttonText = "Space";
-				else if (io.KeysDownDuration[ImGuiKey_Enter] >= 0.0f) buttonText = "Enter";
-				else if (io.KeysDownDuration[ImGuiKey_Escape] >= 0.0f) buttonText = "Escape";
-
-				// Or capture any printable character
-				int key = io.KeysDownDuration[0];
-				if (key >= 32 && key <= 126)
-				{
-					// ASCII printable range
-					buttonText = std::string(1, static_cast<char>(key));
-				}*/
 			}
-
-			// Reset state after capturing a key
-			ImGui::EndTabItem();
 		}
 
-		if (ImGui::BeginTabItem("Statistics"))
+		ImGui::EndTabItem();
+	}
+
+	if (ImGui::BeginTabItem("Statistics"))
+	{
+		if (ImGui::CollapsingHeader("Performance"))
 		{
-			if (ImGui::CollapsingHeader("Performance"))
+
+			// FPS
+			ImGui::SeparatorText("Framerate");
+
+			std::string fpsText = "FPS: " + std::to_string(ImGui::GetIO().Framerate);
+			ImGui::Text(fpsText.c_str());
+
+			std::string frameTimeText = "Frame Time: " + std::to_string(ImGui::GetIO().DeltaTime);
+			ImGui::Text(frameTimeText.c_str());
+
+
+			// Memory
+			ImGui::SeparatorText("Memory");
+
+			MEMORYSTATUSEX memInfo = {};
+			memInfo.dwLength = sizeof(memInfo);
+			GlobalMemoryStatusEx(&memInfo);
+			DWORDLONG totalPhysMem = memInfo.ullTotalPhys;
+
+			std::string totalPhysicalMemoryText = "Total Physical Memory: " + std::to_string(std::round(static_cast<float>(totalPhysMem) / (1024.0f * 1024.0f * 1024.0f) * 100.0f) / 100.0f) + " GB";
+			ImGui::Text(totalPhysicalMemoryText.c_str());
+
+			DWORDLONG totalUsedPhysMem = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
+
+			std::string totalUsedPhysicalMemoryText = "Total Used Physical Memory: " + std::to_string(std::round(static_cast<float>(totalUsedPhysMem) / (1024.0f * 1024.0f * 1024.0f) * 100.0f) / 100.0f) + " GB";
+			ImGui::Text(totalUsedPhysicalMemoryText.c_str());
+
+			static std::queue<float> totalPhysMemUsedQueue = {};
+			totalPhysMemUsedQueue.push(static_cast<float>(totalUsedPhysMem));
+
+			if (totalPhysMemUsedQueue.size() > 60)
 			{
-
-				// FPS
-				ImGui::SeparatorText("Framerate");
-
-				std::string fpsText = "FPS: " + std::to_string(ImGui::GetIO().Framerate);
-				ImGui::Text(fpsText.c_str());
-
-				std::string frameTimeText = "Frame Time: " + std::to_string(ImGui::GetIO().DeltaTime);
-				ImGui::Text(frameTimeText.c_str());
-
-
-				// Memory
-				ImGui::SeparatorText("Memory");
-
-				MEMORYSTATUSEX memInfo = {};
-				memInfo.dwLength = sizeof(memInfo);
-				GlobalMemoryStatusEx(&memInfo);
-				DWORDLONG totalPhysMem = memInfo.ullTotalPhys;
-
-				std::string totalPhysicalMemoryText = "Total Physical Memory: " + std::to_string(std::round(static_cast<float>(totalPhysMem) / (1024.0f * 1024.0f * 1024.0f) * 100.0f) / 100.0f) + " GB";
-				ImGui::Text(totalPhysicalMemoryText.c_str());
-
-				DWORDLONG totalUsedPhysMem = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
-
-				std::string totalUsedPhysicalMemoryText = "Total Used Physical Memory: " + std::to_string(std::round(static_cast<float>(totalUsedPhysMem) / (1024.0f * 1024.0f * 1024.0f) * 100.0f) / 100.0f) + " GB";
-				ImGui::Text(totalUsedPhysicalMemoryText.c_str());
-
-				static std::queue<float> totalPhysMemUsedQueue = {};
-				totalPhysMemUsedQueue.push(static_cast<float>(totalUsedPhysMem));
-
-				if (totalPhysMemUsedQueue.size() > 60)
-				{
-					totalPhysMemUsedQueue.pop();
-				}
-
-				std::queue<float> totalPhysMemUsedQueueCopy = totalPhysMemUsedQueue;
-				std::vector<float> totalPhysMemUsedVec = {};
-				while (totalPhysMemUsedQueueCopy.size() > 0)
-				{
-					totalPhysMemUsedVec.push_back(totalPhysMemUsedQueueCopy.front());
-					totalPhysMemUsedQueueCopy.pop();
-				}
-
-				ImGui::PlotLines("Total Used Memory", totalPhysMemUsedVec.data(), 60, 0, nullptr, 0, 16, ImVec2(250, 50));
-
-				PROCESS_MEMORY_COUNTERS_EX pmc;
-				GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
-				SIZE_T appUsedPhysMem = pmc.PrivateUsage;
-
-				std::string appUsedPhysicalMemoryText = "Applicalication Used Physical Memory: " + std::to_string(std::round(static_cast<float>(appUsedPhysMem) / (1024.0f * 1024.0f * 1024.0f) * 100.0f) / 100.0f) + " GB";
-				ImGui::Text(appUsedPhysicalMemoryText.c_str());
-
-				static std::queue<float> appPhysMemUsedQueue = {};
-				appPhysMemUsedQueue.push(static_cast<float>(appUsedPhysMem));
-
-				if (appPhysMemUsedQueue.size() > 60)
-				{
-					appPhysMemUsedQueue.pop();
-				}
-
-				std::queue<float> appPhysMemUsedQueueCopy = appPhysMemUsedQueue;
-				std::vector<float> appPhysMemUsedVec = {};
-				while (appPhysMemUsedQueueCopy.size() > 0)
-				{
-					appPhysMemUsedVec.push_back(appPhysMemUsedQueueCopy.front());
-					appPhysMemUsedQueueCopy.pop();
-				}
-
-				ImGui::PlotLines("Application Used Memory", appPhysMemUsedVec.data(), 60, 0, nullptr, 0, 16, ImVec2(250, 50));
+				totalPhysMemUsedQueue.pop();
 			}
 
-			if (ImGui::CollapsingHeader("Mouse"))
+			std::queue<float> totalPhysMemUsedQueueCopy = totalPhysMemUsedQueue;
+			std::vector<float> totalPhysMemUsedVec = {};
+			while (totalPhysMemUsedQueueCopy.size() > 0)
 			{
-				ImGuiIO& io = ImGui::GetIO();
-
-				std::string mousePosText = "Mouse Position: (" + std::to_string(io.MousePos.x) + ", " + std::to_string(io.MousePos.y) + ")";
-				ImGui::Text(mousePosText.c_str());
-
-				std::string translatedMousePosText = "Translated Mouse Position: (" + std::to_string(io.MousePos.x / 3) + ", " + std::to_string(io.MousePos.y / 3) + ")";
-				ImGui::Text(translatedMousePosText.c_str());
+				totalPhysMemUsedVec.push_back(totalPhysMemUsedQueueCopy.front());
+				totalPhysMemUsedQueueCopy.pop();
 			}
 
-			ImGui::EndTabItem();
+			ImGui::PlotLines("Total Used Memory", totalPhysMemUsedVec.data(), 60, 0, nullptr, 0, 16, ImVec2(250, 50));
+
+			PROCESS_MEMORY_COUNTERS_EX pmc;
+			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+			SIZE_T appUsedPhysMem = pmc.PrivateUsage;
+
+			std::string appUsedPhysicalMemoryText = "Applicalication Used Physical Memory: " + std::to_string(std::round(static_cast<float>(appUsedPhysMem) / (1024.0f * 1024.0f * 1024.0f) * 100.0f) / 100.0f) + " GB";
+			ImGui::Text(appUsedPhysicalMemoryText.c_str());
+
+			static std::queue<float> appPhysMemUsedQueue = {};
+			appPhysMemUsedQueue.push(static_cast<float>(appUsedPhysMem));
+
+			if (appPhysMemUsedQueue.size() > 60)
+			{
+				appPhysMemUsedQueue.pop();
+			}
+
+			std::queue<float> appPhysMemUsedQueueCopy = appPhysMemUsedQueue;
+			std::vector<float> appPhysMemUsedVec = {};
+			while (appPhysMemUsedQueueCopy.size() > 0)
+			{
+				appPhysMemUsedVec.push_back(appPhysMemUsedQueueCopy.front());
+				appPhysMemUsedQueueCopy.pop();
+			}
+
+			ImGui::PlotLines("Application Used Memory", appPhysMemUsedVec.data(), 60, 0, nullptr, 0, 16, ImVec2(250, 50));
 		}
+
+		if (ImGui::CollapsingHeader("Mouse"))
+		{
+			ImGuiIO& io = ImGui::GetIO();
+
+			std::string mousePosText = "Mouse Position: (" + std::to_string(io.MousePos.x) + ", " + std::to_string(io.MousePos.y) + ")";
+			ImGui::Text(mousePosText.c_str());
+
+			std::string translatedMousePosText = "Translated Mouse Position: (" + std::to_string(io.MousePos.x / 3) + ", " + std::to_string(io.MousePos.y / 3) + ")";
+			ImGui::Text(translatedMousePosText.c_str());
+		}
+
+		ImGui::EndTabItem();
+	}
 
 	ImGui::EndTabBar();
 
