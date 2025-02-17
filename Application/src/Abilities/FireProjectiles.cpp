@@ -31,9 +31,8 @@ void AbilityManager::Shotgun(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size
         DX::XMFLOAT2 finalDirection;
         XMStoreFloat2(&finalDirection, spreadDirection);
 
-        // Create and add projectile
-        std::shared_ptr<Projectile> projectile = std::make_shared<Projectile>(ProjectileType::Base, position, finalDirection, shotSpeed + (rand() % 50 - 25), lifeSpan);
-        ProjectileManager::AddProjectile(projectile);
+        // Add projectile
+        ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan);
     }
 }
 
@@ -62,8 +61,7 @@ void AbilityManager::SurroundShot(DX::XMFLOAT2 position, size_t projectileCount,
         DX::XMFLOAT2 finalDirection;
         XMStoreFloat2(&finalDirection, spreadDirection);
         
-        // Create and add projectile
-        std::shared_ptr<Projectile> projectile = std::make_shared<Projectile>(ProjectileType::Base, position, finalDirection, shotSpeed, lifeSpan);
-        ProjectileManager::AddProjectile(projectile);
+        // Add projectile
+        ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed, lifeSpan);
     }
 }
