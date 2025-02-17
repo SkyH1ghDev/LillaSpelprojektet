@@ -1,6 +1,5 @@
 #pragma once
 
-//#include <d3d11.h>
 #include <DirectXMath.h>
 #include <SpEngine/Physics/Collider.hpp>
 
@@ -28,26 +27,32 @@ public:
 	 * Finds out if there is a collision between
 	 * an entity and the outer most wall in the x-axis
 	 *
-	 * @param[IN] xPos float entityposition
-	 * @param[IN] radius float entityradius
+	 * @param[IN] entity Collider
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallEntityXCollision(const float xPos, const float radiusX = 10.0f);
+	static bool WallEntityXCollision(const Collider& entity);
 
 	/**
 	 * Finds out if there is a collision between
 	 * an entity and the outer most wall in the y-axis
 	 *
-	 * @param[IN] yPos float entityposition
-	 * @param[IN] radius float entityradius
+	 * @param[IN] entity Collider
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallEntityYCollision(const float yPos, const float radiusY = 16.5f);
-
-	static bool WallEntityXCollision(const Collider& entity);
 	static bool WallEntityYCollision(const Collider& entity);
+
+	/**
+	 * Finds out if there is a collision between
+	 * an entity and a pojectile
+	 *
+	 * @param[IN] projectile Collider
+	 * @param[IN] entity Collider
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	static bool ProjectileEntityCollision(const Collider& projectile, const Collider& entity);
 
 private:
 	/**
@@ -87,7 +92,7 @@ private:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	bool EntityEntityCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radiusX1, const float radiusY1, const float radiusX2, const float radiusY2);
+	bool EntityEntityCollision(const Collider& projectile, const Collider& entity);
 
 private:
 	static int m_leftWall;

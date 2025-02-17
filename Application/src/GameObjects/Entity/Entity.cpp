@@ -4,6 +4,7 @@
 #include "EntityTakeDamageComponentFactory.hpp"
 #include "EntityUseCardComponentFactory.hpp"
 #include "EntityVisibleComponentFactory.hpp"
+#include "EntitySetColliderComponentFactory.hpp"
 #include <iostream>
 
 Entity::Entity(EntityType entityType) :
@@ -13,7 +14,7 @@ Entity::Entity(EntityType entityType) :
     m_takeDamage(CreateTakeDamageComponent(entityType)),
     m_useCard(CreateUseCardComponent(entityType)),
     m_type(entityType),
-    m_collider(Collider(this->m_position, 10.0f))
+    m_setCollider(CreateColliderComponent(entityType))
 {
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }

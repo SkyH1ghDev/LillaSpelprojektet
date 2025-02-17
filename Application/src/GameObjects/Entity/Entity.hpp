@@ -15,6 +15,7 @@ enum class EntityType {
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
 #include "IEntityUseCard.hpp"
+#include "IEntitySetCollider.hpp"
 
 class Entity : public IGameObject
 {
@@ -46,6 +47,6 @@ private:
     std::shared_ptr<IEntityAttack> m_attack;
     std::shared_ptr<IEntityTakeDamage> m_takeDamage;
     std::shared_ptr<IEntityUseCard> m_useCard;
+    std::shared_ptr<IEntitySetCollider> m_setCollider;
     EntityType m_type;
-    Collider m_collider;
 };

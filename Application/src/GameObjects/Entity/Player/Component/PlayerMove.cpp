@@ -66,23 +66,20 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
         positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
     }
 
-    
 
     DX::XMFLOAT2 newPosition;
     DX::XMStoreFloat2(&newPosition, positionXMVector);
 
     m_collider.updatePosition(newPosition);
 
-    if (PhysicsEngine::WallEntityXCollision(newPosition.x))
+    if (PhysicsEngine::WallEntityXCollision(m_collider))
     {
         newPosition.x = position.x;
     }
-    if (PhysicsEngine::WallEntityYCollision(newPosition.y))
+    if (PhysicsEngine::WallEntityYCollision(m_collider))
     {
         newPosition.y = position.y;
     }
-
-    m_collider.updatePosition(newPosition);
 
     return newPosition;
 }
