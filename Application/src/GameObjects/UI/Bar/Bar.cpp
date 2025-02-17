@@ -24,6 +24,7 @@ Bar::Bar(BarType type) :
 
 void Bar::Update()
 {
+
 }
 
 void Bar::OnStart()

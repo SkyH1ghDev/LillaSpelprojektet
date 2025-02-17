@@ -34,7 +34,7 @@ Game::Game()
     testScene->AddGameObject(background);
     testScene->AddGameObject(mouse);
 
-
+       
     testScene->AddGameObject(healthBar);
 
 }
