@@ -25,7 +25,6 @@ void EnemyAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
         XMStoreFloat2(&finalDirection, spreadDirection);
 
         // Create and add projectile
-        std::shared_ptr<Projectile> projectile = std::make_shared<Projectile>(ProjectileType::Base, position, finalDirection, 60.0f, 8);
-        ProjectileManager::AddProjectile(projectile);
+        ProjectileManager::AddProjectile(ProjectileType::Base, position, finalDirection, 60.0f, 8);
     }
 }

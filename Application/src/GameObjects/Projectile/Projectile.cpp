@@ -5,26 +5,40 @@
 #include <SpEngine/Clock/Clock.hpp>
 #include <iostream>
 
-Projectile::Projectile(ProjectileType projectileType, DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime) :
+Projectile::Projectile(ProjectileType projectileType) :
     m_move(CreateMoveComponent(projectileType)),
     m_visible(CreateVisibleComponent(projectileType)),
     m_hit(CreateHitComponent(projectileType)),
     m_type(projectileType),
-    m_setPosition(position),
-    m_direction(direction),
-    m_velocity(velocity),
-    m_lifetime(lifetime)
+    m_velocity(0), 
+    m_lifetime(0)
 {
+    std::cout << "Projectile created of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
+}
+
+void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime) {
+    this->m_position = position;
+    this->m_direction = direction;
+    this->m_velocity = velocity;
+    this->m_lifetime = lifetime;
+
+    // Normalize direction
     float length = sqrt(pow(direction.x, 2) + pow(direction.y, 2));
     m_direction = DX::XMFLOAT2(direction.x / length, direction.y / length);
-    std::cout << "Projectile created of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
+
+    // Activate projectile
+    this->m_isActive = true;
+    this->m_shouldRender = true;
+    PerformVisible(ProjectileState::Inactive);
+    this->CenterOrigin(true);
+    std::cout << "Projectile initialized of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
 }
 
 void Projectile::OnStart()
 {
     PerformVisible(ProjectileState::Inactive);
-    this->m_shouldRender = true;
-    this->m_position = m_setPosition;
+    this->m_shouldRender = false;
+    this->m_isActive = false;
     this->CenterOrigin(true);
 
 }

@@ -15,6 +15,7 @@ public:
 	static bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
 	static Sprite GetSprite(const std::string& filename);
 	static std::vector<Sprite> GetAnimatedSprite(const std::string& filename);
+	static std::unordered_map<std::string, std::vector<Sprite>> GetTextureMap();
 
 
 private:
@@ -45,3 +46,9 @@ inline std::vector<Sprite> AssetManager::GetAnimatedSprite(const std::string& fi
 
 	return m_textureMap["default"];
 }
+
+inline std::unordered_map<std::string, std::vector<Sprite>> AssetManager::GetTextureMap()
+{
+	return m_textureMap;
+}
+
