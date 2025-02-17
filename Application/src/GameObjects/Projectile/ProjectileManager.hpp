@@ -8,7 +8,6 @@ class ProjectileManager {
 public:
     static void Initialize(size_t poolSize);
     static void AddProjectile(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float speed, float lifetime);
-    static void ResetAllProjectiles();
 
 private:
     static std::vector<std::shared_ptr<Projectile>> projectiles;
