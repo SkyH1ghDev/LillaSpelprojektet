@@ -25,11 +25,11 @@ public:
     
 
     //void AttachScript(const std::shared_ptr<IScript>& script);
-    virtual void ActivateLvl1() = 0;
-    virtual void ActivateLvl2() = 0;
-    virtual void ActivateLvl3() = 0;
+    virtual void ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) = 0;
+    virtual void ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) = 0;
+    virtual void ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) = 0;
     CardType GetType();
-    void ActivateLevel(size_t cardLevel);
+    void ActivateLevel(size_t cardLevel, DX::XMFLOAT2 position, DX::XMFLOAT2 target);
 
 protected:
     CardType m_type;
@@ -55,16 +55,16 @@ inline CardType ICard::GetType()
 
 
 
-inline void ICard::ActivateLevel(size_t cardLevel) {
+inline void ICard::ActivateLevel(size_t cardLevel, DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
     switch (cardLevel) {
     case 1:
-        ActivateLvl1();
+        ActivateLvl1(position, target);
         break;
     case 2:
-        ActivateLvl2();
+        ActivateLvl2(position, target);
         break;
     case 3:
-        ActivateLvl3();
+        ActivateLvl3(position, target);
         break;
 
     default:

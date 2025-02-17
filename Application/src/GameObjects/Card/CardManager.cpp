@@ -2,13 +2,26 @@
 
 #include <iostream>
 
-std::vector<std::shared_ptr<ICard>> CardManager::m_cardObjects = {};
 
-void CardManager::AttachCard(std::shared_ptr<ICard> Card)
+
+CardManager::CardManager()
 {
-    if (const auto& it = std::ranges::find(m_cardObjects, Card); it == m_cardObjects.end())
-    {
-        m_cardObjects.push_back(Card);
+    m_cardObjects.push_back(std::make_shared<ShotgunCard>());
+    m_cardObjects.push_back(std::make_shared<SpreadCard>());
+}
+
+
+std::shared_ptr<ICard> CardManager::GetCard(CardType cardType)
+{
+    switch (cardType) {
+    case CardType::Shotgun:
+        return m_cardObjects[0];
+        break;
+    case CardType::Spread:
+        return m_cardObjects[1];
+        break;
+    default:
+        std::cerr << "unknonwn cardtype in cardManager";
     }
 }
 
