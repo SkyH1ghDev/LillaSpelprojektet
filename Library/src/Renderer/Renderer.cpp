@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Renderer.hpp"
 
-#include "ImGuiNew.hpp"
+#include "ImGuiTool.hpp"
 
 Renderer::Renderer(HWND& window)
 {
@@ -16,7 +16,7 @@ Renderer::Renderer(HWND& window)
 
 Renderer::~Renderer()
 {
-	ImGuiNew::Shutdown();
+	ImGuiTool::Shutdown();
 }
 
 
@@ -28,12 +28,20 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 	this->FinalBindings();
 
+	DX::XMFLOAT2 origin;
+	DX::XMFLOAT2 originOffset;
 	for (int i = 0; i < len; i++)
 	{
 		if (ObjectVec.at(i)->ShouldRender())
 		{
 			//this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
-			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSourceRectangle().get(), DX::Colors::White, 0.0f, DX::XMFLOAT2(0, 0), ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
+			origin = DX::XMFLOAT2(0, 0);
+			originOffset = ObjectVec.at(i)->GetOriginOffset();
+			if (ObjectVec.at(i)->IsOriginCentered())
+				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+			origin.x += originOffset.x;
+			origin.y += originOffset.y;
+			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSourceRectangle().get(), DX::Colors::White, ObjectVec.at(i)->GetRotationFloat(), origin, ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
 		}
 	}
 
@@ -42,12 +50,12 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
 {
-	ImGuiNew::Start();
+	ImGuiTool::Start();
 
 	DrawScene(mainScene);
 
-	ImGuiNew::Run();
-	ImGuiNew::End();
+	ImGuiTool::Run();
+	ImGuiTool::End();
 
 	this->m_swapChain->Present(0, 0);
 }
@@ -164,5 +172,5 @@ void Renderer::SetupPipeline(HWND& window)
 
 void Renderer::SetupImGui(HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context)
 {
-	ImGuiNew::Initialize(window, device, context);
+	ImGuiTool::Initialize(window, device, context);
 }

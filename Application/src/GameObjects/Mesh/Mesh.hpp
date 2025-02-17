@@ -6,7 +6,8 @@
 // Define an enum for the entity type
 enum class MeshType {
     Background,
-    Mouse
+    Mouse,
+    Object
 };
 
 #include "IMeshStatic.hpp"
@@ -24,10 +25,10 @@ public:
     Mesh(Mesh&& other) noexcept = default;
     Mesh& operator=(Mesh&& other) noexcept = default;
 
-    Mesh(MeshType meshType);
+    Mesh(MeshType meshType, std::string textureName);
 
     void PerformStatic() { if (m_static) m_static->Static(); }
-    void PerformVisible() { if (m_visible) m_visible->Visible(this->m_textureName, m_layerFloat, m_scaleFloat); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, m_layerFloat, m_scaleFloat); }
 
     void Update() override;
     void OnStart() override;

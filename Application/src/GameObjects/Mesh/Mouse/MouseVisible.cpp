@@ -1,8 +1,9 @@
 #include "MouseVisible.hpp"
 
-void MouseVisible::Visible(std::string& texture, float& layer, float& scale)
+void MouseVisible::Visible(std::string& texture, DX::XMFLOAT2 position, float& layer, float& scale)
 {
-	texture = "mouse.png";
 	layer = 1.0;
 	scale = 0.3;
 }
+
+void MouseVisible::UpdateLayer(DX::XMFLOAT2 position, float& layer) {}

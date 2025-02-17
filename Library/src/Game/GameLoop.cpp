@@ -23,7 +23,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	Window window = Window(hInstance, nCmdShow, 1920, 1080);
 	ShowCursor(FALSE);
 	Renderer renderer = Renderer(window.GetWindowHandle());
-	GamePhysics physics;
 
 	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
@@ -49,13 +48,15 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		for (const auto& gameObject : GameObjectManager::GetGameObjects())
 		{
-			gameObject->Update();
-			gameObject->UpdateScripts();
+			if (gameObject->IsActive())
+			{
+				gameObject->Update();
+				gameObject->UpdateScripts();
+			}
 		}
 		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()));
 
 		renderer.Draw(mainScene);
-
 		Clock::End();
 
 		//std::cerr << clock.GetFrameRate() << " FPS\n";

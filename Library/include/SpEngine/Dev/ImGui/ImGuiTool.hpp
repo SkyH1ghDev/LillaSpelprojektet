@@ -1,41 +1,28 @@
 #pragma once
 
+#include <windows.h>
 #include <d3d11.h>
 #include <wrl/client.h>
-
 
 namespace MW = Microsoft::WRL;
 
 class ImGuiTool
 {
 public:
-	ImGuiTool();
-	ImGuiTool(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext);
-	~ImGuiTool();
-	ImGuiTool(const ImGuiTool& other) = delete;
-	ImGuiTool& operator=(const ImGuiTool& other) = delete;
-	ImGuiTool(ImGuiTool&& other) = default;
-	ImGuiTool& operator=(ImGuiTool&& other) = default;
+    ImGuiTool() = default;
+    ~ImGuiTool() = default;
+    ImGuiTool(const ImGuiTool& other) = default;
+    ImGuiTool& operator=(const ImGuiTool& other) = default;
+    ImGuiTool(ImGuiTool&& other) noexcept = default;
+    ImGuiTool& operator=(ImGuiTool&& other) noexcept = default;
 
-	void Start(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11BlendState>& blendState);
-	void End();
-	void Run(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv);
-	void Shutdown();
-
-	MW::ComPtr<ID3D11RenderTargetView> GetRenderTarget();
+    static void Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context);
+    static void Start();
+    static void Run();
+    static void End();
+    static void Shutdown();
 
 private:
-	void Initialized(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& immediateContext);
-	void MouseUpdate();
-	void Test(const MW::ComPtr<ID3D11DeviceContext>& immediateContext, const MW::ComPtr<ID3D11RenderTargetView>& rtv);
+    static void AssetManagerTab();
 
-private:
-	bool m_initialized = false;
-	MW::ComPtr<ID3D11RenderTargetView> m_rtv;
-	MW::ComPtr<ID3D11Texture2D> m_texture;
 };
-
-inline MW::ComPtr<ID3D11RenderTargetView> ImGuiTool::GetRenderTarget()
-{
-	return this->m_rtv;
-}
