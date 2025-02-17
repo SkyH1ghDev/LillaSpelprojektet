@@ -6,6 +6,13 @@
 void PlayerCardScript::OnStart()
 {
 	Input::GetKey(VK_RBUTTON)->Attach(std::static_pointer_cast<IObserver, UseCard>(m_useCard));
+
+	m_cardDeck.AddToDeck(CardType::Shotgun, 1);
+	m_cardDeck.AddToDeck(CardType::Shotgun, 2);
+	m_cardDeck.AddToDeck(CardType::Shotgun, 3);
+	m_cardDeck.AddToDeck(CardType::Spread, 1);
+	m_cardDeck.AddToDeck(CardType::Spread, 2);
+	m_cardDeck.AddToDeck(CardType::Spread, 3);
 }
 
 void PlayerCardScript::Update()
@@ -26,7 +33,8 @@ void PlayerCardScript::Update()
 
 	if (m_useCard->GetUseCard() && m_useCardTimer <= 0)
 	{
-		player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
-		m_useCardTimer = 0.25f;
+		//player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
+		m_cardDeck.UseTopCard(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
+		m_useCardTimer = 1;
 	}
 }

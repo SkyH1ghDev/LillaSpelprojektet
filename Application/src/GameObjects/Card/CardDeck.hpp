@@ -9,7 +9,7 @@
 
 
 
-class CardDeck 
+class CardDeck : public IGameObject
 {
 public:
     CardDeck() = default;
@@ -18,6 +18,9 @@ public:
     CardDeck& operator=(const CardDeck& other) = default;
     CardDeck(CardDeck&& other) noexcept = default;
     CardDeck& operator=(CardDeck&& other) noexcept = default;
+
+    void Update() override;
+    void OnStart() override;
     
     void AddToDeck(CardType cardtype, size_t lvl);
     std::pair<std::shared_ptr<ICard>, size_t> GetTopCard();

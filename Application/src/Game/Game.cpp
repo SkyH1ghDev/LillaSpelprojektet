@@ -14,7 +14,7 @@
 #include "Player/PlayerCardScript.hpp"
 #include "Enemy/EnemyController.hpp"
 #include "Enemy/EnemyManager.hpp"
-#include "GameObjects/Mesh/Scripts/wand.hpp"
+#include "GameObjects/Scripts/wand.hpp"
 
 Game::Game()
 {
@@ -31,10 +31,10 @@ Game::Game()
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
     
     
-    CardDeck cardDeck;
-    size_t lvl = 2;
-    cardDeck.AddToDeck(CardType::Shotgun,lvl);
-    cardDeck.AddToDeck(CardType::Spread, 3);
+    //CardDeck cardDeck;
+    //size_t lvl = 2;
+    //cardDeck.AddToDeck(CardType::Shotgun,lvl);
+    //cardDeck.AddToDeck(CardType::Spread, 3);
    
     
 

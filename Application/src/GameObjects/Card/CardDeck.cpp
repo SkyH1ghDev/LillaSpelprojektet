@@ -5,6 +5,17 @@
 //std::vector<std::pair<std::shared_ptr<ICard>, size_t>> CardDeck::m_cardDeck = {};
 //size_t CardDeck::m_currentcard = 0;
 
+
+void CardDeck::Update()
+{
+
+}
+
+void CardDeck::OnStart()
+{
+
+}
+
 void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
 {
     std::shared_ptr<ICard> card = m_cardMan.GetCard(cardtype);
