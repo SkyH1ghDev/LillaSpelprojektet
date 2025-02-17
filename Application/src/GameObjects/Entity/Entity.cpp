@@ -24,7 +24,15 @@ void Entity::OnStart()
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
-    this->m_collider = std::make_shared<Collider>(this->m_position, 10, CollisionLayer::Player, CollisionLayer::Projectile);
+    if (this->m_type == EntityType::Player)
+    {
+        this->m_collider = std::make_shared<Collider>(this->m_position, 10, CollisionLayer::Player, CollisionLayer::Projectile);
+    }
+    else
+    {
+        this->m_collider = std::make_shared<Collider>(this->m_position, 10, CollisionLayer::Enemy, CollisionLayer::Projectile);
+    }
+    
 }
 
 void Entity::Update()
