@@ -54,5 +54,5 @@ Game::Game()
     HealthBarManager::Initialize(5);
     HealthBarManager::RemoveHeart(6);
     HealthBarManager::AddNewHeart(5);
-    HealthBarManager::RemoveHeart(4);
+    HealthBarManager::RemoveHeart(5);
 }
