@@ -5,7 +5,7 @@
 
 void CardDeck::AddToDeck(std::pair<std::shared_ptr<ICard>, size_t> cardInfo)
 {
-    std::cout << "kortlek" << std::endl;
+    m_cardDeck.push_back(cardInfo);
 }
 
 std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetTopCard()
