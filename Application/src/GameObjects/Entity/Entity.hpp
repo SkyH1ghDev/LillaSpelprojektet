@@ -2,6 +2,7 @@
 #include <memory>
 
 #include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Physics/Collider.hpp>
 
 // Define an enum for the entity type
 enum class EntityType {

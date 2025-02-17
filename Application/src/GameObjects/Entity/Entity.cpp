@@ -24,11 +24,13 @@ void Entity::OnStart()
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
+    this->m_collider = std::make_shared<Collider>(this->m_position, 10, CollisionLayer::Player, CollisionLayer::Projectile);
 }
 
 void Entity::Update()
 {
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
+    this->m_collider->UpdatePosition(this->m_position);
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {

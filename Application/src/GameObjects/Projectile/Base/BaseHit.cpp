@@ -1,6 +1,6 @@
 #include "BaseHit.hpp"
 
-bool BaseHit::Hit()
+void BaseHit::Hit()
 {
-	return false;
+
 }

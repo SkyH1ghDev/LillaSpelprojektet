@@ -31,6 +31,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->m_shouldRender = true;
     PerformVisible(ProjectileState::Inactive);
     this->CenterOrigin(true);
+    this->m_collider = std::make_shared<Collider>(this->m_position, 10, CollisionLayer::Projectile, CollisionLayer::Player);
     std::cout << "Projectile initialized of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
 }
 
@@ -51,6 +52,7 @@ void Projectile::Update()
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= Clock::GetDeltaTime();
         m_rotationFloat += Clock::GetDeltaTime() * 20;
+        this->m_collider->UpdatePosition(this->m_position);
     }
     else
     {

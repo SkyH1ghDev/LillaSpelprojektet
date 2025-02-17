@@ -12,6 +12,8 @@
 #include "Enemy/EnemyManager.hpp"
 #include "Projectile/ProjectileManager.hpp"
 #include "GameObjects/Mesh/Scripts/wand.hpp"
+#include "Collision/CollisionHandler.hpp"
+#include "Emty.hpp"
 
 Game::Game()
 {
@@ -50,6 +52,11 @@ Game::Game()
     ProjectileManager::Initialize(ProjectileType::Base, 200);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
+
+    std::shared_ptr<IGameObject> collisionObject = std::make_shared<Emty>();
+    std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));
+    collisionObject->AttachScript(collisionHandler);
+    testScene->AddGameObject(collisionObject);
 
     //testScene->AddGameObject(exitButton);
 
