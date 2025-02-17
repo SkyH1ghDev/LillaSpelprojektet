@@ -22,6 +22,7 @@ private:
 	std::shared_ptr<MoveLeft> m_left = std::make_shared<MoveLeft>();
 	std::shared_ptr<MoveRight> m_right = std::make_shared<MoveRight>();
 	std::shared_ptr<MoveDown> m_down = std::make_shared<MoveDown>();
+
 	std::shared_ptr<Dash> m_dash = std::make_shared<Dash>();
 	std::shared_ptr<Attack> m_attack = std::make_shared<Attack>();
 	float m_attackTimer = 0;

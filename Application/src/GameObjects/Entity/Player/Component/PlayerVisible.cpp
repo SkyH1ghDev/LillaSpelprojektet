@@ -5,6 +5,7 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
 
     layer = 0.5 + position.y * 0.3 / 360;
     scale = 0.25;
+
     switch (entityState) {
     case EntityState::WalkUp:
         texture = "chesster_backwards_v2.png";
