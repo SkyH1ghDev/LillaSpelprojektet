@@ -52,6 +52,4 @@ Game::Game()
     EnemyManager::SpawnEnemies(player, 2);
     ProjectileManager::Initialize(200);
     HealthBarManager::Initialize(5);
-    HealthBarManager::RemoveHeart(2);
-
 }
