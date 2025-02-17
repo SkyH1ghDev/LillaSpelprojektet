@@ -2,7 +2,7 @@
 
 //#include <d3d11.h>
 #include <DirectXMath.h>
-#include <Collider.hpp>
+#include <SpEngine/Physics/Collider.hpp>
 
 namespace DX = DirectX;
 
