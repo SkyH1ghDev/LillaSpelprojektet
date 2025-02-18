@@ -1,7 +1,7 @@
 #pragma once
 
-//#include <d3d11.h>
 #include <DirectXMath.h>
+#include <SpEngine/Physics/Collider.hpp>
 
 namespace DX = DirectX;
 
@@ -27,77 +27,53 @@ public:
 	 * Finds out if there is a collision between
 	 * an entity and the outer most wall in the x-axis
 	 *
-	 * @param[IN] xPos float entityposition
-	 * @param[IN] radius float entityradius
-	 * @param[IN] ARM float aspectRatioModifier
+	 * @param[IN] entity Collider
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallEntityXCollision(const float xPos, const float radius = 10.0f, const float ARM = 1.0f);
+	static bool WallEntityXCollision(const Collider& entity);
 
 	/**
 	 * Finds out if there is a collision between
 	 * an entity and the outer most wall in the y-axis
 	 *
-	 * @param[IN] yPos float entityposition
-	 * @param[IN] radius float entityradius
-	 * @param[IN] ARM float aspectRatioModifier
+	 * @param[IN] entity Collider
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallEntityYCollision(const float yPos, const float radius = 10.0f, const float ARM = 1.65f);
+	static bool WallEntityYCollision(const Collider& entity);
+
+	/**
+	 * Finds out if there is a collision between
+	 * an entity and a pojectile. Or an entity and entity collision.
+	 *
+	 * @param[IN] projectile Collider
+	 * @param[IN] entity Collider
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	static bool ColliderColliderCollision(const Collider& projectile, const Collider& entity);
+
+	/**
+	 * Finds out if there is a collision between
+	 * a projectile and a wall
+	 *
+	 * @param[IN] projectile Collider
+	 * @param[OUT] bool
+	 * @return true on Collision, false on NO collision
+	 */
+	static bool WallProjectileCollision(const Collider& projectile);
 
 	/**
 	 * Finds out if there is a collision between
 	 * a projectile and a projectile
 	 *
-	 * @param[IN] projPos1 XMFLOAT2 first projectileposition
-	 * @param[IN] projPos2 XMFLOAT2 second projectileposition
-	 * @param[IN] radius1 float first projectileradius
-	 * @param[IN] radius2 float second projectileradius
+	 * @param[IN] projectile1 Collider
+	 * @param[IN] projectile2 Collider
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2);
-
-	/**
-	 * Finds out if there is a collision between
-	 * a projectile and the outer most wall in the x-axis
-	 *
-	 * @param[IN] xPos float projectileposition
-	 * @param[IN] radius float projectileradius
-	 * @param[IN] ARM float aspectRatioModifier
-	 * @param[OUT] bool
-	 * @return true on Collision, false on NO collision
-	 */
-	static bool WallProjectileXCollision(const float xPos, const float radius = 1.0f, const float ARM = 1.0f);
-
-	/**
-	 * Finds out if there is a collision between
-	 * a projectile and the outer most wall in the y-axis
-	 *
-	 * @param[IN] yPos float projectileposition
-	 * @param[IN] radius float projectileradius
-	 * @param[IN] ARM float aspectRatioModifier
-	 * @param[OUT] bool
-	 * @return true on Collision, false on NO collision
-	 */
-	static bool WallProjectileYCollision(const float yPos, const float radius = 1.0f, const float ARM = 1.0f);
-
-	/**
-	 * Finds out if there is a collision between
-	 * a projectile and the outer most wall in the y-axis
-	 *
-	 * @param[IN] projPos1 XMFLOAT2 first projectileposition
-	 * @param[IN] projPos2 XMFLOAT2 second projectileposition
-	 * @param[IN] radiusX1 float "oval width"
-	 * @param[IN] radiusY1 float "oval height"
-	 * @param[IN] radiusX2 float "oval width"
-	 * @param[IN] radiusY2 float "oval height"
-	 * @param[OUT] bool
-	 * @return true on Collision, false on NO collision
-	 */
-	static bool EntityEntityCollision(	const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radiusX1, const float radiusY1, const float radiusX2, const float radiusY2);
+	static bool ProjectileProjectileCollision(const Collider& proj1, const Collider& proj2);
 
 private:
 	static int m_leftWall;

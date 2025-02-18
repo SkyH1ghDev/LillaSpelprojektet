@@ -6,34 +6,81 @@ int PhysicsEngine::m_rightWall = 600;
 int PhysicsEngine::m_topWall = 17;
 int PhysicsEngine::m_bottomWall = 320;
 
-bool PhysicsEngine::WallEntityXCollision(const float xPos, const float radius, const float ARM)
+bool PhysicsEngine::WallEntityXCollision(const Collider& entity)
 {
-    if (xPos - (ARM * radius) < m_leftWall)
+    DX::XMFLOAT2 pos = entity.GetPosition();
+    if (pos.x - entity.GetRadiusX() < m_leftWall)
     {
         return true;
     }
-    if (xPos + (ARM * radius) > m_rightWall)
+    if (pos.x + entity.GetRadiusX() > m_rightWall)
     {
         return true;
     }
     return false;
 }
 
-bool PhysicsEngine::WallEntityYCollision(const float yPos, const float radius, const float ARM)
+bool PhysicsEngine::WallEntityYCollision(const Collider& entity)
 {
-    if (yPos - (ARM * radius) < m_topWall)
+    DX::XMFLOAT2 pos = entity.GetPosition();
+    if (pos.y - entity.GetRadiusY() < m_topWall)
     {
         return true;
     }
-    if (yPos + (ARM * radius) > m_bottomWall)
+    if (pos.y + entity.GetRadiusY() > m_bottomWall)
     {
         return true;
     }
     return false;
 }
 
-bool PhysicsEngine::ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2)
+bool PhysicsEngine::ColliderColliderCollision(const Collider& projectile, const Collider& entity)
 {
+    DX::XMFLOAT2 projPos = projectile.GetPosition();
+    DX::XMFLOAT2 entityPos = entity.GetPosition();
+    DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - entityPos.y);
+    float radiusX1 = projectile.GetRadiusX();
+    float radiusX2 = entity.GetRadiusX();
+    float radiusY1 = projectile.GetRadiusY();
+    float radiusY2 = entity.GetRadiusY();
+
+    float term1 = (vec.x * vec.x) / ((radiusX1 + radiusX2) * (radiusX1 + radiusX2));
+    float term2 = (vec.y * vec.y) / ((radiusY1 + radiusY2) * (radiusY1 + radiusY2));
+
+    return (term1 + term2) <= 1;
+}
+
+bool PhysicsEngine::WallProjectileCollision(const Collider& projectile)
+{
+    DX::XMFLOAT2 projPos = projectile.GetPosition();
+    float radius = projectile.GetRadius();
+
+    if (projPos.x - radius < m_leftWall)
+    {
+        return true;
+    }
+    if (projPos.x + radius > m_rightWall)
+    {
+        return true;
+    }
+    if (projPos.y - radius < m_topWall)
+    {
+        return true;
+    }
+    if (projPos.y + radius > m_bottomWall)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool PhysicsEngine::ProjectileProjectileCollision(const Collider& proj1, const Collider& proj2)
+{
+    DX::XMFLOAT2 projPos1 = proj1.GetPosition();
+    DX::XMFLOAT2 projPos2 = proj2.GetPosition();
+    float radius1 = proj1.GetRadius();
+    float radius2 = proj2.GetRadius();
+
     DX::XMFLOAT2 vec = DX::XMFLOAT2(projPos2.x - projPos1.x, projPos2.y - projPos1.y);
     float lenVec = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
     if (lenVec < (radius1 + radius2))
@@ -41,40 +88,4 @@ bool PhysicsEngine::ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, 
         return true;
     }
     return false;
-}
-
-bool PhysicsEngine::WallProjectileXCollision(const float xPos, const float radius, const float ARM)
-{
-    if (xPos - (ARM * radius) < m_leftWall)
-    {
-        return true;
-    }
-    if (xPos + (ARM * radius) > m_rightWall)
-    {
-        return true;
-    }
-    return false;
-}
-
-bool PhysicsEngine::WallProjectileYCollision(const float yPos, const float radius, const float ARM)
-{
-    if (yPos - (ARM * radius) < m_topWall)
-    {
-        return true;
-    }
-    if (yPos + (ARM * radius) > m_bottomWall)
-    {
-        return true;
-    }
-    return false;
-}
-
-bool PhysicsEngine::EntityEntityCollision(const DX::XMFLOAT2& entPos1, const DX::XMFLOAT2& entPos2, const float radiusX1, const float radiusY1, const float radiusX2, const float radiusY2)
-{
-    DX::XMFLOAT2 vec = DX::XMFLOAT2(entPos2.x - entPos1.x, entPos2.y - entPos1.y);
-
-    float term1 = (vec.x * vec.x) / ((radiusX1 + radiusX2) * (radiusX1 + radiusX2));
-    float term2 = (vec.y * vec.y) / ((radiusY1 + radiusY2) * (radiusY1 + radiusY2));
-
-    return (term1 + term2) <= 1;
 }
