@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-std::unordered_map<std::string, std::shared_ptr<IScene>> SceneManager::m_scenes = {};
+std::unordered_map<std::string, std::shared_ptr<IScene>> SceneManager::m_scenesMap = {};
 std::shared_ptr<IScene> SceneManager::m_currentScene = {};
 
 
@@ -18,12 +18,13 @@ bool SceneManager::RegisterScene(const std::string& id, const std::shared_ptr<IS
         return false;
     }
 
-    if (m_scenes.contains(id))
+    if (m_scenesMap.contains(id))
     {
         return false;
     }
-
-    m_scenes[id] = scene;
+    
+    scene->SetName(id);
+    m_scenesMap[id] = scene;
     return true;
 }
 
