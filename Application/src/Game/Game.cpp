@@ -5,6 +5,7 @@
 #include "Entity.hpp"
 #include "Mesh.hpp"
 #include "Button/Button.hpp"
+#include "Bar/Bar.hpp"
 #include "GameScene.hpp"
 #include "Scene/Factories/GameSceneFactories/GameSceneFactory.hpp"
 #include "Player/PlayerController.hpp"
@@ -18,6 +19,7 @@
 #include "GameObjects/Scripts/wand.hpp"
 #include "Collision/CollisionHandler.hpp"
 #include "Emty.hpp"
+#include "GameObjects/UI/Bar/HealthBarManager.hpp"
 
 
 Game::Game()
@@ -40,7 +42,6 @@ Game::Game()
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "crosshair.png");
 
-    //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "liosstav.png");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
 
@@ -60,6 +61,7 @@ Game::Game()
 
     EnemyManager::SpawnEnemies(player, 2);
 
+
     ProjectileManager::Initialize(ProjectileType::Base, 200);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
@@ -70,5 +72,6 @@ Game::Game()
     testScene->AddGameObject(collisionObject);
 
     //testScene->AddGameObject(exitButton);
+    HealthBarManager::Initialize(5);
 
 }

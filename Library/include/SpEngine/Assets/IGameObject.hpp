@@ -57,6 +57,13 @@ public:
      */
     void SetActive(bool activeState);
 
+     /**
+     * Sets the render state of the game object
+     *
+     * @param renderState The state to set the object to
+     */
+    void SetShouldRender(bool renderState);
+     
     /**
      * Gets position of the GameObject
      *
@@ -191,6 +198,11 @@ inline bool IGameObject::IsActive() const
 inline void IGameObject::SetActive(bool activeState)
 {
 	m_isActive = activeState;
+}
+
+inline void IGameObject::SetShouldRender(bool renderState)
+{
+    m_shouldRender = renderState;
 }
 
 inline DX::XMFLOAT2 IGameObject::GetPosition() const
