@@ -1,6 +1,11 @@
 #include "EnemyTakeDamage.hpp"
 
-void EnemyTakeDamage::TakeDamage()
+void EnemyTakeDamage::TakeDamage(float& hp, float damage)
 {
-    std::cerr << "Enemy tar skada!" << std::endl;
+    hp -= damage;
+}
+
+void EnemyTakeDamage::SetHealth(float& hp)
+{
+    hp = 100;
 }

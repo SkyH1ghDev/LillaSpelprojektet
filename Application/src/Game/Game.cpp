@@ -73,5 +73,6 @@ Game::Game()
 
     //testScene->AddGameObject(exitButton);
     HealthBarManager::Initialize(5);
+    //HealthBarManager::RemoveHeart(1);
 
 }
