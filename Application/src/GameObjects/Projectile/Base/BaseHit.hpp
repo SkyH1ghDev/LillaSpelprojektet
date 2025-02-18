@@ -5,5 +5,5 @@
 class BaseHit : public IProjectileHit
 {
 public:
-    bool Hit() override;
+    void Hit(bool& isActive, bool& shouldRender) override;
 };

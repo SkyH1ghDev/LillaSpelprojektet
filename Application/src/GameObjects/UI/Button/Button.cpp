@@ -11,7 +11,7 @@
 #include "ContinueClicked.hpp"
 #include "ExitMenuClicked.hpp"
 
-std::shared_ptr<IVisible> CreateVisibleComponent(ButtonType type) {
+std::shared_ptr<IUIVisible> CreateVisibleComponent(ButtonType type) {
     switch (type) {
     case ButtonType::Play:
         return std::make_shared<PlayVisible>();
@@ -28,7 +28,7 @@ std::shared_ptr<IVisible> CreateVisibleComponent(ButtonType type) {
     }
 }
 
-std::shared_ptr<IClicked> CreateClickComponent(ButtonType type) {
+std::shared_ptr<IUIClicked> CreateClickComponent(ButtonType type) {
     switch (type) {
     case ButtonType::Play:
         return std::make_shared<PlayClicked>();

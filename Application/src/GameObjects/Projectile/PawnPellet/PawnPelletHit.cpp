@@ -1,6 +1,7 @@
 #include "PawnPelletHit.hpp"
 
-bool PawnPelletHit::Hit()
+void PawnPelletHit::Hit(bool& isActive, bool& shouldRender)
 {
-	return false;
+	isActive = false;
+	shouldRender = false;
 }

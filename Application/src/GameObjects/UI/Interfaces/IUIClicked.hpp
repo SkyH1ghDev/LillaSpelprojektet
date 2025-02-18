@@ -1,7 +1,7 @@
 #pragma once
-class IClicked
+class IUIClicked
 {
 public:
 	virtual void Clicked() = 0;
-	virtual ~IClicked() = default;
+	virtual ~IUIClicked() = default;
 };

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <SpEngine/Input/Input.hpp>
+#include <SpEngine/Physics/Collider.hpp>
 
 namespace DX = DirectX;
 
@@ -56,6 +57,13 @@ public:
      */
     void SetActive(bool activeState);
 
+     /**
+     * Sets the render state of the game object
+     *
+     * @param renderState The state to set the object to
+     */
+    void SetShouldRender(bool renderState);
+     
     /**
      * Gets position of the GameObject
      *
@@ -133,9 +141,16 @@ public:
      */
     void CenterOrigin(bool centerOrigin);
 
+    void SetCollider(std::shared_ptr<Collider> collider);
+
+    std::shared_ptr<Collider> GetCollider() const;
+
+
+
 protected:
     std::string m_textureName;
     DX::XMFLOAT2 m_position = {0, 0};
+    std::shared_ptr<Collider> m_collider = nullptr;
     float m_layerFloat = 0.0;
     float m_scaleFloat = 1.0;
     float m_rotationFloat = 0.0;
@@ -185,6 +200,11 @@ inline void IGameObject::SetActive(bool activeState)
 	m_isActive = activeState;
 }
 
+inline void IGameObject::SetShouldRender(bool renderState)
+{
+    m_shouldRender = renderState;
+}
+
 inline DX::XMFLOAT2 IGameObject::GetPosition() const
 {
     return DX::XMFLOAT2(m_position.x, m_position.y);
@@ -228,4 +248,14 @@ inline void IGameObject::SetRotation(float rotation)
 inline void IGameObject::CenterOrigin(bool centerOrigin)
 {
     this->m_centerOrigin = centerOrigin;
+}
+/* Collision Handling */
+inline void IGameObject::SetCollider(std::shared_ptr<Collider> collider)
+{
+    m_collider = collider;
+}
+
+inline std::shared_ptr<Collider> IGameObject::GetCollider() const
+{
+    return m_collider;
 }
