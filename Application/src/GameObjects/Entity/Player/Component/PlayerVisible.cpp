@@ -4,23 +4,23 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
 {
 
     layer = 0.5 + position.y * 0.3 / 360;
-    scale = 0.25;
+    scale = 0.20;
 
     switch (entityState) {
     case EntityState::WalkUp:
-        texture = "chesster_backwards_v2.png";
+        texture = "chesster_backwards_v3.png";
         break;
     case EntityState::WalkDown:
-        texture = "chesster_forwards_v2.png";
+        texture = "chesster_forward_v3.png";
         break;
     case EntityState::WalkRight:
-        texture = "chesster_right_v1.png";
+        texture = "chesster_right_v2.png";
         break;
     case EntityState::WalkLeft:
-        texture = "chesster_left_v1.png";
+        texture = "chesster_left_v2.png";
         break;
     default:
-        texture = "chesster_forwards_v2.png";
+        texture = "chesster_forward_v3.png";
         break;
     }
 }
