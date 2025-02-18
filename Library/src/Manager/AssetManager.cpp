@@ -24,10 +24,27 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 	m_textureMap["default"] = { Sprite(device) };
 
 	// Load all textures in the Application/Resources/ folder
-	for (const auto& entry : FS::directory_iterator(path))
+	for (const auto& entry : FS::recursive_directory_iterator(path))
 	{
+		if (entry.is_directory()) {
+			continue;
+		}
 		std::string filepath = entry.path().string();
-		filepath.at(filepath.find('\\')) = '/';
+
+		std::vector<int> positions;
+		int res = -1;
+		char sub[] = "\\";
+		while ((res = filepath.find(sub, res + 1)) != std::string::npos)
+		{
+			positions.push_back(res);
+		}
+
+		for (int pos : positions) 
+		{
+			filepath.at(pos) = '/';
+		}
+
+		//filepath.at(filepath.find('\\')) = '/';
 		size_t folderIndex = filepath.find_last_of('/');
 		std::string filename = filepath.substr(folderIndex + 1, filepath.length() - folderIndex);
 		std::string extension = filename.substr(filename.find_last_of('.'));
