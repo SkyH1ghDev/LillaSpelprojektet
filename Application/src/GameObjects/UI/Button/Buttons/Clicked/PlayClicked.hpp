@@ -1,8 +1,8 @@
 #pragma once
-#include "IClicked.hpp"
+#include "IUIClicked.hpp"
 #include <iostream>
 
-class PlayClicked : public IClicked
+class PlayClicked : public IUIClicked
 {
 public:
     void Clicked() override;

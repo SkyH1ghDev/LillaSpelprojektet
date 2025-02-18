@@ -30,7 +30,6 @@ public:
     void PerformVisible(ProjectileState projectileState) { if (m_visible) m_visible->Visible(m_textureName, m_position, projectileState, m_layerFloat, m_scaleFloat); }
     bool PerformHit() { if (m_hit) m_hit->Hit(); }
     
-
     void Update() override;
     void OnStart() override;
 
