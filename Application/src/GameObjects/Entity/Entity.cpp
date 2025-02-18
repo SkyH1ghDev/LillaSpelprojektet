@@ -7,7 +7,7 @@
 #include "EntitySetColliderComponentFactory.hpp"
 #include <iostream>
 
-Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
+Entity::Entity(EntityType entityType) :
     m_move(CreateMoveComponent(entityType)),
     m_visible(CreateVisibleComponent(entityType)),
     m_attack(CreateAttackComponent(entityType)),
