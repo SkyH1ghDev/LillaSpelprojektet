@@ -27,6 +27,7 @@ void Entity::OnStart()
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
     PerformSetCollider();
+    this->m_takeDamage->SetHealth(this->m_hp);
 }
 
 void Entity::PerformSetCollider()
@@ -37,6 +38,11 @@ void Entity::PerformSetCollider()
 void Entity::Update()
 {
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
+    if (this->m_hp <= 0)
+    {
+        this->SetActive(false);
+        this->m_shouldRender = false;
+    }
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {

@@ -5,5 +5,6 @@
 class EnemyTakeDamage : public IEntityTakeDamage
 {
 public:
-    void TakeDamage() override;
+    void TakeDamage(float& hp, float damage) override;
+    void SetHealth(float& hp) override;
 };

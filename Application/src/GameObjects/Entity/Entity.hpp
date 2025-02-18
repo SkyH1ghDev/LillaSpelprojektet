@@ -33,7 +33,7 @@ public:
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState) { if (m_visible) m_visible->Visible(m_textureName, m_position, entityState, m_layerFloat, m_scaleFloat); }
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack) m_attack->Attack(position, direction); }
-    void PerformTakeDamage() { if (m_takeDamage) m_takeDamage->TakeDamage(); }
+    void PerformTakeDamage(float damage) { if (m_takeDamage) m_takeDamage->TakeDamage(this->m_hp, damage); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
     void PerformSetCollider();
 
@@ -50,4 +50,5 @@ private:
     std::shared_ptr<IEntityUseCard> m_useCard;
     std::shared_ptr<IEntitySetCollider> m_setCollider;
     EntityType m_type;
+    float m_hp = 0;
 };

@@ -18,7 +18,7 @@ GridCell CollisionHandler::GetTileForPosition(float x, float y) {
 void CollisionHandler::Update() {
     grid.clear(); // Reset grid each frame
 
-    auto scene = SceneManager::GetScene("main");  // Assuming the Script base class provides access to the scene
+    auto scene = SceneManager::GetScene("main");
     if (!scene) return;
 
     auto objects = scene->GetGameObjectVec();
@@ -72,7 +72,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         if (projectile && entity) {
             // Call the Perform functions
             projectile->PerformHit();
-            entity->PerformTakeDamage();
+            entity->PerformTakeDamage(projectile->GetDamage());
         }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::Enemy &&
@@ -84,8 +84,8 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
 
         if (projectile && entity) {
             // Call the Perform functions
-            projectile->PerformHit();
-            entity->PerformTakeDamage();
+            projectile->PerformHit(); 
+            entity->PerformTakeDamage(projectile->GetDamage());
         }
     }
 }

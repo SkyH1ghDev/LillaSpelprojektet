@@ -3,6 +3,6 @@
 class IProjectileHit
 {
 public:
-    virtual void Hit() = 0;
+    virtual void Hit(bool& isActive, bool& shouldRender) = 0;
     virtual ~IProjectileHit() = default;
 };

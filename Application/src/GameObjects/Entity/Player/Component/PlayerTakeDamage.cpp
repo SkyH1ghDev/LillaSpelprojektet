@@ -1,6 +1,12 @@
 #include "PlayerTakeDamage.hpp"
 
-void PlayerTakeDamage::TakeDamage()
+void PlayerTakeDamage::TakeDamage(float& hp, float damage)
 {
-    std::cerr << "Chester tar skada" << std::endl;
+    hp -= damage;
+    HealthBarManager::RemoveHeart(damage);
+}
+
+void PlayerTakeDamage::SetHealth(float& hp)
+{
+    hp = 5;
 }

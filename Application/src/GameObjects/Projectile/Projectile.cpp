@@ -18,11 +18,12 @@ Projectile::Projectile(ProjectileType projectileType) :
     std::cout << "Projectile created of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
 }
 
-void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime) {
+void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage) {
     this->m_position = position;
     this->m_direction = direction;
     this->m_velocity = velocity;
     this->m_lifetime = lifetime;
+    this->m_damage = damage;
 
     // Normalize direction
     float length = sqrt(pow(direction.x, 2) + pow(direction.y, 2));
@@ -72,3 +73,8 @@ void Projectile::PerformMove(const DX::XMFLOAT2& direction, float velocity) {
         this->m_position = m_move->Move(this->m_position, direction, velocity);
     }
 }
+
+float Projectile::GetDamage() const
+{
+    return this->m_damage * this->m_damageAmp;
+}   
