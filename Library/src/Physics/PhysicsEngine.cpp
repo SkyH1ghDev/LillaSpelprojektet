@@ -51,10 +51,10 @@ bool PhysicsEngine::ColliderColliderCollision(std::shared_ptr<Collider> col1, st
     return (term1 + term2) <= 1;
 }
 
-bool PhysicsEngine::WallProjectileCollision(const Collider& projectile)
+bool PhysicsEngine::WallProjectileCollision(std::shared_ptr<Collider> projectile)
 {
-    DX::XMFLOAT2 projPos = projectile.GetPosition();
-    float radius = projectile.GetRadius();
+    DX::XMFLOAT2 projPos = projectile->GetPosition();
+    float radius = projectile->GetRadius();
 
     if (projPos.x - radius < m_leftWall)
     {
@@ -75,12 +75,12 @@ bool PhysicsEngine::WallProjectileCollision(const Collider& projectile)
     return false;
 }
 
-bool PhysicsEngine::ProjectileProjectileCollision(const Collider& proj1, const Collider& proj2)
+bool PhysicsEngine::ProjectileProjectileCollision(std::shared_ptr<Collider> col1, std::shared_ptr<Collider> col2)
 {
-    DX::XMFLOAT2 projPos1 = proj1.GetPosition();
-    DX::XMFLOAT2 projPos2 = proj2.GetPosition();
-    float radius1 = proj1.GetRadius();
-    float radius2 = proj2.GetRadius();
+    DX::XMFLOAT2 projPos1 = col1->GetPosition();
+    DX::XMFLOAT2 projPos2 = col2->GetPosition();
+    float radius1 = col1->GetRadius();
+    float radius2 = col2->GetRadius();
 
     DX::XMFLOAT2 vec = DX::XMFLOAT2(projPos2.x - projPos1.x, projPos2.y - projPos1.y);
     float lenVec = sqrt(pow(vec.x, 2) + pow(vec.y, 2));

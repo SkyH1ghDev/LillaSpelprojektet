@@ -63,7 +63,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallProjectileCollision(const Collider& projectile);
+	static bool WallProjectileCollision(std::shared_ptr<Collider> projectile);
 
 	/**
 	 * Finds out if there is a collision between
@@ -74,7 +74,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool ProjectileProjectileCollision(const Collider& proj1, const Collider& proj2);
+	static bool ProjectileProjectileCollision(std::shared_ptr<Collider> col1, std::shared_ptr<Collider> col2);
 
 private:
 	static int m_leftWall;

@@ -6,8 +6,8 @@
 TEST(PhysicsEngine, ColliderColliderCollision1)
 {
     //A clear collision
-    Collider circle = Collider({ 0, 0 }, 1);
-    Collider oval = Collider({ 1, 0 }, 1, 1.65f);
+    Collider circle = Collider({ 0, 0 }, 1, CollisionLayer::All, CollisionLayer::All);
+    Collider oval = Collider({ 1, 0 }, 1, 1.65f, CollisionLayer::All, CollisionLayer::All);
     bool returned = PhysicsEngine::ColliderColliderCollision(circle, oval);
     ASSERT_EQ(returned, true);
 }
