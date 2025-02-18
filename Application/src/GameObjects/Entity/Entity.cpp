@@ -6,7 +6,7 @@
 #include "EntityVisibleComponentFactory.hpp"
 #include <iostream>
 
-Entity::Entity(EntityType entityType) :
+Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
     m_move(CreateMoveComponent(entityType)),
     m_visible(CreateVisibleComponent(entityType)),
     m_attack(CreateAttackComponent(entityType)),

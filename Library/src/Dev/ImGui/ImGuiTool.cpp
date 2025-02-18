@@ -11,6 +11,7 @@
 
 #include <SpEngine/Manager/AssetManager.hpp>
 
+#include "SceneManager.hpp"
 
 
 void ImGuiTool::Initialize(const HWND& window, const MW::ComPtr<ID3D11Device>& device, const MW::ComPtr<ID3D11DeviceContext>& context)
@@ -169,7 +170,75 @@ void ImGuiTool::AssetManagerTab()
 
 void ImGuiTool::SceneManagerTab()
 {
+	std::vector<std::shared_ptr<IScene>> scenes = SceneManager::GetAllScenes();
+	static std::vector<std::shared_ptr<IGameObject>> gameObjects = {};
+
+	static int sceneSelectedIndex = 0;
 	
+	if (scenes.size() <= 0)
+	{
+		sceneSelectedIndex = 0;
+		return;
+	}
+
+	static std::string scenePreviewText = "Select Scene...";
+	if (ImGui::BeginCombo("Scenes", scenePreviewText.c_str(), ImGuiComboFlags_None))
+	{
+		for (int i = 0; i < scenes.size(); ++i)
+		{
+			const bool isSelected = (sceneSelectedIndex == i);
+
+			if (ImGui::Selectable(scenes[i]->GetName().c_str(), isSelected))
+			{
+				sceneSelectedIndex = i;
+			}
+
+			if (isSelected)
+			{
+				scenePreviewText = scenes[i]->GetName();
+				gameObjects = scenes[i]->GetGameObjectVec();
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	static int gameObjSelectedIndex = 0;
+
+	if (gameObjects.size() <= 0)
+	{
+		gameObjSelectedIndex = 0;
+		return;
+	}
+	
+	static std::string gameObjectPreviewText = "Select GameObject...";
+	if (ImGui::BeginCombo("GameObjects", gameObjectPreviewText.c_str(), ImGuiComboFlags_None))
+	{
+		for (int i = 0; i < gameObjects.size(); ++i)
+		{
+			const bool isSelected = (gameObjSelectedIndex == i);
+
+			if (ImGui::Selectable(gameObjects.at(i)->GetName().c_str(), isSelected))
+			{
+				gameObjSelectedIndex = i;
+			}
+
+			if (isSelected)
+			{
+				gameObjectPreviewText = gameObjects.at(i)->GetName() + "##" + std::to_string(gameObjects.at(i)->GetUID());
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	std::shared_ptr<IGameObject> selectedGameObject = gameObjects.at(gameObjSelectedIndex);
+	
+	ImGui::Separator();
+	ImGui::NewLine();
+
+	std::string positionText = "Position: " + std::to_string(selectedGameObject->GetPosition().x) + ", " + std::to_string(selectedGameObject->GetPosition().y);
+	ImGui::Text(positionText.c_str());
 }
 
 void ImGuiTool::StatisticsTab()

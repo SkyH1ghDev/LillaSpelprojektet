@@ -17,8 +17,9 @@ class IGameObject : public std::enable_shared_from_this<IGameObject>
 
 public:
 
-    IGameObject() = default;
-    virtual ~IGameObject() {}
+    IGameObject();
+    IGameObject(const std::string& name);
+    virtual ~IGameObject() = default;
     IGameObject(const IGameObject& other) = default;
     IGameObject& operator=(const IGameObject& other) = default;
     IGameObject(IGameObject&& other) noexcept = default;
@@ -56,6 +57,10 @@ public:
      */
     void SetActive(bool activeState);
 
+    std::string GetName() const;
+
+    int GetUID() const;
+    
     /**
      * Gets position of the GameObject
      *
@@ -98,7 +103,10 @@ public:
      */
     void SetPosition(DX::XMFLOAT2 position);
 
+    void SetName(const std::string& name);
+
 protected:
+    std::string m_gameObjectName;
     std::string m_textureName;
     DX::XMFLOAT2 m_position = { 0, 0 };
     float m_layerFloat = 0.0;
@@ -108,7 +116,23 @@ protected:
     bool m_shouldRender = false;
 
     std::vector<std::shared_ptr<IScript>> m_scripts;
+    
+    int m_uniqueID = m_numGameObjects++;
+    static int m_numGameObjects;
 };
+
+inline IGameObject::IGameObject()
+{
+    this->m_gameObjectName = "Unnamed##" + std::to_string(m_numGameObjects);
+    ++m_numGameObjects;
+}
+
+inline IGameObject::IGameObject(const std::string& name)
+{
+    m_gameObjectName = name + "##" + std::to_string(m_numGameObjects);
+    ++m_numGameObjects;
+}
+
 
 inline void IGameObject::AttachScript(const std::shared_ptr<IScript>& script)
 {
@@ -147,27 +171,47 @@ inline void IGameObject::SetActive(bool activeState)
 	m_isActive = activeState;
 }
 
+inline std::string IGameObject::GetName() const
+{
+    return m_gameObjectName;
+}
+
+inline int IGameObject::GetUID() const
+{
+    return this->m_uniqueID;
+}
+
 inline DX::XMFLOAT2 IGameObject::GetPosition() const
 {
     return m_position;
 }
+
 inline std::string IGameObject::GetTextureString() const
 {
     return m_textureName;
 }
+
 inline float IGameObject::GetLayerFloat() const
 {
     return m_layerFloat;
 }
+
 inline float IGameObject::GetScaleFloat() const
 {
     return m_scaleFloat;
 }
+
 inline bool IGameObject::ShouldRender() const
 {
     return m_shouldRender;
 }
+
 inline void IGameObject::SetPosition(DX::XMFLOAT2 position)
 {
     m_position = position;
+}
+
+inline void IGameObject::SetName(const std::string& name)
+{
+    this->m_gameObjectName = name;
 }
