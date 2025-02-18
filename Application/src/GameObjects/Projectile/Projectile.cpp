@@ -2,6 +2,7 @@
 #include "ProjectileMoveComponentFactory.hpp"
 #include "ProjectileVisibleComponentFactory.hpp"
 #include "ProjectileHitComponentFactory.hpp"
+#include "ProjectileSetColliderComponentFactory.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 #include <iostream>
 
@@ -9,6 +10,7 @@ Projectile::Projectile(ProjectileType projectileType) :
     m_move(CreateMoveComponent(projectileType)),
     m_visible(CreateVisibleComponent(projectileType)),
     m_hit(CreateHitComponent(projectileType)),
+    m_setCollider(CreateSetColliderComponent(projectileType)),
     m_type(projectileType),
     m_velocity(0), 
     m_lifetime(0)
@@ -31,7 +33,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->m_shouldRender = true;
     PerformVisible(ProjectileState::Inactive);
     this->CenterOrigin(true);
-    this->m_collider = std::make_shared<Collider>(this->m_position, 10, CollisionLayer::Projectile, CollisionLayer::Player);
+    PerformSetCollider();
     std::cout << "Projectile initialized of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
 }
 
@@ -59,6 +61,10 @@ void Projectile::Update()
         this->m_isActive = false;
         this->m_shouldRender = false;
     }
+}
+void Projectile::PerformSetCollider()
+{
+    this->m_collider = std::make_unique<Collider>(this->m_setCollider->SetCollider(this->m_position));
 }
 
 void Projectile::PerformMove(const DX::XMFLOAT2& direction, float velocity) {
