@@ -1,4 +1,5 @@
 #include "PlayerTakeDamage.hpp"
+#include "StatSheet.hpp"
 
 void PlayerTakeDamage::TakeDamage(float& hp, float damage)
 {
@@ -8,5 +9,5 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage)
 
 void PlayerTakeDamage::SetHealth(float& hp)
 {
-    hp = 5;
+    hp = StatSheet::GetMaxHealth();
 }

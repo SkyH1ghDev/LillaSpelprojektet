@@ -3,10 +3,11 @@
 #include "PlayerAttack.hpp"
 #include "ProjectileManager.hpp"
 #include "AbilityManager.hpp"
+#include "StatSheet.hpp"
 
 void PlayerAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {
-	ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + direction.x * 15, position.y + direction.y * 15), direction, 300.0f, 0.5f, 10.0f);
+	ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + direction.x * 15, position.y + direction.y * 15), direction, StatSheet::GetShotSpeed(), StatSheet::GetShotLife(), StatSheet::GetDamage());
 	//std::shared_ptr<Projectile> projectile = std::make_shared<Projectile>(ProjectileType::Base, DX::XMFLOAT2(position.x + direction.x * 15, position.y + direction.y * 15), direction, 300.0f, 0.5f);
 	//ProjectileManager::AddProjectile(projectile);
 
