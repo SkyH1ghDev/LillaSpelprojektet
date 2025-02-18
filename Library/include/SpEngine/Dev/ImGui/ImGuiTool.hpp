@@ -1,8 +1,11 @@
 #pragma once
 
+#include "ImGuiKeyBindButton.hpp"
+
 #include <windows.h>
 #include <d3d11.h>
 #include <wrl/client.h>
+#include <vector>
 
 namespace MW = Microsoft::WRL;
 
@@ -24,5 +27,8 @@ public:
 
 private:
     static void AssetManagerTab();
+    static void SceneManagerTab();
+    static void StatisticsTab();
+    static void KeyBindTab();
 
 };
