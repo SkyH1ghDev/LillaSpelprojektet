@@ -9,6 +9,6 @@ namespace DX = DirectX;
 class IEntityMove
 {
 public:
-    virtual DX::XMFLOAT2 Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashing, Collider m_collider) = 0;
+    virtual DX::XMFLOAT2 Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashing, std::shared_ptr<Collider> m_collider) = 0;
     virtual ~IEntityMove() = default;
 };

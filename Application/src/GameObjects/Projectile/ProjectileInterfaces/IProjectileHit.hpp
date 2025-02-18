@@ -3,6 +3,6 @@
 class IProjectileHit
 {
 public:
-    virtual bool Hit() = 0;
+    virtual void Hit() = 0;
     virtual ~IProjectileHit() = default;
 };

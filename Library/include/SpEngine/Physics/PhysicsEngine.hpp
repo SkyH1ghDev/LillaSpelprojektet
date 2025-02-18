@@ -31,7 +31,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallEntityXCollision(const Collider& entity);
+	static bool WallEntityXCollision(std::shared_ptr<Collider> entity);
 
 	/**
 	 * Finds out if there is a collision between
@@ -41,7 +41,7 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool WallEntityYCollision(const Collider& entity);
+	static bool WallEntityYCollision(std::shared_ptr<Collider> entity);
 
 	/**
 	 * Finds out if there is a collision between
@@ -52,7 +52,8 @@ public:
 	 * @param[OUT] bool
 	 * @return true on Collision, false on NO collision
 	 */
-	static bool ColliderColliderCollision(const Collider& projectile, const Collider& entity);
+
+	static bool ColliderColliderCollision(std::shared_ptr<Collider> col1, std::shared_ptr<Collider> col2);
 
 	/**
 	 * Finds out if there is a collision between

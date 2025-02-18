@@ -1,6 +1,6 @@
 #include "BishopBallHit.hpp"
 
-bool BishopBallHit::Hit()
+void BishopBallHit::Hit()
 {
-	return false;
+
 }

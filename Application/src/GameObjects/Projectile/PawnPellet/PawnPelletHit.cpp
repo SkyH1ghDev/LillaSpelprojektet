@@ -1,6 +1,6 @@
 #include "PawnPelletHit.hpp"
 
-bool PawnPelletHit::Hit()
+void PawnPelletHit::Hit()
 {
-	return false;
+
 }

@@ -5,5 +5,5 @@
 class BishopBallHit : public IProjectileHit
 {
 public:
-    bool Hit() override;
+    void Hit() override;
 };

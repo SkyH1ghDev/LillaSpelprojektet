@@ -31,7 +31,7 @@ void Entity::OnStart()
 
 void Entity::PerformSetCollider()
 {
-    this->m_collider = this->m_setCollider->CreateCollider(this->m_position);
+    this->m_collider = std::make_unique<Collider>(this->m_setCollider->CreateCollider(this->m_position));
 }
 
 void Entity::Update()

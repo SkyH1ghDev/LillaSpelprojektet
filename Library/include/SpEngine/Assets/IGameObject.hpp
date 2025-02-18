@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <SpEngine/Input/Input.hpp>
+#include <SpEngine/Physics/Collider.hpp>
 
 namespace DX = DirectX;
 
@@ -140,9 +141,16 @@ public:
      */
     void CenterOrigin(bool centerOrigin);
 
+    void SetCollider(std::shared_ptr<Collider> collider);
+
+    std::shared_ptr<Collider> GetCollider() const;
+
+
+
 protected:
     std::string m_textureName;
     DX::XMFLOAT2 m_position = {0, 0};
+    std::shared_ptr<Collider> m_collider = nullptr;
     float m_layerFloat = 0.0;
     float m_scaleFloat = 1.0;
     float m_rotationFloat = 0.0;
@@ -151,7 +159,6 @@ protected:
     bool m_centerOrigin = false;
     bool m_isActive = true;
     bool m_shouldRender = false;
-    Collider m_collider = Collider({0, 0}, 0, 0);
 
     std::vector<std::shared_ptr<IScript>> m_scripts;
 };
@@ -241,4 +248,14 @@ inline void IGameObject::SetRotation(float rotation)
 inline void IGameObject::CenterOrigin(bool centerOrigin)
 {
     this->m_centerOrigin = centerOrigin;
+}
+/* Collision Handling */
+inline void IGameObject::SetCollider(std::shared_ptr<Collider> collider)
+{
+    m_collider = collider;
+}
+
+inline std::shared_ptr<Collider> IGameObject::GetCollider() const
+{
+    return m_collider;
 }
