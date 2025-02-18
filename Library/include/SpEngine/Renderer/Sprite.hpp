@@ -1,8 +1,11 @@
+#pragma once
+
 #include <d3d11.h>
 #include <string>
 #include <directxtk/SpriteBatch.h>
 #include <wrl/client.h>
 #include <APNGLoader/uc_apng_loader.h>
+
 
 namespace MW = Microsoft::WRL;
 namespace DX = DirectX;
@@ -17,16 +20,17 @@ public:
 	Sprite(const MW::ComPtr<ID3D11Device>& device, const uc::apng::frame& frame);
 	Sprite(const Sprite& other);
 	Sprite& operator=(const Sprite& other);
-	~Sprite() = default;
+	virtual ~Sprite() = default;
 
 	inline MW::ComPtr<ID3D11ShaderResourceView> GetSRV();
 	inline DX::XMFLOAT2 GetOrigin();
 	std::shared_ptr<RECT> GetSourceRectangle();
 
-private:
+protected:
 	DX::XMFLOAT2 m_origin;
 	std::shared_ptr<RECT> m_sourceRect;
 	MW::ComPtr<ID3D11ShaderResourceView> m_srv;
+
 };
 
 inline MW::ComPtr<ID3D11ShaderResourceView> Sprite::GetSRV()

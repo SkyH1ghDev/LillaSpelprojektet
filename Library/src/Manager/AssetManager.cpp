@@ -1,5 +1,5 @@
 #include "AssetManager.hpp"
-#include "APNGLoader/uc_apng_loader.h"
+#include <APNGLoader/uc_apng_loader.h>
 
 enum AssetManager::fileFormat : std::uint8_t
 {
@@ -8,7 +8,7 @@ enum AssetManager::fileFormat : std::uint8_t
 	FileFormat_APNG = 2,
 };
 
-std::unordered_map<std::string, std::vector<Sprite>> AssetManager::m_textureMap = {};
+std::unordered_map<std::string, SpriteWrapper> AssetManager::m_textureMap = {};
 std::unordered_map<std::string, int> AssetManager::m_extensionIndex =
 	{
 		{".jpg", FileFormat_JPG}, {".jpeg", FileFormat_JPG},
@@ -51,6 +51,7 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 						while (loader.has_frame())
 						{
 							uc::apng::frame frame = loader.next_frame();
+							
 							sprites.push_back(Sprite(device, frame));
 						}
 

@@ -110,6 +110,8 @@ Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device, const std::string& filepa
 
 Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device, const uc::apng::frame& frame)
 {
+	
+	
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
 

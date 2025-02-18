@@ -2,6 +2,8 @@
 #include <filesystem>
 #include <SpEngine/Renderer/Sprite.hpp>
 
+#include "SpriteWrapper.hpp"
+
 namespace FS = std::filesystem;
 namespace MW = Microsoft::WRL;
 //namespace DX = DirectX;
@@ -13,41 +15,39 @@ public:
 	~AssetManager() = default;
 
 	static bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
-	static Sprite GetSprite(const std::string& filename);
-	static std::vector<Sprite> GetAnimatedSprite(const std::string& filename);
-	static std::unordered_map<std::string, std::vector<Sprite>> GetTextureMap();
+	static SpriteWrapper GetSprite(const std::string& filename);
+	static std::unordered_map<std::string, SpriteWrapper> GetTextureMap();
 
 
 private:
 
-	static std::unordered_map<std::string, std::vector<Sprite>> m_textureMap;
+	
+	static std::unordered_map<std::string, SpriteWrapper> m_textureMap;
 	static std::unordered_map<std::string, int> m_extensionIndex;
 	enum fileFormat : std::uint8_t;
 
 };
 
 //Returns Sprite with the matching filename in the hash map
-inline Sprite AssetManager::GetSprite(const std::string& filename)
+inline SpriteWrapper AssetManager::GetSprite(const std::string& filename)
 {
-	if (m_textureMap.contains(filename))
+	if (!m_textureMap.contains(filename))
 	{
-		return m_textureMap[filename].at(0);
+		return m_textureMap["default"];
 	}
 
-	return m_textureMap["default"].at(0);
-}
-
-inline std::vector<Sprite> AssetManager::GetAnimatedSprite(const std::string& filename)
-{
-	if (m_textureMap.contains(filename))
+	// Is not animated
+	std::shared_ptr<Sprite> sprite = m_textureMap[filename];
+	std::shared_ptr<AnimatedSprite> animatedSprite = std::dynamic_pointer_cast<AnimatedSprite, Sprite>(sprite);
+	if (animatedSprite == nullptr)
 	{
-		return m_textureMap[filename];
+		return sprite;
 	}
 
-	return m_textureMap["default"];
+	return animatedSprite;
 }
 
-inline std::unordered_map<std::string, std::vector<Sprite>> AssetManager::GetTextureMap()
+inline std::unordered_map<std::string, SpriteWrapper> AssetManager::GetTextureMap()
 {
 	return m_textureMap;
 }
