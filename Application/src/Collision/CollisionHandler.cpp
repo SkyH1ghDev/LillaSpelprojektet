@@ -51,7 +51,7 @@ void CollisionHandler::Update() {
                 if (colA && colB &&
                     colA->CanCollideWith(colB->GetLayer()) &&
                     colB->CanCollideWith(colA->GetLayer()) &&
-                    PhysicsEngine::ProjectileEntityCollision(colA, colB));
+                    PhysicsEngine::ColliderColliderCollision(colA, colB));
                 {
                     HandleCollision(objA, objB);
                 }
