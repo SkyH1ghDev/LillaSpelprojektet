@@ -1,6 +1,7 @@
 #include "CollisionHandler.hpp"
 #include "Entity.hpp"
 #include "Projectile.hpp"
+#include "SpEngine/Physics/GamePhysics.hpp"
 
 CollisionHandler::CollisionHandler(int tileSize) : tileSize(tileSize) {}
 
@@ -50,7 +51,7 @@ void CollisionHandler::Update() {
                 if (colA && colB &&
                     colA->CanCollideWith(colB->GetLayer()) &&
                     colB->CanCollideWith(colA->GetLayer()) &&
-                    colA->CheckCollision(*colB))
+                    PhysicsEngine::ProjectileEntityCollision(colA, colB));
                 {
                     HandleCollision(objA, objB);
                 }

@@ -41,13 +41,6 @@ public:
 	void UpdatePosition(DX::XMFLOAT2 position);
 
 	/**
-	 * Collision detection functions.
-	 */
-	bool CheckCollision(const Collider& other) const;
-	bool CheckCircleCollision(const Collider& other) const;
-	bool CheckAABBCollision(const Collider& other) const;
-
-	/**
 	 * Getters for collider properties.
 	 */
 	DX::XMFLOAT2 GetPosition() const;
