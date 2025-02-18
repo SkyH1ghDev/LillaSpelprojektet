@@ -34,7 +34,6 @@ Game::Game()
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "crosshair.png");
 
-    //std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "liosstav.png");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
 
@@ -52,7 +51,4 @@ Game::Game()
     EnemyManager::SpawnEnemies(player, 2);
     ProjectileManager::Initialize(200);
     HealthBarManager::Initialize(5);
-    HealthBarManager::RemoveHeart(6);
-    HealthBarManager::AddNewHeart(5);
-    HealthBarManager::RemoveHeart(5);
 }
