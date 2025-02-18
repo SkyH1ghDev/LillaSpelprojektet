@@ -7,13 +7,13 @@ namespace DX = DirectX;
 
 /**
 * This class will probably undergo changes in the future.
-* 
+*
 * The plan is to send the objects needing collision
 * checks instead of just the raw data. That will make
 * the class easier to use. The raw data is currently used
 * right now because the right getters and stucture in
 * the program does not exist yet.
-* 
+*
 * -Puntis :)
 */
 

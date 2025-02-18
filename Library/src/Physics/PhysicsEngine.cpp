@@ -1,5 +1,5 @@
 #include <istream>
-#include "GamePhysics.hpp"
+#include "PhysicsEngine.hpp"
 
 int PhysicsEngine::m_leftWall = 40;
 int PhysicsEngine::m_rightWall = 600;

@@ -2,7 +2,7 @@
 
 #include <d3d11.h>
 #include <DirectXMath.h>
-#include <SpEngine/Physics/GamePhysics.hpp>
+#include <SpEngine/Physics/PhysicsEngine.hpp>
 
 namespace DX = DirectX;
 
