@@ -8,6 +8,7 @@
 
 class EnemyManager {
 public:
+    static bool IsTooCloseToOtherEntities(DX::XMFLOAT2 newPos, float minDistance);
     static void SpawnEnemies(std::shared_ptr<IGameObject> player, int numberOfEnemies);
     static void UpdateEnemies();
     static void Cleanup();

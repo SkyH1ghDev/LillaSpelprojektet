@@ -6,6 +6,6 @@
 class PlayerTakeDamage : public IEntityTakeDamage
 {
 public:
-    void TakeDamage(float& hp, float damage) override;
+    void TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender) override;
     void SetHealth(float& hp) override;
 };

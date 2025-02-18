@@ -36,6 +36,7 @@ void CollisionHandler::Update() {
             for (int y = topLeft.y; y <= bottomRight.y; ++y) {
                 grid[{x, y}].push_back(obj);
             }
+
         }
     }
 
@@ -72,7 +73,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         if (projectile && entity) {
             // Call the Perform functions
             projectile->PerformHit();
-            entity->PerformTakeDamage(projectile->GetDamage());
+            //entity->PerformTakeDamage(projectile->GetDamage());
         }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::Enemy &&
