@@ -24,8 +24,10 @@ Heart::Heart(HeartType type) :
 
 void Heart::Update()
 {
-	if(heart_empty)
+	if (heart_empty)
 		this->m_shouldRender = true;
+	else
+		this->m_shouldRender = false;
 }
 
 void Heart::OnStart()
