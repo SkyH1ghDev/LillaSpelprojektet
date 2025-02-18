@@ -38,7 +38,7 @@ bool PhysicsEngine::ColliderColliderCollision(const Collider& projectile, const 
 {
     DX::XMFLOAT2 projPos = projectile.GetPosition();
     DX::XMFLOAT2 entityPos = entity.GetPosition();
-    DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - entityPos.y);
+    DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - projPos.y);
     float radiusX1 = projectile.GetRadiusX();
     float radiusX2 = entity.GetRadiusX();
     float radiusY1 = projectile.GetRadiusY();
