@@ -1,7 +1,7 @@
 #include "CollisionHandler.hpp"
 #include "Entity.hpp"
 #include "Projectile.hpp"
-#include "SpEngine/Physics/GamePhysics.hpp"
+#include "SpEngine/Physics/PhysicsEngine.hpp"
 
 CollisionHandler::CollisionHandler(int tileSize) : tileSize(tileSize) {}
 
@@ -61,23 +61,10 @@ void CollisionHandler::Update() {
 }
 
 void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
-    const std::shared_ptr<IGameObject>& objB) {
-    if (objA->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile &&
-        objB->GetCollider()->GetLayer() == CollisionLayer::Player) {
-        // Handle EnemyProjectile hitting the player
-
-        auto projectile = std::dynamic_pointer_cast<Projectile>(objA);
-        auto entity = std::dynamic_pointer_cast<Entity>(objB);
-
-        if (projectile && entity) {
-            // Call the Perform functions
-            projectile->PerformHit();
-            entity->PerformTakeDamage();
-        }
-    }
-    else if (objA->GetCollider()->GetLayer() == CollisionLayer::Player &&
+    const std::shared_ptr<IGameObject>& objB) { 
+    if (objA->GetCollider()->GetLayer() == CollisionLayer::Player &&
         objB->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile) {
-        // Handle AllyProjectile hitting an enemy
+        // Handle EnemyProjectile hitting an ally
 
         auto projectile = std::dynamic_pointer_cast<Projectile>(objB);
         auto entity = std::dynamic_pointer_cast<Entity>(objA);
