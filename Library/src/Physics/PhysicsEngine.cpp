@@ -36,9 +36,10 @@ bool PhysicsEngine::WallEntityYCollision(std::shared_ptr<Collider> entity)
 
 bool PhysicsEngine::ColliderColliderCollision(std::shared_ptr<Collider> col1, std::shared_ptr<Collider> col2)
 {
+
     DX::XMFLOAT2 projPos = col1->GetPosition();
     DX::XMFLOAT2 entityPos = col2->GetPosition();
-    DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - entityPos.y);
+    DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - projPos.y);
     float radiusX1 = col1->GetRadiusX();
     float radiusX2 = col2->GetRadiusX();
     float radiusY1 = col1->GetRadiusY();
