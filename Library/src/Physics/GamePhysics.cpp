@@ -34,15 +34,15 @@ bool PhysicsEngine::WallEntityYCollision(std::shared_ptr<Collider> entity)
     return false;
 }
 
-bool PhysicsEngine::ProjectileEntityCollision(std::shared_ptr<Collider> projectile, std::shared_ptr<Collider> entity)
+bool PhysicsEngine::ColliderColliderCollision(std::shared_ptr<Collider> col1, std::shared_ptr<Collider> col2)
 {
-    DX::XMFLOAT2 projPos = projectile->GetPosition();
-    DX::XMFLOAT2 entityPos = entity->GetPosition();
+    DX::XMFLOAT2 projPos = col1->GetPosition();
+    DX::XMFLOAT2 entityPos = col2->GetPosition();
     DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - entityPos.y);
-    float radiusX1 = projectile->GetRadiusX();
-    float radiusX2 = entity->GetRadiusX();
-    float radiusY1 = projectile->GetRadiusY();
-    float radiusY2 = entity->GetRadiusY();
+    float radiusX1 = col1->GetRadiusX();
+    float radiusX2 = col2->GetRadiusX();
+    float radiusY1 = col1->GetRadiusY();
+    float radiusY2 = col2->GetRadiusY();
 
     float term1 = (vec.x * vec.x) / ((radiusX1 + radiusX2) * (radiusX1 + radiusX2));
     float term2 = (vec.y * vec.y) / ((radiusY1 + radiusY2) * (radiusY1 + radiusY2));
@@ -50,19 +50,11 @@ bool PhysicsEngine::ProjectileEntityCollision(std::shared_ptr<Collider> projecti
     return (term1 + term2) <= 1;
 }
 
-bool PhysicsEngine::ProjectileProjectileCollision(const DX::XMFLOAT2& projPos1, const DX::XMFLOAT2& projPos2, const float radius1, const float radius2)
+bool PhysicsEngine::WallProjectileCollision(const Collider& projectile)
 {
-    DX::XMFLOAT2 vec = DX::XMFLOAT2(projPos2.x - projPos1.x, projPos2.y - projPos1.y);
-    float lenVec = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
-    if (lenVec < (radius1 + radius2))
-    {
-        return true;
-    }
-    return false;
-}
+    DX::XMFLOAT2 projPos = projectile.GetPosition();
+    float radius = projectile.GetRadius();
 
-bool PhysicsEngine::WallProjectileCollision(const DX::XMFLOAT2& projPos, const float radius)
-{
     if (projPos.x - radius < m_leftWall)
     {
         return true;
@@ -82,18 +74,18 @@ bool PhysicsEngine::WallProjectileCollision(const DX::XMFLOAT2& projPos, const f
     return false;
 }
 
-bool PhysicsEngine::EntityEntityCollision(const Collider& projectile, const Collider& entity)
+bool PhysicsEngine::ProjectileProjectileCollision(const Collider& proj1, const Collider& proj2)
 {
-    DX::XMFLOAT2 projPos = projectile.GetPosition();
-    DX::XMFLOAT2 entityPos = entity.GetPosition();
-    DX::XMFLOAT2 vec = DX::XMFLOAT2(entityPos.x - projPos.x, entityPos.y - entityPos.y);
-    float radiusX1 = projectile.GetRadiusX();
-    float radiusX2 = entity.GetRadiusX();
-    float radiusY1 = projectile.GetRadiusY();
-    float radiusY2 = entity.GetRadiusY();
+    DX::XMFLOAT2 projPos1 = proj1.GetPosition();
+    DX::XMFLOAT2 projPos2 = proj2.GetPosition();
+    float radius1 = proj1.GetRadius();
+    float radius2 = proj2.GetRadius();
 
-    float term1 = (vec.x * vec.x) / ((radiusX1 + radiusX2) * (radiusX1 + radiusX2));
-    float term2 = (vec.y * vec.y) / ((radiusY1 + radiusY2) * (radiusY1 + radiusY2));
-
-    return (term1 + term2) <= 1;
+    DX::XMFLOAT2 vec = DX::XMFLOAT2(projPos2.x - projPos1.x, projPos2.y - projPos1.y);
+    float lenVec = sqrt(pow(vec.x, 2) + pow(vec.y, 2));
+    if (lenVec < (radius1 + radius2))
+    {
+        return true;
+    }
+    return false;
 }
