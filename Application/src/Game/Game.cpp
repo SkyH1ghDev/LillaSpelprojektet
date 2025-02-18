@@ -15,7 +15,7 @@
 #include "Enemy/EnemyController.hpp"
 #include "Enemy/EnemyManager.hpp"
 #include "Projectile/ProjectileManager.hpp"
-#include "GameObjects/Mesh/Scripts/wand.hpp"
+#include "GameObjects/Scripts/wand.hpp"
 #include "Collision/CollisionHandler.hpp"
 #include "Emty.hpp"
 

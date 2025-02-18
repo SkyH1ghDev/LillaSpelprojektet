@@ -4,5 +4,5 @@
 
 Collider EnemySetCollider::CreateCollider(DX::XMFLOAT2 position)
 {
-	return Collider(position, 10.0f);
+	return Collider(position, 10.0f, CollisionLayer::Enemy, CollisionLayer::Projectile);
 }

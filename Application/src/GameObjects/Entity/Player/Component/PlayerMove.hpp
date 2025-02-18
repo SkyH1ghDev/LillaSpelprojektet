@@ -5,7 +5,7 @@
 class PlayerMove : public IEntityMove
 {
 public:
-    DX::XMFLOAT2 Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashing, Collider m_collider) override;
+    DX::XMFLOAT2 Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashing, std::shared_ptr<Collider> m_collider) override;
 
 private:
     DX::XMVECTOR velocity = { 0.0f, 0.0f };
