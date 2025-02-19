@@ -24,8 +24,5 @@ public:
 
 private:
     static void AssetManagerTab();
-    static void SceneManagerTab();
-    static void StatisticsTab();
-    static void KeyBindTab();
 
 };

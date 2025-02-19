@@ -18,9 +18,8 @@ class IGameObject : public std::enable_shared_from_this<IGameObject>
 
 public:
 
-    IGameObject();
-    IGameObject(const std::string& name);
-    virtual ~IGameObject() = default;
+    IGameObject() = default;
+    virtual ~IGameObject() {}
     IGameObject(const IGameObject& other) = default;
     IGameObject& operator=(const IGameObject& other) = default;
     IGameObject(IGameObject&& other) noexcept = default;
@@ -65,10 +64,6 @@ public:
      */
     void SetShouldRender(bool renderState);
      
-    std::string GetName() const;
-
-    int GetUID() const;
-    
     /**
      * Gets position of the GameObject
      *
@@ -150,10 +145,9 @@ public:
 
     std::shared_ptr<Collider> GetCollider() const;
 
-    void SetName(const std::string& name);
+
 
 protected:
-    std::string m_gameObjectName;
     std::string m_textureName;
     DX::XMFLOAT2 m_position = {0, 0};
     std::shared_ptr<Collider> m_collider = nullptr;
@@ -167,23 +161,7 @@ protected:
     bool m_shouldRender = false;
 
     std::vector<std::shared_ptr<IScript>> m_scripts;
-    
-    int m_uniqueID = m_numGameObjects++;
-    static int m_numGameObjects;
 };
-
-inline IGameObject::IGameObject()
-{
-    this->m_gameObjectName = "Unnamed##" + std::to_string(m_numGameObjects);
-    ++m_numGameObjects;
-}
-
-inline IGameObject::IGameObject(const std::string& name)
-{
-    m_gameObjectName = name + "##" + std::to_string(m_numGameObjects);
-    ++m_numGameObjects;
-}
-
 
 inline void IGameObject::AttachScript(const std::shared_ptr<IScript>& script)
 {
@@ -227,71 +205,50 @@ inline void IGameObject::SetShouldRender(bool renderState)
     m_shouldRender = renderState;
 }
 
-inline std::string IGameObject::GetName() const
-{
-    return m_gameObjectName;
-}
-
-inline int IGameObject::GetUID() const
-{
-    return this->m_uniqueID;
-}
-
 inline DX::XMFLOAT2 IGameObject::GetPosition() const
 {
     return DX::XMFLOAT2(m_position.x, m_position.y);
 }
-
 inline std::string IGameObject::GetTextureString() const
 {
     return m_textureName;
 }
-
 inline float IGameObject::GetLayerFloat() const
 {
     return m_layerFloat;
 }
-
 inline float IGameObject::GetScaleFloat() const
 {
     return m_scaleFloat;
 }
-
 inline float IGameObject::GetRotationFloat() const 
 {
     return m_rotationFloat;
 }
-
 inline DX::XMFLOAT2 IGameObject::GetOriginOffset() const
 {
     return m_origonOffset;
 }
-
 inline bool IGameObject::IsOriginCentered() const
 {
     return m_centerOrigin;
 }
-
 inline bool IGameObject::ShouldRender() const
 {
     return m_shouldRender;
 }
-
 inline void IGameObject::SetPosition(DX::XMFLOAT2 position)
 {
     m_position = position;
 }
-
 inline void IGameObject::SetRotation(float rotation) 
 {
     m_rotationFloat = rotation;
 }
-
 inline void IGameObject::CenterOrigin(bool centerOrigin)
 {
     this->m_centerOrigin = centerOrigin;
 }
-
 /* Collision Handling */
 inline void IGameObject::SetCollider(std::shared_ptr<Collider> collider)
 {
@@ -301,9 +258,4 @@ inline void IGameObject::SetCollider(std::shared_ptr<Collider> collider)
 inline std::shared_ptr<Collider> IGameObject::GetCollider() const
 {
     return m_collider;
-}
-
-inline void IGameObject::SetName(const std::string& name)
-{
-    this->m_gameObjectName = name;
 }

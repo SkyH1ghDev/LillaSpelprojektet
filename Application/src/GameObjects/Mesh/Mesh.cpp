@@ -3,7 +3,7 @@
 #include "MeshVisibleComponentFactory.hpp"
 #include <iostream>
 
-Mesh::Mesh(MeshType meshType, const std::string& name, const std::string& textureName) : IGameObject(name),
+Mesh::Mesh(MeshType meshType, std::string textureName) :
     m_static(CreateStaticComponent(meshType)),
     m_visible(CreateVisibleComponent(meshType)),
     m_type(meshType)

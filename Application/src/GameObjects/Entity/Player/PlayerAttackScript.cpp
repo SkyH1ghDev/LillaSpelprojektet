@@ -2,7 +2,6 @@
 
 #include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Clock/Clock.hpp>
-#include "StatSheet.hpp"
 
 void PlayerAttackScript::OnStart()
 {
@@ -28,6 +27,6 @@ void PlayerAttackScript::Update()
 	if (m_attack->GetAttack() && m_attackTimer <= 0)
 	{
 		player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
-		m_attackTimer = StatSheet::GetShotDelay();
+		m_attackTimer = 0.25f;
 	}
 }

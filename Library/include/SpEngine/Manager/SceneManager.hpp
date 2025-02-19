@@ -9,7 +9,7 @@
 class SceneManager
 {
 private:
-    static std::unordered_map<std::string, std::shared_ptr<IScene>> m_scenesMap;
+    static std::unordered_map<std::string, std::shared_ptr<IScene>> m_scenes;
     static std::shared_ptr<IScene> m_currentScene;
 
 public:
@@ -25,41 +25,26 @@ public:
 
     [[nodiscard]]
     static std::shared_ptr<IScene> GetScene(const std::string& id);
-
-    [[nodiscard]]
-    static std::vector<std::shared_ptr<IScene>> GetAllScenes();   
+    //bool Update();
 };
 
 inline bool SceneManager::SetCurrentScene(const std::string& id)
 {
-    if (m_scenesMap.contains(id))
+    if (m_scenes.contains(id))
     {
-        m_currentScene = m_scenesMap[id]; // Call the factory function to create the scene
+        m_currentScene = m_scenes[id]; // Call the factory function to create the scene
         return true;
     }
 
     return false;
 }
 
-inline std::shared_ptr<IScene> SceneManager::GetCurrentScene() 
+inline std::shared_ptr<IScene> SceneManager::GetCurrentScene()
 {
-    return m_currentScene;
+
 }
 
-inline std::shared_ptr<IScene> SceneManager::GetScene(const std::string& id)  
+inline std::shared_ptr<IScene> SceneManager::GetScene(const std::string& id)
 {
-    return m_scenesMap.at(id);
-}
-
-inline std::vector<std::shared_ptr<IScene>> SceneManager::GetAllScenes()
-{
-	std::vector<std::shared_ptr<IScene>> scenes;
-	scenes.reserve(m_scenesMap.size());
-
-	for (auto kv : m_scenesMap)
-	{
-		scenes.push_back(kv.second);
-	}
-    
-    return scenes;
+    return m_scenes.at(id);
 }
