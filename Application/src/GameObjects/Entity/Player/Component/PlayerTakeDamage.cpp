@@ -18,7 +18,7 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
         }
         else
         {
-            Sound::Play("ugh.wav", 0.2f);
+            Sound::PlayOnce("ugh.wav", 0.2f);
         }
         iFrameTimer = 1.0;
     }
