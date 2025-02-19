@@ -45,6 +45,11 @@ void Projectile::OnStart()
     this->m_isActive = false;
     this->CenterOrigin(true);
 
+    DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(0, -1);
+    if (this->m_direction.x > 0)
+       this->m_rotationFloat = DX::XMVectorGetY(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle)));
+    else
+        this->m_rotationFloat = -DX::XMVectorGetY(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle)));
 }
 
 void Projectile::Update()
@@ -54,7 +59,6 @@ void Projectile::Update()
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= Clock::GetDeltaTime();
-        m_rotationFloat += Clock::GetDeltaTime() * 20;
         this->m_collider->UpdatePosition(this->m_position);
         if (PhysicsEngine::WallProjectileCollision(m_collider) || PhysicsEngine::WallProjectileCollision(m_collider))
         {
