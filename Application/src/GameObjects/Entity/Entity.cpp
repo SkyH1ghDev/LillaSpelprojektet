@@ -50,6 +50,8 @@ void Entity::Update()
 
     // Normal update logic after spawn animation finishes
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
+    if(this->m_iFrameTimer > 0)
+        this->m_iFrameTimer -= Clock::GetDeltaTime();
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {

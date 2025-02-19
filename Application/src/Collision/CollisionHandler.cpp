@@ -115,4 +115,72 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             entity->PerformTakeDamage(projectile->GetDamage());
         }
     }
+    else if (objA->GetCollider()->GetLayer() == CollisionLayer::Player &&
+        objB->GetCollider()->GetLayer() == CollisionLayer::Enemy)
+    {
+        //Enemy - Player collision
+        auto player = std::dynamic_pointer_cast<Entity>(objA);
+        auto enemy = std::dynamic_pointer_cast<Entity>(objB);
+
+        if (player && enemy)
+        {
+            player->PerformTakeDamage(1);
+
+            // Compute knockback direction (Player moves away from Enemy)
+            DX::XMFLOAT2 playerPos = player->GetPosition();
+            DX::XMFLOAT2 enemyPos = enemy->GetPosition();
+
+            DX::XMVECTOR playerVec = DX::XMLoadFloat2(&playerPos);
+            DX::XMVECTOR enemyVec = DX::XMLoadFloat2(&enemyPos);
+
+            DX::XMVECTOR knockbackDir = DX::XMVectorSubtract(playerVec, enemyVec);
+            knockbackDir = DX::XMVector3Normalize(knockbackDir);  // Normalize the direction
+
+            // Define knockback strength
+            float knockbackForce = 50.0f;
+
+            // Scale the vector
+            DX::XMVECTOR knockbackVector = DX::XMVectorScale(knockbackDir, knockbackForce);
+
+            DX::XMFLOAT2 knockback;
+            DX::XMStoreFloat2(&knockback, knockbackVector);
+
+            // Move the player
+            player->PerformMove(knockback, true);
+        }
+    }
+    else if (objB->GetCollider()->GetLayer() == CollisionLayer::Player &&
+        objA->GetCollider()->GetLayer() == CollisionLayer::Enemy)
+    {
+        //Enemy - Player collision
+        auto player = std::dynamic_pointer_cast<Entity>(objB);
+        auto enemy = std::dynamic_pointer_cast<Entity>(objA);
+
+        if (player && enemy)
+        {
+            player->PerformTakeDamage(1);
+
+            // Compute knockback direction (Player moves away from Enemy)
+            DX::XMFLOAT2 playerPos = player->GetPosition();
+            DX::XMFLOAT2 enemyPos = enemy->GetPosition();
+
+            DX::XMVECTOR playerVec = DX::XMLoadFloat2(&playerPos);
+            DX::XMVECTOR enemyVec = DX::XMLoadFloat2(&enemyPos);
+
+            DX::XMVECTOR knockbackDir = DX::XMVectorSubtract(playerVec, enemyVec);
+            knockbackDir = DX::XMVector3Normalize(knockbackDir);  // Normalize the direction
+
+            // Define knockback strength
+            float knockbackForce = 50.0f;
+
+            // Scale the vector
+            DX::XMVECTOR knockbackVector = DX::XMVectorScale(knockbackDir, knockbackForce);
+
+            DX::XMFLOAT2 knockback;
+            DX::XMStoreFloat2(&knockback, knockbackVector);
+
+            // Move the player
+            player->PerformMove(knockback, true);
+        }
+    }
 }

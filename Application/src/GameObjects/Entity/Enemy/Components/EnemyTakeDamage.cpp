@@ -1,7 +1,7 @@
 #include "EnemyTakeDamage.hpp"
 #include "EnemyManager.hpp"
 
-void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender)
+void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& iFrameTimer)
 {
     hp -= damage;
     if (hp <= 0)
