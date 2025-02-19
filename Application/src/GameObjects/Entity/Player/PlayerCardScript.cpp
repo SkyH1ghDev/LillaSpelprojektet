@@ -31,10 +31,20 @@ void PlayerCardScript::Update()
 	if (m_useCardTimer >= 0)
 		m_useCardTimer -= Clock::GetDeltaTime();
 
+	if (m_manaTimer >= 3) {
+		ManaBarManager::RefillManaShard(1);
+		m_manaTimer = 0;
+	}
+
+
+	m_manaTimer += Clock::GetDeltaTime();
+
 	if (m_useCard->GetUseCard() && m_useCardTimer <= 0)
 	{
-		//player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
-		m_cardDeck->UseTopCard(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
-		m_useCardTimer = 1;
+		if (ManaBarManager::RemoveManaCrystal(1)) {
+			//player->PerformAttack(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
+			m_cardDeck->UseTopCard(wandPos, DX::XMFLOAT2(DX::XMVectorGetX(DX::XMVector2Normalize(playerToMouse)), (DX::XMVectorGetY(DX::XMVector2Normalize(playerToMouse)))));
+			m_useCardTimer = 1;
+		}
 	}
 }
