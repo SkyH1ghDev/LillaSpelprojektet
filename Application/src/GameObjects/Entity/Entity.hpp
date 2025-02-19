@@ -1,22 +1,20 @@
 #pragma once
-#include <memory>
-
-#include <SpEngine/Assets/IGameObject.hpp>
-#include <SpEngine/Physics/Collider.hpp>
-#include <SpEngine/Clock//clock.hpp>
-
-// Define an enum for the entity type
-enum class EntityType {
-    Player,
-    Enemy
-};
-
 #include "IEntityMove.hpp"
 #include "IEntityVisible.hpp"
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
 #include "IEntityUseCard.hpp"
 #include "IEntitySetCollider.hpp"
+
+#include <memory>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
+#include <SpEngine/Clock/Clock.hpp>
+
+// Define an enum for the entity type
+enum class EntityType {
+    Player,
+    Enemy
+};
 
 class Entity : public IGameObject
 {
@@ -34,7 +32,7 @@ public:
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && !this->m_isSpawning) m_attack->Attack(position, direction); }
-    void PerformTakeDamage(float damage) { if (m_takeDamage) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
+    void PerformTakeDamage(float damage) { if (m_takeDamage && !this->m_isSpawning) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
     void PerformSetCollider();
 

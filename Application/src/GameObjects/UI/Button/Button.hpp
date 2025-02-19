@@ -1,7 +1,6 @@
 #pragma once
-#include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
 #include <SpEngine/Input/Action/OnMouseClick.hpp>
-#include <iostream>
 
 #include "IUIVisible.hpp"
 #include "IUIClicked.hpp"

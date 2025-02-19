@@ -8,7 +8,7 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
 
     switch (entityState) {
     case EntityState::WalkUp:
-        texture = "chesster_backwards_v3.png";
+        texture = "bishopMockupTen.apng";
         break;
     case EntityState::WalkDown:
         texture = "chesster_forward_v3.png";

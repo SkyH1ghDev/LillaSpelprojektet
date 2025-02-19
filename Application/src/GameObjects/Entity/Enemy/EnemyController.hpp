@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.hpp"
 
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 
 class EnemyController : public IScript

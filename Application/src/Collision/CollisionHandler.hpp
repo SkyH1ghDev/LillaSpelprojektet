@@ -2,10 +2,9 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
-#include <cmath>
-#include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
 #include <SpEngine/Manager/SceneManager.hpp>
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 struct GridCell {
     int x = 0, y = 0;

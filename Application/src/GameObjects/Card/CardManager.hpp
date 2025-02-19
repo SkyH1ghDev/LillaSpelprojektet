@@ -1,11 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <string>
 #include <memory>
-#include <stdexcept>
 #include "Card.hpp"
-#include <SpEngine/Assets/IScript.hpp>
 
 class CardManager
 {

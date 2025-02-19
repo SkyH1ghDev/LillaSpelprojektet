@@ -1,8 +1,6 @@
 #pragma once
-#include <memory>
 
-#include <SpEngine/Assets/IGameObject.hpp>
-
+#include <SpEngine/Assets/Game/IGameObject.hpp>
 
 class Emty : public IGameObject
 {
@@ -17,7 +15,4 @@ public:
 
     void Update() override;
     void OnStart() override;
-
-private:
-
 };
