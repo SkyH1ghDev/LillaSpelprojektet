@@ -20,7 +20,7 @@ void EnemyManager::SpawnEnemies(std::shared_ptr<IGameObject> player, int numberO
         float randomX = GetRandomFloat(150.0f, 300.0f);
         float randomY = GetRandomFloat(150.0f, 300.0f);
 
-        std::shared_ptr<IGameObject> enemy = std::make_shared<Entity>(EntityType::Enemy);
+        std::shared_ptr<IGameObject> enemy = std::make_shared<Entity>(EntityType::Enemy, "Enemy");
         enemy->SetPosition(DX::XMFLOAT2(randomX, randomY)); // Set position
 
         std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>(player);
