@@ -72,7 +72,7 @@ void CardDeck::PerformVisible()
         this->m_textureName = m_cardDeck[m_currentcard].first->GetCardTexture();
         this->m_scaleFloat = 0.3;
         this->m_layerFloat = 0.9;
-        this->m_position = { 570, 280 }; 
+        this->m_position = { 550, 280 }; 
     }
 }
 

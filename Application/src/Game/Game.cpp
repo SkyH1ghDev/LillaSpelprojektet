@@ -5,7 +5,6 @@
 #include "Entity.hpp"
 #include "Mesh.hpp"
 #include "Button/Button.hpp"
-#include "Bar/Bar.hpp"
 #include "GameScene.hpp"
 #include "Scene/Factories/GameSceneFactories/GameSceneFactory.hpp"
 #include "Player/PlayerController.hpp"
@@ -18,6 +17,7 @@
 #include "Projectile/ProjectileManager.hpp"
 #include "GameObjects/Scripts/wand.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
+#include "GameObjects/UI/Bar/ManaBarManager.hpp"
 
 
 Game::Game()
@@ -66,9 +66,10 @@ Game::Game()
     ProjectileManager::Initialize(ProjectileType::Base, 200);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
-    HealthBarManager::Initialize(5);
 
-    
-    std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck(); //so i can do something like this
+    // UI
+    HealthBarManager::Initialize(5);
+    ManaBarManager::Initialize(3);
+    std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck();
     testScene->AddGameObject(cardDeck);
 }
