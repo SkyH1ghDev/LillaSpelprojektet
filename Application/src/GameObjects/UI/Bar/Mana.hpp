@@ -23,10 +23,10 @@ public:
 
     void Update() override;
     void OnStart() override;
-    void UpdateMana(bool positive);
-
+    void UpdateMana(bool positive, size_t manaCrystalIndex); //remove mana if negative, add mana if positive
 
 private:
     std::shared_ptr<IUIVisible> m_visible;
+    std::string textureNameUpdate;
     ManaType m_type;
 };

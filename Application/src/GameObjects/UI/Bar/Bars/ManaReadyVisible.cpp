@@ -4,5 +4,4 @@ void ManaReadyVisible::Visible(std::string& texture, float& layer, float& scale,
 {
 	layer = 0.7;
 	scale = 0.06;
-	texture = "mana1.png";
 }
