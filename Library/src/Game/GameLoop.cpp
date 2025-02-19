@@ -8,6 +8,8 @@
 
 #include <SpEngine/Clock/Clock.hpp>
 
+#include <SpEngine/Audio/Sound.hpp>
+
 
 //Setup function handling all initialisation of resources
 void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
@@ -29,6 +31,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
+
+	Sound::SetMusic("maybe_battle_theme.wav", 0.2f);
+	Sound::PlayMusic(true);
 
 	// OnStart for all GameObjects
 
@@ -57,7 +62,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		// Update for Collisions
 
-		
 		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()));
 
 		renderer.Draw(mainScene);

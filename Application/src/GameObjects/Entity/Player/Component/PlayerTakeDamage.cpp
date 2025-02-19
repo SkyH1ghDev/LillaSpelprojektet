@@ -10,13 +10,15 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
         HealthBarManager::RemoveHeart(damage);
         if (hp <= 0)
         {
-            Sound::Play("aaagh.wav", 0.5f);
+            Sound::PlayOnce("aaagh.wav", 0.2f);
+            Sound::SetMusic("menu_theme_v2.wav", 0.2f);
+            Sound::PlayMusic(true);
             isActive = false;
             shouldRender = false;
         }
         else
         {
-            Sound::Play("ugh.wav", 0.5f);
+            Sound::Play("ugh.wav", 0.2f);
         }
         iFrameTimer = 1.0;
     }
