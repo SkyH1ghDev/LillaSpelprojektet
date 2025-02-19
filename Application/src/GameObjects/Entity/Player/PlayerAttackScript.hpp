@@ -1,9 +1,8 @@
 #pragma once
 #include "Entity.hpp"
-#include "Mesh.hpp"
 #include "Actions/Attack.hpp"
 
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 
 class PlayerAttackScript : public IScript

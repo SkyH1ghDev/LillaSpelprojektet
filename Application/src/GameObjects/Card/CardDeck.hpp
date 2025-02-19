@@ -1,19 +1,16 @@
 #pragma once
-#include <memory>
-#include"ICard.hpp"
+#include "ICard.hpp"
 #include "CardManager.hpp"
+#include <SpEngine/Assets/Game/IGameObject.hpp>
+
+#include <memory>
 #include <vector>
-#include <random>
-#include <algorithm>
-#include <SpEngine/Assets/IGameObject.hpp>
-
-
 
 class CardDeck : public IGameObject
 {
 public:
     CardDeck() = default;
-    ~CardDeck() = default;
+    ~CardDeck() override = default;
     CardDeck(const CardDeck& other) = default;
     CardDeck& operator=(const CardDeck& other) = default;
     CardDeck(CardDeck&& other) noexcept = default;
@@ -29,8 +26,9 @@ public:
     void ChangeCurrentCard(); //CCC baby
     void ShuffleDeck();
     void UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target);
+    
 private:
     CardManager m_cardMan;
     std::vector<std::pair<std::shared_ptr<ICard>, size_t>> m_cardDeck = {};
-    size_t m_currentcard=0;
+    size_t m_currentCard = 0;
 };

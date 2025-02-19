@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 #include <string>
 #include <iostream>
 #include <vector>

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <SpEngine/Assets/IScript.hpp>
-
+#include <SpEngine/Assets/Game/IScript.hpp>
 #include <DirectXMath.h>
 #include <memory>
 #include <string>

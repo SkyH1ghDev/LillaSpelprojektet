@@ -8,7 +8,7 @@
 #include "Actions/Dash.hpp"
 #include "Actions/Attack.hpp"
 
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 
 class PlayerController : public IScript

@@ -1,11 +1,11 @@
-#pragma once
-#include <SpEngine/Renderer/Sprite.hpp>
-#include <iostream>
+#include "StaticSprite.hpp"
+
+#include <array>
+#include <stb/stb_image.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
 
-Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device)
+StaticSprite::StaticSprite(const MW::ComPtr<ID3D11Device>& device)
 {
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
@@ -55,7 +55,7 @@ Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device)
 		throw("Failed to create Texture Shader Resource View");
 }
 
-Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device, const std::string& filepath)
+StaticSprite::StaticSprite(const MW::ComPtr<ID3D11Device>& device, const std::string& filepath)
 {
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
@@ -108,10 +108,8 @@ Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device, const std::string& filepa
 		throw("Failed to create Texture Shader Resource View");
 }
 
-Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device, const uc::apng::frame& frame)
+StaticSprite::StaticSprite(const MW::ComPtr<ID3D11Device>& device, const APNG::frame& frame)
 {
-	
-	
 	ID3D11ShaderResourceView* srvCpy;
 	ID3D11Texture2D* texture;
 
@@ -156,25 +154,4 @@ Sprite::Sprite(const MW::ComPtr<ID3D11Device>& device, const uc::apng::frame& fr
 
 	if (FAILED(hr))
 		throw("Failed to create Texture Shader Resource View");
-}
-
-Sprite::Sprite(const Sprite& other)
-{
-	m_sourceRect = other.m_sourceRect;
-	m_origin = other.m_origin;
-	m_srv = other.m_srv;
-}
-
-Sprite& Sprite::operator=(const Sprite& other)
-{
-	if (&other == this)
-	{
-		return *this;
-	}
-
-	m_sourceRect = other.m_sourceRect;
-	m_origin = other.m_origin;
-	m_srv = other.m_srv;
-
-	return *this;
 }

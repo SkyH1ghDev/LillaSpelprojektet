@@ -1,10 +1,9 @@
 #pragma once
 #include "Entity.hpp"
-#include "Mesh.hpp"
 #include "Actions/UseCard.hpp"
 #include "Card/CardDeck.hpp"
 
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 
 class PlayerCardScript : public IScript

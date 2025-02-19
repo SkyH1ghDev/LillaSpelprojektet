@@ -8,7 +8,7 @@ enum AssetManager::fileFormat : std::uint8_t
 	FileFormat_APNG = 2,
 };
 
-std::unordered_map<std::string, SpriteWrapper> AssetManager::m_textureMap = {};
+std::unordered_map<std::string, std::shared_ptr<ISprite>> AssetManager::m_textureMap = {};
 std::unordered_map<std::string, int> AssetManager::m_extensionIndex =
 	{
 		{".jpg", FileFormat_JPG}, {".jpeg", FileFormat_JPG},
@@ -21,7 +21,7 @@ std::unordered_map<std::string, int> AssetManager::m_extensionIndex =
 bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path)
 {
 	// Load default texture
-	m_textureMap["default"] = { Sprite(device) };
+	m_textureMap["default"] = { std::make_shared<StaticSprite>(device) };
 
 	// Load all textures in the Application/Resources/ folder
 	for (const auto& entry : FS::directory_iterator(path))
@@ -39,24 +39,24 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 					case FileFormat_JPG:
 					case FileFormat_PNG:
 					{
-						m_textureMap[filename] = { Sprite(device, filepath) };
+						m_textureMap[filename] = { std::make_shared<StaticSprite>(device, filepath) };
 						break;
 					}
 
 					case FileFormat_APNG:
 					{
 						uc::apng::loader loader = uc::apng::create_file_loader(filepath);
-						std::vector<Sprite> sprites;
+						std::vector<std::shared_ptr<StaticSprite>> sprites;
 
 						while (loader.has_frame())
 						{
 							uc::apng::frame frame = loader.next_frame();
 							
-							sprites.push_back(Sprite(device, frame));
+							sprites.push_back(std::make_shared<StaticSprite>(device, frame));
 						}
 
-						m_textureMap[filename] = sprites;
-						break;
+						m_textureMap[filename] = std::make_shared<AnimatedSprite>(sprites);
+						break;	
 					}
 
 				default:

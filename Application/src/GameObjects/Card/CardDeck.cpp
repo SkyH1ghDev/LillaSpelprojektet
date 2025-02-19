@@ -1,6 +1,6 @@
 #include "CardDeck.hpp"
 
-#include <iostream>
+#include <random>
 
 //std::vector<std::pair<std::shared_ptr<ICard>, size_t>> CardDeck::m_cardDeck = {};
 //size_t CardDeck::m_currentcard = 0;
@@ -26,7 +26,7 @@ void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
 
 std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetTopCard()
 {
-    return m_cardDeck.at(m_currentcard);
+    return m_cardDeck.at(m_currentCard);
 }
 
 std::vector<std::pair<std::shared_ptr<ICard>, size_t>> CardDeck::GetDeck()
@@ -41,7 +41,7 @@ void CardDeck::LevelUppCard(size_t cardIndex)
 
 void CardDeck::ChangeCurrentCard()
 {
-    m_currentcard = (m_currentcard + 1) % m_cardDeck.size();
+    m_currentCard = (m_currentCard + 1) % m_cardDeck.size();
 }
 
 void CardDeck::ShuffleDeck()

@@ -1,6 +1,5 @@
 #pragma once
-#include <SpEngine/Assets/IGameObject.hpp>
-#include <iostream>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
 
 #include "IUIVisible.hpp"
 
