@@ -1,9 +1,9 @@
 #include "StaticSprite.hpp"
 
-#include <array>
-#include <stb/stb_image.h>
-
 #define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
+#include <array>
+
 
 StaticSprite::StaticSprite(const MW::ComPtr<ID3D11Device>& device)
 {

@@ -1,6 +1,8 @@
 #include "AssetManager.hpp"
 #include <APNGLoader/uc_apng_loader.h>
 
+namespace APNG = uc::apng;
+
 enum AssetManager::fileFormat : std::uint8_t
 {
 	FileFormat_JPG = 0,
@@ -18,7 +20,7 @@ std::unordered_map<std::string, int> AssetManager::m_extensionIndex =
 		{".wav", FileFormat_WAV}
 	};
 
-std::unique_ptr<DX::AudioEngine> AssetManager::audEngine;
+std::unique_ptr<DX::AudioEngine> AssetManager::m_audioEngine = {};
 std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> AssetManager::m_sfxMap = {};
 
 //Reads all png and jpg files in folder specified by path string
@@ -69,24 +71,27 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 
 					case FileFormat_APNG:
 					{
-						uc::apng::loader loader = uc::apng::create_file_loader(filepath);
+						APNG::loader loader = APNG::create_file_loader(filepath);
 						std::vector<std::shared_ptr<StaticSprite>> sprites;
 
+						APNG::frame frame = loader.next_frame();
+
+						float frameTime = static_cast<float>(frame.delay_num) / static_cast<float>(frame.delay_den);
 						while (loader.has_frame())
 						{
-							uc::apng::frame frame = loader.next_frame();
-							
 							sprites.push_back(std::make_shared<StaticSprite>(device, frame));
+							
+							frame = loader.next_frame();
 						}
 
-						m_textureMap[filename] = std::make_shared<AnimatedSprite>(sprites);
+						m_textureMap[filename] = std::make_shared<AnimatedSprite>(sprites, frameTime);
 						break;	
 					}
 
 					case FileFormat_WAV:
 					{
 						std::wstring wstr = conv.from_bytes(filepath);
-						m_sfxMap[filename] = std::make_shared<DX::SoundEffect>(AssetManager::audEngine.get(), wstr.c_str());
+						m_sfxMap[filename] = std::make_shared<DX::SoundEffect>(m_audioEngine.get(), wstr.c_str());
 						break;
 					}
 
@@ -101,5 +106,5 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 
 void AssetManager::InitializeAudioEngine()
 {
-	AssetManager::audEngine = std::make_unique<DX::AudioEngine>();
+	m_audioEngine = std::make_unique<DX::AudioEngine>();
 }

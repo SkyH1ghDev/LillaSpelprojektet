@@ -157,16 +157,16 @@ void ImGuiTool::AssetManagerTab()
 			std::shared_ptr<AnimatedSprite> animatedSprite = std::dynamic_pointer_cast<AnimatedSprite, ISprite>(sprite);
 
 			ImTextureID fileTexture;
-			if (sprite == nullptr)
+			if (animatedSprite == nullptr)
 			{
 				fileTexture = ImTextureID(std::static_pointer_cast<StaticSprite, ISprite>(sprite)->GetSRV().Get());
 			}
 			else
 			{
+				animatedSprite->UpdateCurrentTime(Clock::GetDeltaTime()); // SHOULD BE REMOVED IF ANIMATED PNG IS IN SCENE
 				fileTexture = ImTextureID(animatedSprite->GetSprite()->GetSRV().Get());
 			}
 			
-
 			ImGui::TableSetColumnIndex(j);
 			ImGui::Text(filename.c_str());
 			ImGui::Image(fileTexture, ImVec2(columnWidth, columnWidth));

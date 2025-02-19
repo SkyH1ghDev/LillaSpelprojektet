@@ -1,5 +1,4 @@
 #include <SpEngine/Manager/AssetManager.hpp>
-#include <vector>
 
 class Sound
 {
@@ -23,21 +22,21 @@ inline void Sound::PlayOnce(std::string filename, float volume, float pitch, flo
 
 inline void Sound::PlayMusic(bool loop)
 {
-	Sound::m_music->Play(loop);
+	m_music->Play(loop);
 }
 
 inline void Sound::SetMusic(std::string filename, float volume)
 {
-	Sound::m_music = std::move(AssetManager::GetSFXMap()[filename]->CreateInstance());
-	Sound::m_music->SetVolume(volume);
+	m_music = std::move(AssetManager::GetSFXMap()[filename]->CreateInstance());
+	m_music->SetVolume(volume);
 }
 
 inline void Sound::PauseMusic()
 {
-	Sound::m_music->Pause();
+	m_music->Pause();
 }
 
 inline void Sound::ResumeMusic()
 {
-	Sound::m_music->Resume();
+	m_music->Resume();
 }

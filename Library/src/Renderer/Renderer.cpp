@@ -9,8 +9,8 @@ Renderer::Renderer(HWND& window)
 	SetupImGui(window, this->m_device, this->m_immediateContext);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
 	
-	AssetManager::ReadFolder(this->m_device, "../Application/Resources");
 	AssetManager::InitializeAudioEngine();
+	AssetManager::ReadFolder(this->m_device, "../Application/Resources");
 
 	this->InitializeBlendState();
 	this->InitializeSamplerState();
@@ -32,7 +32,7 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 	for (int i = 0; i < len; i++)
 	{
-		std::shared_ptr<IGameObject> gameObj;
+		std::shared_ptr<IGameObject> gameObj = ObjectVec.at(i);
 		
 		if (gameObj->ShouldRender())
 		{
@@ -96,16 +96,24 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec)
 {
 	int len = ObjectVec.size();
-	DX::XMFLOAT2 origin;
-	DX::XMFLOAT2 originOffset;
 	for (int i = 0; i < len; i++)
 	{
-		if (ObjectVec.at(i)->ShouldRender())
+		std::shared_ptr<IGameObject> gameObj = ObjectVec.at(i);
+		
+		if (gameObj->ShouldRender())
 		{
-			origin = DX::XMFLOAT2(0, 0);
-			originOffset = ObjectVec.at(i)->GetOriginOffset();
+			
+			DX::XMFLOAT2 origin = DX::XMFLOAT2(0, 0);
+			DX::XMFLOAT2 originOffset = ObjectVec.at(i)->GetOriginOffset();
+
+			std::string textureFilepath = gameObj->GetTextureString();
+			std::shared_ptr<StaticSprite> sprite = AssetManager::GetSprite(textureFilepath);
+			
 			if (ObjectVec.at(i)->IsOriginCentered())
-				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+			{
+				origin = sprite->GetOrigin();
+			}
+			
 			origin.x += originOffset.x;
 			origin.y += originOffset.y;
 			if (ObjectVec.at(i)->GetCollider() != nullptr)
@@ -125,7 +133,17 @@ void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec
 
 				for (int i = 0; i < positions.size(); i++)
 				{
-					this->DrawTexture(this->m_assetMan.GetSprite("hitPixel").GetSRV().Get(), positions.at(i), this->m_assetMan.GetSprite("hitPixel.png").GetSourceRectangle().get(), DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(), { 0, 0 }, 2.0f, DX::DX11::SpriteEffects_None, 1.0f);
+					this->DrawTexture
+					(
+						AssetManager::GetSprite("hitPixel")->GetSRV().Get(),
+						positions.at(i),
+						AssetManager::GetSprite("hitPixel.png")->GetSourceRectangle().get(),
+						DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(),
+						{ 0, 0 },
+						2.0f,
+						DX::DX11::SpriteEffects_None,
+						1.0f)
+					;
 				}
 			}
 		}

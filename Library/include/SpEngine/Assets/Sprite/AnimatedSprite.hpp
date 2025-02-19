@@ -9,7 +9,7 @@ class AnimatedSprite : public ISprite
 {
 public:
     AnimatedSprite() = default;
-    AnimatedSprite(const std::vector<std::shared_ptr<StaticSprite>>& sprites);
+    AnimatedSprite(const std::vector<std::shared_ptr<StaticSprite>>& sprites, const float& frameTime);
     ~AnimatedSprite() override = default;
     AnimatedSprite(const AnimatedSprite& other) = default;
     AnimatedSprite& operator=(const AnimatedSprite& other) = default;
@@ -25,9 +25,10 @@ private:
     float m_currTime = 0.0f;
 };
 
-inline AnimatedSprite::AnimatedSprite(const std::vector<std::shared_ptr<StaticSprite>>& sprites)
+inline AnimatedSprite::AnimatedSprite(const std::vector<std::shared_ptr<StaticSprite>>& sprites, const float& frameTime)
 {
     m_sprites = sprites;
+    m_frameTime = frameTime;
 }
 
 inline std::shared_ptr<StaticSprite> AnimatedSprite::GetSprite() const 

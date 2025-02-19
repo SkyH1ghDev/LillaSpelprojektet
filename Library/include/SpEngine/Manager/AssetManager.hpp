@@ -28,7 +28,7 @@ private:
 	static std::unordered_map<std::string, int> m_extensionIndex;
 	enum fileFormat : std::uint8_t;
 
-	static std::unique_ptr<DX::AudioEngine> audEngine;
+	static std::unique_ptr<DX::AudioEngine> m_audioEngine;
 	static std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> m_sfxMap;
 };
 

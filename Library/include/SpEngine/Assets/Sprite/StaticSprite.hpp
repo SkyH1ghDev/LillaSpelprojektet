@@ -1,4 +1,5 @@
 #pragma once
+
 #include "ISprite.hpp"
 
 #include <directxtk/SpriteBatch.h>
