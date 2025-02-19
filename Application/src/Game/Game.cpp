@@ -39,10 +39,10 @@ Game::Game()
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
     std::shared_ptr<IScript> playerCardScript = std::static_pointer_cast<IScript, PlayerCardScript>(std::make_shared<PlayerCardScript>());
 
-    std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Cursor", "crosshair.png");
+    std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "wood_arena_v1.png");
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "crosshair.png");
 
-    std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Lio Staff Of Destruction", "liosstav.png");
+    std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "liosstav.png");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
 
     player->AttachScript(playerController);

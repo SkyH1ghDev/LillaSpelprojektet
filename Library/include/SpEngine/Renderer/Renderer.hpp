@@ -52,6 +52,12 @@ public:
 	 */
 	void ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color);
 
+	/**
+	 * Emxperementing with hitbox stuff
+	 * 
+	 */
+	void DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec);
+
 private:
 	/**
 	 * Big draw function for a more detailed spritebatch draw call
