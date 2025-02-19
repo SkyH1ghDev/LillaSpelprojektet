@@ -22,11 +22,10 @@ TEST(AssetManagement, HashMap)
     SetupHelper setup;
     setup.Setup(window.GetWindowHandle(), device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-	AssetManager as;
-	as.ReadFolder(device, "../Tests/src/Resources");
+	AssetManager::ReadFolder(device, "../Tests/src/Resources");
     std::string filename = "testTile.png";
 
-    ASSERT_NE(as.GetSprite(filename).GetSRV().Get(), nullptr);
+    ASSERT_NE(AssetManager::GetSprite(filename)->GetSRV().Get(), nullptr);
 }
 
 TEST(Sprites, CopyAssignment) 
@@ -47,8 +46,8 @@ TEST(Sprites, CopyAssignment)
     SetupHelper setup;
     setup.Setup(window.GetWindowHandle(), device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-    Sprite srt1(device, "../Tests/src/Resources/testTile.png");
-    Sprite srt2 = srt1;
+    StaticSprite srt1(device, "../Tests/src/Resources/testTile.png");
+    StaticSprite srt2 = srt1;
 
     ASSERT_EQ(srt1.GetSRV().Get(), srt2.GetSRV().Get());
 }
@@ -71,8 +70,8 @@ TEST(Sprites, Copy)
     SetupHelper setup;
     setup.Setup(window.GetWindowHandle(), device, deviceContext, swapChain, texture, dsView, rtv, width, height);
 
-    Sprite srt1(device, "../Tests/src/Resources/testTile.png");
-    Sprite srt2(srt1);
+    StaticSprite srt1(device, "../Tests/src/Resources/testTile.png");
+    StaticSprite srt2(srt1);
 
     ASSERT_EQ(srt1.GetSRV().Get(), srt2.GetSRV().Get());
 }

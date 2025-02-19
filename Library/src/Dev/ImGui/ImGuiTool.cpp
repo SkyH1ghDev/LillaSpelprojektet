@@ -126,13 +126,13 @@ void ImGuiTool::AssetManagerTab()
 
 	ImGui::BeginTable("test", columnsPerRow);
 
-	std::unordered_map<std::string, std::vector<Sprite>> texMap = AssetManager::GetTextureMap();
+	std::unordered_map<std::string, std::shared_ptr<ISprite>> texMap = AssetManager::GetTextureMap();
 
 	int rows = std::ceil(static_cast<float>(texMap.size()) / columnsPerRow);
 
 	std::vector<std::string> texMapKeys;
 	texMapKeys.reserve(texMap.size());
-	std::vector<std::vector<Sprite>> texMapVals;
+	std::vector<std::shared_ptr<ISprite>> texMapVals;
 	texMapVals.reserve(texMap.size());
 
 	for (auto kv : texMap)
@@ -152,8 +152,20 @@ void ImGuiTool::AssetManagerTab()
 		{
 			const int columnRowIndex = j + i * columnsPerRow;
 			const std::string filename = texMapKeys[columnRowIndex];
-			const ImTextureID fileTexture = ImTextureID(texMapVals[columnRowIndex][0].GetSRV().Get());
 
+			std::shared_ptr<ISprite> sprite = texMapVals[columnRowIndex];
+			std::shared_ptr<AnimatedSprite> animatedSprite = std::dynamic_pointer_cast<AnimatedSprite, ISprite>(sprite);
+
+			ImTextureID fileTexture;
+			if (animatedSprite == nullptr)
+			{
+				fileTexture = ImTextureID(std::static_pointer_cast<StaticSprite, ISprite>(sprite)->GetSRV().Get());
+			}
+			else
+			{
+				fileTexture = ImTextureID(animatedSprite->GetSprite()->GetSRV().Get());
+			}
+			
 			ImGui::TableSetColumnIndex(j);
 			ImGui::Text(filename.c_str());
 			ImGui::Image(fileTexture, ImVec2(columnWidth, columnWidth));

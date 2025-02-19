@@ -1,22 +1,20 @@
 #pragma once
-#include <memory>
-
-#include <SpEngine/Assets/IGameObject.hpp>
-#include <SpEngine/Physics/Collider.hpp>
-#include <SpEngine/Clock//clock.hpp>
-
-// Define an enum for the entity type
-enum class EntityType {
-    Player,
-    Enemy
-};
-
 #include "IEntityMove.hpp"
 #include "IEntityVisible.hpp"
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
 #include "IEntityUseCard.hpp"
 #include "IEntitySetCollider.hpp"
+
+#include <memory>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
+#include <SpEngine/Clock/Clock.hpp>
+
+// Define an enum for the entity type
+enum class EntityType {
+    Player,
+    Enemy
+};
 
 class Entity : public IGameObject
 {

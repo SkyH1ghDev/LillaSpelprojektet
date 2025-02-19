@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SpEngine/Setup/SetupHelper.hpp>
-
 #include <SpEngine/Manager/AssetManager.hpp>
 #include <SpEngine/Assets/IScene.hpp>
 
@@ -119,7 +118,6 @@ private:
 	int m_width = 640;
 	int m_height = 360;
 	SetupHelper m_setup;
-	AssetManager m_assetMan;
 	std::unique_ptr<DX::DX11::SpriteBatch> m_spriteBatch;
 };
 

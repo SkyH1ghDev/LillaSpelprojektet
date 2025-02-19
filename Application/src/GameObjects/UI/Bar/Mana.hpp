@@ -1,5 +1,5 @@
 #pragma once
-#include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
 #include <iostream>
 
 enum class ManaType {
