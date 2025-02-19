@@ -26,5 +26,5 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
 
 void PlayerTakeDamage::SetHealth(float& hp)
 {
-    hp = StatSheet::GetMaxHealth();
+    hp = 5;
 }

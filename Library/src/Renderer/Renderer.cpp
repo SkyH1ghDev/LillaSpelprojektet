@@ -46,6 +46,8 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 		}
 	}
 
+	//this->DrawHitBoxes(ObjectVec);
+
 	this->m_spriteBatch->End();
 }
 
@@ -69,6 +71,45 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 	this->m_spriteBatch->End();
 
 	this->m_swapChain->Present(0, 0);
+}
+
+void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec)
+{
+	int len = ObjectVec.size();
+	DX::XMFLOAT2 origin;
+	DX::XMFLOAT2 originOffset;
+	for (int i = 0; i < len; i++)
+	{
+		if (ObjectVec.at(i)->ShouldRender())
+		{
+			origin = DX::XMFLOAT2(0, 0);
+			originOffset = ObjectVec.at(i)->GetOriginOffset();
+			if (ObjectVec.at(i)->IsOriginCentered())
+				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+			origin.x += originOffset.x;
+			origin.y += originOffset.y;
+			if (ObjectVec.at(i)->GetCollider() != nullptr)
+			{
+				Collider col = *ObjectVec.at(i)->GetCollider();
+				std::vector<DX::XMFLOAT2> positions;
+				
+				positions.push_back({ col.GetPosition().x, col.GetPosition().y - col.GetRadiusY() });
+				positions.push_back({ col.GetPosition().x, col.GetPosition().y + col.GetRadiusY() });
+				positions.push_back({ col.GetPosition().x - col.GetRadiusX(), col.GetPosition().y });
+				positions.push_back({ col.GetPosition().x + col.GetRadiusX(), col.GetPosition().y });
+
+				positions.push_back({ col.GetPosition().x + col.GetRadiusX() / 1.41f, col.GetPosition().y + col.GetRadiusY() / 1.41f });
+				positions.push_back({ col.GetPosition().x + col.GetRadiusX() / 1.41f, col.GetPosition().y - col.GetRadiusY() / 1.41f });
+				positions.push_back({ col.GetPosition().x - col.GetRadiusX() / 1.41f, col.GetPosition().y + col.GetRadiusY() / 1.41f });
+				positions.push_back({ col.GetPosition().x - col.GetRadiusX() / 1.41f, col.GetPosition().y - col.GetRadiusY() / 1.41f });
+
+				for (int i = 0; i < positions.size(); i++)
+				{
+					this->DrawTexture(this->m_assetMan.GetSprite("hitPixel").GetSRV().Get(), positions.at(i), this->m_assetMan.GetSprite("hitPixel.png").GetSourceRectangle().get(), DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(), { 0, 0 }, 2.0f, DX::DX11::SpriteEffects_None, 1.0f);
+				}
+			}
+		}
+	}
 }
 
 void Renderer::DrawTexture(ID3D11ShaderResourceView* texture, const DX::XMFLOAT2& position, const RECT* sourceRectangle, DX::FXMVECTOR color, float rotation, const DX::XMFLOAT2& origin, float scale, DX::DX11::SpriteEffects effects, float layerDepth)

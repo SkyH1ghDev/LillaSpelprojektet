@@ -50,6 +50,7 @@ private:
     std::shared_ptr<IEntityTakeDamage> m_takeDamage;
     std::shared_ptr<IEntityUseCard> m_useCard;
     std::shared_ptr<IEntitySetCollider> m_setCollider;
+
     EntityType m_type;
     float m_hp = 0;
     bool m_isSpawning = true;
