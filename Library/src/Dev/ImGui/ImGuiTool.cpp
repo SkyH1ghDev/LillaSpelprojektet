@@ -159,15 +159,11 @@ void ImGuiTool::AssetManagerTab()
 			ImTextureID fileTexture;
 			if (animatedSprite == nullptr)
 			{
-				std::shared_ptr<StaticSprite> spriteCpy = std::make_shared<StaticSprite>(*std::static_pointer_cast<StaticSprite>(sprite));
-				fileTexture = ImTextureID(std::static_pointer_cast<StaticSprite, ISprite>(spriteCpy)->GetSRV().Get());
+				fileTexture = ImTextureID(std::static_pointer_cast<StaticSprite, ISprite>(sprite)->GetSRV().Get());
 			}
 			else
 			{
-				std::shared_ptr<AnimatedSprite> spriteCpy = std::make_shared<AnimatedSprite>(*std::static_pointer_cast<AnimatedSprite>(sprite));
-				
-				animatedSprite->UpdateCurrentTime(Clock::GetDeltaTime());
-				fileTexture = ImTextureID(spriteCpy->GetSprite()->GetSRV().Get());
+				fileTexture = ImTextureID(animatedSprite->GetSprite()->GetSRV().Get());
 			}
 			
 			ImGui::TableSetColumnIndex(j);
