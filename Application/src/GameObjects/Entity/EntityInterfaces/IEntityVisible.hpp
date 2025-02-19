@@ -9,7 +9,8 @@ enum class EntityState {
     WalkDown,
     WalkRight,
     WalkLeft,
-    Spawn
+    Spawn,
+    TakingDamage
 };
 
 class IEntityVisible

@@ -19,6 +19,9 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
     case EntityState::WalkLeft:
         texture = "chesster_left_v2.png";
         break;
+    case EntityState::TakingDamage:
+        texture = "Toe.png";
+        break;
     default:
         texture = "chesster_forward_v3.png";
         break;
