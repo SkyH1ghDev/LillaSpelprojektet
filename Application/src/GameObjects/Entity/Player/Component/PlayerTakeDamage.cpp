@@ -8,7 +8,7 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
     {
         hp -= damage;
         HealthBarManager::RemoveHeart(damage);
-        StatSheet::CreateEffect(StatType::MoveSpeed, 1.0f, -150);
+        StatSheet::CreateEffect(StatType::MoveSpeed, 0.5f, -150);
         if (hp <= 0)
         {
             Sound::PlayOnce("aaagh.wav", 0.2f);

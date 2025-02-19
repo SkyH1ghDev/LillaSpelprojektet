@@ -10,7 +10,8 @@ enum class EntityState {
     WalkRight,
     WalkLeft,
     Spawn,
-    TakingDamage
+    TakingDamage,
+    Dying
 };
 
 class IEntityVisible

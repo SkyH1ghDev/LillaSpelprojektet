@@ -19,6 +19,9 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
     case EntityState::WalkLeft:
         texture = "chesster_left_v3.png";
         break;
+    case EntityState::Dying:
+        texture = "chesster_death.apng";
+        break;
     case EntityState::TakingDamage:    
         switch (this->m_lastState) {
         case EntityState::WalkUp:

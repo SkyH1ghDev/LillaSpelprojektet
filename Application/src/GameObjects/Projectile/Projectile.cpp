@@ -36,6 +36,13 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->CenterOrigin(true);
     PerformSetCollider();
     std::cout << "Projectile initialized of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
+
+    DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
+
+    if (this->m_direction.y > 0)
+        this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))) - DX::XM_PIDIV2);
+    else
+        this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))) - DX::XM_PIDIV2);
 }
 
 void Projectile::OnStart()
@@ -44,12 +51,6 @@ void Projectile::OnStart()
     this->m_shouldRender = false;
     this->m_isActive = false;
     this->CenterOrigin(true);
-
-    DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(0, -1);
-    if (this->m_direction.x > 0)
-       this->m_rotationFloat = DX::XMVectorGetY(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle)));
-    else
-        this->m_rotationFloat = -DX::XMVectorGetY(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle)));
 }
 
 void Projectile::Update()
