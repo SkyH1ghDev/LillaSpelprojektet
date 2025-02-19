@@ -153,7 +153,7 @@ void Renderer::InitializeSamplerState()
 	ID3D11SamplerState* samplerStateCpy;
 
 	D3D11_SAMPLER_DESC samplerDesc;
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR; // Smooth scaling and rotation
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // Smooth scaling and rotation
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP; // Clamp to edges of texture
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP; // Not used in 2D, but just safe to set anyway
