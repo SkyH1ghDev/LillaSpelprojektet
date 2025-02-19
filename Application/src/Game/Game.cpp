@@ -20,7 +20,6 @@
 #include "Collision/CollisionHandler.hpp"
 #include "Emty.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
-#include "StatSheet.hpp"
 
 Game::Game()
 {
@@ -61,8 +60,10 @@ Game::Game()
 
     EnemyManager::SpawnEnemies(player, 2);
 
-    ProjectileManager::Initialize(ProjectileType::BishopBall, 50);
-    ProjectileManager::Initialize(ProjectileType::PawnPellet, 50);
+
+    ProjectileManager::Initialize(ProjectileType::Base, 200);
+    ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
+    ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
 
     std::shared_ptr<IGameObject> collisionObject = std::make_shared<Emty>();
     std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));
@@ -70,7 +71,7 @@ Game::Game()
     testScene->AddGameObject(collisionObject);
 
     //testScene->AddGameObject(exitButton);
-    HealthBarManager::Initialize(StatSheet::GetMaxHealth());
+    HealthBarManager::Initialize(5);
     //HealthBarManager::RemoveHeart(1);
 
 }
