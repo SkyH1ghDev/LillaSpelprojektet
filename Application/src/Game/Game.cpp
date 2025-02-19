@@ -5,7 +5,6 @@
 #include "Entity.hpp"
 #include "Mesh.hpp"
 #include "Button/Button.hpp"
-#include "Bar/Bar.hpp"
 #include "GameScene.hpp"
 #include "Scene/Factories/GameSceneFactories/GameSceneFactory.hpp"
 #include "Player/PlayerController.hpp"
@@ -20,6 +19,7 @@
 #include "Collision/CollisionHandler.hpp"
 #include "Emty.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
+#include "GameObjects/UI/Bar/ManaBarManager.hpp"
 
 Game::Game()
 {
@@ -35,8 +35,12 @@ Game::Game()
     player->SetPosition({ 150, 150 });
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
 
+
+    std::shared_ptr<PlayerCardScript> pcs = std::make_shared<PlayerCardScript>();
+    std::shared_ptr<IScript> playerCardScript = std::static_pointer_cast<IScript>(pcs);
+
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
-    std::shared_ptr<IScript> playerCardScript = std::static_pointer_cast<IScript, PlayerCardScript>(std::make_shared<PlayerCardScript>());
+
 
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "crosshair.png");
@@ -60,7 +64,6 @@ Game::Game()
 
     EnemyManager::SpawnEnemies(player, 2);
 
-
     ProjectileManager::Initialize(ProjectileType::Base, 200);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
@@ -70,8 +73,8 @@ Game::Game()
     collisionObject->AttachScript(collisionHandler);
     testScene->AddGameObject(collisionObject);
 
-    //testScene->AddGameObject(exitButton);
     HealthBarManager::Initialize(5);
-    //HealthBarManager::RemoveHeart(1);
-
+    ManaBarManager::Initialize(3);
+    std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck();
+    testScene->AddGameObject(cardDeck);
 }
