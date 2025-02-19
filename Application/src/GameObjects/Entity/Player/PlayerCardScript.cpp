@@ -31,6 +31,14 @@ void PlayerCardScript::Update()
 	if (m_useCardTimer >= 0)
 		m_useCardTimer -= Clock::GetDeltaTime();
 
+	if (m_manaTimer >= 3) {
+		ManaBarManager::RefillManaShard(1);
+		m_manaTimer = 0;
+	}
+
+
+	m_manaTimer += Clock::GetDeltaTime();
+
 	if (m_useCard->GetUseCard() && m_useCardTimer <= 0)
 	{
 		if (ManaBarManager::RemoveManaCrystal(1)) {
