@@ -34,7 +34,7 @@ public:
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && !this->m_isSpawning) m_attack->Attack(position, direction); }
-    void PerformTakeDamage(float damage) { if (m_takeDamage) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
+    void PerformTakeDamage(float damage) { if (m_takeDamage && !this->m_isSpawning) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
     void PerformSetCollider();
 
