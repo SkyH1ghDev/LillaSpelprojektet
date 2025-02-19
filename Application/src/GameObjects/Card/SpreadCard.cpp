@@ -15,3 +15,21 @@ void SpreadCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
 void SpreadCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
 	AbilityManager::SurroundShot(position, 30, 7, 200);
 }
+
+void SpreadCard::SetCardTexture(size_t cardLevel)
+{
+    switch (cardLevel) {
+    case 1:
+        this->m_textureName = "spread_lvl1.png";
+        break;
+    case 2:
+        this->m_textureName = "spread_lvl2.png";
+        break;
+    case 3:
+        this->m_textureName = "spread_lvl3.png";
+        break;
+    default:
+        std::cerr << "unknown cardlevel" << std::endl;
+        break;
+    }
+}

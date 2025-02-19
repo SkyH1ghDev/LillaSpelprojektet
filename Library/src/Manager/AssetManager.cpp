@@ -6,6 +6,7 @@ enum AssetManager::fileFormat : std::uint8_t
 	FileFormat_JPG = 0,
 	FileFormat_PNG = 1,
 	FileFormat_APNG = 2,
+	FileFormat_WAV = 3
 };
 
 std::unordered_map<std::string, std::shared_ptr<ISprite>> AssetManager::m_textureMap = {};
@@ -13,8 +14,12 @@ std::unordered_map<std::string, int> AssetManager::m_extensionIndex =
 	{
 		{".jpg", FileFormat_JPG}, {".jpeg", FileFormat_JPG},
 		{".png", FileFormat_PNG},
-		{".apng", FileFormat_APNG}
+		{".apng", FileFormat_APNG},
+		{".wav", FileFormat_WAV}
 	};
+
+std::unique_ptr<DX::AudioEngine> AssetManager::audEngine;
+std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> AssetManager::m_sfxMap = {};
 
 //Reads all png and jpg files in folder specified by path string
 //All read files are added to the instance of the asset manager
@@ -23,11 +28,30 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 	// Load default texture
 	m_textureMap["default"] = { std::make_shared<StaticSprite>(device) };
 
+	std::wstring_convert< std::codecvt<wchar_t, char, std::mbstate_t> > conv;
+
 	// Load all textures in the Application/Resources/ folder
-	for (const auto& entry : FS::directory_iterator(path))
+	for (const auto& entry : FS::recursive_directory_iterator(path))
 	{
+		if (entry.is_directory()) {
+			continue;
+		}
 		std::string filepath = entry.path().string();
-		filepath.at(filepath.find('\\')) = '/';
+
+		std::vector<int> positions;
+		int res = -1;
+		char sub[] = "\\";
+		while ((res = filepath.find(sub, res + 1)) != std::string::npos)
+		{
+			positions.push_back(res);
+		}
+
+		for (int pos : positions) 
+		{
+			filepath.at(pos) = '/';
+		}
+
+		//filepath.at(filepath.find('\\')) = '/';
 		size_t folderIndex = filepath.find_last_of('/');
 		std::string filename = filepath.substr(folderIndex + 1, filepath.length() - folderIndex);
 		std::string extension = filename.substr(filename.find_last_of('.'));
@@ -59,13 +83,23 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 						break;	
 					}
 
+					case FileFormat_WAV:
+					{
+						std::wstring wstr = conv.from_bytes(filepath);
+						m_sfxMap[filename] = std::make_shared<DX::SoundEffect>(AssetManager::audEngine.get(), wstr.c_str());
+						break;
+					}
+
 				default:
 					break;
 			}
 		}
-
-
 	}
 
 	return true;
+}
+
+void AssetManager::InitializeAudioEngine()
+{
+	AssetManager::audEngine = std::make_unique<DX::AudioEngine>();
 }

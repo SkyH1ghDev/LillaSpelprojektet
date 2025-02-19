@@ -8,16 +8,18 @@
 
 void CardDeck::Update()
 {
-
+    PerformVisible();
 }
 
 void CardDeck::OnStart()
 {
-
+    this->m_shouldRender = true;
+    m_cardDeck[m_currentcard].first.get()->SetCardTexture(m_cardDeck[m_currentcard].second);
 }
 
 void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
 {
+
     std::shared_ptr<ICard> card = m_cardMan.GetCard(cardtype);
     std::pair<std::shared_ptr<ICard>, size_t> cardInfo = std::make_pair(card, lvl);
     m_cardDeck.push_back(cardInfo);
@@ -52,7 +54,6 @@ void CardDeck::ShuffleDeck()
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(m_cardDeck.begin(), m_cardDeck.end(), g);
-
 }
 
 void CardDeck::UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
@@ -60,6 +61,18 @@ void CardDeck::UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
     std::pair<std::shared_ptr<ICard>, size_t> topCard = GetTopCard();
     topCard.first->ActivateLevel(topCard.second, position, target);
     ChangeCurrentCard();
+    m_cardDeck[m_currentcard].first.get()->SetCardTexture(m_cardDeck[m_currentcard].second);
+
 }
 
+void CardDeck::PerformVisible()
+{
+    if (!m_cardDeck.empty())
+    {
+        this->m_textureName = m_cardDeck[m_currentcard].first->GetCardTexture();
+        this->m_scaleFloat = 0.3;
+        this->m_layerFloat = 0.9;
+        this->m_position = { 550, 280 }; 
+    }
+}
 

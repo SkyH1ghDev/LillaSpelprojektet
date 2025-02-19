@@ -28,6 +28,8 @@ public:
     virtual void ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) = 0;
     virtual void ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) = 0;
     virtual void ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) = 0;
+    virtual void SetCardTexture(size_t cardLevel) = 0;
+    std::string GetCardTexture();
     CardType GetType();
     void ActivateLevel(size_t cardLevel, DX::XMFLOAT2 position, DX::XMFLOAT2 target);
 
@@ -47,10 +49,15 @@ protected:
     std::vector<std::shared_ptr<IScript>> m_scripts;
 };
 
-
 inline CardType ICard::GetType()
 {
     return this->m_type;
+}
+
+
+inline std::string ICard::GetCardTexture()
+{
+    return this->m_textureName;
 }
 
 
@@ -66,7 +73,6 @@ inline void ICard::ActivateLevel(size_t cardLevel, DX::XMFLOAT2 position, DX::XM
     case 3:
         ActivateLvl3(position, target);
         break;
-
     default:
         std::cerr << "unknown cardlevel" << std::endl;
         break;

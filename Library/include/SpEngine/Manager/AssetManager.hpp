@@ -4,10 +4,11 @@
 #include <SpEngine/Assets/Sprite/AnimatedSprite.hpp>
 
 #include <filesystem>
+#include <directxtk/Audio.h>
 
 namespace FS = std::filesystem;
 namespace MW = Microsoft::WRL;
-//namespace DX = DirectX;
+namespace DX = DirectX;
 
 class AssetManager
 {
@@ -19,11 +20,16 @@ public:
 	static std::shared_ptr<StaticSprite> GetSprite(const std::string& filename);
 	static std::unordered_map<std::string, std::shared_ptr<ISprite>> GetTextureMap();
 
+	static std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> GetSFXMap();
+	static void InitializeAudioEngine();
+
 private:
 	static std::unordered_map<std::string, std::shared_ptr<ISprite>> m_textureMap;
 	static std::unordered_map<std::string, int> m_extensionIndex;
 	enum fileFormat : std::uint8_t;
 
+	static std::unique_ptr<DX::AudioEngine> audEngine;
+	static std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> m_sfxMap;
 };
 
 //Returns Sprite with the matching filename in the hash map
@@ -50,5 +56,10 @@ inline std::shared_ptr<StaticSprite> AssetManager::GetSprite(const std::string& 
 inline std::unordered_map<std::string, std::shared_ptr<ISprite>> AssetManager::GetTextureMap()
 {
 	return m_textureMap;
+}
+
+inline std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> AssetManager::GetSFXMap()
+{
+	return m_sfxMap;
 }
 

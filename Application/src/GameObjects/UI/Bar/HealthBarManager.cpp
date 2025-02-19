@@ -31,9 +31,8 @@ void HealthBarManager::RefillHeart(size_t healthIncrease)
         
         heartIndex++;
         std::shared_ptr<Heart> heart = std::dynamic_pointer_cast<Heart>(health[heartIndex]);
-        if (heart) {
+        if (heart)
             heart->UpdateHeart(true);
-        }
     }
     return;
 }
@@ -45,9 +44,9 @@ void HealthBarManager::RemoveHeart(size_t healthDamage)
             return;
 
         std::shared_ptr<Heart> heart = std::dynamic_pointer_cast<Heart>(health[heartIndex]);
-        if (heart) {
+        if (heart)
             heart->UpdateHeart(false);
-        }
+
         heartIndex--;
 
     }

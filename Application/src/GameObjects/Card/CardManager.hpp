@@ -17,6 +17,7 @@ public:
 
     std::shared_ptr<ICard> GetCard(CardType cardType);
     std::vector<std::shared_ptr<ICard>> GetCardObjects();
+    std::string GetCardTexture();
 
 private:
     std::vector<std::shared_ptr<ICard>> m_cardObjects;

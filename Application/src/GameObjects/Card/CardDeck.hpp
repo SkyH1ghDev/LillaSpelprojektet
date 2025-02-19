@@ -26,7 +26,9 @@ public:
     void ChangeCurrentCard(); //CCC baby
     void ShuffleDeck();
     void UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target);
-    
+
+    void PerformVisible();
+
 private:
     CardManager m_cardMan;
     std::vector<std::pair<std::shared_ptr<ICard>, size_t>> m_cardDeck = {};
