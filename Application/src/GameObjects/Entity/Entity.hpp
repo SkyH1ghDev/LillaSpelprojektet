@@ -32,7 +32,7 @@ public:
     Entity(EntityType entityType, const std::string& name);
 
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
-    void PerformVisible(EntityState entityState) { if (m_visible) m_visible->Visible(m_textureName, m_position, entityState, m_layerFloat, m_scaleFloat); }
+    void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && !this->m_isSpawning) m_attack->Attack(position, direction); }
     void PerformTakeDamage(float damage) { if (m_takeDamage) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
@@ -55,4 +55,5 @@ private:
     bool m_isSpawning = true;
     float m_spawnTimer = 2.0f;
     float m_iFrameTimer = 0.0f;
+    EntityState m_state;
 };
