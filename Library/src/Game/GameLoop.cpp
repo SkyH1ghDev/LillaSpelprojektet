@@ -36,7 +36,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
-
+	
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!exitHandler->ShouldExit())

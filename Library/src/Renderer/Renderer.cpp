@@ -8,6 +8,7 @@ Renderer::Renderer(HWND& window)
 	SetupPipeline(window);
 	SetupImGui(window, this->m_device, this->m_immediateContext);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
+	this->m_assetMan.InitializeAudioEngine();
 	this->m_assetMan.ReadFolder(this->m_device, "../Application/Resources");
 	this->InitializeBlendState();
 	this->InitializeSamplerState();
