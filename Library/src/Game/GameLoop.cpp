@@ -32,7 +32,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
 
-	Sound::SetMusic("maybe_battle_theme.wav", 0.2f);
+	Sound::SetMusic("battle_theme_1.wav", 0.2f);
 	Sound::PlayMusic(true);
 
 	// OnStart for all GameObjects
