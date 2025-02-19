@@ -21,7 +21,6 @@
 #include "Emty.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "StatSheet.hpp"
-#include <SpEngine/Audio/Sound.hpp>
 
 Game::Game()
 {

@@ -9,9 +9,13 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage)
 
 
     if (hp <= 0)
-        Sound::Play("aaagh.wav", 0.5f);
+    {
+        Sound::PlayOnce("aaagh.wav", 0.2f);
+        Sound::SetMusic("menu_theme_v2.wav", 0.2f);
+        Sound::PlayMusic(true);
+    }
     else 
-        Sound::Play("ugh.wav", 0.5f);
+        Sound::PlayOnce("ugh.wav", 0.2f);
 
 }
 
