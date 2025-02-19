@@ -1,7 +1,7 @@
 #pragma once
 #include "Mesh.hpp"
 #include <SpEngine/Input/Input.hpp>
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 
 class WandScript : public IScript

@@ -3,8 +3,7 @@ project "Library"
     targetdir(targetBuildPath .. "/%{prj.name}")
     objdir(objBuildPath .. "/%{prj.name}")
 
-    dependson{"DirectXTK"}
-    dependson{"ImGui"}
+    dependson{"DirectXTK", "ImGui", "stb"}
 
     files {
         "src/**.cpp",

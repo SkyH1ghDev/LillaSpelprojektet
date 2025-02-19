@@ -1,6 +1,6 @@
 #include "CardDeck.hpp"
 
-#include <iostream>
+#include <random>
 
 //std::vector<std::pair<std::shared_ptr<ICard>, size_t>> CardDeck::m_cardDeck = {};
 //size_t CardDeck::m_currentcard = 0;
@@ -14,7 +14,7 @@ void CardDeck::Update()
 void CardDeck::OnStart()
 {
     this->m_shouldRender = true;
-    m_cardDeck[m_currentcard].first.get()->SetCardTexture(m_cardDeck[m_currentcard].second);
+    m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
 
 void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
@@ -28,7 +28,7 @@ void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
 
 std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetTopCard()
 {
-    return m_cardDeck.at(m_currentcard);
+    return m_cardDeck.at(m_currentCard);
 }
 
 std::vector<std::pair<std::shared_ptr<ICard>, size_t>> CardDeck::GetDeck()
@@ -43,7 +43,7 @@ void CardDeck::LevelUppCard(size_t cardIndex)
 
 void CardDeck::ChangeCurrentCard()
 {
-    m_currentcard = (m_currentcard + 1) % m_cardDeck.size();
+    m_currentCard = (m_currentCard + 1) % m_cardDeck.size();
 }
 
 void CardDeck::ShuffleDeck()
@@ -61,7 +61,7 @@ void CardDeck::UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
     std::pair<std::shared_ptr<ICard>, size_t> topCard = GetTopCard();
     topCard.first->ActivateLevel(topCard.second, position, target);
     ChangeCurrentCard();
-    m_cardDeck[m_currentcard].first.get()->SetCardTexture(m_cardDeck[m_currentcard].second);
+    m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 
 }
 
@@ -69,7 +69,7 @@ void CardDeck::PerformVisible()
 {
     if (!m_cardDeck.empty())
     {
-        this->m_textureName = m_cardDeck[m_currentcard].first->GetCardTexture();
+        this->m_textureName = m_cardDeck[m_currentCard].first->GetCardTexture();
         this->m_scaleFloat = 0.3;
         this->m_layerFloat = 0.9;
         this->m_position = { 550, 280 }; 

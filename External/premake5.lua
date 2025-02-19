@@ -81,7 +81,7 @@ project "APNGLoader"
 
     prebuildcommands{
         "{MKDIR} " .. mkdirPath,
-        "{COPY} ../External/APNGLoader/*.h " .. copyPath,
+        "{COPY} ../External/APNGLoader/*.h " .. copyPath
     }
 
     files {
@@ -92,4 +92,17 @@ project "APNGLoader"
         "APNGLoader/"
     }
 
+project "stb"
+    kind "StaticLib"
 
+    targetdir(targetBuildPath .. "/External/lib/")
+    objdir(objBuildPath .. "/%{prj.name}")
+
+    mkdirPath = "\"" .. targetBuildPath .. "/External/include/%{prj.name}\""
+    copyPath = "\"" .. targetBuildPath .. "/External/include/%{prj.name}\""   
+
+    prebuildcommands
+    {
+        "{MKDIR} " .. mkdirPath,
+        "{COPY} ../External/stb/*.h " .. copyPath
+    }

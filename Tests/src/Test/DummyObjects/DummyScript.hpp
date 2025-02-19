@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SpEngine/Assets/IScript.hpp>
+#include <SpEngine/Assets/Game/IScript.hpp>
 
 class DummyScript : public IScript
 {

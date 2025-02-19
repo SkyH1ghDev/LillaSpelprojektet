@@ -1,15 +1,17 @@
-#include <iostream>
 #include "Renderer.hpp"
 
-#include "ImGuiTool.hpp"
+#include <SpEngine/Assets/Game/IGameObject.hpp>
+#include <SpEngine/Dev/ImGui/ImGuiTool.hpp>
 
 Renderer::Renderer(HWND& window)
 {
 	SetupPipeline(window);
 	SetupImGui(window, this->m_device, this->m_immediateContext);
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
-	this->m_assetMan.InitializeAudioEngine();
-	this->m_assetMan.ReadFolder(this->m_device, "../Application/Resources");
+	
+	AssetManager::InitializeAudioEngine();
+	AssetManager::ReadFolder(this->m_device, "../Application/Resources");
+
 	this->InitializeBlendState();
 	this->InitializeSamplerState();
 	this->InitializeRasterState();
@@ -20,29 +22,47 @@ Renderer::~Renderer()
 	ImGuiTool::Shutdown();
 }
 
-
 void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 {
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_FrontToBack, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
+	
 	std::vector<std::shared_ptr<IGameObject>> ObjectVec = sceneToRender->GetGameObjectVec();
 	int len = ObjectVec.size();
+	FinalBindings();
 
-	this->FinalBindings();
-
-	DX::XMFLOAT2 origin;
-	DX::XMFLOAT2 originOffset;
 	for (int i = 0; i < len; i++)
 	{
-		if (ObjectVec.at(i)->ShouldRender())
+		std::shared_ptr<IGameObject> gameObj = ObjectVec.at(i);
+		
+		if (gameObj->ShouldRender())
 		{
 			//this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), DX::Colors::White);
-			origin = DX::XMFLOAT2(0, 0);
-			originOffset = ObjectVec.at(i)->GetOriginOffset();
-			if (ObjectVec.at(i)->IsOriginCentered())
-				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+
+			std::string textureFilepath = gameObj->GetTextureString();
+			std::shared_ptr<StaticSprite> sprite = AssetManager::GetSprite(textureFilepath);
+			
+			DX::XMFLOAT2 origin = DX::XMFLOAT2(0, 0);
+			DX::XMFLOAT2 originOffset = gameObj->GetOriginOffset();
+			
+			if (gameObj->IsOriginCentered())
+			{
+				origin = sprite->GetOrigin();
+			}
+
 			origin.x += originOffset.x;
 			origin.y += originOffset.y;
-			this->DrawTexture(this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSRV().Get(), ObjectVec.at(i)->GetPosition(), this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetSourceRectangle().get(), DX::Colors::White, ObjectVec.at(i)->GetRotationFloat(), origin, ObjectVec.at(i)->GetScaleFloat(), DX::DX11::SpriteEffects_None, ObjectVec.at(i)->GetLayerFloat());
+			DrawTexture
+			(
+				sprite->GetSRV().Get(),
+				gameObj->GetPosition(),
+				sprite->GetSourceRectangle().get(),
+				DX::Colors::White,
+				gameObj->GetRotationFloat(),
+				origin,
+				gameObj->GetScaleFloat(),
+				DX::DX11::SpriteEffects_None,
+				gameObj->GetLayerFloat()
+			);
 		}
 	}
 
@@ -66,8 +86,8 @@ void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
 void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& position, DX::FXMVECTOR color)
 {
 	this->m_spriteBatch->Begin(DX::DX11::SpriteSortMode_Texture, this->m_blendState.Get(), this->m_samplerState.Get(), nullptr, this->m_rasterState.Get(), nullptr, DX::XMMatrixIdentity());
-	this->FinalBindings();
-	this->DrawTexture(this->m_assetMan.GetSprite(textureString).GetSRV().Get(), position, color);
+	FinalBindings();
+	DrawTexture(AssetManager::GetSprite(textureString)->GetSRV().Get(), position, color);
 	this->m_spriteBatch->End();
 
 	this->m_swapChain->Present(0, 0);
@@ -76,16 +96,24 @@ void Renderer::ExperimentalDraw(std::string textureString, const DX::XMFLOAT2& p
 void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec)
 {
 	int len = ObjectVec.size();
-	DX::XMFLOAT2 origin;
-	DX::XMFLOAT2 originOffset;
 	for (int i = 0; i < len; i++)
 	{
-		if (ObjectVec.at(i)->ShouldRender())
+		std::shared_ptr<IGameObject> gameObj = ObjectVec.at(i);
+		
+		if (gameObj->ShouldRender())
 		{
-			origin = DX::XMFLOAT2(0, 0);
-			originOffset = ObjectVec.at(i)->GetOriginOffset();
+			
+			DX::XMFLOAT2 origin = DX::XMFLOAT2(0, 0);
+			DX::XMFLOAT2 originOffset = ObjectVec.at(i)->GetOriginOffset();
+
+			std::string textureFilepath = gameObj->GetTextureString();
+			std::shared_ptr<StaticSprite> sprite = AssetManager::GetSprite(textureFilepath);
+			
 			if (ObjectVec.at(i)->IsOriginCentered())
-				origin = this->m_assetMan.GetSprite(ObjectVec.at(i)->GetTextureString()).GetOrigin();
+			{
+				origin = sprite->GetOrigin();
+			}
+			
 			origin.x += originOffset.x;
 			origin.y += originOffset.y;
 			if (ObjectVec.at(i)->GetCollider() != nullptr)
@@ -105,7 +133,17 @@ void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec
 
 				for (int i = 0; i < positions.size(); i++)
 				{
-					this->DrawTexture(this->m_assetMan.GetSprite("hitPixel").GetSRV().Get(), positions.at(i), this->m_assetMan.GetSprite("hitPixel.png").GetSourceRectangle().get(), DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(), { 0, 0 }, 2.0f, DX::DX11::SpriteEffects_None, 1.0f);
+					this->DrawTexture
+					(
+						AssetManager::GetSprite("hitPixel")->GetSRV().Get(),
+						positions.at(i),
+						AssetManager::GetSprite("hitPixel.png")->GetSourceRectangle().get(),
+						DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(),
+						{ 0, 0 },
+						2.0f,
+						DX::DX11::SpriteEffects_None,
+						1.0f)
+					;
 				}
 			}
 		}

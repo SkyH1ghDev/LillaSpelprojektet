@@ -1,7 +1,10 @@
 #pragma once
+#include "IMeshStatic.hpp"
+#include "IMeshVisible.hpp"
+
 #include <memory>
 
-#include <SpEngine/Assets/IGameObject.hpp>
+#include <SpEngine/Assets/Game/IGameObject.hpp>
 
 // Define an enum for the entity type
 enum class MeshType {
@@ -9,10 +12,6 @@ enum class MeshType {
     Mouse,
     Object
 };
-
-#include "IMeshStatic.hpp"
-#include "IMeshVisible.hpp"
-
 
 class Mesh : public IGameObject
 {
