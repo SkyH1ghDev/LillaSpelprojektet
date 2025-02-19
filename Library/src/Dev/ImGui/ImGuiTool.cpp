@@ -152,19 +152,22 @@ void ImGuiTool::AssetManagerTab()
 		{
 			const int columnRowIndex = j + i * columnsPerRow;
 			const std::string filename = texMapKeys[columnRowIndex];
-			
+
 			std::shared_ptr<ISprite> sprite = texMapVals[columnRowIndex];
 			std::shared_ptr<AnimatedSprite> animatedSprite = std::dynamic_pointer_cast<AnimatedSprite, ISprite>(sprite);
 
 			ImTextureID fileTexture;
 			if (animatedSprite == nullptr)
 			{
-				fileTexture = ImTextureID(std::static_pointer_cast<StaticSprite, ISprite>(sprite)->GetSRV().Get());
+				std::shared_ptr<StaticSprite> spriteCpy = std::make_shared<StaticSprite>(*std::static_pointer_cast<StaticSprite>(sprite));
+				fileTexture = ImTextureID(std::static_pointer_cast<StaticSprite, ISprite>(spriteCpy)->GetSRV().Get());
 			}
 			else
 			{
-				animatedSprite->UpdateCurrentTime(Clock::GetDeltaTime()); // SHOULD BE REMOVED IF ANIMATED PNG IS IN SCENE
-				fileTexture = ImTextureID(animatedSprite->GetSprite()->GetSRV().Get());
+				std::shared_ptr<AnimatedSprite> spriteCpy = std::make_shared<AnimatedSprite>(*std::static_pointer_cast<AnimatedSprite>(sprite));
+				
+				animatedSprite->UpdateCurrentTime(Clock::GetDeltaTime());
+				fileTexture = ImTextureID(spriteCpy->GetSprite()->GetSRV().Get());
 			}
 			
 			ImGui::TableSetColumnIndex(j);
