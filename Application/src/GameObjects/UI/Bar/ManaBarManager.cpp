@@ -20,7 +20,7 @@ void ManaBarManager::Initialize(size_t manaNumber)
     maxMana = manaBar.size();
 }
 
-void ManaBarManager::RefillMana(size_t manaNumber)
+void ManaBarManager::RefillManaShard(size_t manaNumber)
 {
     for (size_t i = 0; i < manaNumber; ++i) {
         if (manaCrystalIndex >= 5) {
@@ -41,11 +41,27 @@ void ManaBarManager::RefillMana(size_t manaNumber)
     return;
 }
 
-void ManaBarManager::RemoveMana(size_t manaNumber)
+void ManaBarManager::RemoveManaCrystal(size_t manaNumber)
 {
-    for (size_t i = 0; i < manaNumber; ++i) {
-        
+    if (manaNumber > manaBarIndex + 1)
+        return;
+    else if(manaNumber == manaBarIndex + 1) {
+        if (manaCrystalIndex < 5)
+            return;
+    }
 
+    manaNumber *= 5;
+
+    for (size_t i = 0; i < manaNumber; ++i) {
+        if (manaCrystalIndex <= 0) {
+            manaBarIndex--;
+            manaCrystalIndex = 5;
+        }
+
+        std::shared_ptr<Mana> mana = std::dynamic_pointer_cast<Mana>(manaBar[manaBarIndex]);
+        if (mana)
+            mana->UpdateMana(false, manaCrystalIndex);
+        manaCrystalIndex--;
 
     }
     return;

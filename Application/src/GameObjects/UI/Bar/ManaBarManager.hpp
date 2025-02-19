@@ -5,8 +5,8 @@
 class ManaBarManager {
 public:
     static void Initialize(size_t manaNumber);
-    static void RefillMana(size_t manaNumber);
-    static void RemoveMana(size_t manaNumber);
+    static void RefillManaShard(size_t manaNumber);
+    static void RemoveManaCrystal(size_t manaNumber);
 
     
 private:

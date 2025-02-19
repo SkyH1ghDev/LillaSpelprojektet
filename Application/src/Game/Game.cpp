@@ -70,9 +70,6 @@ Game::Game()
     // UI
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
-    ManaBarManager::RefillMana(10);
-    ManaBarManager::RefillMana(2);
-
     std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck();
     testScene->AddGameObject(cardDeck);
 }
