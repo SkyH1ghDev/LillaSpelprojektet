@@ -50,12 +50,30 @@ void Entity::Update()
 
     // Normal update logic after spawn animation finishes
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
-    if(this->m_iFrameTimer > 0)
+    if (this->m_iFrameTimer > 0)
+    {
+        PerformVisible(EntityState::TakingDamage);
         this->m_iFrameTimer -= Clock::GetDeltaTime();
+    }
+    else
+    {
+        this->m_state = EntityState::WalkDown;
+        PerformVisible(m_state);
+    }
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr) {
         m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
     }
+}
+
+void Entity::PerformVisible(EntityState entityState)
+{
+    if (m_visible && this->m_state != EntityState::TakingDamage)
+    {
+        this->m_state = entityState;
+        m_visible->Visible(m_textureName, m_position, m_state, m_layerFloat, m_scaleFloat);
+    }
+        
 }
