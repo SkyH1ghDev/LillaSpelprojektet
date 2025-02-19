@@ -1,7 +1,6 @@
 #include "ManaBarManager.hpp"
 
 std::vector<std::shared_ptr<IGameObject>> ManaBarManager::manaBar;
-std::vector<std::shared_ptr<IGameObject>> ManaBarManager::manaCrystal;
 int ManaBarManager::maxMana = 0;
 int ManaBarManager::manaBarIndex = 0;
 int ManaBarManager::manaCrystalIndex = 0;
@@ -41,13 +40,13 @@ void ManaBarManager::RefillManaShard(size_t manaNumber)
     return;
 }
 
-void ManaBarManager::RemoveManaCrystal(size_t manaNumber)
+bool ManaBarManager::RemoveManaCrystal(size_t manaNumber)
 {
     if (manaNumber > manaBarIndex + 1)
-        return;
+        return false;
     else if(manaNumber == manaBarIndex + 1) {
         if (manaCrystalIndex < 5)
-            return;
+            return false;
     }
 
     manaNumber *= 5;
@@ -64,5 +63,5 @@ void ManaBarManager::RemoveManaCrystal(size_t manaNumber)
         manaCrystalIndex--;
 
     }
-    return;
+    return true;
 }
