@@ -2,6 +2,7 @@
 
 #include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Clock/Clock.hpp>
+#include "StatSheet.hpp"
 
 void PlayerController::OnStart()
 {
@@ -16,6 +17,8 @@ void PlayerController::OnStart()
 
 void PlayerController::Update()
 {
+	StatSheet::UpdateEffects();
+
 	std::shared_ptr<Entity> player = std::static_pointer_cast<Entity>(m_gameObject.lock());
 	player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y }, m_dash->IsDashing());
 

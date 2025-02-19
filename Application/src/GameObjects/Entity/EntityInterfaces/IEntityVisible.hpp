@@ -9,7 +9,8 @@ enum class EntityState {
     WalkDown,
     WalkRight,
     WalkLeft,
-    Spawn
+    Spawn,
+    TakingDamage
 };
 
 class IEntityVisible
@@ -19,4 +20,5 @@ public:
     virtual void UpdateLayer(DX::XMFLOAT2 position, float& layer) = 0;
 
 	virtual ~IEntityVisible() = default;
+
 };

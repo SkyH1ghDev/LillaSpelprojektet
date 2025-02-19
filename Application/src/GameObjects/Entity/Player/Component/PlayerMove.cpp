@@ -1,11 +1,13 @@
 #include "PlayerMove.hpp"
-
+#include "StatSheet.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
 DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashInput, std::shared_ptr<Collider> m_collider) {
     float deltaTime = Clock::GetDeltaTime();
     DX::XMVECTOR positionXMVector = XMLoadFloat2(&position);
     DX::XMVECTOR directionXMVector = DX::XMVector2Normalize(XMLoadFloat2(&direction));
+
+    this->maxSpeed = StatSheet::GetMoveSpeed();
 
     //In the middle of the Dash
     if (isDashing) {
