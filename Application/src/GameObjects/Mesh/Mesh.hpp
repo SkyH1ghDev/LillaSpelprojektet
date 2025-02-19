@@ -25,7 +25,7 @@ public:
     Mesh(Mesh&& other) noexcept = default;
     Mesh& operator=(Mesh&& other) noexcept = default;
 
-    Mesh(MeshType meshType, std::string textureName);
+    Mesh(MeshType meshType, const std::string& name, const std::string& textureName);
     
     void PerformStatic() { if (m_static) m_static->Static(); }
     void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, m_layerFloat, m_scaleFloat); }

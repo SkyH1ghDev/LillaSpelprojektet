@@ -28,7 +28,7 @@ public:
     Entity(Entity&& other) noexcept = default;
     Entity& operator=(Entity&& other) noexcept = default;
 
-    Entity(EntityType entityType);
+    Entity(EntityType entityType, const std::string& name);
 
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState) { if (m_visible) m_visible->Visible(m_textureName, m_position, entityState, m_layerFloat, m_scaleFloat); }
