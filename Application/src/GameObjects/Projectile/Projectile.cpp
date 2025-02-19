@@ -56,6 +56,10 @@ void Projectile::Update()
         m_lifetime -= Clock::GetDeltaTime();
         m_rotationFloat += Clock::GetDeltaTime() * 20;
         this->m_collider->UpdatePosition(this->m_position);
+        if (PhysicsEngine::WallProjectileCollision(m_collider) || PhysicsEngine::WallProjectileCollision(m_collider))
+        {
+            PerformHit();
+        }
     }
     else
     {

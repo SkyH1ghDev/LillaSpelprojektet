@@ -21,13 +21,13 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
 
 void Entity::OnStart()
 {
-    PerformVisible(EntityState::WalkDown);
+    PerformVisible(EntityState::Spawn);
     this->m_shouldRender = true;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
-    PerformSetCollider();
     this->m_takeDamage->SetHealth(this->m_hp);
+    PerformSetCollider();
 }
 
 void Entity::PerformSetCollider()
@@ -37,12 +37,21 @@ void Entity::PerformSetCollider()
 
 void Entity::Update()
 {
-    this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
-    if (this->m_hp <= 0)
+    if (m_isSpawning)
     {
-        this->SetActive(false);
-        this->m_shouldRender = false;
+        m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
+        if (m_spawnTimer <= 0.0f)
+        {
+            m_isSpawning = false; // Enable movement and attacks
+            PerformVisible(EntityState::WalkDown);
+        }
+        return; // Skip the rest of update logic while spawning
     }
+
+    // Normal update logic after spawn animation finishes
+    this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
+    if(this->m_iFrameTimer > 0)
+        this->m_iFrameTimer -= Clock::GetDeltaTime();
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
