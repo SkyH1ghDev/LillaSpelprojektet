@@ -62,8 +62,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		// Update for Collisions
 
-		GameObjectManager::GetGameObjects().at(2)->SetPosition(DX::XMFLOAT2(Input::GetMousePositionX(), Input::GetMousePositionY()));
-
 		renderer.Draw(mainScene);
 		Clock::End();
 
