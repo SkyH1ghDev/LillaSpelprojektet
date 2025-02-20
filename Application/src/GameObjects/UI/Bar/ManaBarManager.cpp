@@ -21,14 +21,16 @@ void ManaBarManager::Initialize(size_t manaNumber)
 
 void ManaBarManager::RefillManaShard(size_t manaNumber)
 {
+
     for (size_t i = 0; i < manaNumber; ++i) {
-        if (manaCrystalIndex >= 5) {
+        if (manaCrystalIndex >= 5 && manaBarIndex < maxMana) {
             manaBarIndex++;
             manaCrystalIndex = 0;
         }
 
         if (manaBarIndex >= maxMana) {
             manaBarIndex = maxMana - 1;
+            manaCrystalIndex = 5;
             return;
         }
 
