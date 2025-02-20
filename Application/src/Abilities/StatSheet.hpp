@@ -34,6 +34,10 @@ public:
 
 	static int GetMaxHealth();
 	static int GetMaxMana();
+	static float GetCurrentHealth();
+
+	static void IncreaseHealth(float amount);
+	static void DecreaseHealth(float amount);
 
 	static void CreateEffect(StatType type, float lifeTime, float amount);
 	static void UpdateEffects();
@@ -45,6 +49,7 @@ private:
 	static float m_shotLife;
 	static int m_maxHealth;
 	static int m_maxMana;
+	static float m_currentHealth;
 
 	static std::vector<Effect> m_damageMod;
 	static std::vector<Effect> m_moveSpeedMod;
@@ -132,4 +137,27 @@ inline int StatSheet::GetMaxHealth()
 inline int StatSheet::GetMaxMana()
 {
 	return StatSheet::m_maxMana;
+}
+
+inline float StatSheet::GetCurrentHealth()
+{
+	return StatSheet::m_currentHealth;
+}
+
+/**
+  * Increase the health
+  * @param amount of health added
+  */
+inline void StatSheet::IncreaseHealth(float amount)
+{
+	StatSheet::m_currentHealth += amount;
+}
+
+/**
+  * Decrease the health
+  * @param amount of health removed
+  */
+inline void StatSheet::DecreaseHealth(float amount)
+{
+	StatSheet::m_currentHealth -= amount;
 }

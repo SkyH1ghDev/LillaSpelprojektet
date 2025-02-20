@@ -13,6 +13,9 @@ void PlayerCardScript::OnStart()
 	m_cardDeck->AddToDeck(CardType::Spread, 1);
 	m_cardDeck->AddToDeck(CardType::Spread, 2);
 	m_cardDeck->AddToDeck(CardType::Spread, 3);
+	m_cardDeck->AddToDeck(CardType::Heal, 1);
+	m_cardDeck->AddToDeck(CardType::Heal, 2);
+	m_cardDeck->AddToDeck(CardType::Heal, 3);
 }
 
 void PlayerCardScript::Update()
@@ -31,7 +34,7 @@ void PlayerCardScript::Update()
 	if (m_useCardTimer >= 0)
 		m_useCardTimer -= Clock::GetDeltaTime();
 
-	if (m_manaTimer >= 3) {
+	if (m_manaTimer >= 1) {
 		ManaBarManager::RefillManaShard(1);
 		m_manaTimer = 0;
 	}

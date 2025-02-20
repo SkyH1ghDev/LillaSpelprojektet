@@ -10,8 +10,8 @@ void ManaBarManager::Initialize(size_t manaNumber)
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
     for (size_t i = 0; i < manaNumber; ++i) {
         auto manaReady = std::make_shared<Mana>(ManaType::Ready);
-        float manaPositionY = 330 - 30 * i;
-        manaReady->SetPosition({ 610,  manaPositionY});
+        float manaPositionY = 330 - 20 * i;
+        manaReady->SetPosition({ 615,  manaPositionY});
 
         manaBar.push_back(manaReady);
         testScene->AddGameObject(manaReady);
@@ -21,14 +21,16 @@ void ManaBarManager::Initialize(size_t manaNumber)
 
 void ManaBarManager::RefillManaShard(size_t manaNumber)
 {
+
     for (size_t i = 0; i < manaNumber; ++i) {
-        if (manaCrystalIndex >= 5) {
+        if (manaCrystalIndex >= 5 && manaBarIndex < maxMana) {
             manaBarIndex++;
             manaCrystalIndex = 0;
         }
 
         if (manaBarIndex >= maxMana) {
             manaBarIndex = maxMana - 1;
+            manaCrystalIndex = 5;
             return;
         }
 
