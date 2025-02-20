@@ -2,6 +2,9 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb/stb_image_write.h>
+#include <chrono>
 #include <array>
 
 
@@ -115,6 +118,11 @@ StaticSprite::StaticSprite(const MW::ComPtr<ID3D11Device>& device, const APNG::f
 
 	int rgbaChannels = 4, textureWidth = frame.image.width(), textureHeight = frame.image.height();
 	const std::uint8_t* imageData = frame.image.data();
+
+	/* Debug section */
+	std::chrono::milliseconds ms = duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+	stbi_write_png(std::string("../ImageDump/" + std::to_string(ms.count()) + ".png").c_str(), textureWidth, textureHeight, 4, frame.image.data(), textureWidth * rgbaChannels);
+	/**/
 
 	m_sourceRect = std::make_shared<RECT>();
 	m_sourceRect->left = 0;

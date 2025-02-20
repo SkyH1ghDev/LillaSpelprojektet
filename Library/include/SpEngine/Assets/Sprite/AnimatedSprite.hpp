@@ -33,7 +33,8 @@ inline AnimatedSprite::AnimatedSprite(const std::vector<std::shared_ptr<StaticSp
 
 inline std::shared_ptr<StaticSprite> AnimatedSprite::GetSprite(float time) const 
 {
-    int index = static_cast<int>(time / m_frameTime) % static_cast<int>(m_sprites.size());
+    //+ 0.0001f to avoid division by zero
+    int index = static_cast<int>(time / (m_frameTime + 0.0001f)) % static_cast<int>(m_sprites.size());
     
     return m_sprites.at(index);
 }

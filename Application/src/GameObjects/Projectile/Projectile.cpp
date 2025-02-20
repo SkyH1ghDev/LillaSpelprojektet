@@ -42,9 +42,9 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
 
     if (this->m_direction.y > 0)
-        this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))) - DX::XM_PIDIV2);
+        this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
     else
-        this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))) - DX::XM_PIDIV2);
+        this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
 }
 
 void Projectile::OnStart()

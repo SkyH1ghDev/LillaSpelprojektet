@@ -163,7 +163,7 @@ void ImGuiTool::AssetManagerTab()
 			}
 			else
 			{
-				fileTexture = ImTextureID(animatedSprite->GetSprite()->GetSRV().Get());
+				fileTexture = ImTextureID(animatedSprite->GetSprite(0)->GetSRV().Get());
 			}
 			
 			ImGui::TableSetColumnIndex(j);
