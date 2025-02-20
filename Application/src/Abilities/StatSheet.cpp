@@ -7,6 +7,7 @@ float StatSheet::m_shotDelay = 0.5f;
 float StatSheet::m_shotLife = 0.5f;
 int StatSheet::m_maxHealth = 5;
 int StatSheet::m_maxMana = 3;
+float StatSheet::m_currentHealth = 5;
 
 std::vector<Effect> StatSheet::m_damageMod;
 std::vector<Effect> StatSheet::m_moveSpeedMod;

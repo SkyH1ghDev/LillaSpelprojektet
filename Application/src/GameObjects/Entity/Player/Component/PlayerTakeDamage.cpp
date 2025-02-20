@@ -6,7 +6,8 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
 {
     if (iFrameTimer <= 0)
     {
-        hp -= damage;
+        StatSheet::DecreaseHealth(damage);
+        hp = StatSheet::GetCurrentHealth();
         HealthBarManager::RemoveHeart(damage);
         StatSheet::CreateEffect(StatType::MoveSpeed, 0.5f, -150);
         if (hp <= 0)
