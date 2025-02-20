@@ -14,8 +14,6 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
             Sound::PlayOnce("aaagh.wav", 0.2f);
             Sound::SetMusic("menu_theme_v2.wav", 0.2f);
             Sound::PlayMusic(true);
-            isActive = false;
-            //shouldRender = false;
         }
         else
         {
