@@ -16,6 +16,7 @@ enum class EntityType {
     Enemy
 };
 
+
 class Entity : public IGameObject
 {
 public:
@@ -31,8 +32,8 @@ public:
 
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
-    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && !this->m_isSpawning) m_attack->Attack(position, direction); }
-    void PerformTakeDamage(float damage) { if (m_takeDamage && !this->m_isSpawning) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
+    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning) m_attack->Attack(position, direction); }
+    void PerformTakeDamage(float damage) { if (m_takeDamage && this->m_state != EntityState::Spawning) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
     void PerformSetCollider();
 
@@ -51,8 +52,9 @@ private:
 
     EntityType m_type;
     float m_hp = 0;
-    bool m_isSpawning = true;
+    bool m_isAnimating = false;
     float m_spawnTimer = 2.0f;
     float m_iFrameTimer = 0.0f;
+    float m_DeathAnimationTimer = 4.0f;
     EntityState m_state;
 };

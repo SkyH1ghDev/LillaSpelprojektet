@@ -21,7 +21,9 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
 
 void Entity::OnStart()
 {
-    PerformVisible(EntityState::Spawn);
+    this->m_state = EntityState::Spawning;
+    PerformVisible(this->m_state);
+    this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
@@ -37,43 +39,74 @@ void Entity::PerformSetCollider()
 
 void Entity::Update()
 {
-    if (m_isSpawning)
+    if (this->m_state == EntityState::Spawning)
     {
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
         if (m_spawnTimer <= 0.0f)
         {
-            m_isSpawning = false; // Enable movement and attacks
-            PerformVisible(EntityState::WalkDown);
+            this->m_state = EntityState::Base;
         }
-        return; // Skip the rest of update logic while spawning
+        return;
     }
 
     // Normal update logic after spawn animation finishes
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
+
     if (this->m_iFrameTimer > 0)
     {
-        PerformVisible(EntityState::TakingDamage);
+        this->m_isAnimating = true;
+        this->m_state = EntityState::TakingDamage;
         this->m_iFrameTimer -= Clock::GetDeltaTime();
+        if (this->m_iFrameTimer <= 0)
+        {
+            this->m_state = EntityState::Base;
+            this->m_isAnimating = false;
+        }
     }
-    else
+
+    if (this->m_hp <= 0)
     {
-        this->m_state = EntityState::WalkDown;
-        PerformVisible(m_state);
+        this->m_isAnimating = true;
+        this->m_state = EntityState::Dying;
+        this->m_DeathAnimationTimer -= Clock::GetDeltaTime();
+        if (this->m_DeathAnimationTimer <= 0)
+        {
+            this->m_state = EntityState::Dead;
+            this->m_isAnimating = false;
+            SetActive(false);
+        }
     }
+    PerformVisible(this->m_state);
+
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr) {
+        if (direction.y == -1 && !m_isAnimating)
+        {
+            this->m_state = EntityState::WalkUp;
+        }
+        else if (direction.y == 1 && !m_isAnimating)
+        {
+            this->m_state = EntityState::WalkDown;
+        }
+        else if (direction.x == 1 && !m_isAnimating)
+        {
+            this->m_state = EntityState::WalkRight;
+        }
+        else if (direction.x == -1 && !m_isAnimating)
+        {
+            this->m_state = EntityState::WalkLeft;
+        }
         m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
     }
 }
 
 void Entity::PerformVisible(EntityState entityState)
 {
-    if (m_visible && this->m_state != EntityState::TakingDamage)
+    if (m_visible)
     {
-        this->m_state = entityState;
-        m_visible->Visible(m_textureName, m_position, m_state, m_layerFloat, m_scaleFloat);
+        m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat);
     }
         
 }

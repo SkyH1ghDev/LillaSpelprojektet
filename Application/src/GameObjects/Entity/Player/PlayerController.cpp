@@ -41,21 +41,5 @@ void PlayerController::Update()
 		m_attackTimer = 0.25f;
 	}*/
 
-	if (m_up->GetMoveDirection().y == -1)
-	{
-		player->PerformVisible(EntityState::WalkUp);
-	}
-	else if (m_down->GetMoveDirection().y == 1)
-	{
-		player->PerformVisible(EntityState::WalkDown);
-	}
-	else if (m_right->GetMoveDirection().x == 1)
-	{
-		player->PerformVisible(EntityState::WalkRight);
-	}
-	else if (m_left->GetMoveDirection().x == -1)
-	{
-		player->PerformVisible(EntityState::WalkLeft);
-	}
 
 }

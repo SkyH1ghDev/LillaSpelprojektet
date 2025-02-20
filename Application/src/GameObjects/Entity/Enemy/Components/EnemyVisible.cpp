@@ -3,7 +3,7 @@
 void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityState entityState, float& layer, float& scale)
 {
     switch (entityState) {
-    case EntityState::Spawn:
+    case EntityState::Spawning:
         texture = "Toe.png";
         break;
     default:

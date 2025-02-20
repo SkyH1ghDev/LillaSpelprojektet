@@ -5,13 +5,15 @@
 namespace DX = DirectX;
 
 enum class EntityState {
+    Base,
     WalkUp,
     WalkDown,
     WalkRight,
     WalkLeft,
-    Spawn,
+    Spawning,
     TakingDamage,
-    Dying
+    Dying,
+    Dead
 };
 
 class IEntityVisible
