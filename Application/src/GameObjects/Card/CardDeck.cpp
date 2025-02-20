@@ -69,8 +69,7 @@ void CardDeck::PerformVisible()
 {
     if (!m_cardDeck.empty())
     {
-
-        this->m_textureName = m_cardDeck[m_currentcard].first->GetCardTexture();
+        this->m_textureName = m_cardDeck[m_currentCard].first->GetCardTexture();
         this->m_scaleFloat = 1.0;
         this->m_layerFloat = 0.9;
         this->m_position = { 560, 285 };
