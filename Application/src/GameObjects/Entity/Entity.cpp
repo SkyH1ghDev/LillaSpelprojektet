@@ -39,6 +39,8 @@ void Entity::PerformSetCollider()
 
 void Entity::Update()
 {
+    this->UpdateAnimation();
+
     if (this->m_state == EntityState::Spawning)
     {
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
@@ -54,6 +56,8 @@ void Entity::Update()
 
     if (this->m_iFrameTimer > 0)
     {
+        if (!this->m_isAnimating && this->m_state != EntityState::TakingDamage)
+            this->ResetAnimation();
         this->m_isAnimating = true;
         this->m_state = EntityState::TakingDamage;
         this->m_iFrameTimer -= Clock::GetDeltaTime();
@@ -65,7 +69,10 @@ void Entity::Update()
     }
 
     if (this->m_hp <= 0)
-    {
+    {   
+        this->m_iFrameTimer = 0;
+        if (!this->m_isAnimating && this->m_state != EntityState::Dying)
+            this->ResetAnimation();
         this->m_isAnimating = true;
         this->m_state = EntityState::Dying;
         this->m_DeathAnimationTimer -= Clock::GetDeltaTime();
