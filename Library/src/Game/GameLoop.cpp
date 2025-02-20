@@ -67,5 +67,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
+	AssetManager::ResetAudioEngine();
 	DestroyWindow(window.GetWindowHandle());
 }

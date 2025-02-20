@@ -22,6 +22,7 @@ public:
 
 	static std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> GetSFXMap();
 	static void InitializeAudioEngine();
+	static void ResetAudioEngine();
 
 private:
 	static std::unordered_map<std::string, std::shared_ptr<ISprite>> m_textureMap;

@@ -108,3 +108,8 @@ void AssetManager::InitializeAudioEngine()
 {
 	m_audioEngine = std::make_unique<DX::AudioEngine>();
 }
+
+void AssetManager::ResetAudioEngine()
+{
+	AssetManager::m_audioEngine.reset();
+}
