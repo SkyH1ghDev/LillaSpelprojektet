@@ -25,6 +25,8 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->m_lifetime = lifetime;
     this->m_damage = damage;
 
+    this->ResetAnimation();
+
     // Normalize direction
     float length = sqrt(pow(direction.x, 2) + pow(direction.y, 2));
     m_direction = DX::XMFLOAT2(direction.x / length, direction.y / length);
@@ -57,6 +59,7 @@ void Projectile::Update()
 {
     if (m_lifetime > 0)
     {
+        this->UpdateAnimation();
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= Clock::GetDeltaTime();

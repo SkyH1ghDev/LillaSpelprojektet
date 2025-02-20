@@ -17,7 +17,7 @@ public:
 	~AssetManager() = default;
 
 	static bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
-	static std::shared_ptr<StaticSprite> GetSprite(const std::string& filename);
+	static std::shared_ptr<StaticSprite> GetSprite(const std::string& filename, float animationTime);
 	static std::unordered_map<std::string, std::shared_ptr<ISprite>> GetTextureMap();
 
 	static std::unordered_map<std::string, std::shared_ptr<DX::SoundEffect>> GetSFXMap();
@@ -34,7 +34,7 @@ private:
 };
 
 //Returns Sprite with the matching filename in the hash map
-inline std::shared_ptr<StaticSprite> AssetManager::GetSprite(const std::string& filename)
+inline std::shared_ptr<StaticSprite> AssetManager::GetSprite(const std::string& filename, float animationTime)
 {
 	if (!m_textureMap.contains(filename))
 	{
@@ -51,7 +51,7 @@ inline std::shared_ptr<StaticSprite> AssetManager::GetSprite(const std::string& 
 	}
 
 	animatedSprite->UpdateCurrentTime(Clock::GetDeltaTime());
-	return animatedSprite->GetSprite();
+	return animatedSprite->GetSprite(animationTime);
 }
 
 inline std::unordered_map<std::string, std::shared_ptr<ISprite>> AssetManager::GetTextureMap()

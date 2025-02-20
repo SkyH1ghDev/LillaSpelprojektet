@@ -16,7 +16,7 @@ public:
     AnimatedSprite(AnimatedSprite&& other) noexcept = default;
     AnimatedSprite& operator=(AnimatedSprite&& other) noexcept = default;
 
-    std::shared_ptr<StaticSprite> GetSprite() const;
+    std::shared_ptr<StaticSprite> GetSprite(float time) const;
     void UpdateCurrentTime(const float& deltaTime);
     
 private:
@@ -31,9 +31,9 @@ inline AnimatedSprite::AnimatedSprite(const std::vector<std::shared_ptr<StaticSp
     m_frameTime = frameTime;
 }
 
-inline std::shared_ptr<StaticSprite> AnimatedSprite::GetSprite() const 
+inline std::shared_ptr<StaticSprite> AnimatedSprite::GetSprite(float time) const 
 {
-    int index = static_cast<int>(m_currTime / m_frameTime) % static_cast<int>(m_sprites.size());
+    int index = static_cast<int>(time / m_frameTime) % static_cast<int>(m_sprites.size());
     
     return m_sprites.at(index);
 }

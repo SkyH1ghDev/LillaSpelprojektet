@@ -7,6 +7,7 @@
 #include <vector>
 #include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Physics/Collider.hpp>
+#include <SpEngine/Clock/Clock.hpp>
 
 namespace DX = DirectX;
 
@@ -150,6 +151,9 @@ public:
     std::shared_ptr<Collider> GetCollider() const;
 
     void SetName(const std::string& name);
+    void UpdateAnimation();
+    void ResetAnimation();
+    float GetAnimationTime();
 
 protected:
     std::string m_gameObjectName;
@@ -169,6 +173,7 @@ protected:
     
     int m_uniqueID = m_numGameObjects++;
     static int m_numGameObjects;
+    float m_animationTime = 0;
 };
 
 inline IGameObject::IGameObject()
@@ -305,4 +310,19 @@ inline std::shared_ptr<Collider> IGameObject::GetCollider() const
 inline void IGameObject::SetName(const std::string& name)
 {
     this->m_gameObjectName = name;
+}
+
+inline void IGameObject::UpdateAnimation()
+{
+    this->m_animationTime += Clock::GetDeltaTime();
+}
+
+inline void IGameObject::ResetAnimation()
+{
+    this->m_animationTime = 0;
+}
+
+inline float IGameObject::GetAnimationTime()
+{
+    return this->m_animationTime;
 }
