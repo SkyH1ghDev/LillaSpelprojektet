@@ -151,6 +151,10 @@ inline float StatSheet::GetCurrentHealth()
 inline void StatSheet::IncreaseHealth(float amount)
 {
 	StatSheet::m_currentHealth += amount;
+	if (m_currentHealth > m_maxHealth)
+	{
+		m_currentHealth = m_maxHealth;
+	}
 }
 
 /**
