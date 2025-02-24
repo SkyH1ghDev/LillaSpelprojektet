@@ -7,7 +7,7 @@ void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySt
         texture = "Toe.png";
         break;
     default:
-        texture = "bishop.png";
+        texture = "bishop_v2.png";
         break;
     }
     
