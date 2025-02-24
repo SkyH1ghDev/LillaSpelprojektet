@@ -5,6 +5,7 @@ Makefile
 .idea/
 Build/
 Generated/
+ImageDump/
 
 **.make
 **.vcxproj.filters
