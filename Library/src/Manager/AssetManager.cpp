@@ -1,6 +1,11 @@
 #include "AssetManager.hpp"
 #include <APNGLoader/uc_apng_loader.h>
 
+//Included for debugging
+#include <chrono>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <stb/stb_image_write.h>
+
 namespace APNG = uc::apng;
 
 enum AssetManager::fileFormat : std::uint8_t
@@ -71,7 +76,7 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 
 					case FileFormat_APNG:
 					{
-						APNG::loader loader = APNG::create_file_loader(filepath);
+						auto loader = APNG::create_file_loader(filepath);
 						std::vector<std::shared_ptr<StaticSprite>> sprites;
 
 						APNG::frame frame = loader.next_frame();
@@ -80,7 +85,10 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 						while (loader.has_frame())
 						{
 							sprites.push_back(std::make_shared<StaticSprite>(device, frame));
-							
+							/* Debug section for dumping images*/
+							//std::chrono::milliseconds ms = duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+							//stbi_write_png(std::string("../ImageDump/" + std::to_string(ms.count()) + ".png").c_str(), frame.image.width(), frame.image.height(), 4, frame.image.data(), frame.image.width() * 4);
+							/**/
 							frame = loader.next_frame();
 						}
 
