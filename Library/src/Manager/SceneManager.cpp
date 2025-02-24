@@ -1,24 +1,12 @@
 #include "SceneManager.hpp"
-
 #include <iostream>
 
 std::unordered_map<std::string, std::shared_ptr<IScene>> SceneManager::m_scenesMap = {};
 std::shared_ptr<IScene> SceneManager::m_currentScene = {};
 
-
 bool SceneManager::RegisterScene(const std::string& id, const std::shared_ptr<IScene>& scene)
 {
-    if (id.empty())
-    {
-        return false;
-    }
-
-    if (scene == nullptr)
-    {
-        return false;
-    }
-
-    if (m_scenesMap.contains(id))
+    if (id.empty() || scene == nullptr || m_scenesMap.contains(id))
     {
         return false;
     }
@@ -28,18 +16,28 @@ bool SceneManager::RegisterScene(const std::string& id, const std::shared_ptr<IS
     return true;
 }
 
-
-
-// Load a scene by ID
-
-
-// Call update (or display) on the current scene
-/*bool SceneManager::Update() {
-    if (m_currentScene) {
-        m_currentScene->Display();
-        return true;
-    }
-    else {
+bool SceneManager::LoadScene(const std::string& id)
+{
+    if (!m_scenesMap.contains(id))
+    {
         return false;
     }
-}*/
+    
+    if (m_currentScene)
+    {
+        UnloadScene();
+    }
+    
+    m_currentScene = m_scenesMap[id];
+    m_currentScene->SetActive(true); // Activate all objects in the scene
+    return true;
+}
+
+void SceneManager::UnloadScene()
+{
+    if (m_currentScene)
+    {
+        m_currentScene->SetActive(false); // Deactivate all objects in the current scene
+        m_currentScene.reset();
+    }
+}

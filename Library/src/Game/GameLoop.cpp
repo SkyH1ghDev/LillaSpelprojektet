@@ -30,7 +30,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
-	std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
+	SceneManager::LoadScene("main");
+
 
 	Sound::SetMusic("battle_theme_1.wav", 0.4f);
 	Sound::PlayMusic(true);
@@ -48,6 +49,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		Clock::Start();
 		Input::HandleInput(window.GetWindowHandle());
+		std::shared_ptr<IScene> currentScene = SceneManager::GetCurrentScene();
 
 		// Update for all GameObjects
 
@@ -62,11 +64,30 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		// Update for Collisions
 
-		renderer.Draw(mainScene);
+		renderer.Draw(currentScene);
+
+		
+
 		Clock::End();
 
+		
+		timer -= Clock::GetDeltaTime();
+		if (timer <= 0)
+		{
+			SceneManager::UnloadScene();
+			SceneManager::LoadScene("secondScene");
+			timer2 -= Clock::GetDeltaTime();
+			if (timer2 <= 0)
+			{
+				SceneManager::UnloadScene();
+				SceneManager::LoadScene("main");
+			}
+			
+		}
 		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 	AssetManager::ResetAudioEngine();
 	DestroyWindow(window.GetWindowHandle());
+	
+
 }

@@ -78,4 +78,17 @@ Game::Game()
     ManaBarManager::RefillManaShard(5); 
     std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck();
     testScene->AddGameObject(cardDeck);
+
+
+    if (!SceneManager::RegisterScene("secondScene", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+
+    std::shared_ptr<IScene> secondScene = SceneManager::GetScene("secondScene");
+
+    secondScene->AddGameObject(player);
+    secondScene->AddGameObject(background);
+    secondScene->AddGameObject(mouse);
+
 }
