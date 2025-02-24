@@ -53,7 +53,7 @@ private:
     EntityType m_type;
     float m_hp = 0;
     bool m_isAnimating = false;
-    float m_spawnTimer = 2.0f;
+    float m_spawnTimer = 1.9f;
     float m_iFrameTimer = 0.0f;
     float m_DeathAnimationTimer = 3.9f;
     EntityState m_state;
