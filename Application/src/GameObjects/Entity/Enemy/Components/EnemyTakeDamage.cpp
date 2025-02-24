@@ -6,7 +6,7 @@ void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& 
 {
     hp -= damage;
     Sound::PlayOnce("knack.wav", 0.2f);
-    if (hp <= 0)
+    if (hp <= 0 && isActive)
     {
         isActive = false;
         shouldRender = false;
