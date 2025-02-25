@@ -42,6 +42,8 @@ void Game::SetupGame()
 
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
 
+
+    //Button Scene???
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({300, 100});
     std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Continue);
