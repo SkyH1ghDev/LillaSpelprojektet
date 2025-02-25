@@ -101,4 +101,5 @@ void Game::ResetGame()
     HealthBarManager::Cleanup();
     ManaBarManager::Cleanup();
     StatSheet::Reset();
+    CardManager::Cleanup();
 }
