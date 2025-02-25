@@ -2,7 +2,7 @@
 #include "IUIClicked.hpp"
 #include <iostream>
 
-class MenuClicked : public IUIClicked
+class QuitClicked : public IUIClicked
 {
 public:
     void Clicked() override;

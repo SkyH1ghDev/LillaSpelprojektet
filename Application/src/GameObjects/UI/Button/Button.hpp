@@ -24,7 +24,6 @@ public:
     Button& operator=(Button&& other) noexcept = default;
 
     Button(ButtonType type);
-    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_layerFloat, m_scaleFloat, m_position); };
     void PerformClicked();
 
     void Update() override;
@@ -37,6 +36,6 @@ private:
     ButtonType m_type;
 
 private:
-    void PerformTexture();
+    void PerformVisible();
     void PerformHover();
 };

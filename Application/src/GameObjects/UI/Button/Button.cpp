@@ -1,41 +1,22 @@
 #include "Button.hpp"
 
-#include "PlayVisible.hpp"
-#include "ExitVisible.hpp"
-#include "MenuVisible.hpp"
-#include "ContinueVisible.hpp"
-#include "ExitMenuVisible.hpp"
 #include "PlayClicked.hpp"
-#include "ExitClicked.hpp"
-#include "MenuClicked.hpp"
 #include "ContinueClicked.hpp"
-#include "ExitMenuClicked.hpp"
+#include "QuitClicked.hpp"
+#include "ExitClicked.hpp"
 
-std::shared_ptr<IUIVisible> CreateVisibleComponent(ButtonType type) {
-    switch (type) {
-    case ButtonType::Play:
-        return std::make_shared<PlayVisible>();
-    case ButtonType::Continue:
-        return std::make_shared<ExitVisible>();
-    case ButtonType::Quit:
-        return std::make_shared<MenuVisible>();
-    case ButtonType::Exit:
-        return std::make_shared<ExitMenuVisible>();
-    default:
-        throw std::invalid_argument("Invalid ButtonType");
-    }
-}
+
 
 std::shared_ptr<IUIClicked> CreateClickComponent(ButtonType type) {
     switch (type) {
     case ButtonType::Play:
         return std::make_shared<PlayClicked>();
     case ButtonType::Continue:
-        return std::make_shared<ExitClicked>();
-    case ButtonType::Quit:
-        return std::make_shared<MenuClicked>();
-    case ButtonType::Exit:
         return std::make_shared<ContinueClicked>();
+    case ButtonType::Quit:
+        return std::make_shared<QuitClicked>();
+    case ButtonType::Exit:
+        return std::make_shared<ExitClicked>();
     default:
         throw std::invalid_argument("Invalid ButtonType");
     }
@@ -47,7 +28,6 @@ Button::Button(ButtonType type) :
 {
     std::cout << "Button created" << std::endl;
 }
-
 
 
 void Button::PerformClicked()
@@ -63,12 +43,12 @@ void Button::PerformClicked()
         }
     }
     else {
-        PerformTexture();
+        PerformVisible();
     }
 
 }
 
-void Button::PerformTexture()
+void Button::PerformVisible()
 {
     switch (m_type) {
     case ButtonType::Play:
@@ -120,11 +100,9 @@ void Button::OnStart()
     Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
 
     PerformVisible();
-    PerformTexture();
     SetActive(true);
     this->m_shouldRender = true;
 
-    this->m_position = { 200, 100 };
     this->m_textureName = "button_basic.png";
     this->m_layerFloat = 0.9;
     this->m_scaleFloat = 1.0;
