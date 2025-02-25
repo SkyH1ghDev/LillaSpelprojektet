@@ -3,6 +3,9 @@
 #include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Clock/Clock.hpp>
 
+#include "GameObjects/UI/Bar/ManaBarManager.hpp"
+#include "GameObjects/UI/Bar/HealthBarManager.hpp"
+
 void PlayerCardScript::OnStart()
 {
 	Input::GetKey(VK_RBUTTON)->Attach(std::static_pointer_cast<IObserver, UseCard>(m_useCard));
