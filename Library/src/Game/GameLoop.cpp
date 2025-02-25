@@ -69,21 +69,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		Clock::End();
 
-		timer -= Clock::GetDeltaTime();
-		if (timer <= 0)
-		{
-			m_game.ResetGame();
-			GameObjectManager::ClearGameObjects();
-			m_game.SetupGame();
-			SceneManager::LoadScene("main");
-			for (const auto& gameObject : GameObjectManager::GetGameObjects())
-			{
-				gameObject->OnStart();
-			}
-
-			timer = 10;
-		}
-
 		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 	AssetManager::ResetAudioEngine();
