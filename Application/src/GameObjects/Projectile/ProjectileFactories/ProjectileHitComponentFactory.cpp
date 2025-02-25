@@ -12,6 +12,8 @@ std::shared_ptr<IProjectileHit> CreateHitComponent(ProjectileType type)
     case ProjectileType::PawnPellet:
         return std::make_shared<PawnPelletHit>();
         break;
+    case ProjectileType::ScatterPellet:
+        return std::make_shared<ScatterPelletHit>();
     default:
         throw std::invalid_argument("Unknown ProjectileType in CreateHitComponent");
         break;

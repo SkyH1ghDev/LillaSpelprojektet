@@ -6,7 +6,8 @@
 enum class ProjectileType {
     Base,
     BishopBall,
-    PawnPellet
+    PawnPellet,
+    ScatterPellet
 };
 
 #include "IProjectileMove.hpp"
