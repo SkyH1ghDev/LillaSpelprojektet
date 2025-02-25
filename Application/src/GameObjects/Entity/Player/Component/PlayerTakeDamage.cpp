@@ -1,6 +1,7 @@
 #include "PlayerTakeDamage.hpp"
 #include "StatSheet.hpp"
 #include <SpEngine/Audio/Sound.hpp>
+#include "HealthBarManager.hpp"
 
 void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& iFrameTimer)
 {

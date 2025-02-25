@@ -2,6 +2,8 @@
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <cmath>
 #include <SpEngine/Clock/Clock.hpp>
+#include <random>
+
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;

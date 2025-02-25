@@ -1,7 +1,5 @@
 #pragma once
 #include "IEntityAttack.hpp"
-#include "ProjectileManager.hpp"
-#include <iostream>
 
 class EnemyAttack : public IEntityAttack
 {

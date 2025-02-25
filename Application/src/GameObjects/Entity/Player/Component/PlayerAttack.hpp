@@ -1,8 +1,5 @@
 #pragma once
 #include "IEntityAttack.hpp"
-
-#include <iostream>
-
 #include <DirectXMath.h>
 
 namespace DX = DirectX;

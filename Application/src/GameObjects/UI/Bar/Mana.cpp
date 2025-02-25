@@ -3,7 +3,6 @@
 Mana::Mana(ManaType type) :
 m_type(type)
 {
-	std::cout << "Mana created" << std::endl;
 }
 
 void Mana::Update()

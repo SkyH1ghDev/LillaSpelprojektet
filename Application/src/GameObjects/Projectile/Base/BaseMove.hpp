@@ -1,6 +1,5 @@
 #pragma once
 #include "IProjectileMove.hpp"
-#include <iostream>
 
 class BaseMove : public IProjectileMove
 {

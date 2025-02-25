@@ -1,6 +1,5 @@
 #pragma once
 #include "IEntityMove.hpp"
-#include <iostream> 
 
 class PlayerMove : public IEntityMove
 {

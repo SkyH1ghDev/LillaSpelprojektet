@@ -7,6 +7,8 @@
 #include "EntitySetColliderComponentFactory.hpp"
 #include <iostream>
 #include "EnemyManager.hpp"
+#include <SpEngine/Clock/Clock.hpp>
+
 
 Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
     m_move(CreateMoveComponent(entityType)),

@@ -1,6 +1,5 @@
 #pragma once
 #include "IProjectileVisible.hpp"
-#include <iostream>
 
 class BaseVisible : public IProjectileVisible
 {
