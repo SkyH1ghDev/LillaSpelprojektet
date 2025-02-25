@@ -16,6 +16,9 @@ std::shared_ptr<IProjectileVisible> CreateVisibleComponent(ProjectileType type)
     case ProjectileType::ScatterPellet:
         return std::make_shared<ScatterPelletVisible>();
         break;
+    case ProjectileType::SniperBullet:
+        return std::make_shared<SniperBulletVisible>();
+        break;
     default:
         throw std::invalid_argument("Unknown ProjectileType in CreateVisibleComponent");
         break;
