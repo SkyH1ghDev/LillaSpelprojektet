@@ -6,6 +6,7 @@
 #include "EntityVisibleComponentFactory.hpp"
 #include "EntitySetColliderComponentFactory.hpp"
 #include <iostream>
+#include "EnemyManager.hpp"
 
 Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
     m_move(CreateMoveComponent(entityType)),
@@ -25,11 +26,25 @@ void Entity::OnStart()
     PerformVisible(this->m_state);
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
+    this->m_isAlive = true;
+    this->m_isActive = true;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
     this->m_takeDamage->SetHealth(this->m_hp);
     PerformSetCollider();
+    
+    switch (m_type) {
+    case EntityType::Player:
+        this->m_DeathAnimationTimer = 3.9;
+        break;
+    case EntityType::Enemy:
+        this->m_DeathAnimationTimer = 0.0;
+        break;
+    default:
+        this->m_DeathAnimationTimer = 0.0;
+        break;
+    }
 }
 
 void Entity::PerformSetCollider()
@@ -81,6 +96,12 @@ void Entity::Update()
             this->m_state = EntityState::Dead;
             this->m_isAnimating = false;
             SetActive(false);
+            SetIsAlive(false);
+            if (this->m_type != EntityType::Player)
+            {
+                SetShouldRender(false);
+                EnemyManager::UpdateEnemies();
+            }
         }
     }
     PerformVisible(this->m_state);

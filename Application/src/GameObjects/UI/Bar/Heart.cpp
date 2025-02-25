@@ -33,6 +33,8 @@ void Heart::Update()
 void Heart::OnStart()
 {
 	PerformVisible();
+	SetIsAlive(true);
+	this->m_isActive = true;
 }
 
 void Heart::UpdateHeart(bool positive)

@@ -34,6 +34,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     // Activate projectile
     this->m_isActive = true;
     this->m_shouldRender = true;
+    this->m_isAlive = true;
     PerformVisible(ProjectileState::Inactive);
     this->CenterOrigin(true);
     PerformSetCollider();
@@ -52,6 +53,7 @@ void Projectile::OnStart()
     PerformVisible(ProjectileState::Inactive);
     this->m_shouldRender = false;
     this->m_isActive = false;
+    this->m_isAlive = false;
     this->CenterOrigin(true);
 }
 

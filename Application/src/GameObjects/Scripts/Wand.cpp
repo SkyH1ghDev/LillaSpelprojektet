@@ -1,5 +1,6 @@
 #pragma once
 #include "Wand.hpp"
+#include "StatSheet.hpp"
 
 WandScript::WandScript(std::shared_ptr<IGameObject> player)
 {
@@ -13,8 +14,11 @@ void WandScript::OnStart()
 
 void WandScript::Update()
 {
+	
 	std::shared_ptr<Mesh> wand = std::static_pointer_cast<Mesh>(m_gameObject.lock());
 	DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
+
+	wand->UpdateAnimation();
 
 	DX::XMFLOAT2 wandPos;
 	DX::XMFLOAT2 pos = this->player->GetPosition();

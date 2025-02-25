@@ -44,5 +44,7 @@ private:
 private:
     SetupHelper m_setup;
     Game m_game;
+    float timer = 10;
+    float timer2 = 10;
 };
 

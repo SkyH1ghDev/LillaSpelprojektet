@@ -32,7 +32,7 @@ void AbilityManager::Shotgun(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size
         XMStoreFloat2(&finalDirection, spreadDirection);
 
         // Add projectile
-        ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
+        ProjectileManager::AddProjectile(ProjectileType::ScatterPellet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
     }
 }
 

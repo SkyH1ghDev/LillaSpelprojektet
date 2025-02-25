@@ -155,6 +155,19 @@ public:
     void ResetAnimation();
     float GetAnimationTime();
 
+    /**
+     * Sets objects alive state.
+     *, if currently alive in a scene
+     *
+     */
+    void SetIsAlive(bool isAlive);
+
+    /**
+     * Returns wether or not GameObject is alive in a scene.
+     *
+     */
+    bool IsAlive();
+
 protected:
     std::string m_gameObjectName;
     std::string m_textureName;
@@ -168,6 +181,7 @@ protected:
     bool m_centerOrigin = false;
     bool m_isActive = true;
     bool m_shouldRender = false;
+    bool m_isAlive = false;
 
     std::vector<std::shared_ptr<IScript>> m_scripts;
     
@@ -325,4 +339,14 @@ inline void IGameObject::ResetAnimation()
 inline float IGameObject::GetAnimationTime()
 {
     return this->m_animationTime;
+}
+
+inline void IGameObject::SetIsAlive(bool isAlive)
+{
+    this->m_isAlive = isAlive;
+}
+
+inline bool IGameObject::IsAlive()
+{
+    return this->m_isAlive;
 }

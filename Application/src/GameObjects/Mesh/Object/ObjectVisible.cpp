@@ -2,7 +2,7 @@
 
 void ObjectVisible::Visible(std::string& texture, DX::XMFLOAT2 position, float& layer, float& scale)
 {
-	scale = 0.1;
+	scale = 1.0;
 	layer = 0.5 + position.y * 0.3 / 360;
 }
 

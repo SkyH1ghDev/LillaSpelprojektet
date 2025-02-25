@@ -2,7 +2,7 @@
 #include "IProjectileHit.hpp"
 #include <iostream>
 
-class BishopBallHit : public IProjectileHit
+class ScatterPelletHit : public IProjectileHit
 {
 public:
     void Hit(bool& isActive, bool& shouldRender, bool& isAlive) override;

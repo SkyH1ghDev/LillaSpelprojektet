@@ -20,8 +20,9 @@
 #include "Emty.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "GameObjects/UI/Bar/ManaBarManager.hpp"
+#include "Abilities/StatSheet.hpp"
 
-Game::Game()
+void Game::SetupGame()
 {
     // Setup Main Scene
 
@@ -30,7 +31,7 @@ Game::Game()
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
-    
+
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
     player->SetPosition({ 150, 150 });
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
@@ -46,7 +47,7 @@ Game::Game()
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "crosshair.png");
 
-    std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "liosstav.png");
+    std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "wandMockupOne.apng");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
 
     player->AttachScript(playerController);
@@ -66,7 +67,6 @@ Game::Game()
 
     EnemyManager::SpawnEnemies(player, 2);
 
-    ProjectileManager::Initialize(ProjectileType::Base, 200);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
 
@@ -77,7 +77,30 @@ Game::Game()
 
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
-    ManaBarManager::RefillManaShard(5); 
+    ManaBarManager::RefillManaShard(5);
     std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck();
     testScene->AddGameObject(cardDeck);
+
+
+    if (!SceneManager::RegisterScene("secondScene", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+
+    std::shared_ptr<IScene> secondScene = SceneManager::GetScene("secondScene");
+
+    secondScene->AddGameObject(player);
+    secondScene->AddGameObject(background);
+    secondScene->AddGameObject(mouse);
+}
+
+void Game::ResetGame()
+{
+    SceneManager::ClearScene("main");
+    SceneManager::ClearScene("secondScene");
+    EnemyManager::Cleanup();
+    ProjectileManager::Cleanup();
+    HealthBarManager::Cleanup();
+    ManaBarManager::Cleanup();
+    StatSheet::Reset();
 }

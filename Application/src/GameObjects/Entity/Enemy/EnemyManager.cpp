@@ -86,12 +86,6 @@ void EnemyManager::UpdateEnemies() {
         m_enemies.clear();
         SpawnEnemies(m_player, 2); // Respawn a new wave
     }
-
-    for (auto& enemy : m_enemies) {
-        if (enemy) {
-            enemy->Update();
-        }
-    }
 }
 
 void EnemyManager::Cleanup() {
