@@ -5,5 +5,5 @@
 class ScatterPelletHit : public IProjectileHit
 {
 public:
-    void Hit(bool& isActive, bool& shouldRender) override;
+    void Hit(bool& isActive, bool& shouldRender, bool& isAlive) override;
 };
