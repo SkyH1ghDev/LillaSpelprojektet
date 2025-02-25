@@ -62,6 +62,6 @@ void AbilityManager::SurroundShot(DX::XMFLOAT2 position, size_t projectileCount,
         XMStoreFloat2(&finalDirection, spreadDirection);
         
         // Add projectile
-        ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed, lifeSpan, 10.0f);
+        ProjectileManager::AddProjectile(ProjectileType::SniperBullet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed, lifeSpan, 10.0f);
     }
 }

@@ -5,5 +5,6 @@
 #include "PawnPelletHit.hpp"
 #include "BishopBallHit.hpp"
 #include "ScatterPellethit.hpp"
+#include "SniperBulletHit.hpp"
 
 std::shared_ptr<IProjectileHit> CreateHitComponent(ProjectileType type);

@@ -5,5 +5,6 @@
 #include "PawnPelletMove.hpp"
 #include "BishopBallMove.hpp"
 #include "ScatterPelletMove.hpp"
+#include "SniperBulletMove.hpp"
 
 std::shared_ptr<IProjectileMove> CreateMoveComponent(ProjectileType type);
