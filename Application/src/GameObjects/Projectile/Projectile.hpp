@@ -6,7 +6,8 @@
 enum class ProjectileType {
     Base,
     BishopBall,
-    PawnPellet
+    PawnPellet,
+    ScatterPellet
 };
 
 #include "IProjectileMove.hpp"
@@ -29,7 +30,7 @@ public:
     void Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage);
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
     void PerformVisible(ProjectileState projectileState) { if (m_visible) m_visible->Visible(m_textureName, m_position, projectileState, m_layerFloat, m_scaleFloat); }
-    void PerformHit() { if (m_hit) m_hit->Hit(this->m_isActive, this->m_shouldRender); }
+    void PerformHit() { if (m_hit) m_hit->Hit(this->m_isActive, this->m_shouldRender, this->m_isAlive); }
     void PerformSetCollider();
     
     void Update() override;

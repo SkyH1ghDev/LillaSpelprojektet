@@ -12,6 +12,9 @@ std::shared_ptr<IProjectileSetCollider> CreateSetColliderComponent(ProjectileTyp
     case ProjectileType::PawnPellet:
         return std::make_shared<PawnPelletSetCollider>();
         break;
+    case ProjectileType::ScatterPellet:
+        return std::make_shared<ScatterPelletSetCollider>();
+        break;
     default:
         throw std::invalid_argument("Unknown ProjectileType in CreateSetColliderComponent");
         break;

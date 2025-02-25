@@ -4,5 +4,6 @@
 #include "BaseSetCollider.hpp"
 #include "PawnPelletSetCollider.hpp"
 #include "BishopBallSetCollider.hpp"
+#include "ScatterPelletSetCollider.hpp"
 
 std::shared_ptr<IProjectileSetCollider> CreateSetColliderComponent(ProjectileType type);

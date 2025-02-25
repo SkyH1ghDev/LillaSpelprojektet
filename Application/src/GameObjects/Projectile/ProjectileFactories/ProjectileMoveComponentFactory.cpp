@@ -12,6 +12,9 @@ std::shared_ptr<IProjectileMove> CreateMoveComponent(ProjectileType type)
     case ProjectileType::PawnPellet:
         return std::make_shared<PawnPelletMove>();
         break;
+    case ProjectileType::ScatterPellet:
+        return std::make_shared<ScatterPelletMove>();
+        break;
     default:
         throw std::invalid_argument("Unknown ProjectileType in CreateMoveComponent");
         break;

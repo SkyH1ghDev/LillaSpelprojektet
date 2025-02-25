@@ -1,5 +1,4 @@
 #include "EnemyTakeDamage.hpp"
-#include "EnemyManager.hpp"
 #include <SpEngine/Audio/Sound.hpp>
 
 void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& iFrameTimer)
@@ -8,9 +7,6 @@ void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& 
     Sound::PlayOnce("knack.wav", 0.2f);
     if (hp <= 0 && isActive)
     {
-        isActive = false;
-        shouldRender = false;
-        EnemyManager::UpdateEnemies();
         Sound::PlayOnce("buh.wav", 0.2f);
     }
 }
