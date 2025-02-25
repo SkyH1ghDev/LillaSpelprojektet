@@ -23,4 +23,3 @@ bool ExitHandler::ShouldExit() const
 {
     return this->m_shouldExit;
 }
-

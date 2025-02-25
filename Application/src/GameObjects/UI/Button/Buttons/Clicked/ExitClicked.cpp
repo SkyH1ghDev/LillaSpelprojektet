@@ -3,5 +3,5 @@
 
 void ExitClicked::Clicked()
 {
-	std::cerr << "Exit" << std::endl;
+
 }

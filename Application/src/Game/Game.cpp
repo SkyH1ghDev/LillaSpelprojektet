@@ -118,7 +118,6 @@ void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
 {
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "mouse.png");
 
-
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({ 250, 150 });
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
