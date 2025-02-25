@@ -6,7 +6,7 @@
 CollisionHandler::CollisionHandler(int tileSize) : tileSize(tileSize) {}
 
 void CollisionHandler::OnStart() {
-   
+    // This function runs once when the script is attached to a game object
     grid.clear();
 }
 

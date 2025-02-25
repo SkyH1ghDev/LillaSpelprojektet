@@ -20,8 +20,6 @@ public:
     [[nodiscard]] static std::vector<std::shared_ptr<IScene>> GetAllScenes();
     static bool LoadScene(const std::string& id);
     static void UnloadScene();
-    static void ClearScene(const std::string& id);
-
 };
 
 inline bool SceneManager::SetCurrentScene(const std::string& id)

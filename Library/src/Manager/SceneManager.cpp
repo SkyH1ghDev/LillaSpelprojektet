@@ -41,18 +41,3 @@ void SceneManager::UnloadScene()
         m_currentScene.reset();
     }
 }
-
-void SceneManager::ClearScene(const std::string& id)
-{
-    if (!m_scenesMap.contains(id))
-    {
-        std::cerr << "Scene with ID '" << id << "' does not exist.\n";
-    }
-
-    // Get the scene and clear its game objects
-    std::shared_ptr<IScene> scene = m_scenesMap[id];
-    if (scene)
-    {
-        scene->ClearGameObjects();
-    }
-}

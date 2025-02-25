@@ -13,11 +13,7 @@ enum class EntityState {
     Spawning,
     TakingDamage,
     Dying,
-    Dead,
-    DashUp,
-    DashDown,
-    DashRight,
-    DashLeft  
+    Dead
 };
 
 class IEntityVisible

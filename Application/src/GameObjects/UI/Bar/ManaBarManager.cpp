@@ -67,10 +67,3 @@ bool ManaBarManager::RemoveManaCrystal(size_t manaNumber)
     }
     return true;
 }
-
-void ManaBarManager::Cleanup()
-{
-    manaBar.clear();
-    manaBarIndex = 0;
-    manaCrystalIndex = 0;
-}

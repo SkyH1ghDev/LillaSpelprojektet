@@ -41,8 +41,6 @@ public:
 
 	static void CreateEffect(StatType type, float lifeTime, float amount);
 	static void UpdateEffects();
-
-	static void Reset();
 private:
 	static float m_damage;
 	static float m_moveSpeed;
@@ -166,26 +164,4 @@ inline void StatSheet::IncreaseHealth(float amount)
 inline void StatSheet::DecreaseHealth(float amount)
 {
 	StatSheet::m_currentHealth -= amount;
-}
-
-/**
-  * Resets StatSheet to base
-  *
-  */
-inline void StatSheet::Reset()
-{
-	m_damage = 20.0f;
-	m_moveSpeed = 200.0f;
-	m_shotSpeed = 300.0f;
-	m_shotDelay = 0.5f;
-	m_shotLife = 0.5f;
-	m_maxHealth = 5;
-	m_maxMana = 3;
-	m_currentHealth = 5;
-
-	m_damageMod.clear();
-	m_moveSpeedMod.clear();
-	m_shotSpeedMod.clear();
-	m_shotLifeMod.clear();
-	m_shotDelayMod.clear();
 }

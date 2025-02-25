@@ -20,9 +20,8 @@
 #include "Emty.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "GameObjects/UI/Bar/ManaBarManager.hpp"
-#include "Abilities/StatSheet.hpp"
 
-void Game::SetupGame()
+Game::Game()
 {
     // Setup Main Scene
 
@@ -31,7 +30,7 @@ void Game::SetupGame()
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
-
+    
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
     player->SetPosition({ 150, 150 });
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
@@ -65,6 +64,7 @@ void Game::SetupGame()
 
     EnemyManager::SpawnEnemies(player, 2);
 
+    ProjectileManager::Initialize(ProjectileType::Base, 200);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
 
@@ -75,7 +75,7 @@ void Game::SetupGame()
 
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
-    ManaBarManager::RefillManaShard(5);
+    ManaBarManager::RefillManaShard(5); 
     std::shared_ptr<IGameObject> cardDeck = pcs->GetCardDeck();
     testScene->AddGameObject(cardDeck);
 
@@ -90,15 +90,5 @@ void Game::SetupGame()
     secondScene->AddGameObject(player);
     secondScene->AddGameObject(background);
     secondScene->AddGameObject(mouse);
-}
 
-void Game::ResetGame()
-{
-    SceneManager::ClearScene("main");
-    SceneManager::ClearScene("secondScene");
-    EnemyManager::Cleanup();
-    ProjectileManager::Cleanup();
-    HealthBarManager::Cleanup();
-    ManaBarManager::Cleanup();
-    StatSheet::Reset();
 }

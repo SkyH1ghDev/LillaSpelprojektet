@@ -16,7 +16,6 @@ public:
 
     static void AttachGameObject(const std::shared_ptr<IGameObject>& gameObject);
     static std::vector<std::shared_ptr<IGameObject>> GetGameObjects();
-    static void ClearGameObjects();
 
 private:
     static std::vector<std::shared_ptr<IGameObject>> m_gameObjects;

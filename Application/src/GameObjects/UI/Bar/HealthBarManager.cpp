@@ -79,10 +79,3 @@ void HealthBarManager::AddNewHeart(size_t heartNumber)
 
 
 }
-
-void HealthBarManager::Cleanup()
-{
-    health.clear();
-    heartIndex = 0;
-    maxHealth = 0;
-}

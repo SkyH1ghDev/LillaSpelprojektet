@@ -7,13 +7,19 @@
 class CardManager
 {
 public:
-    static std::shared_ptr<ICard> GetCard(CardType cardType);
-    static std::vector<std::shared_ptr<ICard>> GetCardObjects();
-    static std::string GetCardTexture();
-    static void Cleanup();
+    
+    CardManager();
+    virtual ~CardManager() {}
+    CardManager(const CardManager& other) = default;
+    CardManager& operator=(const CardManager& other) = default;
+    CardManager(CardManager&& other) noexcept = default;
+    CardManager& operator=(CardManager&& other) noexcept = default;
+
+    std::shared_ptr<ICard> GetCard(CardType cardType);
+    std::vector<std::shared_ptr<ICard>> GetCardObjects();
+    std::string GetCardTexture();
 
 private:
-    static std::vector<std::shared_ptr<ICard>> m_cardObjects;
-    static size_t m_currentindex;
-    static void Initialize();
+    std::vector<std::shared_ptr<ICard>> m_cardObjects;
+    size_t m_currentindex = 0;
 };
