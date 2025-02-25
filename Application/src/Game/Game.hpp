@@ -16,4 +16,5 @@ public:
 
 private:
     void SetupStartScene(std::shared_ptr<IScene> startScene);
+    void SetupMainScene(std::shared_ptr<IScene> mainScene);
 };
