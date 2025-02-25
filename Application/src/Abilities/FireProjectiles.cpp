@@ -62,6 +62,17 @@ void AbilityManager::SurroundShot(DX::XMFLOAT2 position, size_t projectileCount,
         XMStoreFloat2(&finalDirection, spreadDirection);
         
         // Add projectile
-        ProjectileManager::AddProjectile(ProjectileType::SniperBullet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed, lifeSpan, 10.0f);
+        ProjectileManager::AddProjectile(ProjectileType::PawnPellet, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed, lifeSpan, 10.0f);
     }
+}
+
+void AbilityManager::SniperShot(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float shotSpeed, float damageMultiplier)
+{
+    DX::XMVECTOR dirVec = XMLoadFloat2(&direction);
+    dirVec = DX::XMVector2Normalize(dirVec);
+    DX::XMFLOAT2 dir;
+    XMStoreFloat2(&dir, dirVec);
+
+    // Add projectile
+    ProjectileManager::AddProjectile(ProjectileType::SniperBullet, position, dir, shotSpeed, 10.0f, 20.0f * damageMultiplier);
 }

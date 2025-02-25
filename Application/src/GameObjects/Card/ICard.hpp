@@ -10,7 +10,8 @@
 enum class CardType {
     Shotgun,
     Spread,
-    Heal
+    Heal,
+    Sniper
 };
 
 class ICard : public std::enable_shared_from_this<ICard>
