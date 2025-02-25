@@ -19,17 +19,26 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
     case EntityState::WalkLeft:
         texture = "chesster_left_v3.png";
         break;
-    case EntityState::DashUp:
-        texture = "chesster_back_dash.apng";
-        break;
-    case EntityState::DashDown:
-        texture = "chesster_front_dash.apng";
-        break;
-    case EntityState::DashRight:
-        texture = "chesster_right_dash.apng";
-        break;
-    case EntityState::DashLeft:
-        texture = "chesster_left_dash.apng";
+    case EntityState::Dashing:
+        switch (this->m_lastState) {
+        case EntityState::WalkUp:
+            texture = "chesster_back_dash.apng";
+            break;
+        case EntityState::WalkDown:
+            texture = "chesster_front_dash.apng";
+            break;
+        case EntityState::WalkRight:
+            texture = "chesster_right_dash.apng";
+            break;
+        case EntityState::WalkLeft:
+            texture = "chesster_left_dash.apng";
+            break;
+        case EntityState::Dashing:
+            break;
+        default:
+            texture = "chesster_front_dash.apng";
+            break;
+        }
         break;
     case EntityState::TakingDamage:    
         switch (this->m_lastState) {

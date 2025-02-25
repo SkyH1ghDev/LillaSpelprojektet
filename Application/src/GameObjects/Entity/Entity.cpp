@@ -104,6 +104,21 @@ void Entity::Update()
             }
         }
     }
+
+    if (this->m_dashTimer > 0)
+    {
+        if (!this->m_isAnimating)
+            this->ResetAnimation();
+        this->m_isAnimating = true;
+        this->m_dashTimer -= Clock::GetDeltaTime();
+        if (this->m_dashTimer <= 0)
+        {
+            m_isAnimating = false;
+            this->m_dashTimer = 0;
+            this->m_state = EntityState::Base;
+        }
+
+    }
     PerformVisible(this->m_state);
 
 }
@@ -113,34 +128,23 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         if (direction.y == -1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkUp;
-            if (dashing)
-            {
-                this->m_state = EntityState::DashUp;
-            }
         }
         else if (direction.y == 1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkDown;
-            if (dashing)
-            {
-                this->m_state = EntityState::DashDown;
-            }
         }
         else if (direction.x == 1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkRight;
-            if (dashing)
-            {
-                this->m_state = EntityState::DashRight;
-            }
         }
         else if (direction.x == -1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkLeft;
-            if (dashing)
-            {
-                this->m_state = EntityState::DashLeft;
-            }
+        }
+        if (dashing)
+        {
+            this->m_state = EntityState::Dashing;
+            this->m_dashTimer = 0.5f;
         }
         
         m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
