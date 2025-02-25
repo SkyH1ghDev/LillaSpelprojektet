@@ -30,7 +30,6 @@ public:
     void PerformVisible();
 
 private:
-    CardManager m_cardMan;
     std::vector<std::pair<std::shared_ptr<ICard>, size_t>> m_cardDeck = {};
     size_t m_currentCard = 0;
 };

@@ -15,3 +15,8 @@ void GameObjectManager::AttachGameObject(const std::shared_ptr<IGameObject>& gam
         m_gameObjects.push_back(gameObject);
     }
 }
+
+void GameObjectManager::ClearGameObjects()
+{
+    m_gameObjects.clear();
+}

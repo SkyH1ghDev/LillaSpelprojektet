@@ -14,6 +14,7 @@ void CardDeck::Update()
 void CardDeck::OnStart()
 {
     this->m_shouldRender = true;
+    this->m_isActive = true;
     SetIsAlive(true);
     m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
@@ -21,7 +22,7 @@ void CardDeck::OnStart()
 void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
 {
 
-    std::shared_ptr<ICard> card = m_cardMan.GetCard(cardtype);
+    std::shared_ptr<ICard> card = CardManager::GetCard(cardtype);
     std::pair<std::shared_ptr<ICard>, size_t> cardInfo = std::make_pair(card, lvl);
     m_cardDeck.push_back(cardInfo);
 

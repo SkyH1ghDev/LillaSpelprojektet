@@ -13,7 +13,8 @@ enum class EntityState {
     Spawning,
     TakingDamage,
     Dying,
-    Dead
+    Dead,
+    Dashing
 };
 
 class IEntityVisible

@@ -27,6 +27,7 @@ void Entity::OnStart()
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
+    this->m_isActive = true;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
@@ -103,6 +104,21 @@ void Entity::Update()
             }
         }
     }
+
+    if (this->m_dashTimer > 0)
+    {
+        if (!this->m_isAnimating)
+            this->ResetAnimation();
+        this->m_isAnimating = true;
+        this->m_dashTimer -= Clock::GetDeltaTime();
+        if (this->m_dashTimer <= 0)
+        {
+            m_isAnimating = false;
+            this->m_dashTimer = 0;
+            this->m_state = EntityState::Base;
+        }
+
+    }
     PerformVisible(this->m_state);
 
 }
@@ -125,6 +141,12 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         {
             this->m_state = EntityState::WalkLeft;
         }
+        if (dashing)
+        {
+            this->m_state = EntityState::Dashing;
+            this->m_dashTimer = 0.5f;
+        }
+        
         m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
     }
 }
