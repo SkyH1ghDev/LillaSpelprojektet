@@ -7,6 +7,7 @@ public:
     static void Initialize(size_t manaNumber);
     static void RefillManaShard(size_t manaNumber);
     static bool RemoveManaCrystal(size_t manaNumber);
+    static void Cleanup();
     
 private:
     static std::vector<std::shared_ptr<IGameObject>> manaBar;

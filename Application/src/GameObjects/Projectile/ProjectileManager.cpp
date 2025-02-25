@@ -4,6 +4,7 @@
 
 // Initialize static variable
 std::unordered_map<ProjectileType, std::vector<std::shared_ptr<Projectile>>> ProjectileManager::projectilePools;
+std::unordered_map<ProjectileType, size_t> ProjectileManager::lastInactiveIndexMap;
 
 void ProjectileManager::Initialize(ProjectileType type, size_t poolSize) {
     auto& projectiles = projectilePools[type]; // Get the pool for the given type
@@ -20,7 +21,6 @@ void ProjectileManager::Initialize(ProjectileType type, size_t poolSize) {
 }
 
 void ProjectileManager::AddProjectile(ProjectileType type, DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float speed, float lifetime, float damage) {
-    static std::unordered_map<ProjectileType, size_t> lastInactiveIndexMap;
 
     auto& projectiles = projectilePools[type];
 
@@ -56,4 +56,10 @@ void ProjectileManager::AddProjectile(ProjectileType type, DX::XMFLOAT2 position
     projectiles[oldSize]->Initialize(position, direction, speed, lifetime, damage);
     projectiles[oldSize]->SetActive(true);
     lastInactiveIndex = oldSize;
+}
+
+void ProjectileManager::Cleanup()
+{
+    projectilePools.clear();
+    lastInactiveIndexMap.clear();
 }
