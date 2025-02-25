@@ -16,6 +16,7 @@ void Mana::OnStart()
 	this->m_layerFloat = 0.7;
 	this->m_scaleFloat = 0.85;
 	this->m_shouldRender = true;
+	SetIsAlive(true);
 	if(textureNameUpdate.empty())
 		textureNameUpdate = "mana_0.png";
 }

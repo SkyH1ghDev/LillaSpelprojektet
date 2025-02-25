@@ -55,6 +55,6 @@ private:
     bool m_isAnimating = false;
     float m_spawnTimer = 1.9f;
     float m_iFrameTimer = 0.0f;
-    float m_DeathAnimationTimer = 3.9f;
+    float m_DeathAnimationTimer = 0.0f;
     EntityState m_state;
 };

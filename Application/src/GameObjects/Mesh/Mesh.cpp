@@ -15,6 +15,7 @@ Mesh::Mesh(MeshType meshType, const std::string& name, const std::string& textur
 void Mesh::OnStart() {
     PerformVisible();
     this->m_shouldRender = true;
+    this->m_isAlive = true;
 }
 
 void Mesh::Update() {

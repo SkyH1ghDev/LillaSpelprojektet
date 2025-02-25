@@ -46,6 +46,7 @@ protected:
     bool m_centerOrigin = false;
     bool m_isActive = true;
     bool m_shouldRender = false;
+    bool m_isAlive = true;
 
     std::vector<std::shared_ptr<IScript>> m_scripts;
 };

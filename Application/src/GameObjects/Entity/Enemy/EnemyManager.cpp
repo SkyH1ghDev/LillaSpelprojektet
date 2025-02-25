@@ -89,7 +89,7 @@ void EnemyManager::UpdateEnemies() {
 
     for (auto& enemy : m_enemies) {
         if (enemy) {
-            enemy->Update();
+            //enemy->Update();
         }
     }
 }

@@ -64,26 +64,10 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 		// Update for Collisions
 
-		renderer.Draw(currentScene);
-
-		
+		renderer.Draw(currentScene);	
 
 		Clock::End();
 
-		
-		timer -= Clock::GetDeltaTime();
-		if (timer <= 0)
-		{
-			SceneManager::UnloadScene();
-			SceneManager::LoadScene("secondScene");
-			timer2 -= Clock::GetDeltaTime();
-			if (timer2 <= 0)
-			{
-				SceneManager::UnloadScene();
-				SceneManager::LoadScene("main");
-			}
-			
-		}
 		//std::cerr << clock.GetFrameRate() << " FPS\n";
 	}
 	AssetManager::ResetAudioEngine();

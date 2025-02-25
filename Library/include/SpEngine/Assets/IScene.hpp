@@ -43,6 +43,9 @@ inline void IScene::SetActive(bool active)
 {
     for (auto& gameObject : m_gameObjects)
     {
-        gameObject->SetActive(active); // Ensure IGameObject has a SetActive method
+        if (gameObject->IsAlive() || !active)
+        {
+            gameObject->SetActive(active); // Ensure IGameObject has a SetActive method
+        }
     }
 }

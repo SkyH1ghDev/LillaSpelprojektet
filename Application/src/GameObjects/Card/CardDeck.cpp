@@ -14,6 +14,7 @@ void CardDeck::Update()
 void CardDeck::OnStart()
 {
     this->m_shouldRender = true;
+    SetIsAlive(true);
     m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
 
