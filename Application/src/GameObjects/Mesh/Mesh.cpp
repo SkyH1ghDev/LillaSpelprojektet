@@ -16,6 +16,7 @@ void Mesh::OnStart() {
     PerformVisible();
     this->m_shouldRender = true;
     this->m_isAlive = true;
+    this->m_isActive = true;
 }
 
 void Mesh::Update() {

@@ -12,6 +12,7 @@ public:
     std::string GetName() const;
     void SetName(const std::string& name);
     void SetActive(bool active); // New function to set active state for all game objects
+    void ClearGameObjects();
 
 protected:
     std::vector<std::shared_ptr<IGameObject>> m_gameObjects;
@@ -48,4 +49,9 @@ inline void IScene::SetActive(bool active)
             gameObject->SetActive(active); // Ensure IGameObject has a SetActive method
         }
     }
+}
+
+inline void IScene::ClearGameObjects()
+{
+    this->m_gameObjects.clear();
 }
