@@ -41,6 +41,7 @@ Game::Game()
 
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
 
+    std::shared_ptr<IGameObject> button = std::make_shared<Button>(ButtonType::Exit);
 
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "crosshair.png");
@@ -52,6 +53,7 @@ Game::Game()
     player->AttachScript(playerAttackScript);
     player->AttachScript(playerCardScript);
 
+    testScene->AddGameObject(button);
     wand->AttachScript(wandScript);
     wand->CenterOrigin(true);
     testScene->AddGameObject(player);
