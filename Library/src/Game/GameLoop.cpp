@@ -27,10 +27,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	ShowCursor(FALSE);
 	Renderer renderer = Renderer(window.GetWindowHandle());
 
-	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
+	//std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	//Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
+	ExitHandler exitHandler;
 	SceneManager::LoadScene("startScene");
 
 
@@ -46,7 +47,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
-	while (!exitHandler->ShouldExit())
+	while (!exitHandler.ShouldExit())
 	{
 		Clock::Start();
 		Input::HandleInput(window.GetWindowHandle());

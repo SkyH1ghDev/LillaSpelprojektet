@@ -58,11 +58,12 @@ void Game::SetupGame()
 
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "wandMockupOne.apng");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
-
+    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
+    exitButton->SetPosition({ 0, 280 });
+    testScene->AddGameObject(exitButton);
     player->AttachScript(playerController);
     player->AttachScript(playerAttackScript);
     player->AttachScript(playerCardScript);
-
 
     wand->AttachScript(wandScript);
     wand->CenterOrigin(true);

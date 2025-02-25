@@ -3,5 +3,5 @@
 
 void ExitClicked::Clicked()
 {
-
+	ExitHandler::Exit();
 }
