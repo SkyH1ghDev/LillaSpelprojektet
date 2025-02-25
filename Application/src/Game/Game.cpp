@@ -24,12 +24,21 @@
 
 void Game::SetupGame()
 {
+    // Setup Start Scene
+    if (!SceneManager::RegisterScene("startScene", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+    std::shared_ptr<IScene> startScene = SceneManager::GetScene("startScene");
+    SetupStartScene(startScene);
+
     // Setup Main Scene
 
     if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
+
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
 
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
@@ -43,20 +52,6 @@ void Game::SetupGame()
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
 
 
-    //Button Scene???
-    std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
-    playButton->SetPosition({300, 100});
-    std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Continue);
-    continueButton->SetPosition({ 300, 150 });
-    std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
-    quitButton->SetPosition({ 300, 200 });
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
-    exitButton->SetPosition({ 300, 250 });
-
-    testScene->AddGameObject(playButton);
-    testScene->AddGameObject(continueButton);
-    testScene->AddGameObject(quitButton);
-    testScene->AddGameObject(exitButton);
 
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "crosshair.png");
@@ -117,4 +112,19 @@ void Game::ResetGame()
     HealthBarManager::Cleanup();
     ManaBarManager::Cleanup();
     StatSheet::Reset();
+}
+
+void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
+{
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "mouse.png");
+
+
+    std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
+    playButton->SetPosition({ 250, 150 });
+    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
+    exitButton->SetPosition({ 250, 200 });
+
+    startScene->AddGameObject(mouse);
+    startScene->AddGameObject(playButton);
+    startScene->AddGameObject(exitButton);
 }

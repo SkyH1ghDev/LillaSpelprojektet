@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <SpEngine/Assets/IScene.hpp>
+#include <memory>
 
 class Game
 {
@@ -11,4 +13,7 @@ public:
     Game& operator=(Game&& other) noexcept = default;
     void SetupGame();
     void ResetGame();
+
+private:
+    void SetupStartScene(std::shared_ptr<IScene> startScene);
 };

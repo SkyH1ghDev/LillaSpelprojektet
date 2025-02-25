@@ -31,7 +31,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
-	SceneManager::LoadScene("main");
+	SceneManager::LoadScene("startScene");
 
 
 	Sound::SetMusic("battle_theme_1.wav", 0.4f);

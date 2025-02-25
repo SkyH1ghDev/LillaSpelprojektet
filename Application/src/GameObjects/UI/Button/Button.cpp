@@ -101,8 +101,9 @@ void Button::OnStart()
 
     PerformVisible();
     SetActive(true);
-    this->m_shouldRender = true;
+    SetIsAlive(true);
 
+    this->m_shouldRender = true;
     this->m_textureName = "button_basic.png";
     this->m_layerFloat = 0.9;
     this->m_scaleFloat = 1.0;
