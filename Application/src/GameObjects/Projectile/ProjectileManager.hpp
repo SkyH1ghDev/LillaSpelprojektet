@@ -1,8 +1,9 @@
 #pragma once
+
+#include "Projectile.hpp"
 #include <vector>
 #include <memory>
 #include <unordered_map>
-#include "Projectile.hpp"
 #include <SpEngine/Manager/SceneManager.hpp>
 
 class ProjectileManager {

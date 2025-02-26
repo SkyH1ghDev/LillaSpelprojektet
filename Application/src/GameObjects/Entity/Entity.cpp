@@ -20,7 +20,7 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
 
-void Entity::OnStart()
+void Entity::InitializeValues()
 {
     this->m_state = EntityState::Spawning;
     PerformVisible(this->m_state);
@@ -34,16 +34,22 @@ void Entity::OnStart()
     PerformSetCollider();
     
     switch (m_type) {
-    case EntityType::Player:
-        this->m_DeathAnimationTimer = 3.9;
-        break;
-    case EntityType::Enemy:
-        this->m_DeathAnimationTimer = 0.0;
-        break;
-    default:
-        this->m_DeathAnimationTimer = 0.0;
-        break;
+        
+        case EntityType::Player:
+            this->m_DeathAnimationTimer = 3.9;
+            break;
+        
+        case EntityType::Enemy:
+        default:
+            this->m_DeathAnimationTimer = 0.0;
+            break;
     }
+}
+
+
+void Entity::OnStart()
+{
+    InitializeValues();
 }
 
 void Entity::PerformSetCollider()
@@ -99,7 +105,6 @@ void Entity::Update()
             if (this->m_type != EntityType::Player)
             {
                 SetShouldRender(false);
-                EnemyManager::UpdateEnemies();
             }
         }
     }

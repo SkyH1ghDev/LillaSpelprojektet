@@ -30,6 +30,8 @@ public:
 
     Entity(EntityType entityType, const std::string& name);
 
+    void InitializeValues();
+
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
