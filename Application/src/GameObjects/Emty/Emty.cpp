@@ -3,7 +3,7 @@
 void Emty::OnStart()
 {
 	this->m_isAlive = true;
-	this->m_isActive = true;
+	this->m_isActive = false;
 }
 
 void Emty::Update()

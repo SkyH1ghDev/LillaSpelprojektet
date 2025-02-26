@@ -32,10 +32,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	//Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
 	ExitHandler exitHandler;
-	SceneManager::LoadScene("start");
+	//SceneManager::LoadScene("start");
 
-
-	Sound::SetMusic("battle_theme_1.wav", 0.4f);
+	Sound::SetMusic("paused.wav", 0.5f);
 	Sound::PlayMusic(true);
 
 	// OnStart for all GameObjects
@@ -44,7 +43,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
-	
+	SceneManager::LoadScene("pause");
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!exitHandler.ShouldExit())

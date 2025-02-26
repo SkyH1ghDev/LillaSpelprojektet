@@ -27,7 +27,7 @@ void Entity::OnStart()
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
-    this->m_isActive = true;
+    this->m_isActive = false;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
@@ -104,6 +104,8 @@ void Entity::Update()
             }
         }
     }
+
+    if (this->m_isActive)
     PerformVisible(this->m_state);
 
 }

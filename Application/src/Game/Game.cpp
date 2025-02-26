@@ -1,6 +1,5 @@
 ﻿#include "Game.hpp"
 
-#include <SpEngine/Manager/SceneManager.hpp>
 
 #include "Entity.hpp"
 #include "Mesh.hpp"
@@ -21,6 +20,7 @@
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "GameObjects/UI/Bar/ManaBarManager.hpp"
 #include "Abilities/StatSheet.hpp"
+#include "Scripts/PauseBackGround.hpp"
 
 void Game::SetupGame()
 {
@@ -32,6 +32,12 @@ void Game::SetupGame()
     std::shared_ptr<IScene> startScene = SceneManager::GetScene("start");
     SetupStartScene(startScene);
 
+    if (!SceneManager::RegisterScene("pause", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+    std::shared_ptr<IScene> pauseScene = SceneManager::GetScene("pause");
+    SetupPauseScene(pauseScene);
 
     // Setup Main Scene
     if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
@@ -40,7 +46,6 @@ void Game::SetupGame()
     }
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
     SetupMainScene(mainScene);
-
 }
 
 void Game::ResetGame()
@@ -123,5 +128,29 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene)
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     exitButton->SetPosition({ 0, 280 });
     mainScene->AddGameObject(exitButton);
+
+}
+
+void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
+{
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "mouse.png");
+
+    std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
+    playButton->SetPosition({ 250, 150 });
+    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
+    exitButton->SetPosition({ 250, 200 });
+
+    pauseScene->AddGameObject(mouse);
+    pauseScene->AddGameObject(playButton);
+    pauseScene->AddGameObject(exitButton);
+
+    for (size_t i = 0; i < 8; i++)
+    {
+        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground1" + std::to_string(i)), "pawnground.apng");
+        std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
+        background->AttachScript(script);
+        background->SetPosition({ float(80 * i), 0 });
+        pauseScene->AddGameObject(background);
+    }
 
 }

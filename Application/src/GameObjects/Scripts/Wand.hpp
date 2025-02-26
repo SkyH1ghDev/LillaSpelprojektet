@@ -1,6 +1,5 @@
 #pragma once
 #include "Mesh.hpp"
-#include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Assets/Game/IScript.hpp>
 
 
