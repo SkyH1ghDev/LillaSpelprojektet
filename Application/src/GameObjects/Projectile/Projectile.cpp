@@ -39,6 +39,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     PerformVisible();
     this->CenterOrigin(true);
     PerformSetCollider();
+    this->m_state = ProjectileState::Active;
     std::cout << "Projectile initialized of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
 
     DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
@@ -60,7 +61,7 @@ void Projectile::OnStart()
 
 void Projectile::Update()
 {
-    if (m_lifetime > 0)
+    if (m_lifetime > 0 && m_isAlive)
     {
         this->UpdateAnimation();
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
@@ -69,21 +70,20 @@ void Projectile::Update()
         this->m_collider->UpdatePosition(this->m_position);
         if (PhysicsEngine::WallProjectileCollision(m_collider) || PhysicsEngine::WallProjectileCollision(m_collider))
         {
-            PerformHit();
+            this->m_isAlive = false;
         }
     }
     else
-        this->m_isAlive = false;
-
-    if (!this->m_isAlive)
     {
         this->m_state = ProjectileState::Exploding;
+        SetCollider(nullptr);
         if (!this->m_isAnimating)
         {
             this->ResetAnimation();
-            this->m_animationTimer = 0.5;
-        }    
+            this->m_animationTimer = 0.4;
+        }
         this->m_isAnimating = true;
+        this->UpdateAnimation();
         this->m_animationTimer -= Clock::GetDeltaTime();
         if (this->m_animationTimer <= 0)
         {
@@ -92,6 +92,7 @@ void Projectile::Update()
             this->m_shouldRender = false;
         }
     }
+    
     PerformVisible();
 }
 void Projectile::PerformSetCollider()
@@ -100,7 +101,7 @@ void Projectile::PerformSetCollider()
 }
 
 void Projectile::PerformMove(const DX::XMFLOAT2& direction, float velocity) {
-    if (m_move != nullptr) {
+    if (m_move != nullptr && this->m_state != ProjectileState::Exploding) {
         this->m_position = m_move->Move(this->m_position, direction, velocity);
     }
 }
