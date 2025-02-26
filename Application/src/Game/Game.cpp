@@ -128,7 +128,7 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene)
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     exitButton->SetPosition({ 0, 280 });
     mainScene->AddGameObject(exitButton);
-
+     
 }
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
@@ -137,12 +137,12 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({ 245, 150 });
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
-    exitButton->SetPosition({ 245, 200 });
+    std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
+    quitButton->SetPosition({ 245, 200 });
 
     pauseScene->AddGameObject(mouse);
     pauseScene->AddGameObject(playButton);
-    pauseScene->AddGameObject(exitButton);
+    pauseScene->AddGameObject(quitButton);
 
     for (size_t i = 0; i < 8; i++)
     {
