@@ -18,4 +18,5 @@ private:
     void SetupStartScene(std::shared_ptr<IScene> startScene);
     void SetupMainScene(std::shared_ptr<IScene> mainScene);
     void SetupPauseScene(std::shared_ptr<IScene> pauseScene);
+    void SetupDeathScene(std::shared_ptr<IScene> deathScene);
 };

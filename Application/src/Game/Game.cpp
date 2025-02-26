@@ -46,6 +46,9 @@ void Game::SetupGame()
     }
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
     SetupMainScene(mainScene);
+
+    //SetupDeathScene(mainScene);
+
 }
 
 void Game::ResetGame()
@@ -154,5 +157,17 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
         background->SetPosition({ float(80 * i), 0 });
         pauseScene->AddGameObject(background);
     }
+
+}
+
+void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene)
+{
+    std::shared_ptr<IGameObject> playAgainButton = std::make_shared<Button>(ButtonType::Play);
+    playAgainButton->SetPosition({ 0, 150 });
+    std::shared_ptr<IGameObject> quitGameButton = std::make_shared<Button>(ButtonType::Quit);
+    quitGameButton->SetPosition({ 0, 200 });
+
+    deathScene->AddGameObject(playAgainButton);
+    deathScene->AddGameObject(quitGameButton);
 
 }

@@ -34,7 +34,7 @@ void Button::PerformClicked()
     //Mouse over Button
     if (this->m_isActive)
     {
-        if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 150 &&
+        if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 145 &&
             Input::GetMousePositionY() > this->m_position.y + 25 && Input::GetMousePositionY() < this->m_position.y + 75)
         {
             PerformHover();
@@ -92,6 +92,20 @@ void Button::PerformHover()
     }
 }
 
+void Button::SetupButton()
+{
+    Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
+
+    PerformVisible();
+    SetActive(true);
+    SetIsAlive(true);
+
+    this->m_shouldRender = true;
+    this->m_textureName = "button_basic.png";
+    this->m_layerFloat = 0.9;
+    this->m_scaleFloat = 1.0;
+}
+
 void Button::Update()
 {
     PerformClicked();
@@ -99,14 +113,5 @@ void Button::Update()
 
 void Button::OnStart()
 {
-    Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
-
-    PerformVisible();
-    //SetActive(true);
-    SetIsAlive(true);
-    
-    this->m_shouldRender = true;
-    this->m_textureName = "button_basic.png";
-    this->m_layerFloat = 0.9;
-    this->m_scaleFloat = 1.0;
+    SetupButton();
 }
