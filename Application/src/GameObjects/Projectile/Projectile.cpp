@@ -92,3 +92,12 @@ float Projectile::GetDamage() const
 {
     return this->m_damage * this->m_damageAmp;
 }   
+
+void Projectile::Reset()
+{
+    PerformVisible(ProjectileState::Inactive);
+    this->m_shouldRender = false;
+    this->m_isActive = false;
+    this->m_isAlive = false;
+    this->CenterOrigin(true);
+}

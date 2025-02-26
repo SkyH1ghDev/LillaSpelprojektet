@@ -51,12 +51,24 @@ void Game::SetupGame()
 void Game::ResetGame()
 {
     SceneManager::ClearScene("main");
+    SceneManager::ClearScene("start");
+    SceneManager::ClearScene("pause");
     SceneManager::ClearScene("secondScene");
     EnemyManager::Cleanup();
     ProjectileManager::Cleanup();
     HealthBarManager::Cleanup();
     ManaBarManager::Cleanup();
     StatSheet::Reset();
+
+    SetupGame();
+
+    // OnStart for all GameObjects
+
+    for (const auto& gameObject : GameObjectManager::GetGameObjects())
+    {
+        gameObject->OnStart();
+    }
+    SceneManager::LoadScene("start");
 }
 
 void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
@@ -125,7 +137,7 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene)
 
 
     // Temporary Exit Button
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
+    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Quit);
     exitButton->SetPosition({ 0, 280 });
     mainScene->AddGameObject(exitButton);
      

@@ -39,6 +39,7 @@ public:
 
     void Update() override;
     void OnStart() override;
+    void Reset() override;
 
     EntityType GetType() const { return m_type; }
 

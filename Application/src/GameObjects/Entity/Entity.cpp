@@ -140,3 +140,29 @@ void Entity::PerformVisible(EntityState entityState)
     }
         
 }
+
+void Entity::Reset()
+{
+    this->m_state = EntityState::Spawning;
+    PerformVisible(this->m_state);
+    this->m_spawnTimer = 2.0;
+    this->m_shouldRender = true;
+    this->m_isAlive = true;
+    this->m_isActive = false;
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    //PerformAttack();
+    this->m_takeDamage->SetHealth(this->m_hp);
+
+    switch (m_type) {
+    case EntityType::Player:
+        this->m_DeathAnimationTimer = 3.9;
+        break;
+    case EntityType::Enemy:
+        this->m_DeathAnimationTimer = 0.0;
+        break;
+    default:
+        this->m_DeathAnimationTimer = 0.0;
+        break;
+    }
+}

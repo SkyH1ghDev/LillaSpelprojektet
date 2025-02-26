@@ -28,6 +28,7 @@ public:
 
     void Update() override;
     void OnStart() override;
+    void Reset() override;
 
 private:
     std::shared_ptr<IUIVisible> m_visible;

@@ -22,3 +22,11 @@ void Mesh::OnStart() {
 void Mesh::Update() {
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
 }
+
+void Mesh::Reset()
+{
+    PerformVisible();
+    this->m_shouldRender = true;
+    this->m_isAlive = true;
+    this->m_isActive = false;
+}

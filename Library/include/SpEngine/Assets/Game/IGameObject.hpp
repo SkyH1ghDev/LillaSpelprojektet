@@ -26,8 +26,6 @@ public:
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
 
-
-
     /**
      * Function that gets called every frame
      */
@@ -37,6 +35,8 @@ public:
      * Function that gets called when the game starts
      */
     virtual void OnStart() = 0;
+
+    virtual void Reset() = 0;
 
     void AttachScript(const std::shared_ptr<IScript>& script);
 

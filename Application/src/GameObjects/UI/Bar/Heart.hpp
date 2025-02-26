@@ -24,6 +24,7 @@ public:
 
     void Update() override;
     void OnStart() override;
+    void Reset() override;
     void UpdateHeart(bool positive);
     
 
