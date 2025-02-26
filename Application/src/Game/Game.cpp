@@ -139,11 +139,13 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     playButton->SetPosition({ 245, 150 });
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
     quitButton->SetPosition({ 245, 200 });
+    std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Quit);
+    continueButton->SetPosition({ 245, 200 });
 
-    pauseScene->AddGameObject(mouse);
-    pauseScene->AddGameObject(playButton);
     pauseScene->AddGameObject(quitButton);
+    pauseScene->AddGameObject(continueButton);
 
+    //Create animated background
     for (size_t i = 0; i < 8; i++)
     {
         std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pawnground.apng");
