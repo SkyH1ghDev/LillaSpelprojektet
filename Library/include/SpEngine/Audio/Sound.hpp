@@ -10,6 +10,7 @@ public:
 	static void PlayMusic(bool loop);
 	static void PauseMusic();
 	static void ResumeMusic();
+	static void ResetAudio();
 private:
 	inline static std::unique_ptr<DX::SoundEffectInstance> m_music = nullptr;
 	static float gameVolume;
@@ -39,4 +40,9 @@ inline void Sound::PauseMusic()
 inline void Sound::ResumeMusic()
 {
 	m_music->Resume();
+}
+
+inline void Sound::ResetAudio()
+{
+	AssetManager::ResetAudioEngine();
 }

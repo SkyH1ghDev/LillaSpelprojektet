@@ -61,7 +61,7 @@ void Game::ResetGame()
 
 void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
 {
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "mouse.png");
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({ 250, 150 });
@@ -96,7 +96,7 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene)
 
     // Background and Mouse
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "crosshair.png");
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Crosshair", "crosshair.png");
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "wandMockupOne.apng");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
     wand->AttachScript(wandScript);
@@ -133,7 +133,7 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene)
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
 {
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "mouse.png");
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PauseMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({ 250, 150 });
@@ -146,7 +146,7 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
 
     for (size_t i = 0; i < 8; i++)
     {
-        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground1" + std::to_string(i)), "pawnground.apng");
+        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pawnground.apng");
         std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });

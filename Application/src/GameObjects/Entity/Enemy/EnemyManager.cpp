@@ -69,7 +69,7 @@ void EnemyManager::SpawnEnemies(std::shared_ptr<IGameObject> player, int numberO
 
         std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>(player);
         enemy->AttachScript(enemyController);
-
+        enemy->SetActive(true);
         testScene->AddGameObject(enemy);
         m_enemies.push_back(enemy);
     }
