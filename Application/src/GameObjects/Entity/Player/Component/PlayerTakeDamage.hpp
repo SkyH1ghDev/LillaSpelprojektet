@@ -10,7 +10,4 @@ public:
 
 private:
     void PlayerDeath();
-
-private:
-    float dyingTimer = 5;
 };

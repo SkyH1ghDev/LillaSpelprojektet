@@ -41,11 +41,11 @@ void PlayerTakeDamage::PlayerDeath()
     std::shared_ptr<Button> quit = std::make_shared<Button>(ButtonType::Quit);
     restart->SetupButton();
     quit->SetupButton();
-
+    restart->SetPosition({ 245, 180 });
+    quit->SetPosition({ 245, 240 });
     std::shared_ptr<IGameObject> restartButton = restart;
     std::shared_ptr<IGameObject> quitButton = quit;
-    restartButton->SetPosition({ 245, 150 });
-    quitButton->SetPosition({ 245, 200 });
+
     
     deathScene->AddGameObject(restartButton);
     deathScene->AddGameObject(quitButton);
