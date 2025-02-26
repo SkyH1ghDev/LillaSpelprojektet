@@ -22,6 +22,11 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
 
+void Entity::Initialize()
+{
+
+}
+
 void Entity::OnStart()
 {
     this->m_state = EntityState::Spawning;

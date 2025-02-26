@@ -64,9 +64,10 @@ void Game::SetupGame()
     mouse->CenterOrigin(true);
 
     EnemyManager::SpawnEnemies(player, 2);
+    
 
-    ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
-    ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20);
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20);
 
     std::shared_ptr<IGameObject> collisionObject = std::make_shared<Emty>();
     std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));
@@ -97,7 +98,8 @@ void Game::ResetGame()
     SceneManager::ClearScene("main");
     SceneManager::ClearScene("secondScene");
     EnemyManager::Cleanup();
-    ProjectileManager::Cleanup();
+    ProjectileManager::Cleanup(ProjectileType::BishopBall);
+    ProjectileManager::Cleanup(ProjectileType::PawnPellet);
     HealthBarManager::Cleanup();
     ManaBarManager::Cleanup();
     StatSheet::Reset();
