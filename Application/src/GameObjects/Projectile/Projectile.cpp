@@ -35,7 +35,8 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->m_isActive = true;
     this->m_shouldRender = true;
     this->m_isAlive = true;
-    PerformVisible(ProjectileState::Inactive);
+    this->m_isAnimating = false;
+    PerformVisible();
     this->CenterOrigin(true);
     PerformSetCollider();
     std::cout << "Projectile initialized of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
@@ -50,7 +51,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
 
 void Projectile::OnStart()
 {
-    PerformVisible(ProjectileState::Inactive);
+    PerformVisible();
     this->m_shouldRender = false;
     this->m_isActive = false;
     this->m_isAlive = false;
@@ -72,10 +73,26 @@ void Projectile::Update()
         }
     }
     else
+        this->m_isAlive = false;
+
+    if (!this->m_isAlive)
     {
-        this->m_isActive = false;
-        this->m_shouldRender = false;
+        this->m_state = ProjectileState::Exploding;
+        if (!this->m_isAnimating)
+        {
+            this->ResetAnimation();
+            this->m_animationTimer = 0.5;
+        }    
+        this->m_isAnimating = true;
+        this->m_animationTimer -= Clock::GetDeltaTime();
+        if (this->m_animationTimer <= 0)
+        {
+            this->m_isActive = false;
+            this->m_isAlive = false;
+            this->m_shouldRender = false;
+        }
     }
+    PerformVisible();
 }
 void Projectile::PerformSetCollider()
 {
@@ -92,3 +109,11 @@ float Projectile::GetDamage() const
 {
     return this->m_damage * this->m_damageAmp;
 }   
+
+void Projectile::PerformHit()
+{
+    if (m_hit)
+    {
+        m_hit->Hit(this->m_isAlive);
+    }  
+}

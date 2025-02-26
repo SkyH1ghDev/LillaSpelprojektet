@@ -1,8 +1,6 @@
 #include "ScatterPelletHit.hpp"
 
-void ScatterPelletHit::Hit(bool& isActive, bool& shouldRender, bool& isAlive)
+void ScatterPelletHit::Hit(bool& isAlive)
 {
-	isActive = false;
-	shouldRender = false;
 	isAlive = false;
 }

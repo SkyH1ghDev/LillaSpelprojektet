@@ -1,6 +1,6 @@
 #include "BaseHit.hpp"
 
-void BaseHit::Hit(bool& isActive, bool& shouldRender, bool& isAlive)
+void BaseHit::Hit(bool& isAlive)
 {
 
 }
