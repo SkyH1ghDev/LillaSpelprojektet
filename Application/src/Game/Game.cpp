@@ -64,9 +64,9 @@ void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
-    playButton->SetPosition({ 250, 150 });
+    playButton->SetPosition({245, 150 });
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
-    exitButton->SetPosition({ 250, 200 });
+    exitButton->SetPosition({ 245, 200 });
 
     startScene->AddGameObject(mouse);
     startScene->AddGameObject(playButton);
@@ -136,9 +136,9 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PauseMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
-    playButton->SetPosition({ 250, 150 });
+    playButton->SetPosition({ 245, 150 });
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
-    exitButton->SetPosition({ 250, 200 });
+    exitButton->SetPosition({ 245, 200 });
 
     pauseScene->AddGameObject(mouse);
     pauseScene->AddGameObject(playButton);
