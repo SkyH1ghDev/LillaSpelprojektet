@@ -34,7 +34,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	ExitHandler exitHandler;
 
 
-	Sound::SetMusic("paused.wav", 0.5f);
+	Sound::SetMusic("menu_theme.wav", 0.2f);
 	Sound::PlayMusic(true);
 
 	// OnStart for all GameObjects

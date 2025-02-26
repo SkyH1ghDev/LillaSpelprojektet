@@ -26,7 +26,6 @@ Button::Button(ButtonType type) :
     m_clicked(CreateClickComponent(type)),
     m_type(type)
 {
-    std::cout << "Button created" << std::endl;
 }
 
 
