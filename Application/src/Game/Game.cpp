@@ -25,6 +25,8 @@ void Game::SetupGame()
 {
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
+    std::shared_ptr<Entity> playerEntity = std::dynamic_pointer_cast<Entity>(player);
+    playerEntity->Initialize();
     player->AttachScript(playerController);
 
     // Setup Start Scene
@@ -59,7 +61,6 @@ void Game::SetupGame()
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
     SetupMainScene(mainScene, player);
 
-    SceneManager::LoadScene("main");
 }
 
 void Game::ResetGame()
