@@ -36,6 +36,7 @@ public:
     void PerformTakeDamage(float damage) { if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
     void PerformSetCollider();
+    void PlayerDeath();
 
     void Update() override;
     void OnStart() override;
