@@ -153,6 +153,7 @@ void Entity::Reset()
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
     this->m_takeDamage->SetHealth(this->m_hp);
+    this->m_animationTime = 0;
 
     switch (m_type) {
     case EntityType::Player:

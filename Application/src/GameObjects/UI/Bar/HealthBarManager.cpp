@@ -26,13 +26,15 @@ void HealthBarManager::Initialize(size_t heartNumber)
 void HealthBarManager::RefillHeart(size_t healthIncrease)
 {
     for (size_t i = 0; i < healthIncrease; ++i) {
-        if (heartIndex >= maxHealth-1) 
-            return;
-        
-        heartIndex++;
+
         std::shared_ptr<Heart> heart = std::dynamic_pointer_cast<Heart>(health[heartIndex]);
         if (heart)
             heart->UpdateHeart(true);
+        if (heartIndex < maxHealth - 1)
+            heartIndex++;
+        else
+            return;
+
     }
     return;
 }
@@ -40,14 +42,16 @@ void HealthBarManager::RefillHeart(size_t healthIncrease)
 void HealthBarManager::RemoveHeart(size_t healthDamage)
 {
     for (size_t i = 0; i < healthDamage; ++i) {
-        if (heartIndex < 0)
-            return;
+        
 
         std::shared_ptr<Heart> heart = std::dynamic_pointer_cast<Heart>(health[heartIndex]);
         if (heart)
             heart->UpdateHeart(false);
 
-        heartIndex--;
+        if (heartIndex > 0)
+            heartIndex--;
+        else
+            return;
 
     }
     return;
@@ -85,4 +89,11 @@ void HealthBarManager::Cleanup()
     health.clear();
     heartIndex = 0;
     maxHealth = 0;
+}
+
+void HealthBarManager::Reset()
+{
+    heartIndex = 0;
+    maxHealth = 5;
+    RefillHeart(maxHealth);
 }
