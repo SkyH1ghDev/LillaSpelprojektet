@@ -198,7 +198,6 @@ void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<I
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
     quitButton->SetPosition({ 245, 210 });
        
-
     deathScene->AddGameObject(player);
     deathScene->AddGameObject(mouse);
     deathScene->AddGameObject(restartButton);

@@ -199,6 +199,8 @@ void Entity::PlayerDeath()
     HealthBarManager::Reset();
     ManaBarManager::Reset();
     StatSheet::Reset();
+
+    this->m_state = EntityState::Dead;
 }
 
 
