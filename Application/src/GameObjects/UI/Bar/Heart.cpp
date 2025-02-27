@@ -12,6 +12,7 @@ void Heart::OnStart()
 	this->m_isActive = false;
 	this->m_shouldRender = true;
 	this->m_scaleFloat = 1.0;
+	this->m_layerFloat = 0.8;
 	this->m_textureName = "heart.png";
 }
 

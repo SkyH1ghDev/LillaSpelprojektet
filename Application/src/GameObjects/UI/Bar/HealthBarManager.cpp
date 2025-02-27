@@ -9,9 +9,9 @@ void HealthBarManager::Initialize(size_t heartNumber)
     std::shared_ptr<IScene> scene = SceneManager::GetScene("main");
     for (size_t i = 0; i < heartNumber; ++i) {
         auto heart = std::make_shared<Heart>();
-        float heartPositionX = 30.0f + 25.0f * i;
+        float heartPositionX = 20.0f + 28.0f * i;
 
-        heart->SetPosition({ heartPositionX, 10.0f });
+        heart->SetPosition({ heartPositionX, -5.0f });
 
         health.push_back(heart);
         scene->AddGameObject(heart);
@@ -30,7 +30,7 @@ void HealthBarManager::AddNewHeart(size_t heartNumber)
 
         auto heart = std::make_shared<Heart>();
         float heartPositionX = 30 + 25.0f * i + 25.0f * maxHealth;
-        heart->SetPosition({ heartPositionX, 10.0f });
+        heart->SetPosition({ heartPositionX, -50.0f });
 
         health.push_back(heart);
         scene->AddGameObject(heart);
