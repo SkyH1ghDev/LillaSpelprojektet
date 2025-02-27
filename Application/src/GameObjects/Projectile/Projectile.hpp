@@ -36,6 +36,7 @@ public:
     
     void Update() override;
     void OnStart() override;
+    void Reset() override;
 
     ProjectileType GetType() const { return m_type; }
 

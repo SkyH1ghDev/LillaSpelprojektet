@@ -86,6 +86,20 @@ void EnemyManager::SpawnEnemies()
                 break;
             }
         }
+
+        if (!validPosition) {
+            continue; // Skip this enemy if no valid position is found
+        }
+
+        std::shared_ptr<IGameObject> enemy = std::make_shared<Entity>(EntityType::Enemy, "Enemy");
+        enemy->SetPosition(randomPos);
+        enemy->OnStart();
+
+        std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>(player);
+        enemy->AttachScript(enemyController);
+        enemy->SetActive(true);
+        testScene->AddGameObject(enemy);
+        m_enemies.push_back(enemy);
     }
 }
 

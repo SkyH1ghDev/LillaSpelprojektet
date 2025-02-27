@@ -3,6 +3,7 @@
 #include "Projectile.hpp"
 #include <vector>
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
 

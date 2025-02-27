@@ -9,6 +9,7 @@ public:
     static void RemoveHeart(size_t healthDamage);
     static void AddNewHeart(size_t heartNumber);
     static void Cleanup();
+    static void Reset();
 
 private:
     static std::vector<std::shared_ptr<IGameObject>> health;

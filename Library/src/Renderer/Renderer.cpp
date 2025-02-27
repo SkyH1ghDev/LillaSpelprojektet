@@ -10,7 +10,8 @@ Renderer::Renderer(HWND& window)
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
 	
 	AssetManager::InitializeAudioEngine();
-	AssetManager::ReadFolder(this->m_device, "../Application/Resources");
+	AssetManager::ReadFolder(this->m_device, "../Application/Resources/Assets");
+	AssetManager::ReadAnimations(this->m_device, "../Application/Resources/Animations");
 
 	this->InitializeBlendState();
 	this->InitializeSamplerState();

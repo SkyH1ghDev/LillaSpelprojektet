@@ -1,6 +1,6 @@
 #pragma once
 #include "Wand.hpp"
-#include "StatSheet.hpp"
+#include <SpEngine/Input/Input.hpp>
 
 WandScript::WandScript(std::shared_ptr<IGameObject> player)
 {

@@ -17,6 +17,8 @@ public:
 	~AssetManager() = default;
 
 	static bool ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
+	static bool ReadAnimations(const MW::ComPtr<ID3D11Device>& device, const std::string& path);
+
 	static std::shared_ptr<StaticSprite> GetSprite(const std::string& filename, float animationTime);
 	static std::unordered_map<std::string, std::shared_ptr<ISprite>> GetTextureMap();
 

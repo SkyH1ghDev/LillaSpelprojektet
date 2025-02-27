@@ -27,14 +27,14 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	ShowCursor(FALSE);
 	Renderer renderer = Renderer(window.GetWindowHandle());
 
-	std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
+	//std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 
-	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
+	//Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
-	SceneManager::LoadScene("main");
+	ExitHandler exitHandler;
 
 
-	Sound::SetMusic("battle_theme_1.wav", 0.4f);
+	Sound::SetMusic("menu_theme.wav", 0.2f);
 	Sound::PlayMusic(true);
 
 	// OnStart for all GameObjects
@@ -43,10 +43,14 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
-	
+	// Weird Bug otherwise ._.
+	SceneManager::LoadScene("death");
+	SceneManager::LoadScene("pause");
+	SceneManager::LoadScene("start");
+
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
-	while (!exitHandler->ShouldExit())
+	while (!exitHandler.ShouldExit())
 	{
 		Clock::Start();
 		Input::HandleInput(window.GetWindowHandle());

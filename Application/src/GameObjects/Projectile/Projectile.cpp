@@ -118,3 +118,12 @@ void Projectile::PerformHit()
         m_hit->Hit(this->m_isAlive);
     }  
 }
+
+void Projectile::Reset()
+{
+    PerformVisible(ProjectileState::Inactive);
+    this->m_shouldRender = false;
+    this->m_isActive = false;
+    this->m_isAlive = false;
+    this->CenterOrigin(true);
+}

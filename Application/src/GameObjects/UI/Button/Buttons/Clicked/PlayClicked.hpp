@@ -1,6 +1,5 @@
 #pragma once
 #include "IUIClicked.hpp"
-#include <iostream>
 
 class PlayClicked : public IUIClicked
 {

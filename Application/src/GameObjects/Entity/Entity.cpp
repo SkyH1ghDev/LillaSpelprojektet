@@ -29,7 +29,7 @@ void Entity::InitializeValues()
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
-    this->m_isActive = true;
+    this->m_isActive = false;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
@@ -126,7 +126,9 @@ void Entity::Update()
         }
 
     }
-    PerformVisible(this->m_state);
+
+    if (this->m_isActive)
+        PerformVisible(this->m_state);
 
 }
 
@@ -165,4 +167,32 @@ void Entity::PerformVisible(EntityState entityState)
         m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat);
     }
         
+}
+
+void Entity::Reset()
+{
+    this->m_state = EntityState::Spawning;
+    PerformVisible(this->m_state);
+    this->m_spawnTimer = 2.0;
+    this->m_shouldRender = true;
+    this->m_isAlive = true;
+
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    //PerformAttack();
+    this->m_takeDamage->SetHealth(this->m_hp);
+    this->m_animationTime = 0;
+
+    switch (m_type) {
+    case EntityType::Player:
+        this->m_DeathAnimationTimer = 3.9;
+        break;
+    case EntityType::Enemy:
+        this->m_DeathAnimationTimer = 0.0;
+        this->m_isActive = false;
+        break;
+    default:
+        this->m_DeathAnimationTimer = 0.0;
+        break;
+    }
 }

@@ -18,6 +18,7 @@ public:
 
     void Update() override;
     void OnStart() override;
+    void Reset() override;
     
     void AddToDeck(CardType cardtype, size_t lvl);
     std::pair<std::shared_ptr<ICard>, size_t> GetTopCard();

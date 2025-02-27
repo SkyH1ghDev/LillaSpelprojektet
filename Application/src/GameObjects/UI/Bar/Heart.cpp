@@ -34,7 +34,7 @@ void Heart::OnStart()
 {
 	PerformVisible();
 	SetIsAlive(true);
-	this->m_isActive = true;
+	this->m_isActive = false;
 }
 
 void Heart::UpdateHeart(bool positive)
@@ -47,4 +47,11 @@ void Heart::UpdateHeart(bool positive)
 		//Removes a heart
 		this->heart_empty = false;
 	}
+}
+
+void Heart::Reset()
+{
+	PerformVisible();
+	SetIsAlive(true);
+	this->m_isActive = false;
 }

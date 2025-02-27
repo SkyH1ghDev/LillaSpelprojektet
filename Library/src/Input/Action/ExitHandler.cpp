@@ -3,24 +3,15 @@
 #include <SpEngine/Input/KeyState.hpp>
 #include <bitset>
 
-void ExitHandler::Update(std::optional<std::any> data)
+bool ExitHandler::exitGame = false;
+
+void ExitHandler::Exit()
 {
-
-    // Makes sure that if it has been set to true,
-    // it can't be changed back and makes sure the program exits correctly
-    if (m_shouldExit)
-    {
-        return;
-    }
-
-    if (data.has_value())
-    {
-        m_shouldExit = (std::any_cast<std::bitset<4>>(data.value()) & std::bitset<4>(KeyState_Pressed)).any();
-    }
+    exitGame = true;
 }
 
-bool ExitHandler::ShouldExit() const
+bool ExitHandler::ShouldExit()
 {
-    return this->m_shouldExit;
+    return exitGame;
 }
 
