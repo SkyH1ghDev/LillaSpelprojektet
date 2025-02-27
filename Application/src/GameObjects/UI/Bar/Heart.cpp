@@ -7,7 +7,6 @@ void Heart::Update()
 
 void Heart::OnStart()
 {
-	PerformVisible();
 	SetIsAlive(true);
 	this->m_isActive = false;
 	this->m_shouldRender = true;
@@ -26,7 +25,6 @@ void Heart::UpdateHeart(bool heart)
 
 void Heart::Reset()
 {
-	PerformVisible();
 	SetIsAlive(true);
 	this->m_isActive = false;
 }
