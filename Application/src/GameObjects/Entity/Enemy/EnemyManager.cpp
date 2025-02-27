@@ -3,12 +3,15 @@
 
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Math/SpMath.hpp>
+#include <iostream>
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
 std::shared_ptr<IGameObject> EnemyManager::m_player;
+RoundState EnemyManager::m_state = RoundState_Waiting;
 int EnemyManager::m_numberOfEnemies = 0;
 int EnemyManager::m_pointBudget = 3;
+int EnemyManager::m_waveNumber = 0;
 
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 {
@@ -17,7 +20,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 
 void EnemyManager::OnStart()
 {
-    SpawnEnemies(m_player);
+    SpawnEnemies();
 }
 
 void EnemyManager::Update()
@@ -46,13 +49,13 @@ bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistan
     return false;
 }
 
-void EnemyManager::SpawnEnemies(const std::shared_ptr<IGameObject>& player)
+void EnemyManager::SpawnEnemies()
 {
     std::shared_ptr<IScene> testScene = SceneManager::GetCurrentScene();
-    m_player = player;
-    DX::XMFLOAT2 playerPos = player->GetPosition();
     std::vector<std::string> enemiesToSpawn = CalculateEnemiesToSpawn();
 
+    DX::XMFLOAT2 playerPos = m_player->GetPosition();
+    
     constexpr float minDistanceFromPlayer = 50.0f; // Avoid spawning too close to player
     constexpr float minDistanceBetweenEnemies = 30.0f; // Avoid enemy clustering
 
@@ -78,7 +81,7 @@ void EnemyManager::SpawnEnemies(const std::shared_ptr<IGameObject>& player)
                 !IsTooCloseToOtherEnemies(randomPos, minDistanceBetweenEnemies)
             )
             {
-                CreateEnemy(enemiesToSpawn.at(i), randomPos, player);
+                CreateEnemy(enemiesToSpawn.at(i), randomPos, m_player);
                 break;
             }
         }
@@ -98,7 +101,6 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         float Queen;
     };
     
-    EnemySpawnChance chance = {};
     EnemyPointData pointData = {};
 
     std::vector<std::string> entitiesToSpawn;
@@ -108,6 +110,8 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
     while (pointBudget > 0)
     {
 
+        EnemySpawnChance chance = {};
+        
         // Set percent odds of spawning a certain type
         if (pointBudget < 3)
         {
@@ -134,7 +138,6 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
 
         float rand = SpMath::RandomReal<float>(0.0f, 1.0f);
 
-        // TODO: ADD SPAWNNING FOR ALL TYPES OF ENEMIES
         if (rand < chance.Queen)
         {
             entitiesToSpawn.push_back("Queen");
@@ -190,26 +193,39 @@ void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& posi
     m_enemies.push_back(enemy);
 }
 
-
 void EnemyManager::UpdateEnemies()
 {
-    // Remove dead enemies
-    m_enemies.erase
-    (
-        std::remove_if
-        (
-            m_enemies.begin(),
-            m_enemies.end(),
-        [](const std::shared_ptr<IGameObject>& enemy) { return !enemy || !enemy->IsActive(); }
-        ),
-        m_enemies.end()
-    );
-
-    // Respawn enemies if all are dead
-    if (m_enemies.empty())
+    switch (m_state)
     {
-        SpawnEnemies(m_player); // Respawn a new wave
-        m_pointBudget += SpMath::RandomInteger<int>(1, 4);
+        case RoundState_Waiting:
+            m_state = RoundState_WaveStarted;
+            m_pointBudget += SpMath::RandomInteger<int>(1, 4);
+            break;
+        
+        case RoundState_WaveStarted:
+            m_enemies.erase
+            (
+                std::remove_if
+                (
+                    m_enemies.begin(),
+                    m_enemies.end(),
+                    [](const std::shared_ptr<IGameObject>& enemy) { return !enemy || !enemy->IsActive(); }
+                ),
+                m_enemies.end()
+            );
+        
+            if (m_enemies.empty())
+            {
+                ++m_waveNumber;
+                SpawnEnemies();
+                
+                if (m_waveNumber % 3 == 0)
+                {
+                    m_state = RoundState_Waiting;
+                    break;
+                }
+            }
+            break;
     }
 }
 
