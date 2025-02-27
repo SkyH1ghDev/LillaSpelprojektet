@@ -185,9 +185,9 @@ void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& posi
     
     std::shared_ptr<Entity> enemy = std::make_shared<Entity>(EntityType::Enemy, type);
     enemy->SetPosition(position);
-    enemy->InitializeValues();
+    enemy->Initialize();
     
-    std::shared_ptr<EnemyController> enemyController = std::make_shared<EnemyController>(player);
+    std::shared_ptr<EnemyController> enemyController = std::make_shared<EnemyController>();
     enemy->AttachScript(enemyController);
 
     currScene->AddGameObject(enemy);

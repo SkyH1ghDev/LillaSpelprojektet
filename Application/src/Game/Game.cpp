@@ -55,8 +55,6 @@ void Game::SetupGame()
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
 
 
-    std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "Mouse", "crosshair.png");
 
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "wandMockupOne.apng");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
@@ -73,8 +71,6 @@ void Game::SetupGame()
 
     std::shared_ptr<EnemyManager> enemyManager = std::make_shared<EnemyManager>(player);
     mainScene->AddGameObject(enemyManager);
-
-    EnemyManager::SpawnEnemies(player, 2);
    
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20, "PawnPellet");
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20, "PawnPellet");
