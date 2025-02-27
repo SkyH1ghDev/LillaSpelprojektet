@@ -10,3 +10,7 @@ void Empty::Update()
 
 }
 
+void Empty::Reset()
+{
+
+}

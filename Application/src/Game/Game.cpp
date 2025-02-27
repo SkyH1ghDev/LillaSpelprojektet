@@ -19,6 +19,7 @@
 #include "GameObjects/UI/Bar/ManaBarManager.hpp"
 #include "Abilities/StatSheet.hpp"
 #include "Scripts/PauseBackGround.hpp"
+#include "Button.hpp"
 
 void Game::SetupGame()
 {
@@ -135,14 +136,13 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
 
 
     // Collision
-    std::shared_ptr<IGameObject> collisionObject = std::make_shared<Emty>();
+    std::shared_ptr<IGameObject> collisionObject = std::make_shared<Empty>();
     std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));
     collisionObject->AttachScript(collisionHandler);
     mainScene->AddGameObject(collisionObject);
 
 
     // Managers
-    EnemyManager::SpawnEnemies(player, 2);
     ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
     ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
     HealthBarManager::Initialize(5);

@@ -16,6 +16,7 @@ public:
     EnemyManager(const std::shared_ptr<IGameObject>& player);
     void Update() override;
     void OnStart() override;
+    void Reset() override;
     
     void SpawnEnemies();
     void CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player);

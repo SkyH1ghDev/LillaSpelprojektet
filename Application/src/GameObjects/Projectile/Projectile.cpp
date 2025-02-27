@@ -121,7 +121,7 @@ void Projectile::PerformHit()
 
 void Projectile::Reset()
 {
-    PerformVisible(ProjectileState::Inactive);
+    PerformVisible();
     this->m_shouldRender = false;
     this->m_isActive = false;
     this->m_isAlive = false;
