@@ -37,7 +37,7 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::str
         // Use the provided name and append an index for uniqueness
         auto obj = std::make_shared<T>(type, name + "_" + std::to_string(i));
         obj->SetActive(false);
-        if (name == "Enemy")
+        if (name == "Bishop")
         {
             std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>();
             obj->AttachScript(enemyController);

@@ -31,8 +31,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	Input::GetKey(VK_ESCAPE)->Attach(std::static_pointer_cast<IObserver, ExitHandler>(exitHandler));
 
-	SceneManager::LoadScene("main");
-
 
 	Sound::SetMusic("battle_theme_1.wav", 0.4f);
 	Sound::PlayMusic(true);
@@ -43,6 +41,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
+
+	SceneManager::LoadScene("main");
 	
 	//Render- / main application loop
 	//May want to change the condition to a bool variable

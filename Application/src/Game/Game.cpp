@@ -30,9 +30,9 @@ void Game::SetupGame()
     }
 
     SceneManager::LoadScene("main");
-    
+
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
-    
+
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
     std::shared_ptr<IScript> playerController = std::make_shared<PlayerController>();
     player->AttachScript(playerController);
@@ -46,15 +46,6 @@ void Game::SetupGame()
 
     std::shared_ptr<Entity> playerEntity = std::dynamic_pointer_cast<Entity>(player);
     playerEntity->Initialize();
-    std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
-
-
-    std::shared_ptr<PlayerCardScript> pcs = std::make_shared<PlayerCardScript>();
-    std::shared_ptr<IScript> playerCardScript = std::static_pointer_cast<IScript>(pcs);
-
-    std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
-
-
 
     std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "wandMockupOne.apng");
     std::shared_ptr<IScript> wandScript = std::static_pointer_cast<IScript, WandScript>(std::make_shared<WandScript>(player));
@@ -74,7 +65,6 @@ void Game::SetupGame()
    
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20, "PawnPellet");
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20, "PawnPellet");
-    PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 10, "Bishop");
 
     std::shared_ptr<IGameObject> collisionObject = std::make_shared<Empty>();
     std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));
@@ -98,6 +88,8 @@ void Game::SetupGame()
     secondScene->AddGameObject(player);
     secondScene->AddGameObject(background);
     secondScene->AddGameObject(mouse);
+
+
 }
 
 void Game::ResetGame()

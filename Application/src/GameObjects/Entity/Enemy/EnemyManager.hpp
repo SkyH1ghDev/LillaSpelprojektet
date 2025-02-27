@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <SpEngine/Assets/Game/IGameObject.hpp>
+#include "Entity.hpp"
 
 enum RoundState
 {
@@ -20,6 +21,7 @@ public:
     void SpawnEnemies();
     void CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player);
     void UpdateEnemies();
+    EntityType ConvertStringToEntityType(const std::string& type);
     static void Cleanup();
     
     std::vector<std::string> CalculateEnemiesToSpawn();

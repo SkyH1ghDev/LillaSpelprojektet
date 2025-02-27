@@ -32,6 +32,7 @@ void Entity::Initialize()
     this->m_isAlive = true;
     this->m_isActive = true;
     this->m_takeDamage->SetHealth(this->m_hp);
+    PerformSetCollider();
 
     switch (m_type) {
         
@@ -40,6 +41,8 @@ void Entity::Initialize()
             break;
         
         case EntityType::Enemy:
+            this->m_DeathAnimationTimer = 0.0;
+            break;
         default:
             this->m_DeathAnimationTimer = 0.0;
             break;
@@ -53,7 +56,6 @@ void Entity::OnStart()
     this->m_spawnTimer = 2.0;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
-    PerformSetCollider();
 }
 
 void Entity::PerformSetCollider()
