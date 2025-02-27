@@ -1,6 +1,7 @@
 #include "PlayerMove.hpp"
 #include "StatSheet.hpp"
 #include <SpEngine/Clock/Clock.hpp>
+#include "PlayerInfo.hpp"
 
 DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool dashInput, std::shared_ptr<Collider> m_collider) {
     float deltaTime = Clock::GetDeltaTime();
@@ -82,7 +83,7 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     {
         newPosition.y = position.y;
     }
-
+    PlayerInfo::SetPosition(newPosition);
     return newPosition;
 }
 

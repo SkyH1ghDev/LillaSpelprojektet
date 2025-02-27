@@ -33,7 +33,6 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	ExitHandler exitHandler;
 
-
 	Sound::SetMusic("menu_theme.wav", 0.2f);
 	Sound::PlayMusic(true);
 
@@ -48,6 +47,9 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	SceneManager::LoadScene("pause");
 	SceneManager::LoadScene("start");
 
+
+	SceneManager::LoadScene("main");
+	
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!exitHandler.ShouldExit())

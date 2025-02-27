@@ -59,6 +59,7 @@ void Game::SetupGame()
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
     SetupMainScene(mainScene, player);
 
+    SceneManager::LoadScene("main");
 }
 
 void Game::ResetGame()
@@ -68,7 +69,8 @@ void Game::ResetGame()
     SceneManager::ClearScene("pause");
     SceneManager::ClearScene("secondScene");
     EnemyManager::Cleanup();
-    ProjectileManager::Cleanup();
+    ProjectileManager::Cleanup(ProjectileType::BishopBall);
+    ProjectileManager::Cleanup(ProjectileType::PawnPellet);
     HealthBarManager::Cleanup();
     ManaBarManager::Cleanup();
     StatSheet::Reset();
@@ -120,6 +122,9 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     mainScene->AddGameObject(player);
     mainScene->AddGameObject(cardDeck);
 
+    //Enemies
+    std::shared_ptr<EnemyManager> enemyManager = std::make_shared<EnemyManager>(player);
+    mainScene->AddGameObject(enemyManager);
 
     // Background and Mouse
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
@@ -143,8 +148,8 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
 
 
     // Managers
-    ProjectileManager::Initialize(ProjectileType::BishopBall, 10);
-    ProjectileManager::Initialize(ProjectileType::PawnPellet, 10);
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20, "PawnPellet");
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20, "PawnPellet");
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);

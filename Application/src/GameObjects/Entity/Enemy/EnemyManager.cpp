@@ -1,5 +1,6 @@
 #include "EnemyManager.hpp"
 #include "EnemyController.hpp"
+#include "EnemyPoolManager.hpp"
 
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <cmath>
@@ -17,6 +18,13 @@ int EnemyManager::m_waveNumber = 0;
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 {
     m_player = player;
+
+    // Initialize the pool with a certain number of enemies
+    //PoolManager<Entity, EntityType>::Initialize(EntityType::Pawn, 10, "Pawn");
+    PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 5, "Bishop");
+    //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
+    //PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 3, "Rook");
+    //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
 }
 
 void EnemyManager::OnStart()
@@ -186,16 +194,17 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
 
 void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player)
 {
-    std::shared_ptr<IScene> currScene = SceneManager::GetCurrentScene();
-    
-    std::shared_ptr<Entity> enemy = std::make_shared<Entity>(EntityType::Enemy, type);
-    enemy->SetPosition(position);
-    enemy->InitializeValues();
-    
-    std::shared_ptr<EnemyController> enemyController = std::make_shared<EnemyController>(player);
-    enemy->AttachScript(enemyController);
+    // Convert the string type to EntityType (assuming you have a mapping)
+    EntityType enemyType = ConvertStringToEntityType(type);
 
-    currScene->AddGameObject(enemy);
+    // Retrieve an enemy from the pool
+    std::shared_ptr<Entity> enemy = PoolManager<Entity, EntityType>::GetObject(enemyType, type);
+
+    // Set the enemy's position and activate it
+    enemy->SetPosition(position);
+    enemy->Initialize();
+
+    // Add the enemy to the list of active enemies
     m_enemies.push_back(enemy);
 }
 
@@ -203,39 +212,58 @@ void EnemyManager::UpdateEnemies()
 {
     switch (m_state)
     {
-        case RoundState_Waiting:
-            m_state = RoundState_WaveStarted;
-            m_pointBudget += SpMath::RandomInteger<int>(1, 4);
-            break;
-        
-        case RoundState_WaveStarted:
-            m_enemies.erase
+    case RoundState_Waiting:
+        m_state = RoundState_WaveStarted;
+        m_pointBudget += SpMath::RandomInteger<int>(1, 4);
+        break;
+
+    case RoundState_WaveStarted:
+        m_enemies.erase
+        (
+            std::remove_if
             (
-                std::remove_if
-                (
-                    m_enemies.begin(),
-                    m_enemies.end(),
-                    [](const std::shared_ptr<IGameObject>& enemy) { return !enemy || !enemy->IsActive(); }
-                ),
-                m_enemies.end()
-            );
-        
-            if (m_enemies.empty())
-            {
-                ++m_waveNumber;
-                SpawnEnemies();
-                
-                if (m_waveNumber % 3 == 0)
-                {
-                    m_state = RoundState_Waiting;
-                    break;
+                m_enemies.begin(),
+                m_enemies.end(),
+                [](const std::shared_ptr<IGameObject>& enemy) {
+                    if (!enemy || !enemy->IsActive()) {
+                        // Return the enemy to the pool
+                        std::shared_ptr<Entity> enemyEntity = std::dynamic_pointer_cast<Entity>(enemy);
+                        PoolManager<Entity, EntityType>::ReturnObject(enemyEntity->GetType(), enemyEntity);
+                        return true;
+                    }
+                    return false;
                 }
+            ),
+            m_enemies.end()
+        );
+
+        if (m_enemies.empty())
+        {
+            ++m_waveNumber;
+            SpawnEnemies();
+
+            if (m_waveNumber % 3 == 0)
+            {
+                m_state = RoundState_Waiting;
+                break;
             }
-            break;
+        }
+        break;
     }
 }
 
 void EnemyManager::Cleanup()
 {
     m_enemies.clear();
+}
+
+EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
+{
+    //if (type == "Pawn") return EntityType::Pawn;
+    if (type == "Bishop") return EntityType::Enemy;
+    //if (type == "Knight") return EntityType::Knight;
+    //if (type == "Rook") return EntityType::Rook;
+    //if (type == "Queen") return EntityType::Queen;
+    // Default to Pawn if no match is found
+    return EntityType::Enemy;
 }
