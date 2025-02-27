@@ -68,12 +68,13 @@ void Game::SetupGame()
 
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20);
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20);
+    //PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 10);
 
     std::shared_ptr<IGameObject> collisionObject = std::make_shared<Emty>();
     std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));
     collisionObject->AttachScript(collisionHandler);
     testScene->AddGameObject(collisionObject);
-
+      
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);

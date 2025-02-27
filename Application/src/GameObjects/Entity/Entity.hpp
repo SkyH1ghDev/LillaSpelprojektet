@@ -57,5 +57,5 @@ private:
     float m_iFrameTimer = 0.0f;
     float m_DeathAnimationTimer = 0.0f;
     float m_dashTimer = 0.0f;
-    EntityState m_state;
+    EntityState m_state = EntityState::Base;
 };
