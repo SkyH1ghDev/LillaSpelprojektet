@@ -114,7 +114,10 @@ void Button::Update()
 void Button::OnStart()
 {
     SetupButton();
+
 }
+
+
 
 void Button::Reset()
 {
@@ -129,3 +132,4 @@ void Button::Reset()
     this->m_layerFloat = 0.9;
     this->m_scaleFloat = 1.0;
 }
+
