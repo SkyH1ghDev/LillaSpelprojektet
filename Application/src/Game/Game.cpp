@@ -37,7 +37,7 @@ void Game::SetupGame()
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> pauseScene = SceneManager::GetScene("pause");
-    SetupPauseScene(pauseScene);
+    //SetupPauseScene(pauseScene);
 
     // Setup Main Scene
     if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
@@ -46,6 +46,7 @@ void Game::SetupGame()
     }
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
     SetupMainScene(mainScene);
+
 }
 
 void Game::ResetGame()
@@ -78,7 +79,7 @@ void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({245, 150 });
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
-    exitButton->SetPosition({ 245, 200 });
+    exitButton->SetPosition({ 245, 210 });
 
     startScene->AddGameObject(mouse);
     startScene->AddGameObject(playButton);

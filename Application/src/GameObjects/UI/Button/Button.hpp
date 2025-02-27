@@ -25,6 +25,7 @@ public:
 
     Button(ButtonType type);
     void PerformClicked();
+    void SetupButton();
 
     void Update() override;
     void OnStart() override;
@@ -39,4 +40,5 @@ private:
 private:
     void PerformVisible();
     void PerformHover();
+
 };
