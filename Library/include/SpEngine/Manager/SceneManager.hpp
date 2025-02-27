@@ -21,6 +21,7 @@ public:
     static bool LoadScene(const std::string& id);
     static void UnloadScene();
     static void ClearScene(const std::string& id);
+    static void ResetScene(const std::string& id);
 
 };
 

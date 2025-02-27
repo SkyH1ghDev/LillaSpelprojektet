@@ -7,6 +7,7 @@ void QuitClicked::Clicked()
 {
 	SceneManager::UnloadScene();
 	SceneManager::LoadScene("start");
+	SceneManager::ResetScene("main");
 	Sound::SetMusic("menu_theme.wav", 0.2f);
 	Sound::PlayMusic(true);
 
