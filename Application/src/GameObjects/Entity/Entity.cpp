@@ -70,10 +70,14 @@ void Entity::Update()
 
     if (this->m_state == EntityState::Spawning)
     {
+        if (!this->m_isAnimating)
+            this->ResetAnimation();
+        this->m_isAnimating = true;
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
         if (m_spawnTimer <= 0.0f)
         {
             this->m_state = EntityState::Base;
+            this->m_isAnimating = false;
         }
         return;
     }
@@ -178,7 +182,7 @@ void Entity::PerformVisible(EntityState entityState)
 void Entity::Reset()
 {
     this->m_state = EntityState::Spawning;
-    PerformVisible(this->m_state);
+    //PerformVisible(this->m_state);
     this->m_spawnTimer = 2.0;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
