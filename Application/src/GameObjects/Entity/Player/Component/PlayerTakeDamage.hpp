@@ -1,7 +1,5 @@
 #pragma once
 #include "IEntityTakeDamage.hpp"
-#include "HealthBarManager.hpp"
-#include <iostream>
 
 class PlayerTakeDamage : public IEntityTakeDamage
 {

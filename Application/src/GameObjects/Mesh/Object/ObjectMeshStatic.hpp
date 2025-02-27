@@ -1,6 +1,5 @@
 #pragma once
 #include "IMeshStatic.hpp"
-#include <iostream>
 
 class ObjectMeshStatic : public IMeshStatic
 {

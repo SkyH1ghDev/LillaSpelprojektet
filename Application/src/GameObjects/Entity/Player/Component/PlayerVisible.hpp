@@ -1,6 +1,5 @@
 #pragma once
 #include "IEntityVisible.hpp"
-#include <iostream>
 
 class PlayerVisible : public IEntityVisible
 {

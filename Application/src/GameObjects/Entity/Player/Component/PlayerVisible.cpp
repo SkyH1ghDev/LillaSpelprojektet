@@ -11,7 +11,7 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
         texture = "chesster_back_v3.png";
         break;
     case EntityState::WalkDown:
-        texture = "chesster_front_v3.png";
+        texture = "chesster_front_idle.apng";
         break;
     case EntityState::WalkRight:
         texture = "chesster_right_v3.png";

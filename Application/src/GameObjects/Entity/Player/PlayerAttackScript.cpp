@@ -2,6 +2,7 @@
 #include "StatSheet.hpp"
 #include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Clock/Clock.hpp>
+#include "Entity.hpp"
 
 void PlayerAttackScript::OnStart()
 {

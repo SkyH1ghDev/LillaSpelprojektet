@@ -1,6 +1,5 @@
 #pragma once
 #include "IMeshVisible.hpp"
-#include <iostream>
 
 class BackgroundVisible : public IMeshVisible
 {

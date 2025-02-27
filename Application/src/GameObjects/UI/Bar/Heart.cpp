@@ -19,7 +19,7 @@ Heart::Heart(HeartType type) :
 	m_visible(CreateVisibleComponent(type)),
 	m_type(type)
 {
-	std::cout << "Heart created" << std::endl;
+
 }
 
 void Heart::Update()

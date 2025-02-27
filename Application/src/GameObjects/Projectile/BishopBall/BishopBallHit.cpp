@@ -1,8 +1,6 @@
 #include "BishopBallHit.hpp"
 
-void BishopBallHit::Hit(bool& isActive, bool& shouldRender, bool& isAlive)
+void BishopBallHit::Hit(bool& isAlive)
 {
-	isActive = false;
-	shouldRender = false;
 	isAlive = false;
 }

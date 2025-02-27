@@ -1,4 +1,6 @@
 #include "EnemyAttack.hpp"
+#include "ProjectileManager.hpp"
+#include <iostream>
 
 void EnemyAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {

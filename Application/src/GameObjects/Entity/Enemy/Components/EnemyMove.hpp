@@ -1,6 +1,5 @@
 #pragma once
 #include "IEntityMove.hpp"
-#include <iostream>
 
 class EnemyMove : public IEntityMove
 {

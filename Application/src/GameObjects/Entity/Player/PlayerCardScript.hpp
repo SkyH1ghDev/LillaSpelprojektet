@@ -2,7 +2,6 @@
 #include "Entity.hpp"
 #include "Actions/UseCard.hpp"
 #include "Card/CardDeck.hpp"
-#include "ManaBarManager.hpp"
 
 #include <SpEngine/Assets/Game/IScript.hpp>
 

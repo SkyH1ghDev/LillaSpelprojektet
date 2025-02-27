@@ -1,7 +1,5 @@
 #pragma once
-#include "Entity.hpp"
 #include "Actions/Attack.hpp"
-
 #include <SpEngine/Assets/Game/IScript.hpp>
 
 

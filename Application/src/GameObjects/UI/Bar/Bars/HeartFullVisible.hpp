@@ -1,6 +1,5 @@
 #pragma once
 #include "IUIVisible.hpp"
-#include <iostream>
 
 class HeartFullVisible : public IUIVisible
 {
