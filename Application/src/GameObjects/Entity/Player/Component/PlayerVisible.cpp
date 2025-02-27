@@ -41,7 +41,7 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
         }
         break;
     case EntityState::Dying:
-        texture = "chesster_death_animation.apng";
+        texture = "chesster_death";
         break;
     case EntityState::Dead:
         texture = "chesster_dead.png";

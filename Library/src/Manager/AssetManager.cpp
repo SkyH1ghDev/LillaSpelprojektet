@@ -84,6 +84,7 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 						float frameTime = static_cast<float>(frame.delay_num) / static_cast<float>(frame.delay_den);
 						while (loader.has_frame())
 						{
+							//
 							sprites.push_back(std::make_shared<StaticSprite>(device, frame));
 							/* Debug section for dumping images*/
 							//std::chrono::milliseconds ms = duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
@@ -107,6 +108,72 @@ bool AssetManager::ReadFolder(const MW::ComPtr<ID3D11Device>& device, const std:
 					break;
 			}
 		}
+	}
+
+	return true;
+}
+
+//For animations at 12 fps
+bool AssetManager::ReadAnimations(const MW::ComPtr<ID3D11Device>& device, const std::string& path)
+{
+	std::unordered_map<std::string, std::vector<std::shared_ptr<StaticSprite>>> frameMap;
+	std::vector<std::string> animationNames;
+
+	for (const auto& entry : FS::recursive_directory_iterator(path))
+	{
+		if (entry.is_directory()) {
+			continue;
+		}
+		std::string filepath = entry.path().string();
+
+		std::vector<int> positions;
+		int res = -1;
+		char sub[] = "\\";
+		while ((res = filepath.find(sub, res + 1)) != std::string::npos)
+		{
+			positions.push_back(res);
+		}
+
+		for (int pos : positions)
+		{
+			filepath.at(pos) = '/';
+		}
+
+		size_t subFolderIndex = filepath.find_last_of('/');
+		size_t folderIndex = filepath.find_last_of('/', subFolderIndex - 1);
+		std::string filename = filepath.substr(subFolderIndex + 1, filepath.length() - subFolderIndex);
+		std::string extension = filename.substr(filename.find_last_of('.')); 
+		std::string animName = filepath.substr(folderIndex + 1 , subFolderIndex - folderIndex - 1);
+
+		if (animationNames.empty())
+			animationNames.push_back(animName);
+
+		for (size_t i = 0; i < animationNames.size(); i++)
+		{
+			if (animationNames[i] == animName)
+				break;
+			if (i == animationNames.size() - 1)
+				animationNames.push_back(animName);
+		}
+
+		if (m_extensionIndex.contains(extension))
+		{
+			switch (m_extensionIndex[extension])
+			{
+			case FileFormat_PNG:
+			{
+				frameMap[animName].push_back(std::make_shared<StaticSprite>(device, filepath));
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
+
+	for (auto name : animationNames)
+	{
+		m_textureMap[name] = std::make_shared<AnimatedSprite>(frameMap[name], 1.0f/24.0f);
 	}
 
 	return true;
