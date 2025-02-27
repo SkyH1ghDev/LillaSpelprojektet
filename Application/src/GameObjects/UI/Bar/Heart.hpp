@@ -1,7 +1,7 @@
 #pragma once
 #include <SpEngine/Assets/Game/IGameObject.hpp>
 
-#include "IUIVisible.hpp"
+#include "GameObjects/UI/Interfaces/IUIVisible.hpp"
 
 // Define an enum for the entity type
 enum class HeartType {
@@ -13,7 +13,7 @@ class Heart : public IGameObject
 {
 public:
     Heart() = default;
-    ~Heart() = default;
+    ~Heart() override = default;
     Heart(const Heart& other) = default;
     Heart& operator=(const Heart& other) = default;
     Heart(Heart&& other) noexcept = default;

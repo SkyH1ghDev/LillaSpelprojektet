@@ -183,7 +183,7 @@ void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& posi
 {
     std::shared_ptr<IScene> currScene = SceneManager::GetCurrentScene();
     
-    std::shared_ptr<Entity> enemy = std::make_shared<Entity>(EntityType::Enemy, type);
+    std::shared_ptr<Entity> enemy = std::make_shared<Entity>(EntityType::Bishop, type);
     enemy->SetPosition(position);
     enemy->InitializeValues();
     
