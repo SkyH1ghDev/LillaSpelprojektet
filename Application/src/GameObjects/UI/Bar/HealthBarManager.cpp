@@ -43,7 +43,7 @@ void HealthBarManager::DrawHearts()
 {
     float currentHealth = StatSheet::GetCurrentHealth();
 
-    for (size_t i = 1; i < maxHealth; i++) {
+    for (size_t i = 0; i < maxHealth; i++) {
         if (currentHealth > i)
             health[i]->UpdateHeart(true);
         else

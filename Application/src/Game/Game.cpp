@@ -165,17 +165,17 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
 {
-    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PauseMouse", "mouse.png");
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
-    std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
-    playButton->SetPosition({ 245, 150 });
+    std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Continue);
+    continueButton->SetPosition({ 245, 150 });
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
-    quitButton->SetPosition({ 245, 200 });
-    std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Quit);
-    continueButton->SetPosition({ 245, 200 });
+    quitButton->SetPosition({ 245, 210 });
 
-    pauseScene->AddGameObject(quitButton);
     pauseScene->AddGameObject(continueButton);
+    pauseScene->AddGameObject(quitButton);
+    pauseScene->AddGameObject(mouse);
+
 
     //Create animated background
     for (size_t i = 0; i < 8; i++)
@@ -198,7 +198,6 @@ void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<I
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
     quitButton->SetPosition({ 245, 210 });
        
-
     deathScene->AddGameObject(player);
     deathScene->AddGameObject(mouse);
     deathScene->AddGameObject(restartButton);

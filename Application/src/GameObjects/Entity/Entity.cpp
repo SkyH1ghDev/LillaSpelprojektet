@@ -9,6 +9,12 @@
 #include "EnemyManager.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
+#include "StatSheet.hpp"
+#include "HealthBarManager.hpp"
+#include "ManaBarManager.hpp"
+#include <SpEngine/Audio/Sound.hpp>
+#include <SpEngine/Manager/SceneManager.hpp>
+
 
 Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
     m_move(CreateMoveComponent(entityType)),
@@ -89,9 +95,9 @@ void Entity::Update()
     {
         if (!this->m_isAnimating && this->m_state != EntityState::TakingDamage)
             this->ResetAnimation();
-        this->m_isAnimating = true;
-        this->m_state = EntityState::TakingDamage;
-        this->m_iFrameTimer -= Clock::GetDeltaTime();
+            this->m_isAnimating = true;
+            this->m_state = EntityState::TakingDamage;
+            this->m_iFrameTimer -= Clock::GetDeltaTime();
         if (this->m_iFrameTimer <= 0)
         {
             this->m_state = EntityState::Base;
@@ -101,6 +107,7 @@ void Entity::Update()
 
     if (this->m_hp <= 0)
     {   
+
         this->m_iFrameTimer = 0;
         if (!this->m_isAnimating && this->m_state != EntityState::Dying)
             this->ResetAnimation();
@@ -109,15 +116,19 @@ void Entity::Update()
         this->m_DeathAnimationTimer -= Clock::GetDeltaTime();
         if (this->m_DeathAnimationTimer <= 0)
         {
-            this->m_state = EntityState::Dead;
-            this->m_isAnimating = false;
-            SetActive(false);
-            SetIsAlive(false);
             if (this->m_type != EntityType::Player)
             {
                 SetShouldRender(false);
                 this->m_isAlive = false;
                 this->m_isActive = false;
+            }
+            else
+            {
+                this->m_state = EntityState::Dead;
+                this->m_isAnimating = false;
+                SetActive(false);
+
+                PlayerDeath();
             }
         }
     }
@@ -178,6 +189,21 @@ void Entity::PerformVisible(EntityState entityState)
     }
         
 }
+
+void Entity::PlayerDeath()
+{
+    SceneManager::UnloadScene();
+    SceneManager::LoadScene("death");
+    SceneManager::ResetScene("main");
+
+    HealthBarManager::Reset();
+    ManaBarManager::Reset();
+    StatSheet::Reset();
+
+    this->m_state = EntityState::Dead;
+}
+
+
 
 void Entity::Reset()
 {
