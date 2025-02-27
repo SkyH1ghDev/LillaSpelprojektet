@@ -9,6 +9,7 @@
 #include "Scene/Factories/GameSceneFactories/GameSceneFactory.hpp"
 #include "Player/PlayerController.hpp"
 #include "CardDeck.hpp"
+#include "PlayerFactory.hpp"
 
 #include "Player/PlayerAttackScript.hpp"
 #include "Player/PlayerCardScript.hpp"
@@ -32,8 +33,9 @@ void Game::SetupGame()
     SceneManager::LoadScene("main");
     
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
-    
-    std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
+
+    PlayerFactory playerFactory = PlayerFactory();
+    std::shared_ptr<Entity> player = playerFactory.CreateEntity("player");
     std::shared_ptr<IScript> playerController = std::make_shared<PlayerController>();
     player->AttachScript(playerController);
     std::shared_ptr<IScript> playerAttackScript = std::make_shared<PlayerAttackScript>();

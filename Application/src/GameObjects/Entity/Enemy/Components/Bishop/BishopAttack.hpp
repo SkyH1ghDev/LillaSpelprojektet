@@ -1,4 +1,5 @@
 #pragma once
+#include "IEntityAttack.hpp"
 
 class BishopAttack : public IEntityAttack
 {

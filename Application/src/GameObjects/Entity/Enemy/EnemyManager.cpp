@@ -6,6 +6,8 @@
 #include <random>
 #include <SpEngine/Math/SpMath.hpp>
 
+#include "BishopFactory.hpp"
+
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
 std::shared_ptr<IGameObject> EnemyManager::m_player;
@@ -182,8 +184,9 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
 void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player)
 {
     std::shared_ptr<IScene> currScene = SceneManager::GetCurrentScene();
+    BishopFactory factory = BishopFactory();
     
-    std::shared_ptr<Entity> enemy = std::make_shared<Entity>(EntityType::Bishop, type);
+    std::shared_ptr<Entity> enemy = factory.CreateEntity("Bishop");
     enemy->SetPosition(position);
     enemy->InitializeValues();
     

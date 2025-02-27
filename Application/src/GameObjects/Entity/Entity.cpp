@@ -1,24 +1,26 @@
 #include "Entity.hpp"
-#include "EntityAttackComponentFactory.hpp"
-#include "EntityMoveComponentFactory.hpp"
-#include "EntityTakeDamageComponentFactory.hpp"
-#include "EntityVisibleComponentFactory.hpp"
-#include "EntitySetColliderComponentFactory.hpp"
-#include <iostream>
 #include "EnemyManager.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
-
-Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
-    m_move(CreateMoveComponent(entityType)),
-    m_visible(CreateVisibleComponent(entityType)),
-    m_attack(CreateAttackComponent(entityType)),
-    m_takeDamage(CreateTakeDamageComponent(entityType)),
-    m_type(entityType),
-    m_setCollider(CreateColliderComponent(entityType))
+Entity::Entity
+(
+    const std::shared_ptr<IEntityAttack>& attackComponent,
+    const std::shared_ptr<IEntityMove>& moveComponent,
+    const std::shared_ptr<IEntityVisible>& visibleComponent,
+    const std::shared_ptr<IEntitySetCollider>& colliderComponent,
+    const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
+    const EntityType& entityType,
+    const std::string& name
+) : IGameObject(name)
 {
-    std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
+    this->m_move = moveComponent;
+    this->m_visible = visibleComponent;
+    this->m_attack = attackComponent;
+    this->m_takeDamage = takeDamageComponent;
+    this->m_setCollider = colliderComponent;
+    this->m_type = entityType;
 }
+
 
 void Entity::InitializeValues()
 {
@@ -152,7 +154,7 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
             this->m_dashTimer = 0.5f;
         }
         
-        m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
+        m_position = m_move->Move(m_position, direction, this->m_collider, dashing);
     }
 }
 

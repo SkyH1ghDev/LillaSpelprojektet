@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include "IEntityvisible.hpp"
 
 class BishopVisible : public IEntityVisible
 {

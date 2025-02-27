@@ -1,6 +1,5 @@
 #include "EnemyController.hpp"
 
-#include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Clock/Clock.hpp>
 
 EnemyController::EnemyController(std::shared_ptr<IGameObject> player)
@@ -32,10 +31,41 @@ void EnemyController::Update()
 	this->m_attackTimer += Clock::GetDeltaTime();
 
 	// Only attack if enough time has passed
+	// TODO: REFACTOR AWAY HARD ATTACK SPEED AND DISTANCE FROM PLAYER
 	if (distance < 300 && (this->m_attackTimer >= this->m_attackCooldown))
 	{
 		enemy->PerformAttack(enemyPos, direction);
 		this->m_attackTimer = 0;
 	}
 
+	DX::XMFLOAT2 enemyToPlayerDirection;
+	DX::XMStoreFloat2(&enemyToPlayerDirection, enemyToPlayerVec);
+
+	DX::XMFLOAT2 movementDirection = {};
+	if (abs(enemyToPlayerDirection.x) > abs(enemyToPlayerDirection.y))
+	{
+		if (enemyToPlayerDirection.x > 0)
+		{
+			movementDirection.x = 1;
+		}
+		else
+		{
+			movementDirection.x = -1;
+		}
+	}
+
+	if (abs(enemyToPlayerDirection.y) > abs(enemyToPlayerDirection.x))
+	{
+		if (enemyToPlayerDirection.y > 0)
+		{
+			movementDirection.y = 1;
+		}
+		else
+		{
+			movementDirection.y = -1;
+		}
+	}
+	
+	enemy->PerformMove(movementDirection, false);
+	
 }   

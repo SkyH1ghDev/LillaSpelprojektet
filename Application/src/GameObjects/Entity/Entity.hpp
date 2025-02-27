@@ -32,7 +32,16 @@ public:
     Entity(Entity&& other) noexcept = default;
     Entity& operator=(Entity&& other) noexcept = default;
 
-    Entity(EntityType entityType, const std::string& name);
+    Entity
+    (
+        const std::shared_ptr<IEntityAttack>& attackComponent,
+        const std::shared_ptr<IEntityMove>& moveComponent,
+        const std::shared_ptr<IEntityVisible>& visibleComponent,
+        const std::shared_ptr<IEntitySetCollider>& colliderComponent,
+        const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
+        const EntityType& entityType,
+        const std::string& name
+    );
 
     void InitializeValues();
 

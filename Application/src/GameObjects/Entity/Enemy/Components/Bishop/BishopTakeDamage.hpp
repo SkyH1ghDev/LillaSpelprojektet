@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include "IEntityTakeDamage.hpp"
 
 class BishopTakeDamage : public IEntityTakeDamage
 {

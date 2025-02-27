@@ -11,7 +11,7 @@ public:
     IEntityFactory(IEntityFactory&& other) noexcept = default;
     IEntityFactory& operator=(IEntityFactory&& other) noexcept = default;
 
-    static Entity CreateEntity();
+    virtual std::shared_ptr<Entity> CreateEntity(const std::string& name) = 0;
 
 protected:
     virtual std::shared_ptr<IEntityAttack> CreateAttackComponent() = 0;
