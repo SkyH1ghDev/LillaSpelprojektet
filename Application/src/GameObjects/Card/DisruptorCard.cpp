@@ -4,17 +4,17 @@
 
 void DisruptorCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    //AbilityManager::SniperShot(position, target, 600, 3);
+    AbilityManager::DisruptorWave(position, target, 0.5f);
 }
 
 void DisruptorCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    //AbilityManager::SniperShot(position, target, 600, 4);
+    AbilityManager::DisruptorWave(position, target, 0.7f);
 }
 
 void DisruptorCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    //AbilityManager::SniperShot(position, target, 600, 5);
+    AbilityManager::DisruptorWave(position, target, 1.0f);
 }
 
 void DisruptorCard::SetCardTexture(size_t cardLevel)

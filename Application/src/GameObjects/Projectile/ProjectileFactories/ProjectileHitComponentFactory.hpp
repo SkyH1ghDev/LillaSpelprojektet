@@ -6,5 +6,6 @@
 #include "BishopBallHit.hpp"
 #include "ScatterPellethit.hpp"
 #include "SniperBulletHit.hpp"
+#include "DisruptorWaveHit.hpp"
 
 std::shared_ptr<IProjectileHit> CreateHitComponent(ProjectileType type);

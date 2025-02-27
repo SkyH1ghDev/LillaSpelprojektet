@@ -26,3 +26,9 @@ bool Collider::CanCollideWith(CollisionLayer otherLayer) const
 	return static_cast<int>(m_mask) & static_cast<int>(otherLayer);
 }
 
+void Collider::SetRadius(float newRadius, float aspectRatio)
+{
+	this->m_radiusX = newRadius;
+	this->m_radiusY = newRadius * aspectRatio;
+}
+

@@ -67,7 +67,7 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 		}
 	}
 
-	//this->DrawHitBoxes(ObjectVec);
+	this->DrawHitBoxes(ObjectVec);
 
 	this->m_spriteBatch->End();
 }
