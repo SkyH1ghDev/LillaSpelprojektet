@@ -42,7 +42,7 @@ void Entity::Initialize()
             break;
         
         case EntityType::Enemy:
-            this->m_DeathAnimationTimer = 0.0;
+            this->m_DeathAnimationTimer = 0.9;
             break;
         default:
             this->m_DeathAnimationTimer = 0.0;
@@ -191,7 +191,7 @@ void Entity::Reset()
         this->m_DeathAnimationTimer = 3.9;
         break;
     case EntityType::Enemy:
-        this->m_DeathAnimationTimer = 0.0;
+        this->m_DeathAnimationTimer = 0.9;
         this->m_isActive = false;
         this->m_isAlive = false;
         this->m_shouldRender = false;
