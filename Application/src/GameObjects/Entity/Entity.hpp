@@ -29,9 +29,7 @@ public:
     Entity& operator=(Entity&& other) noexcept = default;
 
     Entity(EntityType entityType, const std::string& name);
-
-    void InitializeValues();
-
+    void Initialize();
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
@@ -59,5 +57,5 @@ private:
     float m_iFrameTimer = 0.0f;
     float m_DeathAnimationTimer = 0.0f;
     float m_dashTimer = 0.0f;
-    EntityState m_state;
+    EntityState m_state = EntityState::Base;
 };

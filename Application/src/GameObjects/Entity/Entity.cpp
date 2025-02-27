@@ -22,7 +22,8 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
 
-void Entity::InitializeValues()
+
+void Entity::Initialize()
 {
     this->m_state = EntityState::Spawning;
     PerformVisible(this->m_state);
@@ -30,12 +31,8 @@ void Entity::InitializeValues()
     this->m_shouldRender = true;
     this->m_isAlive = true;
     this->m_isActive = true;
-    this->CenterOrigin(true);
-    this->m_origonOffset = DX::XMFLOAT2(0, 50);
-    //PerformAttack();
     this->m_takeDamage->SetHealth(this->m_hp);
-    PerformSetCollider();
-    
+
     switch (m_type) {
         
         case EntityType::Player:
@@ -52,7 +49,11 @@ void Entity::InitializeValues()
 
 void Entity::OnStart()
 {
-    InitializeValues();
+    PerformVisible(this->m_state);
+    this->m_spawnTimer = 2.0;
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    PerformSetCollider();
 }
 
 void Entity::PerformSetCollider()
@@ -108,6 +109,8 @@ void Entity::Update()
             if (this->m_type != EntityType::Player)
             {
                 SetShouldRender(false);
+                this->m_isAlive = false;
+                this->m_isActive = false;
             }
         }
     }
