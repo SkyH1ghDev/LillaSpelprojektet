@@ -23,11 +23,6 @@ bool SceneManager::LoadScene(const std::string& id)
         return false;
     }
     
-    if (m_currentScene)
-    {
-        UnloadScene();
-    }
-    
     m_currentScene = m_scenesMap[id];
     m_currentScene->SetActive(true); // Activate all objects in the scene
     return true;

@@ -105,19 +105,9 @@ void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec
 		if (gameObj->ShouldRender())
 		{
 			
-			DX::XMFLOAT2 origin = DX::XMFLOAT2(0, 0);
-			DX::XMFLOAT2 originOffset = ObjectVec.at(i)->GetOriginOffset();
-
 			std::string textureFilepath = gameObj->GetTextureString();
 			std::shared_ptr<StaticSprite> sprite = AssetManager::GetSprite(textureFilepath, 0);
 			
-			if (ObjectVec.at(i)->IsOriginCentered())
-			{
-				origin = sprite->GetOrigin();
-			}
-			
-			origin.x += originOffset.x;
-			origin.y += originOffset.y;
 			if (ObjectVec.at(i)->GetCollider() != nullptr)
 			{
 				Collider col = *ObjectVec.at(i)->GetCollider();
