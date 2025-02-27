@@ -47,7 +47,6 @@ void Button::PerformClicked()
             PerformVisible();
         }
     }
-
 }
 
 void Button::PerformVisible()
@@ -102,7 +101,7 @@ void Button::SetupButton()
 
     this->m_shouldRender = true;
     this->m_textureName = "button_basic.png";
-    this->m_layerFloat = 0.9;
+    this->m_layerFloat = 0.3;
     this->m_scaleFloat = 1.0;
 }
 

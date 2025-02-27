@@ -11,12 +11,12 @@ void ProjectileManager::Initialize(ProjectileType type, size_t poolSize) {
     projectiles.clear();
     projectiles.reserve(poolSize);
 
-    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
+    std::shared_ptr<IScene> scene = SceneManager::GetScene("main");
     for (size_t i = 0; i < poolSize; ++i) {
         auto projectile = std::make_shared<Projectile>(type);
         projectile->SetActive(false);
         projectiles.push_back(projectile);
-        testScene->AddGameObject(projectile);
+        scene->AddGameObject(projectile);
     }
 }
 

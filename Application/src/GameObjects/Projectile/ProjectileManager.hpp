@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include "Projectile.hpp"
 #include <SpEngine/Manager/SceneManager.hpp>
