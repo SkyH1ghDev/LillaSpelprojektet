@@ -5,7 +5,8 @@ namespace DX = DirectX;
 
 enum class ProjectileState {
     Active,
-    Inactive
+    Inactive,
+    Exploding,
 };
 
 class IProjectileVisible

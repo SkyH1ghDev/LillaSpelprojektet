@@ -1,8 +1,6 @@
 #include "SniperBulletHit.hpp"
 
-void SniperBulletHit::Hit(bool& isActive, bool& shouldRender, bool& isAlive)
+void SniperBulletHit::Hit(bool& isAlive)
 {
-	isActive = false;
-	shouldRender = false;
 	isAlive = false;
 }

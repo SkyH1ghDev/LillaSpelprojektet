@@ -30,8 +30,8 @@ public:
     Projectile(ProjectileType projectileType);
     void Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage);
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
-    void PerformVisible(ProjectileState projectileState) { if (m_visible) m_visible->Visible(m_textureName, m_position, projectileState, m_layerFloat, m_scaleFloat); }
-    void PerformHit() { if (m_hit) m_hit->Hit(this->m_isActive, this->m_shouldRender, this->m_isAlive); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat); }
+    void PerformHit();
     void PerformSetCollider();
     
     void Update() override;
@@ -47,10 +47,13 @@ private:
     std::shared_ptr<IProjectileHit> m_hit;
     std::shared_ptr<IProjectileSetCollider> m_setCollider;
     ProjectileType m_type;
+    ProjectileState m_state = ProjectileState::Inactive;
     DX::XMFLOAT2 m_setPosition;
     DX::XMFLOAT2 m_direction;
     float m_velocity;
     float m_lifetime;
     float m_damageAmp = 1.0;
     float m_damage = 0.0;
+    bool m_isAnimating = false;
+    float m_animationTimer = 0;
 };
