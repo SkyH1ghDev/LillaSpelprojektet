@@ -70,10 +70,12 @@ void Projectile::Update()
         this->m_collider->UpdatePosition(this->m_position);
         if (PhysicsEngine::WallProjectileCollision(m_collider) || PhysicsEngine::WallProjectileCollision(m_collider))
         {
+            this->m_isActive = false;
             this->m_isAlive = false;
+            this->m_shouldRender = false;
         }
     }
-    else
+    else if(this->m_hasDeathAnimation)
     {
         this->m_state = ProjectileState::Exploding;
         SetCollider(nullptr);
@@ -91,6 +93,12 @@ void Projectile::Update()
             this->m_isAlive = false;
             this->m_shouldRender = false;
         }
+    }
+    else
+    {
+        this->m_isActive = false;
+        this->m_isAlive = false;
+        this->m_shouldRender = false;
     }
     
     PerformVisible();

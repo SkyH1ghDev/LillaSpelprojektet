@@ -1,6 +1,6 @@
 #include "BishopBallVisible.hpp"
 
-void BishopBallVisible::Visible(std::string& texture, DX::XMFLOAT2 position, ProjectileState entityState, float& layer, float& scale)
+void BishopBallVisible::Visible(std::string& texture, DX::XMFLOAT2 position, ProjectileState entityState, float& layer, float& scale, bool& hasDeathAnimation)
 {
     layer = 0.5 + 0.3 * position.y / 360;
 

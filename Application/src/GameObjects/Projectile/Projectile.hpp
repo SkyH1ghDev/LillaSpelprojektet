@@ -30,7 +30,7 @@ public:
     Projectile(ProjectileType projectileType, const std::string& name);
     void Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage);
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
-    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat, this->m_hasDeathAnimation); }
     void PerformHit();
     void PerformSetCollider();
     
@@ -57,4 +57,5 @@ private:
     float m_damage = 0.0;
     bool m_isAnimating = false;
     float m_animationTimer = 0;
+    bool m_hasDeathAnimation = false;
 };
