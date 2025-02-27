@@ -131,7 +131,7 @@ void Entity::Update()
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
-    if (m_move != nullptr && this->m_state != EntityState::Dying) {
+    if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
         if (direction.y == -1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkUp;
