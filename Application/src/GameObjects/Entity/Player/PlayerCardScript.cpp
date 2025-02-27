@@ -22,6 +22,7 @@ void PlayerCardScript::OnStart()
 	m_cardDeck->AddToDeck(CardType::Sniper, 1);
 	m_cardDeck->AddToDeck(CardType::Sniper, 2);
 	m_cardDeck->AddToDeck(CardType::Sniper, 3);
+	m_cardDeck->AddToDeck(CardType::Disruptor, 1);
 	m_cardDeck->ShuffleDeck();
 }
 
