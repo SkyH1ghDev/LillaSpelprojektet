@@ -33,8 +33,6 @@ private:
     static int m_pointBudget;
     static int m_waveNumber;
 
-
-
     struct EnemyPointData
     {
         const int Pawn = 1;
