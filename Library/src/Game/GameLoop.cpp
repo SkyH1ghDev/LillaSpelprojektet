@@ -43,8 +43,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		gameObject->OnStart();
 	}
 	// Weird Bug otherwise ._.
-	SceneManager::LoadScene("death");
-	SceneManager::LoadScene("pause");
+	//SceneManager::LoadScene("death");
+	//SceneManager::LoadScene("pause");
 	SceneManager::LoadScene("start");
 
 
