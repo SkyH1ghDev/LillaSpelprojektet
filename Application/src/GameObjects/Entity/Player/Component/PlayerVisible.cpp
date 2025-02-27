@@ -8,16 +8,16 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
 
     switch (entityState) {
     case EntityState::WalkUp:
-        texture = "chesster_back_v3.png";
+        texture = "chesster_back_idle";
         break;
     case EntityState::WalkDown:
-        texture = "chesster_front_idle.apng";
+        texture = "chesster_front_idle";
         break;
     case EntityState::WalkRight:
-        texture = "chesster_right_v3.png";
+        texture = "chesster_right_idle";
         break;
     case EntityState::WalkLeft:
-        texture = "chesster_left_v3.png";
+        texture = "chesster_left_idle";
         break;
     case EntityState::Dashing:
         switch (this->m_lastState) {
@@ -62,13 +62,13 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
         }
         break;
     case EntityState::Dying:
-        texture = "chesster_death_animation.apng";
+        texture = "chesster_death";
         break;
     case EntityState::Dead:
         texture = "chesster_dead.png";
         break;
     default:
-        texture = "chesster_front_v3.png";
+        texture = "chesster_front_idle";
         break;
     }
     this->m_lastState = entityState;

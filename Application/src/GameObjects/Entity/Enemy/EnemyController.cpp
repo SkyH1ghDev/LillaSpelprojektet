@@ -1,11 +1,7 @@
 #include "EnemyController.hpp"
-
+#include "PlayerInfo.hpp"
 #include <SpEngine/Input/Input.hpp>
 #include <SpEngine/Clock/Clock.hpp>
-
-EnemyController::EnemyController(std::shared_ptr<IGameObject> player)
-	: m_player(player) {
-}
 
 void EnemyController::OnStart()
 {
@@ -16,7 +12,7 @@ void EnemyController::Update()
 {
 	std::shared_ptr<Entity> enemy = std::static_pointer_cast<Entity>(m_gameObject.lock());
 	DX::XMFLOAT2 enemyPos = enemy->GetPosition();
-	DX::XMFLOAT2 playerPos = this->m_player->GetPosition();
+	DX::XMFLOAT2 playerPos = PlayerInfo::GetPosition();
 
 	DX::XMVECTOR enemyVec = XMLoadFloat2(&enemyPos);
 	DX::XMVECTOR playerVec = XMLoadFloat2(&playerPos);

@@ -22,31 +22,41 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
     std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
 }
 
-void Entity::OnStart()
+
+void Entity::Initialize()
 {
     this->m_state = EntityState::Spawning;
     PerformVisible(this->m_state);
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
-    this->m_isActive = true;
-    this->CenterOrigin(true);
-    this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
+    this->m_isActive = true;
     this->m_takeDamage->SetHealth(this->m_hp);
     PerformSetCollider();
-    
+
     switch (m_type) {
-    case EntityType::Player:
-        this->m_DeathAnimationTimer = 3.9;
-        break;
-    case EntityType::Enemy:
-        this->m_DeathAnimationTimer = 0.0;
-        break;
-    default:
-        this->m_DeathAnimationTimer = 0.0;
-        break;
+        
+        case EntityType::Player:
+            this->m_DeathAnimationTimer = 3.9;
+            break;
+        
+        case EntityType::Enemy:
+            this->m_DeathAnimationTimer = 0.9;
+            break;
+        default:
+            this->m_DeathAnimationTimer = 0.0;
+            break;
     }
+}
+
+
+void Entity::OnStart()
+{
+    PerformVisible(this->m_state);
+    this->m_spawnTimer = 2.0;
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
 }
 
 void Entity::PerformSetCollider()
@@ -60,10 +70,14 @@ void Entity::Update()
 
     if (this->m_state == EntityState::Spawning)
     {
+        if (!this->m_isAnimating)
+            this->ResetAnimation();
+        this->m_isAnimating = true;
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
         if (m_spawnTimer <= 0.0f)
         {
             this->m_state = EntityState::Base;
+            this->m_isAnimating = false;
         }
         return;
     }
@@ -102,7 +116,8 @@ void Entity::Update()
             if (this->m_type != EntityType::Player)
             {
                 SetShouldRender(false);
-                EnemyManager::UpdateEnemies();
+                this->m_isAlive = false;
+                this->m_isActive = false;
             }
         }
     }
@@ -121,7 +136,9 @@ void Entity::Update()
         }
 
     }
-    PerformVisible(this->m_state);
+
+    if (this->m_isActive)
+        PerformVisible(this->m_state);
 
 }
 
@@ -160,4 +177,31 @@ void Entity::PerformVisible(EntityState entityState)
         m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat);
     }
         
+}
+
+void Entity::Reset()
+{
+    this->m_state = EntityState::Spawning;
+    //PerformVisible(this->m_state);
+    this->m_spawnTimer = 2.0;
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    //PerformAttack();
+    this->m_takeDamage->SetHealth(this->m_hp);
+    this->m_animationTime = 0;
+
+    switch (m_type) {
+    case EntityType::Player:
+        this->m_DeathAnimationTimer = 3.9;
+        break;
+    case EntityType::Enemy:
+        this->m_DeathAnimationTimer = 0.9;
+        this->m_isActive = false;
+        this->m_isAlive = false;
+        this->m_shouldRender = false;
+        break;
+    default:
+        this->m_DeathAnimationTimer = 0.0;
+        break;
+    }
 }

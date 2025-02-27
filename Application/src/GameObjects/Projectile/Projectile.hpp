@@ -27,15 +27,16 @@ public:
     Projectile(Projectile&& other) noexcept = default;
     Projectile& operator=(Projectile&& other) noexcept = default;
 
-    Projectile(ProjectileType projectileType);
+    Projectile(ProjectileType projectileType, const std::string& name);
     void Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage);
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
-    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat); }
+    void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat, this->m_hasDeathAnimation); }
     void PerformHit();
     void PerformSetCollider();
     
     void Update() override;
     void OnStart() override;
+    void Reset() override;
 
     ProjectileType GetType() const { return m_type; }
 
@@ -56,4 +57,5 @@ private:
     float m_damage = 0.0;
     bool m_isAnimating = false;
     float m_animationTimer = 0;
+    bool m_hasDeathAnimation = false;
 };

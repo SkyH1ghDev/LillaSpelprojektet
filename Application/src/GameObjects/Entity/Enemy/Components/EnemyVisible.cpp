@@ -6,8 +6,11 @@ void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySt
     case EntityState::Spawning:
         texture = "bishop_spawn_bilinear.apng";
         break;
+    case EntityState::Dying:
+        texture = "bishop_death";
+        break;
     default:
-        texture = "Bishop_idle.apng";
+        texture = "bishop_idle";
         break;
     }
     

@@ -68,6 +68,14 @@ bool ManaBarManager::RemoveManaCrystal(size_t manaNumber)
     return true;
 }
 
+void ManaBarManager::Reset()
+{
+    for (size_t i = 0; i < 3; i++) {
+        RemoveManaCrystal(1);
+    }
+    RefillManaShard(5);
+}
+
 void ManaBarManager::Cleanup()
 {
     manaBar.clear();

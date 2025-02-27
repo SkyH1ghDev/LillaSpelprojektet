@@ -26,8 +26,6 @@ public:
     IGameObject(IGameObject&& other) noexcept = default;
     IGameObject& operator=(IGameObject&& other) noexcept = default;
 
-
-
     /**
      * Function that gets called every frame
      */
@@ -37,6 +35,8 @@ public:
      * Function that gets called when the game starts
      */
     virtual void OnStart() = 0;
+
+    virtual void Reset() = 0;
 
     void AttachScript(const std::shared_ptr<IScript>& script);
 
@@ -56,14 +56,14 @@ public:
      *
      * @param activeState The state to set the object to
      */
-    void SetActive(bool activeState);
+    void SetActive(const bool& activeState);
 
      /**
      * Sets the render state of the game object
      *
      * @param renderState The state to set the object to
      */
-    void SetShouldRender(bool renderState);
+    void SetShouldRender(const bool& renderState);
      
     std::string GetName() const;
 
@@ -130,23 +130,23 @@ public:
      *
      *
      */
-    void SetPosition(DX::XMFLOAT2 position);
+    void SetPosition(const DX::XMFLOAT2& position);
 
     /**
      * Sets object rotation.
      *
      *
      */
-    void SetRotation(float rotation);
+    void SetRotation(const float& rotation);
 
     /**
      * Sets object origin, false if top left = (0,0), true if centered.
      *
      *
      */
-    void CenterOrigin(bool centerOrigin);
+    void CenterOrigin(const bool& centerOrigin);
 
-    void SetCollider(std::shared_ptr<Collider> collider);
+    void SetCollider(const std::shared_ptr<Collider>& collider);
 
     std::shared_ptr<Collider> GetCollider() const;
 
@@ -160,7 +160,7 @@ public:
      *, if currently alive in a scene
      *
      */
-    void SetIsAlive(bool isAlive);
+    void SetIsAlive(const bool& isAlive);
 
     /**
      * Returns wether or not GameObject is alive in a scene.
@@ -179,7 +179,7 @@ protected:
     DX::XMFLOAT2 m_origonOffset = { 0, 0 };
 
     bool m_centerOrigin = false;
-    bool m_isActive = true;
+    bool m_isActive = false;
     bool m_shouldRender = false;
     bool m_isAlive = false;
 
@@ -235,12 +235,12 @@ inline bool IGameObject::IsActive() const
 	return m_isActive;
 }
 
-inline void IGameObject::SetActive(bool activeState)
+inline void IGameObject::SetActive(const bool& activeState)
 {
 	m_isActive = activeState;
 }
 
-inline void IGameObject::SetShouldRender(bool renderState)
+inline void IGameObject::SetShouldRender(const bool& renderState)
 {
     m_shouldRender = renderState;
 }
@@ -295,23 +295,23 @@ inline bool IGameObject::ShouldRender() const
     return m_shouldRender;
 }
 
-inline void IGameObject::SetPosition(DX::XMFLOAT2 position)
+inline void IGameObject::SetPosition(const DX::XMFLOAT2& position)
 {
     m_position = position;
 }
 
-inline void IGameObject::SetRotation(float rotation) 
+inline void IGameObject::SetRotation(const float& rotation) 
 {
     m_rotationFloat = rotation;
 }
 
-inline void IGameObject::CenterOrigin(bool centerOrigin)
+inline void IGameObject::CenterOrigin(const bool& centerOrigin)
 {
     this->m_centerOrigin = centerOrigin;
 }
 
 /* Collision Handling */
-inline void IGameObject::SetCollider(std::shared_ptr<Collider> collider)
+inline void IGameObject::SetCollider(const std::shared_ptr<Collider>& collider)
 {
     m_collider = collider;
 }
@@ -341,7 +341,7 @@ inline float IGameObject::GetAnimationTime()
     return this->m_animationTime;
 }
 
-inline void IGameObject::SetIsAlive(bool isAlive)
+inline void IGameObject::SetIsAlive(const bool& isAlive)
 {
     this->m_isAlive = isAlive;
 }

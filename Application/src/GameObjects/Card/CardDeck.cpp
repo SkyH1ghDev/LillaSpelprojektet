@@ -14,7 +14,7 @@ void CardDeck::Update()
 void CardDeck::OnStart()
 {
     this->m_shouldRender = true;
-    this->m_isActive = true;
+    this->m_isActive = false;
     SetIsAlive(true);
     m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
@@ -78,3 +78,10 @@ void CardDeck::PerformVisible()
     }
 }
 
+void CardDeck::Reset()
+{
+    this->m_shouldRender = true;
+    this->m_isActive = false;
+    SetIsAlive(true);
+    m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
+}

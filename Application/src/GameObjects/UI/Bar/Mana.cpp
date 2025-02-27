@@ -15,7 +15,7 @@ void Mana::OnStart()
 	this->m_layerFloat = 0.7;
 	this->m_scaleFloat = 0.85;
 	this->m_shouldRender = true;
-	this->m_isActive = true;
+	this->m_isActive = false;
 	SetIsAlive(true);
 	if(textureNameUpdate.empty())
 		textureNameUpdate = "mana_0.png";
@@ -73,4 +73,16 @@ void Mana::UpdateMana(bool positive, size_t manaCrystalIndex)
 	}
 
 
+}
+
+
+void Mana::Reset()
+{
+	this->m_layerFloat = 0.7;
+	this->m_scaleFloat = 0.85;
+	this->m_shouldRender = true;
+	this->m_isActive = false;
+	SetIsAlive(true);
+	if (textureNameUpdate.empty())
+		textureNameUpdate = "mana_0.png";
 }
