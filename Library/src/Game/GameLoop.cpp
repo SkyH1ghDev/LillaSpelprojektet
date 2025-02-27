@@ -43,8 +43,10 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
-	SceneManager::LoadScene("start");
+	// Weird Bug otherwise ._.
 	SceneManager::LoadScene("death");
+	SceneManager::LoadScene("pause");
+	SceneManager::LoadScene("start");
 
 	//Render- / main application loop
 	//May want to change the condition to a bool variable

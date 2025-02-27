@@ -24,20 +24,33 @@
 
 void Game::SetupGame()
 {
+    std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
+    std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
+    player->AttachScript(playerController);
+
     // Setup Start Scene
     if (!SceneManager::RegisterScene("start", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> startScene = SceneManager::GetScene("start");
-    SetupStartScene(startScene);
+    SetupStartScene(startScene, player);
 
     if (!SceneManager::RegisterScene("pause", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> pauseScene = SceneManager::GetScene("pause");
-    //SetupPauseScene(pauseScene);
+    SetupPauseScene(pauseScene);
+
+    // Setup Death Scene
+    if (!SceneManager::RegisterScene("death", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+    std::shared_ptr<IScene> deathScene = SceneManager::GetScene("death");
+    SetupDeathScene(deathScene, player);
+
 
     // Setup Main Scene
     if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
@@ -45,7 +58,7 @@ void Game::SetupGame()
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
-    SetupMainScene(mainScene);
+    SetupMainScene(mainScene, player);
 
 }
 
@@ -72,8 +85,10 @@ void Game::ResetGame()
     SceneManager::LoadScene("start");
 }
 
-void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
+void Game::SetupStartScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
 {
+
+    std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
@@ -81,23 +96,23 @@ void Game::SetupStartScene(std::shared_ptr<IScene> startScene)
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     exitButton->SetPosition({ 245, 210 });
 
+    startScene->AddGameObject(player);
+    startScene->AddGameObject(background);
     startScene->AddGameObject(mouse);
     startScene->AddGameObject(playButton);
     startScene->AddGameObject(exitButton);
 }
 
-void Game::SetupMainScene(std::shared_ptr<IScene> mainScene)
+void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player)
 {
-
     // Player, Controller and CardDeck
-    std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
-    std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
+
+
     std::shared_ptr<IScript> playerAttackScript = std::static_pointer_cast<IScript, PlayerAttackScript>(std::make_shared<PlayerAttackScript>());
     std::shared_ptr<PlayerCardScript> pcs = std::make_shared<PlayerCardScript>();
     std::shared_ptr<IScript> playerCardScript = std::static_pointer_cast<IScript>(pcs);
 
     player->SetPosition({ 150, 150 });
-    player->AttachScript(playerController);
     player->AttachScript(playerAttackScript);
     player->AttachScript(playerCardScript);
     player->CenterOrigin(true);
@@ -168,4 +183,20 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
         pauseScene->AddGameObject(background);
     }
 
+}
+
+void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<IGameObject> player)
+{
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PausMouse", "mouse.png");
+
+    std::shared_ptr<IGameObject> restartButton = std::make_shared<Button>(ButtonType::Play);
+    restartButton->SetPosition({ 245, 150 });
+    std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
+    quitButton->SetPosition({ 245, 210 });
+       
+
+    deathScene->AddGameObject(player);
+    deathScene->AddGameObject(mouse);
+    deathScene->AddGameObject(restartButton);
+    deathScene->AddGameObject(quitButton);
 }
