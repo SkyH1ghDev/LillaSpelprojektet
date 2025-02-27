@@ -1,6 +1,6 @@
 #include "EnemyManager.hpp"
 #include "EnemyController.hpp"
-#include "PoolingManager.hpp"
+#include "PoolManager.hpp"
 
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <cmath>
