@@ -10,7 +10,7 @@ void PawnPelletVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Pro
         texture = "BlueBulletHit.apng";
         break;
     default:
-        texture = "BlueBulletTwo.apng";
+        texture = "BlueBullet_noParticle.apng";
         break;
     }
 }
