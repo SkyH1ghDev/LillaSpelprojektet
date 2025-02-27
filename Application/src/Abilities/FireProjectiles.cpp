@@ -76,3 +76,8 @@ void AbilityManager::SniperShot(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, f
     // Add projectile
     ProjectileManager::AddProjectile(ProjectileType::SniperBullet, position, dir, shotSpeed, 10.0f, 20.0f * damageMultiplier);
 }
+
+void AbilityManager::DisruptorWave(DX::XMFLOAT2 position)
+{
+    // Add
+}
