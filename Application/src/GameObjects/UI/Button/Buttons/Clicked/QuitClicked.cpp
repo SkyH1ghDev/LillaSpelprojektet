@@ -13,7 +13,6 @@ void QuitClicked::Clicked()
 	SceneManager::ResetScene("main");
 	Sound::SetMusic("menu_theme.wav", 0.2f);
 	Sound::PlayMusic(true);
-
 	HealthBarManager::Reset();
 	ManaBarManager::Reset();
 	StatSheet::Reset();

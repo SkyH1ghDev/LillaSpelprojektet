@@ -180,9 +180,6 @@ void Entity::Reset()
     this->m_state = EntityState::Spawning;
     PerformVisible(this->m_state);
     this->m_spawnTimer = 2.0;
-    this->m_shouldRender = true;
-    this->m_isAlive = true;
-
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     //PerformAttack();
@@ -196,6 +193,8 @@ void Entity::Reset()
     case EntityType::Enemy:
         this->m_DeathAnimationTimer = 0.0;
         this->m_isActive = false;
+        this->m_isAlive = false;
+        this->m_shouldRender = false;
         break;
     default:
         this->m_DeathAnimationTimer = 0.0;

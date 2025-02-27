@@ -29,6 +29,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 
 void EnemyManager::OnStart()
 {
+    this->m_isAlive = true;
     SpawnEnemies();
 }
 
@@ -38,8 +39,12 @@ void EnemyManager::Update()
 }
 
 void EnemyManager::Reset()
-{
-
+ {
+    m_enemies.clear();
+    EnemyManager::m_state = RoundState_Waiting;
+    EnemyManager::m_numberOfEnemies = 0;
+    EnemyManager::m_pointBudget = 3;
+    EnemyManager::m_waveNumber = 0;
 }
 
 bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance)
@@ -80,8 +85,8 @@ void EnemyManager::SpawnEnemies()
         {
             DX::XMFLOAT2 randomPos =
             {
-                SpMath::RandomReal<float>(50.0f, 590.0f),
-                SpMath::RandomReal<float>(27.0f, 310.0f)
+                SpMath::RandomReal<float>(80.0f, 590.0f),
+                SpMath::RandomReal<float>(47.0f, 310.0f)
             };
             
             float dx = playerPos.x - randomPos.x;
