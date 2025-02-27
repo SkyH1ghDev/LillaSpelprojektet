@@ -34,6 +34,8 @@ void Game::SetupGame()
 
     std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
     player->SetPosition({ 150, 150 });
+    std::shared_ptr<Entity> playerEntity = std::dynamic_pointer_cast<Entity>(player);
+    playerEntity->Initialize();
     std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
 
 
@@ -66,9 +68,9 @@ void Game::SetupGame()
     EnemyManager::SpawnEnemies(player, 2);
     
 
-    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20);
-    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20);
-    //PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 10);
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20, "PawnPellet");
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20, "PawnPellet");
+    PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 10, "Bishop");
 
     std::shared_ptr<IGameObject> collisionObject = std::make_shared<Emty>();
     std::shared_ptr<IScript> collisionHandler = std::static_pointer_cast<IScript, CollisionHandler>(std::make_shared<CollisionHandler>(32));

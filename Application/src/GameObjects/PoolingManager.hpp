@@ -4,12 +4,13 @@
 #include <memory>
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
+#include "EnemyController.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
 public:
-    static void Initialize(Type type, size_t poolSize);
-    static std::shared_ptr<T> GetObject(Type type);
+    static void Initialize(Type type, size_t poolSize, const std::string& name);
+    static std::shared_ptr<T> GetObject(Type type, const std::string& name);
     static void ReturnObject(Type type, std::shared_ptr<T> object);
     static void Cleanup(Type type);
 
@@ -26,26 +27,32 @@ template <typename T, typename Type>
 std::unordered_map<Type, size_t> PoolManager<T, Type>::lastInactiveIndexMap;
 
 template <typename T, typename Type>
-void PoolManager<T, Type>::Initialize(Type type, size_t poolSize) {
+void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::string& name) {
     auto& objectPool = objectPools[type];
     objectPool.clear();
     objectPool.reserve(poolSize);
 
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
     for (size_t i = 0; i < poolSize; ++i) {
-        auto obj = std::make_shared<T>(type); // Pass the type to the constructor
+        // Use the provided name and append an index for uniqueness
+        auto obj = std::make_shared<T>(type, name + "_" + std::to_string(i));
         obj->SetActive(false);
+        if (name == "Enemy")
+        {
+            std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>();
+            obj->AttachScript(enemyController);
+        }
         objectPool.push_back(obj);
         testScene->AddGameObject(obj);
     }
 }
 
 template <typename T, typename Type>
-std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type) {
+std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type, const std::string& name) {
     auto& objectPool = objectPools[type];
 
     if (objectPool.empty()) {
-        Initialize(type, 10); // Create an initial pool if none exists
+        Initialize(type, 10, name); // Initialize the pool with the provided name
     }
 
     size_t& lastInactiveIndex = lastInactiveIndexMap[type];
@@ -66,7 +73,8 @@ std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type) {
     objectPool.reserve(newSize);
 
     for (size_t i = oldSize; i < newSize; ++i) {
-        auto newObj = std::make_shared<T>(type); // Pass the type to the constructor
+        // Use the provided name and append an index for uniqueness
+        auto newObj = std::make_shared<T>(type, name + "_" + std::to_string(i));
         newObj->SetActive(false);
         objectPool.push_back(newObj);
         testScene->AddGameObject(newObj);

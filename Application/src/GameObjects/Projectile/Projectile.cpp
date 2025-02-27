@@ -6,7 +6,7 @@
 #include <SpEngine/Clock/Clock.hpp>
 #include <iostream>
 
-Projectile::Projectile(ProjectileType projectileType) :
+Projectile::Projectile(ProjectileType projectileType, const std::string& name) :
     m_move(CreateMoveComponent(projectileType)),
     m_visible(CreateVisibleComponent(projectileType)),
     m_hit(CreateHitComponent(projectileType)),

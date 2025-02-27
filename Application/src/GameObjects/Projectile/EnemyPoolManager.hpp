@@ -3,10 +3,11 @@
 #include "PoolingManager.hpp"
 #include "Entity.hpp"
 
-class EnemyManager {
+class EnemyPoolManager {
 public:
-    static void AddEnemy(EntityType type, DX::XMFLOAT2 position) {
-        auto enemy = PoolManager<Entity, EntityType>::GetObject(type);
+    static void AddEnemy(EntityType type, DX::XMFLOAT2 position, const std::string& name = "Enemy") {
+        auto enemy = PoolManager<Entity, EntityType>::GetObject(type, name);
+        
         enemy->Initialize();
         enemy->SetPosition(position);
     }

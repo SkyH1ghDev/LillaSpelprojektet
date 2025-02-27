@@ -179,7 +179,7 @@ protected:
     DX::XMFLOAT2 m_origonOffset = { 0, 0 };
 
     bool m_centerOrigin = false;
-    bool m_isActive = true;
+    bool m_isActive = false;
     bool m_shouldRender = false;
     bool m_isAlive = false;
 

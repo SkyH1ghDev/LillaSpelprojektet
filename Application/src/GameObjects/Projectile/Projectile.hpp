@@ -27,7 +27,7 @@ public:
     Projectile(Projectile&& other) noexcept = default;
     Projectile& operator=(Projectile&& other) noexcept = default;
 
-    Projectile(ProjectileType projectileType);
+    Projectile(ProjectileType projectileType, const std::string& name);
     void Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage);
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
     void PerformVisible(ProjectileState projectileState) { if (m_visible) m_visible->Visible(m_textureName, m_position, projectileState, m_layerFloat, m_scaleFloat); }
