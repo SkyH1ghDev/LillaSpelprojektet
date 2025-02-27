@@ -8,7 +8,8 @@ enum class ProjectileType {
     BishopBall,
     PawnPellet,
     ScatterPellet,
-    SniperBullet
+    SniperBullet,
+    DisruptorWave
 };
 
 #include "IProjectileMove.hpp"
@@ -52,6 +53,7 @@ private:
     DX::XMFLOAT2 m_direction;
     float m_velocity;
     float m_lifetime;
+    float m_maxlifetime;
     float m_damageAmp = 1.0;
     float m_damage = 0.0;
     bool m_isAnimating = false;

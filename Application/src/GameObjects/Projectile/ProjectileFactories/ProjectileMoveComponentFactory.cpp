@@ -18,6 +18,9 @@ std::shared_ptr<IProjectileMove> CreateMoveComponent(ProjectileType type)
     case ProjectileType::SniperBullet:
         return std::make_shared<SniperBulletMove>();
         break;
+    case ProjectileType::DisruptorWave:
+        return std::make_shared<DisruptorWaveMove>();
+        break;
     default:
         throw std::invalid_argument("Unknown ProjectileType in CreateMoveComponent");
         break;

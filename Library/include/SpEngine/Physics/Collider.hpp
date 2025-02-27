@@ -10,11 +10,12 @@ namespace DX = DirectX;
  */
 enum class CollisionLayer {
 	None = 0,
-	Player = 1 << 0,  // 0001 (1)
-	Enemy = 1 << 1,   // 0010 (2)
-	AllyProjectile = 1 << 2, // 0100 (4)
-	EnemyProjectile = 1 << 3,    // 1000 (8)
-	All = ~0          // 1111 (all bits set)
+	Player = 1 << 0,  // 00001 (1)
+	Enemy = 1 << 1,   // 00010 (2)
+	AllyProjectile = 1 << 2, // 00100 (4)
+	EnemyProjectile = 1 << 3,    // 01000 (8)
+	DisruptorWave = 1 << 4, // 10000
+	All = ~0          // 11111 (all bits set)
 };
 
 class Collider
@@ -50,6 +51,11 @@ public:
 	CollisionLayer GetLayer() const;
 	CollisionLayer GetMask() const;
 	bool CanCollideWith(CollisionLayer otherLayer) const;
+
+	/**
+	 * Setters for collider properties. (Only necessary)
+	 */
+	void SetRadius(float newRadius, float aspectRatio = 1.0f);
 
 private:
 	DX::XMFLOAT2 m_position;

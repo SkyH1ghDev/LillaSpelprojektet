@@ -6,5 +6,6 @@
 #include "BishopBallSetCollider.hpp"
 #include "ScatterPelletSetCollider.hpp"
 #include "SniperBulletSetCollider.hpp"	
+#include "DisruptorWaveSetCollider.hpp"
 
 std::shared_ptr<IProjectileSetCollider> CreateSetColliderComponent(ProjectileType type);

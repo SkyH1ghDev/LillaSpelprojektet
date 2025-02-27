@@ -183,4 +183,34 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             player->PerformMove(knockback, true);
         }
     }
+    else if (objB->GetCollider()->GetLayer() == CollisionLayer::DisruptorWave &&
+        objA->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile) 
+    {
+            // Handle destructive AllyProjectile hitting an enemyProjectile
+
+            auto allyProjectile = std::dynamic_pointer_cast<Projectile>(objA);
+            auto enemyProjectile = std::dynamic_pointer_cast<Projectile>(objB);
+
+            if (allyProjectile && enemyProjectile) 
+            {
+                // Call the Perform functions
+                allyProjectile->PerformHit();
+                enemyProjectile->PerformHit();
+            }
+    }
+    else if (objA->GetCollider()->GetLayer() == CollisionLayer::DisruptorWave &&
+        objB->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile)
+    {
+            // Handle destructive AllyProjectile hitting an enemyProjectile
+
+            auto allyProjectile = std::dynamic_pointer_cast<Projectile>(objA);
+            auto enemyProjectile = std::dynamic_pointer_cast<Projectile>(objB);
+
+            if (allyProjectile && enemyProjectile)
+            {
+                // Call the Perform functions
+                allyProjectile->PerformHit();
+                enemyProjectile->PerformHit();
+            }
+    }
 }
