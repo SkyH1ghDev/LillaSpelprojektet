@@ -96,7 +96,6 @@ void Button::SetupButton()
     Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
 
     PerformVisible();
-    SetActive(true);
     SetIsAlive(true);
 
     this->m_shouldRender = true;
@@ -113,10 +112,7 @@ void Button::Update()
 void Button::OnStart()
 {
     SetupButton();
-
 }
-
-
 
 void Button::Reset()
 {

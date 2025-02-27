@@ -1,102 +1,64 @@
 #include "HealthBarManager.hpp"
+#include "StatSheet.hpp"
 
-std::vector<std::shared_ptr<IGameObject>> HealthBarManager::health;
+std::vector<std::shared_ptr<Heart>> HealthBarManager::health;
 int HealthBarManager::maxHealth = 0;
-int HealthBarManager::heartIndex = 0;
 
 void HealthBarManager::Initialize(size_t heartNumber)
 {
-    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
+    std::shared_ptr<IScene> scene = SceneManager::GetScene("main");
     for (size_t i = 0; i < heartNumber; ++i) {
-        auto heartEmpty = std::make_shared<Heart>(HeartType::Empty);
-        auto heartFull = std::make_shared<Heart>(HeartType::Full);
+        auto heart = std::make_shared<Heart>();
         float heartPositionX = 30.0f + 25.0f * i;
-        heartEmpty->SetPosition({ heartPositionX, 10.0f });
-        heartFull->SetPosition({ heartPositionX, 10.0f });
 
-        health.push_back(heartFull);
-        heartIndex++;
-        testScene->AddGameObject(heartFull);
-        testScene->AddGameObject(heartEmpty);
+        heart->SetPosition({ heartPositionX, 10.0f });
+
+        health.push_back(heart);
+        scene->AddGameObject(heart);
     }
-    heartIndex--;
     maxHealth = health.size();
-}
-
-void HealthBarManager::RefillHeart(size_t healthIncrease)
-{
-    for (size_t i = 0; i < healthIncrease; ++i) {
-
-        if (heartIndex < 0)
-            heartIndex = 0;
-
-        std::shared_ptr<Heart> heart = std::dynamic_pointer_cast<Heart>(health[heartIndex]);
-        if (heart)
-            heart->UpdateHeart(true);
-        if (heartIndex < maxHealth - 1)
-            heartIndex++;
-        else
-            return;
-
-    }
-    return;
-}
-
-void HealthBarManager::RemoveHeart(size_t healthDamage)
-{
-    for (size_t i = 0; i < healthDamage; ++i) {
-        
-        if (heartIndex < 0)
-            return;
-
-        std::shared_ptr<Heart> heart = std::dynamic_pointer_cast<Heart>(health[heartIndex]);
-        if (heart)
-            heart->UpdateHeart(false);
-
-        if (heartIndex >= 0)
-            heartIndex--;
-
-    }
-    return;
+    DrawHearts();
 }
 
 void HealthBarManager::AddNewHeart(size_t heartNumber)
 {
-    RefillHeart(30);
+    std::shared_ptr<IScene> scene = SceneManager::GetScene("main");
 
-    heartIndex = maxHealth - 1;
-    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
-    int currentHearts = heartIndex + 1;
     for (size_t i = 0; i < heartNumber; ++i) {
         if (maxHealth > 30)
             return;
 
-        auto heartEmpty = std::make_shared<Heart>(HeartType::Empty);
-        auto heartFull = std::make_shared<Heart>(HeartType::Full);
-        float heartPositionX = 30 + 25.0f * i + 25.0f * currentHearts;
-        heartEmpty->SetPosition({ heartPositionX, 10.0f });
-        heartFull->SetPosition({ heartPositionX, 10.0f });
+        auto heart = std::make_shared<Heart>();
+        float heartPositionX = 30 + 25.0f * i + 25.0f * maxHealth;
+        heart->SetPosition({ heartPositionX, 10.0f });
 
-        health.push_back(heartFull);
-        heartIndex++;
-        testScene->AddGameObject(heartFull);
-        testScene->AddGameObject(heartEmpty);
-        maxHealth = health.size();
+        health.push_back(heart);
+        scene->AddGameObject(heart);
     }
+    maxHealth = health.size();
+    DrawHearts();
+}
 
+void HealthBarManager::DrawHearts()
+{
+    float currentHealth = StatSheet::GetCurrentHealth();
 
+    for (size_t i = 1; i < maxHealth; i++) {
+        if (currentHealth > i)
+            health[i]->UpdateHeart(true);
+        else
+            health[i]->UpdateHeart(false);
+    }
 }
 
 void HealthBarManager::Cleanup()
 {
     health.clear();
-    heartIndex = 0;
     maxHealth = 0;
 }
 
 void HealthBarManager::Reset()
 {
-    heartIndex = 0;
     maxHealth = 5;
-    RefillHeart(maxHealth);
+    DrawHearts();
 }

@@ -38,7 +38,6 @@ void SceneManager::UnloadScene()
     if (m_currentScene)
     {
         m_currentScene->SetActive(false); // Deactivate all objects in the current scene
-        m_currentScene.reset();
     }
 }
 

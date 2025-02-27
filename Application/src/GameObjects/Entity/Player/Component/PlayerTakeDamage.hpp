@@ -1,6 +1,6 @@
 #pragma once
 #include "IEntityTakeDamage.hpp"
-#include "HealthBarManager.hpp"
+
 
 class PlayerTakeDamage : public IEntityTakeDamage
 {
