@@ -4,20 +4,20 @@
 
 void HealCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-	HealthBarManager::RefillHeart(1);
     StatSheet::IncreaseHealth(1);
+    HealthBarManager::DrawHearts();
 }
 
 void HealCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-	HealthBarManager::RefillHeart(2);
     StatSheet::IncreaseHealth(2);
+    HealthBarManager::DrawHearts();
 }
 
 void HealCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-	HealthBarManager::RefillHeart(3);
     StatSheet::IncreaseHealth(3);
+    HealthBarManager::DrawHearts();
 }
 
 void HealCard::SetCardTexture(size_t cardLevel)

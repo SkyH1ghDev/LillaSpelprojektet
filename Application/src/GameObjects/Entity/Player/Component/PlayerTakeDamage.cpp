@@ -1,5 +1,7 @@
 #include "PlayerTakeDamage.hpp"
 #include "StatSheet.hpp"
+#include "HealthBarManager.hpp"
+#include "ManaBarManager.hpp"
 #include <SpEngine/Audio/Sound.hpp>
 #include "HealthBarManager.hpp"
 #include <SpEngine/Manager/SceneManager.hpp>
@@ -10,7 +12,7 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
     {
         StatSheet::DecreaseHealth(damage);
         hp = StatSheet::GetCurrentHealth();
-        HealthBarManager::RemoveHeart(damage);
+        HealthBarManager::DrawHearts();
         StatSheet::CreateEffect(StatType::MoveSpeed, 0.5f, -150);
         if (hp <= 0)
         {
@@ -28,7 +30,7 @@ void PlayerTakeDamage::SetHealth(float& hp)
 {
     hp = StatSheet::GetMaxHealth();
 }
-
+ 
 void PlayerTakeDamage::PlayerDeath()
 {
     SceneManager::UnloadScene();
@@ -39,4 +41,7 @@ void PlayerTakeDamage::PlayerDeath()
     Sound::SetMusic("menu_theme.wav", 0.2f);
     Sound::PlayMusic(true);
 
+    HealthBarManager::Reset();
+    ManaBarManager::Reset();
+    StatSheet::Reset();
 }

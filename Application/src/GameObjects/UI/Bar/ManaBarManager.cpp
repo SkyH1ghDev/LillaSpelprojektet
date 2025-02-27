@@ -70,8 +70,10 @@ bool ManaBarManager::RemoveManaCrystal(size_t manaNumber)
 
 void ManaBarManager::Reset()
 {
-    manaBarIndex = 0;
-    manaCrystalIndex = 0;
+    for (size_t i = 0; i < 3; i++) {
+        RemoveManaCrystal(1);
+    }
+    RefillManaShard(5);
 }
 
 void ManaBarManager::Cleanup()
