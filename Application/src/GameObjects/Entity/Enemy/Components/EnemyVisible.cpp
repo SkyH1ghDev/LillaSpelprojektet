@@ -10,7 +10,7 @@ void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySt
         texture = "bishop_death";
         break;
     default:
-        texture = "Bishop_idle.apng";
+        texture = "bishop_idle";
         break;
     }
     
