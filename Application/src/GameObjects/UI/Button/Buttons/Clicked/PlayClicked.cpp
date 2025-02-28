@@ -7,6 +7,7 @@
 void PlayClicked::Clicked()
 {	
 	SceneManager::UnloadScene();
+	SceneManager::ResetScene("main");
 	SceneManager::LoadScene("main");
 	HealthBarManager::DrawHearts();
 	ManaBarManager::Reset();

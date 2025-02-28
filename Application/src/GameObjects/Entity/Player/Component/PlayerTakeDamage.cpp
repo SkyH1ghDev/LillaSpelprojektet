@@ -4,9 +4,9 @@
 #include <SpEngine/Audio/Sound.hpp>
 
 
-void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& iFrameTimer)
+void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& damageTimer, bool& iFrame)
 {
-    if (iFrameTimer <= 0)
+    if (!iFrame)
     {
         StatSheet::DecreaseHealth(damage);
         hp = StatSheet::GetCurrentHealth();
@@ -23,7 +23,8 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool&
         {
             Sound::PlayOnce("ugh.wav", 0.2f);
         }
-        iFrameTimer = 1.0;
+        iFrame = true;
+        damageTimer = 1.0f;
     }
 }
 

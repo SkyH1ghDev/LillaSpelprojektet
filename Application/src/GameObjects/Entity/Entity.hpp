@@ -33,7 +33,7 @@ public:
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
-    void PerformTakeDamage(float damage) { if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
+    void PerformTakeDamage(float damage) { if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame); }
     void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
     void PerformSetCollider();
     void PlayerDeath();
@@ -56,8 +56,9 @@ private:
     float m_hp = 0;
     bool m_isAnimating = false;
     float m_spawnTimer = 1.9f;
-    float m_iFrameTimer = 0.0f;
+    float m_damageTimer = 0.0f;
     float m_DeathAnimationTimer = 0.0f;
     float m_dashTimer = 0.0f;
     EntityState m_state = EntityState::Base;
+    bool m_iFrame = false;
 };
