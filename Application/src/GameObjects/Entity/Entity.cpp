@@ -35,7 +35,8 @@ void Entity::InitializeValues()
     //PerformAttack();
     this->m_takeDamage->SetHealth(this->m_hp);
     PerformSetCollider();
-    
+
+    // THIS IS PRETTY UNMAINTAINABLE //
     switch (m_type) {
         
         case EntityType::Player:
@@ -47,6 +48,7 @@ void Entity::InitializeValues()
             this->m_DeathAnimationTimer = 0.0;
             break;
     }
+    // ------------------------------------------------- //
 }
 
 
@@ -64,6 +66,7 @@ void Entity::Update()
 {
     this->UpdateAnimation();
 
+    // STATE MACHINE SHOULD NOT BE DONE IN THE UPDATE //
     if (this->m_state == EntityState::Spawning)
     {
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
@@ -124,8 +127,10 @@ void Entity::Update()
             this->m_dashTimer = 0;
             this->m_state = EntityState::Base;
         }
-
     }
+    // ----------------------------------------------------------------- //
+    
+    
     PerformVisible(this->m_state);
 
 }

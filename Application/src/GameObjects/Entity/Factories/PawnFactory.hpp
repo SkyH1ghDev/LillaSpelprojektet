@@ -1,21 +1,20 @@
 #pragma once
 #include "IEntityFactory.hpp"
-#include "BishopAttack.hpp"
-#include "BishopMove.hpp"
+#include "PawnAttack.hpp"
 #include "PawnMove.hpp"
 #include "BishopVisible.hpp"
 #include "BishopTakeDamage.hpp"
 #include "BishopSetCollider.hpp"
 
-class BishopFactory : public IEntityFactory
+class PawnFactory : public IEntityFactory
 {
 public:
-    BishopFactory() = default;
-    ~BishopFactory() override = default;
-    BishopFactory(const BishopFactory& other) = default;
-    BishopFactory& operator=(const BishopFactory& other) = default;
-    BishopFactory(BishopFactory&& other) noexcept = default;
-    BishopFactory& operator=(BishopFactory&& other) noexcept = default;
+    PawnFactory() = default;
+    ~PawnFactory() override = default;
+    PawnFactory(const PawnFactory& other) = default;
+    PawnFactory& operator=(const PawnFactory& other) = default;
+    PawnFactory(PawnFactory&& other) noexcept = default;
+    PawnFactory& operator=(PawnFactory&& other) noexcept = default;
 
     std::shared_ptr<Entity> CreateEntity(const std::string& name) override;
     
@@ -28,7 +27,7 @@ private:
     
 };
 
-inline std::shared_ptr<Entity> BishopFactory::CreateEntity(const std::string& name)
+inline std::shared_ptr<Entity> PawnFactory::CreateEntity(const std::string& name)
 {
     return std::make_shared<Entity>
     (
@@ -39,34 +38,34 @@ inline std::shared_ptr<Entity> BishopFactory::CreateEntity(const std::string& na
             CreateVisibleComponent(),
             CreateSetColliderComponent(),
             CreateTakeDamageComponent(),
-            EntityType::Bishop,
+            EntityType::Pawn,
             name
         )
     );
 
 }
 
-inline std::shared_ptr<IEntityAttack> BishopFactory::CreateAttackComponent()
+inline std::shared_ptr<IEntityAttack> PawnFactory::CreateAttackComponent()
 {
-    return std::make_shared<BishopAttack>();
+    return std::make_shared<PawnAttack>();
 }
 
-inline std::shared_ptr<IEntityMove> BishopFactory::CreateMoveComponent()
+inline std::shared_ptr<IEntityMove> PawnFactory::CreateMoveComponent()
 {
-    return std::make_shared<BishopMove>();
+    return std::make_shared<PawnMove>();
 }
 
-inline std::shared_ptr<IEntityVisible> BishopFactory::CreateVisibleComponent()
+inline std::shared_ptr<IEntityVisible> PawnFactory::CreateVisibleComponent()
 {
     return std::make_shared<BishopVisible>();
 }
 
-inline std::shared_ptr<IEntitySetCollider> BishopFactory::CreateSetColliderComponent()
+inline std::shared_ptr<IEntitySetCollider> PawnFactory::CreateSetColliderComponent()
 {
     return std::make_shared<BishopSetCollider>();
 }
 
-inline std::shared_ptr<IEntityTakeDamage> BishopFactory::CreateTakeDamageComponent()
+inline std::shared_ptr<IEntityTakeDamage> PawnFactory::CreateTakeDamageComponent()
 {
     return std::make_shared<BishopTakeDamage>();
 }

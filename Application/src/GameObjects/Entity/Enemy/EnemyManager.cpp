@@ -7,6 +7,7 @@
 #include <SpEngine/Math/SpMath.hpp>
 
 #include "BishopFactory.hpp"
+#include "PawnFactory.hpp"
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
@@ -184,9 +185,38 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
 void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player)
 {
     std::shared_ptr<IScene> currScene = SceneManager::GetCurrentScene();
-    BishopFactory factory = BishopFactory();
+    std::shared_ptr<Entity> enemy;
+        
+    if (type == "Queen")
+    {
+        BishopFactory factory = BishopFactory();
+        enemy = factory.CreateEntity("Bishop");
+    }
+
+    if (type == "Rook")
+    {
+        BishopFactory factory = BishopFactory();
+        enemy = factory.CreateEntity("Bishop");
+    }
+
+    if (type == "Knight")
+    {
+        BishopFactory factory = BishopFactory();
+        enemy = factory.CreateEntity("Bishop");
+    }
     
-    std::shared_ptr<Entity> enemy = factory.CreateEntity("Bishop");
+    if (type == "Bishop")
+    {
+        BishopFactory factory = BishopFactory();
+        enemy = factory.CreateEntity("Bishop");
+    }
+
+    if (type == "Pawn")
+    {
+        PawnFactory factory = PawnFactory();
+        enemy = factory.CreateEntity("Pawn");
+    }
+
     enemy->SetPosition(position);
     enemy->InitializeValues();
     
