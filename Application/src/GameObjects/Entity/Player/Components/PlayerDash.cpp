@@ -54,8 +54,7 @@ DX::XMFLOAT2 PlayerDash::Dash(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
 
     
     DX::XMFLOAT2 newPosition;
-    DX::XMStoreFloat2(&newPosition, positionXMVe
-        ctor);
+    DX::XMStoreFloat2(&newPosition, positionXMVector);
     
     collider->UpdatePosition(newPosition);
     
