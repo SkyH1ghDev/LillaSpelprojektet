@@ -2,7 +2,6 @@
 #include <SpEngine/Dev/Pattern/Observer/IObserver.hpp>
 #include <SpEngine/Input/KeyState.hpp>
 #include <bitset>
-#include <iostream>
 
 class Attack : public IObserver
 {
