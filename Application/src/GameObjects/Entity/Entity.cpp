@@ -9,6 +9,12 @@
 #include "EnemyManager.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
+#include "StatSheet.hpp"
+#include "HealthBarManager.hpp"
+#include "ManaBarManager.hpp"
+#include <SpEngine/Audio/Sound.hpp>
+#include <SpEngine/Manager/SceneManager.hpp>
+
 
 Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
     m_move(CreateMoveComponent(entityType)),
@@ -33,7 +39,12 @@ void Entity::Initialize()
     //PerformAttack();
     this->m_isActive = true;
     this->m_takeDamage->SetHealth(this->m_hp);
-    PerformSetCollider();
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    if (!this->m_collider)
+        PerformSetCollider();
+    else
+        this->m_collider->UpdatePosition(this->m_position);
 
     switch (m_type) {
         
@@ -85,23 +96,25 @@ void Entity::Update()
     // Normal update logic after spawn animation finishes
     this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
 
-    if (this->m_iFrameTimer > 0)
+    if (this->m_damageTimer > 0)
     {
         if (!this->m_isAnimating && this->m_state != EntityState::TakingDamage)
             this->ResetAnimation();
         this->m_isAnimating = true;
         this->m_state = EntityState::TakingDamage;
-        this->m_iFrameTimer -= Clock::GetDeltaTime();
-        if (this->m_iFrameTimer <= 0)
+        this->m_damageTimer -= Clock::GetDeltaTime();
+        if (this->m_damageTimer <= 0)
         {
+            this->m_damageTimer = 0;
             this->m_state = EntityState::Base;
             this->m_isAnimating = false;
+            this->m_iFrame = false;
         }
     }
 
     if (this->m_hp <= 0)
     {   
-        this->m_iFrameTimer = 0;
+        this->m_damageTimer = 0;
         if (!this->m_isAnimating && this->m_state != EntityState::Dying)
             this->ResetAnimation();
         this->m_isAnimating = true;
@@ -113,11 +126,20 @@ void Entity::Update()
             this->m_isAnimating = false;
             SetActive(false);
             SetIsAlive(false);
+            //this->m_DeathAnimationTimer = 0;
             if (this->m_type != EntityType::Player)
             {
                 SetShouldRender(false);
                 this->m_isAlive = false;
                 this->m_isActive = false;
+            }
+            else
+            {
+                this->m_state = EntityState::Dead;
+                this->m_isAnimating = false;
+                SetActive(false);
+                
+                PlayerDeath();
             }
         }
     }
@@ -179,6 +201,21 @@ void Entity::PerformVisible(EntityState entityState)
         
 }
 
+void Entity::PlayerDeath()
+{
+    SceneManager::UnloadScene();
+    SceneManager::LoadScene("death");
+    SceneManager::ResetScene("main");
+
+    HealthBarManager::Reset();
+    ManaBarManager::Reset();
+    StatSheet::Reset();
+
+    this->m_state = EntityState::Dead;
+}
+
+
+
 void Entity::Reset()
 {
     this->m_state = EntityState::Spawning;
@@ -189,10 +226,12 @@ void Entity::Reset()
     //PerformAttack();
     this->m_takeDamage->SetHealth(this->m_hp);
     this->m_animationTime = 0;
+    this->m_iFrame = false;
 
     switch (m_type) {
     case EntityType::Player:
         this->m_DeathAnimationTimer = 3.9;
+        this->m_isActive = true;
         break;
     case EntityType::Enemy:
         this->m_DeathAnimationTimer = 0.9;
