@@ -14,7 +14,9 @@ enum class CollisionLayer {
 	Enemy = 1 << 1,   // 0010 (2)
 	AllyProjectile = 1 << 2, // 0100 (4)
 	EnemyProjectile = 1 << 3,    // 1000 (8)
-	All = ~0          // 1111 (all bits set)
+	All = ~0,          // 1111 (all bits set)
+
+	StaticMesh = 1 << 5
 };
 
 class Collider

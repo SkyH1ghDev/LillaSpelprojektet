@@ -20,6 +20,7 @@
 #include "Abilities/StatSheet.hpp"
 #include "Scripts/AnimateMesh.hpp"
 #include "Button.hpp"
+#include "StaticMesh.hpp"
 
 void Game::SetupGame()
 {
@@ -160,7 +161,11 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Quit);
     exitButton->SetPosition({ 0, 280 });
     mainScene->AddGameObject(exitButton);
-     
+
+    //StaicMeshes
+    DX::XMFLOAT2 pos = { 150, 150 };
+    std::shared_ptr<IGameObject> testMesh = std::make_shared<StaticMesh>("testMesh", "Toe.png", pos, 6, 1);
+    mainScene->AddGameObject(testMesh);
 }
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
