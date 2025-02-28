@@ -1,16 +1,17 @@
 #include "PlayerMove.hpp"
 #include "StatSheet.hpp"
+#include <SpEngine/Physics/PhysicsEngine.hpp>
 #include <SpEngine/Clock/Clock.hpp>
 
-DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, const std::shared_ptr<Collider>& collider, bool dashInput) {
+DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, const std::shared_ptr<Collider>& collider, EntityMoveData& moveData) {
     float deltaTime = Clock::GetDeltaTime();
     DX::XMVECTOR positionXMVector = XMLoadFloat2(&position);
     DX::XMVECTOR directionXMVector = DX::XMVector2Normalize(XMLoadFloat2(&direction));
 
-    this->maxSpeed = StatSheet::GetMoveSpeed();
+    moveData.maxSpeed = StatSheet::GetMoveSpeed();
 
     //In the middle of the Dash
-    if (isDashing) {
+    /*if (isDashing) {
 
 		dashSpeed += dashAcceleration * deltaTime;
         if (dashSpeed > maxDashSpeed)
@@ -46,27 +47,33 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     //Regular movement
     else {
         if (dashCooldownTimer > 0)
-            dashCooldownTimer -= deltaTime;
+            dashCooldownTimer -= deltaTime;*/
 
-        if (DX::XMVector2Length(directionXMVector).m128_f32[0] > 0.0f) {
-			facingDirection = directionXMVector;
-            currentSpeed += acceleration * deltaTime;
+    if (DX::XMVector2Length(directionXMVector).m128_f32[0] > 0.0f)
+    {
+        moveData.facingDirection = directionXMVector;
+        moveData.currentSpeed += moveData.acceleration * deltaTime;
 
-            if (currentSpeed > maxSpeed) 
-                currentSpeed = maxSpeed;
-        }
-        else {
-            currentSpeed -= deceleration * deltaTime;
-
-            if (currentSpeed < 0) 
-                currentSpeed = 0;
-        }
-
-        velocity = DX::XMVectorScale(directionXMVector, currentSpeed);
-
-        DX::XMVECTOR movement = DX::XMVectorScale(velocity, deltaTime);
-        positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
+        if (moveData.currentSpeed > moveData.maxSpeed)
+        {
+            moveData.currentSpeed = moveData.maxSpeed;
+        } 
     }
+    else
+    {
+        moveData.currentSpeed -= moveData.deceleration * deltaTime;
+
+        if (moveData.currentSpeed < 0)
+        {
+            moveData.currentSpeed = 0;
+        }
+    }
+
+    moveData.velocity = DX::XMVectorScale(directionXMVector, moveData.currentSpeed);
+
+    DX::XMVECTOR movement = DX::XMVectorScale(moveData.velocity, deltaTime);
+    positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
+    //}
 
 
     DX::XMFLOAT2 newPosition;

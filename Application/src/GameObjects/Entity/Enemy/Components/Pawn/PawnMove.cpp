@@ -1,7 +1,7 @@
 #include "PawnMove.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
-DX::XMFLOAT2 PawnMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, const std::shared_ptr<Collider>& collider, bool dashing)
+DX::XMFLOAT2 PawnMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, const std::shared_ptr<Collider>& collider, EntityMoveData& moveData)
 {
     DX::XMFLOAT2 newPosition = position;
 

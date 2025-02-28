@@ -25,7 +25,7 @@ private:
     std::shared_ptr<IEntityVisible> CreateVisibleComponent() override;
     std::shared_ptr<IEntitySetCollider> CreateSetColliderComponent() override;
     std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent() override;
-    
+    std::shared_ptr<IEntityDash> CreateDashComponent() override;
 };
 
 inline std::shared_ptr<Entity> BishopFactory::CreateEntity(const std::string& name)
@@ -39,6 +39,7 @@ inline std::shared_ptr<Entity> BishopFactory::CreateEntity(const std::string& na
             CreateVisibleComponent(),
             CreateSetColliderComponent(),
             CreateTakeDamageComponent(),
+            CreateDashComponent(),
             EntityType::Bishop,
             name
         )
@@ -54,6 +55,11 @@ inline std::shared_ptr<IEntityAttack> BishopFactory::CreateAttackComponent()
 inline std::shared_ptr<IEntityMove> BishopFactory::CreateMoveComponent()
 {
     return std::make_shared<BishopMove>();
+}
+
+inline std::shared_ptr<IEntityDash> BishopFactory::CreateDashComponent()
+{
+    return nullptr;
 }
 
 inline std::shared_ptr<IEntityVisible> BishopFactory::CreateVisibleComponent()

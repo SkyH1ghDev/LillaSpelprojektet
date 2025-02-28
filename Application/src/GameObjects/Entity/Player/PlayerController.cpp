@@ -18,6 +18,12 @@ void PlayerController::Update()
 {
 	StatSheet::UpdateEffects();
 
+	DX::XMFLOAT2 movementDirection =
+	{
+		m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,
+		m_up->GetMoveDirection().y + m_down->GetMoveDirection().y
+	};
 	std::shared_ptr<Entity> player = std::static_pointer_cast<Entity>(m_gameObject.lock());
-	player->PerformMove({ m_right->GetMoveDirection().x + m_left->GetMoveDirection().x,  m_up->GetMoveDirection().y + m_down->GetMoveDirection().y }, m_dash->IsDashing());
+	player->PerformDash(movementDirection, m_dash->IsDashing());
+	player->PerformMove(movementDirection);
 }

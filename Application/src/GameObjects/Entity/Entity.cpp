@@ -9,6 +9,7 @@ Entity::Entity
     const std::shared_ptr<IEntityVisible>& visibleComponent,
     const std::shared_ptr<IEntitySetCollider>& colliderComponent,
     const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
+    const std::shared_ptr<IEntityDash>& dashComponent,
     const EntityType& entityType,
     const std::string& name
 ) : IGameObject(name)
@@ -18,6 +19,7 @@ Entity::Entity
     this->m_attack = attackComponent;
     this->m_takeDamage = takeDamageComponent;
     this->m_setCollider = colliderComponent;
+    this->m_dash = dashComponent;
     this->m_type = entityType;
 }
 
@@ -25,7 +27,7 @@ Entity::Entity
 void Entity::InitializeValues()
 {
     this->m_state = EntityState::Spawning;
-    PerformVisible(this->m_state);
+    PerformVisible();
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
@@ -44,6 +46,10 @@ void Entity::InitializeValues()
             break;
         
         case EntityType::Bishop:
+        case EntityType::Knight:
+        case EntityType::Pawn:
+        case EntityType::Queen:
+        case EntityType::Rook:
         default:
             this->m_DeathAnimationTimer = 0.0;
             break;
@@ -55,11 +61,6 @@ void Entity::InitializeValues()
 void Entity::OnStart()
 {
     InitializeValues();
-}
-
-void Entity::PerformSetCollider()
-{
-    this->m_collider = std::make_unique<Collider>(this->m_setCollider->CreateCollider(this->m_position));
 }
 
 void Entity::Update()
@@ -131,11 +132,11 @@ void Entity::Update()
     // ----------------------------------------------------------------- //
     
     
-    PerformVisible(this->m_state);
+    PerformVisible();
 
 }
 
-void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
+void Entity::PerformMove(const DX::XMFLOAT2& direction) {
     if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
         if (direction.y == -1 && !m_isAnimating)
         {
@@ -153,21 +154,47 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         {
             this->m_state = EntityState::WalkLeft;
         }
-        if (dashing)
-        {
-            this->m_state = EntityState::Dashing;
-            this->m_dashTimer = 0.5f;
-        }
         
-        m_position = m_move->Move(m_position, direction, this->m_collider, dashing);
+        m_position = m_move->Move(m_position, direction, this->m_collider, m_moveData);
     }
 }
 
-void Entity::PerformVisible(EntityState entityState)
+void Entity::PerformVisible()
 {
     if (m_visible)
     {
         m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat);
     }
         
+}
+
+void Entity::PerformDash(const DX::XMFLOAT2& direction, const bool& isDashing)
+{
+    if (isDashing && m_dash)
+    {
+        this->m_state = EntityState::Dashing;
+        this->m_dashTimer = 0.5f;
+        m_position = m_dash->Dash(m_position, direction, m_collider, isDashing, m_moveData);
+    }
+}
+
+void Entity::PerformAttack(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction)
+{
+    if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
+    {
+        m_attack->Attack(position, direction);
+    }
+}
+
+void Entity::PerformTakeDamage(const float& damage)
+{
+    if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
+    {
+        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer);
+    } 
+}
+
+void Entity::PerformSetCollider()
+{
+    this->m_collider = std::make_unique<Collider>(this->m_setCollider->CreateCollider(this->m_position));
 }

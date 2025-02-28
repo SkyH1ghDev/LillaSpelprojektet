@@ -146,7 +146,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             DX::XMStoreFloat2(&knockback, knockbackVector);
 
             // Move the player
-            player->PerformMove(knockback, true);
+            player->PerformMove(knockback);
         }
     }
     else if (objB->GetCollider()->GetLayer() == CollisionLayer::Player &&
@@ -180,7 +180,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             DX::XMStoreFloat2(&knockback, knockbackVector);
 
             // Move the player
-            player->PerformMove(knockback, true);
+            player->PerformMove(knockback);
         }
     }
 }

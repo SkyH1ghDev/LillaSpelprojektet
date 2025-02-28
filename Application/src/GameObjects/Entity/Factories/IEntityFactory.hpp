@@ -19,5 +19,6 @@ protected:
     virtual std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent() = 0;
     virtual std::shared_ptr<IEntitySetCollider> CreateSetColliderComponent() = 0;
     virtual std::shared_ptr<IEntityVisible> CreateVisibleComponent() = 0;
+    virtual std::shared_ptr<IEntityDash> CreateDashComponent() = 0;
 
 };

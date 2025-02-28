@@ -1,6 +1,7 @@
 #pragma once
 #include "IEntityFactory.hpp"
 #include "PlayerAttack.hpp"
+#include "PlayerDash.hpp"
 #include "PlayerMove.hpp"
 #include "PlayerVisible.hpp"
 #include "PlayerTakeDamage.hpp"
@@ -24,6 +25,7 @@ private:
     std::shared_ptr<IEntityVisible> CreateVisibleComponent() override;
     std::shared_ptr<IEntitySetCollider> CreateSetColliderComponent() override;
     std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent() override;
+    std::shared_ptr<IEntityDash> CreateDashComponent() override;
     
 };
 
@@ -38,6 +40,7 @@ inline std::shared_ptr<Entity> PlayerFactory::CreateEntity(const std::string& na
             CreateVisibleComponent(),
             CreateSetColliderComponent(),
             CreateTakeDamageComponent(),
+            CreateDashComponent(),
             EntityType::Player,
             name
         )
@@ -52,6 +55,11 @@ inline std::shared_ptr<IEntityAttack> PlayerFactory::CreateAttackComponent()
 inline std::shared_ptr<IEntityMove> PlayerFactory::CreateMoveComponent()
 {
     return std::make_shared<PlayerMove>();
+}
+
+inline std::shared_ptr<IEntityDash> PlayerFactory::CreateDashComponent()
+{
+    return std::make_shared<PlayerDash>();
 }
 
 inline std::shared_ptr<IEntityVisible> PlayerFactory::CreateVisibleComponent()

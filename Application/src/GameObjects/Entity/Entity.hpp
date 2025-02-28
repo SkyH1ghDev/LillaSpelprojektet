@@ -1,10 +1,11 @@
 #pragma once
 #include "IEntityMove.hpp"
+#include "IEntityDash.hpp"
 #include "IEntityVisible.hpp"
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
-#include "IEntityUseCard.hpp"
 #include "IEntitySetCollider.hpp"
+#include "EntityMoveData.hpp"
 
 #include <memory>
 #include <SpEngine/Assets/Game/IGameObject.hpp>
@@ -19,6 +20,9 @@ enum class EntityType {
     Knight,
     Pawn
 };
+
+// UGLY IMPLEMENTATION
+
 
 
 class Entity : public IGameObject
@@ -39,16 +43,18 @@ public:
         const std::shared_ptr<IEntityVisible>& visibleComponent,
         const std::shared_ptr<IEntitySetCollider>& colliderComponent,
         const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
+        const std::shared_ptr<IEntityDash>& dashComponent,
         const EntityType& entityType,
         const std::string& name
     );
 
     void InitializeValues();
 
-    void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
-    void PerformVisible(EntityState entityState);
-    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
-    void PerformTakeDamage(float damage) { if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_iFrameTimer); }
+    void PerformMove(const DX::XMFLOAT2& direction);
+    void PerformDash(const DX::XMFLOAT2& direction, const bool& isDashing);
+    void PerformVisible();
+    void PerformAttack(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction); 
+    void PerformTakeDamage(const float& damage);
     void PerformSetCollider();
 
     void Update() override;
@@ -58,10 +64,13 @@ public:
 
 private:
     std::shared_ptr<IEntityMove> m_move;
+    std::shared_ptr<IEntityDash> m_dash;
     std::shared_ptr<IEntityVisible> m_visible;
     std::shared_ptr<IEntityAttack> m_attack;
     std::shared_ptr<IEntityTakeDamage> m_takeDamage;
     std::shared_ptr<IEntitySetCollider> m_setCollider;
+
+    EntityMoveData m_moveData = {};
 
     EntityType m_type;
     float m_hp = 0;

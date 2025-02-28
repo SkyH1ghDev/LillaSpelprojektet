@@ -66,6 +66,6 @@ void EnemyController::Update()
 		}
 	}
 	
-	enemy->PerformMove(movementDirection, false);
+	enemy->PerformMove(movementDirection);
 	
 }   

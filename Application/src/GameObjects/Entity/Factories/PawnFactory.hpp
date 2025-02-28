@@ -24,6 +24,7 @@ private:
     std::shared_ptr<IEntityVisible> CreateVisibleComponent() override;
     std::shared_ptr<IEntitySetCollider> CreateSetColliderComponent() override;
     std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent() override;
+    std::shared_ptr<IEntityDash> CreateDashComponent() override;
     
 };
 
@@ -38,6 +39,7 @@ inline std::shared_ptr<Entity> PawnFactory::CreateEntity(const std::string& name
             CreateVisibleComponent(),
             CreateSetColliderComponent(),
             CreateTakeDamageComponent(),
+            CreateDashComponent(),
             EntityType::Pawn,
             name
         )
@@ -53,6 +55,11 @@ inline std::shared_ptr<IEntityAttack> PawnFactory::CreateAttackComponent()
 inline std::shared_ptr<IEntityMove> PawnFactory::CreateMoveComponent()
 {
     return std::make_shared<PawnMove>();
+}
+
+inline std::shared_ptr<IEntityDash> PawnFactory::CreateDashComponent()
+{
+    return nullptr;
 }
 
 inline std::shared_ptr<IEntityVisible> PawnFactory::CreateVisibleComponent()
