@@ -170,7 +170,7 @@ void Entity::PerformVisible()
 
 void Entity::PerformDash(const DX::XMFLOAT2& direction, const bool& isDashing)
 {
-    if (isDashing && m_dash)
+    if (m_dash && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player))  
     {
         this->m_state = EntityState::Dashing;
         this->m_dashTimer = 0.5f;

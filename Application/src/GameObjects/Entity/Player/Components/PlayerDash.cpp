@@ -52,13 +52,10 @@ DX::XMFLOAT2 PlayerDash::Dash(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
         }
     }
 
-    moveData.velocity = DX::XMVectorScale(directionXMVector, moveData.currentSpeed);
-
-    DX::XMVECTOR movement = DX::XMVectorScale(moveData.velocity, deltaTime);
-    positionXMVector = DX::XMVectorAdd(positionXMVector, movement);
     
     DX::XMFLOAT2 newPosition;
-    DX::XMStoreFloat2(&newPosition, positionXMVector);
+    DX::XMStoreFloat2(&newPosition, positionXMVe
+        ctor);
     
     collider->UpdatePosition(newPosition);
     

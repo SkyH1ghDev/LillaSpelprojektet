@@ -24,6 +24,7 @@ void PlayerController::Update()
 		m_up->GetMoveDirection().y + m_down->GetMoveDirection().y
 	};
 	std::shared_ptr<Entity> player = std::static_pointer_cast<Entity>(m_gameObject.lock());
+	
 	player->PerformDash(movementDirection, m_dash->IsDashing());
 	player->PerformMove(movementDirection);
 }
