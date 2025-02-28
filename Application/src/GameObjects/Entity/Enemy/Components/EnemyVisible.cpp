@@ -9,6 +9,9 @@ void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySt
     case EntityState::Dying:
         texture = "bishop_death";
         break;
+    case EntityState::TakingDamage:
+        texture = "bishop_damage";
+        break;
     default:
         texture = "bishop_idle";
         break;

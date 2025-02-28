@@ -39,6 +39,8 @@ void Entity::Initialize()
     //PerformAttack();
     this->m_isActive = true;
     this->m_takeDamage->SetHealth(this->m_hp);
+    this->CenterOrigin(true);
+    this->m_origonOffset = DX::XMFLOAT2(0, 50);
     if (!this->m_collider)
         PerformSetCollider();
     else
