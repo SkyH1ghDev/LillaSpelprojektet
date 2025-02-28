@@ -168,19 +168,23 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Continue);
-    continueButton->SetPosition({ 245, 150 });
+    continueButton->SetPosition({ 244, 150 });
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
-    quitButton->SetPosition({ 245, 210 });
+    quitButton->SetPosition({ 244, 210 });
 
     pauseScene->AddGameObject(continueButton);
     pauseScene->AddGameObject(quitButton);
     pauseScene->AddGameObject(mouse);
-
+    std::shared_ptr<IScript> updateScript = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
+    std::shared_ptr<Mesh> pausedText = std::make_shared<Mesh>(MeshType::Object, "PauseText", "paused");
+    pausedText->AttachScript(updateScript);
+    pausedText->SetPosition({241, 75});
+    pauseScene->AddGameObject(pausedText);
 
     //Create animated background
     for (size_t i = 0; i < 8; i++)
     {
-        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pawnground.apng");
+        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pause_background");
         std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });
