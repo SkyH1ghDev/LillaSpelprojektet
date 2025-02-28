@@ -1,12 +1,13 @@
 #pragma once
-#include "PauseBackground.hpp"
+#include "AnimateMesh.hpp"
 #include "StatSheet.hpp"
+#include "Mesh.hpp"
 
-void PauseBackgroundScript::OnStart()
+void AnimateScript::OnStart()
 {
 }
 
-void PauseBackgroundScript::Update()
+void AnimateScript::Update()
 {
 	std::shared_ptr<Mesh> background = std::static_pointer_cast<Mesh>(m_gameObject.lock());
 	background->PerformVisible();

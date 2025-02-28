@@ -18,7 +18,7 @@
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "GameObjects/UI/Bar/ManaBarManager.hpp"
 #include "Abilities/StatSheet.hpp"
-#include "Scripts/PauseBackGround.hpp"
+#include "Scripts/AnimateMesh.hpp"
 #include "Button.hpp"
 
 void Game::SetupGame()
@@ -175,7 +175,7 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     pauseScene->AddGameObject(continueButton);
     pauseScene->AddGameObject(quitButton);
     pauseScene->AddGameObject(mouse);
-    std::shared_ptr<IScript> updateScript = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
+    std::shared_ptr<IScript> updateScript = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
     std::shared_ptr<Mesh> pausedText = std::make_shared<Mesh>(MeshType::Object, "PauseText", "paused");
     pausedText->AttachScript(updateScript);
     pausedText->SetPosition({241, 75});
@@ -185,7 +185,7 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     for (size_t i = 0; i < 8; i++)
     {
         std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pause_background");
-        std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
+        std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });
         pauseScene->AddGameObject(background);
