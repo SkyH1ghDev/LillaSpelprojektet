@@ -32,6 +32,7 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
 void Entity::Initialize()
 {
     this->m_state = EntityState::Spawning;
+    this->m_isAnimating = false;
     PerformVisible(this->m_state);
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
@@ -87,6 +88,7 @@ void Entity::Update()
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
         if (m_spawnTimer <= 0.0f)
         {
+            this->m_spawnTimer = 0;
             this->m_state = EntityState::Base;
             this->m_isAnimating = false;
         }
@@ -114,21 +116,20 @@ void Entity::Update()
 
     if (this->m_hp <= 0)
     {   
-        this->m_damageTimer = 0;
-        if (!this->m_isAnimating && this->m_state != EntityState::Dying)
+        if ((!this->m_isAnimating && this->m_state != EntityState::Dying) || this->m_state == EntityState::TakingDamage)
+        {
             this->ResetAnimation();
+            this->m_damageTimer = 0;
+        }
         this->m_isAnimating = true;
         this->m_state = EntityState::Dying;
         this->m_DeathAnimationTimer -= Clock::GetDeltaTime();
         if (this->m_DeathAnimationTimer <= 0)
         {
-            this->m_state = EntityState::Dead;
-            this->m_isAnimating = false;
-            SetActive(false);
-            SetIsAlive(false);
-            //this->m_DeathAnimationTimer = 0;
+            this->m_DeathAnimationTimer = 0;
             if (this->m_type != EntityType::Player)
             {
+
                 SetShouldRender(false);
                 this->m_isAlive = false;
                 this->m_isActive = false;
@@ -159,8 +160,7 @@ void Entity::Update()
 
     }
 
-    if (this->m_isActive)
-        PerformVisible(this->m_state);
+    PerformVisible(this->m_state);
 
 }
 
@@ -199,6 +199,15 @@ void Entity::PerformVisible(EntityState entityState)
         m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat);
     }
         
+}
+
+void Entity::PerformTakeDamage(float damage)
+{
+    if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
+    {
+        this->m_isAnimating = false;
+        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame);
+    }
 }
 
 void Entity::PlayerDeath()
