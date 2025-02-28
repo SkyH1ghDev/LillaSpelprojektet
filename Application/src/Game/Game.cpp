@@ -30,12 +30,12 @@ void Game::SetupGame()
     player->AttachScript(playerController);
 
     // Setup Start Scene
-    if (!SceneManager::RegisterScene("start", GameSceneFactory::CreateScene(0)))
+    if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
-    std::shared_ptr<IScene> startScene = SceneManager::GetScene("start");
-    SetupStartScene(startScene, player);
+    std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
+    SetupMainScene(mainScene, player);
 
     if (!SceneManager::RegisterScene("pause", GameSceneFactory::CreateScene(0)))
     {
@@ -54,19 +54,19 @@ void Game::SetupGame()
 
 
     // Setup Main Scene
-    if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
+    if (!SceneManager::RegisterScene("game", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
-    std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
-    SetupMainScene(mainScene, player);
+    std::shared_ptr<IScene> gameScene = SceneManager::GetScene("game");
+    SetupGameScene(gameScene, player);
 
 }
 
 void Game::ResetGame()
 {
+    SceneManager::ClearScene("game");
     SceneManager::ClearScene("main");
-    SceneManager::ClearScene("start");
     SceneManager::ClearScene("pause");
     SceneManager::ClearScene("secondScene");
     EnemyManager::Cleanup();
@@ -84,10 +84,10 @@ void Game::ResetGame()
     {
         gameObject->OnStart();
     }
-    SceneManager::LoadScene("start");
+    SceneManager::LoadScene("main");
 }
 
-void Game::SetupStartScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
+void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
 {
 
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
@@ -105,7 +105,7 @@ void Game::SetupStartScene(std::shared_ptr<IScene> startScene, std::shared_ptr<I
     startScene->AddGameObject(exitButton);
 }
 
-void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player)
+void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player)
 {
     // Player, Controller and CardDeck
 

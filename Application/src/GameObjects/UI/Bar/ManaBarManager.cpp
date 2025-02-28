@@ -7,7 +7,7 @@ int ManaBarManager::manaCrystalIndex = 0;
 
 void ManaBarManager::Initialize(size_t manaNumber)
 {
-    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
+    std::shared_ptr<IScene> testScene = SceneManager::GetScene("game");
     for (size_t i = 0; i < manaNumber; ++i) {
         auto manaReady = std::make_shared<Mana>(ManaType::Ready);
         float manaPositionY = 330 - 20 * i;

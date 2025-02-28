@@ -33,7 +33,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	ExitHandler exitHandler;
 
-	Sound::SetMusic("paused.wav", 0.4f);
+	Sound::SetMusic("menu_theme.wav", 0.4f);
 	Sound::PlayMusic(true);
 
 	// OnStart for all GameObjects
@@ -42,7 +42,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
-	SceneManager::LoadScene("pause");
+	SceneManager::LoadScene("main");
 
 
 	

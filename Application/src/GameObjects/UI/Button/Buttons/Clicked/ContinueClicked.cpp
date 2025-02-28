@@ -5,7 +5,7 @@
 void ContinueClicked::Clicked()
 {
 	SceneManager::UnloadScene();
-	SceneManager::LoadScene("main");
+	SceneManager::LoadScene("game");
 	Sound::SetMusic("battle_theme_1.wav", 0.5f);
 	Sound::PlayMusic(true);
 }

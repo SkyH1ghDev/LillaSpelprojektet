@@ -214,7 +214,7 @@ void Entity::PlayerDeath()
 {
     SceneManager::UnloadScene();
     SceneManager::LoadScene("death");
-    SceneManager::ResetScene("main");
+    SceneManager::ResetScene("game");
 
     HealthBarManager::Reset();
     ManaBarManager::Reset();

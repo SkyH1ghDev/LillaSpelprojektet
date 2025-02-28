@@ -21,7 +21,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 
     // Initialize the pool with a certain number of enemies
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Pawn, 10, "Pawn");
-    PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 5, "Bishop");
+    PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 20, "Bishop");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 3, "Rook");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
