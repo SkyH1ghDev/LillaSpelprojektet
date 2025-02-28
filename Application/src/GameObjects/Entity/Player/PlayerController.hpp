@@ -1,6 +1,4 @@
 #pragma once
-#include "Entity.hpp"
-#include "Mesh.hpp"
 #include "Actions/MoveUp.hpp"
 #include "Actions/MoveLeft.hpp"
 #include "Actions/MoveRight.hpp"

@@ -20,6 +20,7 @@
 #include "Abilities/StatSheet.hpp"
 #include "Scripts/AnimateMesh.hpp"
 #include "Button.hpp"
+#include "GameObjects/Scripts/PauseControl.hpp"
 
 void Game::SetupGame()
 {
@@ -61,6 +62,12 @@ void Game::SetupGame()
     std::shared_ptr<IScene> gameScene = SceneManager::GetScene("game");
     SetupGameScene(gameScene, player);
 
+    std::shared_ptr<Empty> escape = std::make_shared<Empty>();
+    std::shared_ptr<IScript> pauseScript = std::static_pointer_cast<IScript, PauseControl>(std::make_shared<PauseControl>());
+    escape->AttachScript(pauseScript);
+    gameScene->AddGameObject(escape);
+    pauseScene->AddGameObject(escape);
+    
 }
 
 void Game::ResetGame()
