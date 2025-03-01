@@ -3,6 +3,6 @@
 #include <memory>
 #include "Entity.hpp"
 #include "PlayerSetCollider.hpp"
-#include "EnemySetCollider.hpp"
+#include "BishopSetCollider.hpp"
 
 std::shared_ptr<IEntitySetCollider> CreateColliderComponent(EntityType type);

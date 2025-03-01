@@ -18,7 +18,7 @@ GridCell CollisionHandler::GetTileForPosition(float x, float y) {
 void CollisionHandler::Update() {
     grid.clear(); // Reset grid each frame
 
-    auto scene = SceneManager::GetScene("main");
+    auto scene = SceneManager::GetScene("game");
     if (!scene) return;
 
     auto objects = scene->GetGameObjectVec();

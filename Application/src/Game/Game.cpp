@@ -11,15 +11,16 @@
 
 #include "Player/PlayerAttackScript.hpp"
 #include "Player/PlayerCardScript.hpp"
-#include "Enemy/EnemyManager.hpp"
+#include "Enemies/EnemyManager.hpp"
 #include "Projectile/ProjectileManager.hpp"
 #include "GameObjects/Scripts/Wand.hpp"
 #include "Collision/CollisionHandler.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "GameObjects/UI/Bar/ManaBarManager.hpp"
 #include "Abilities/StatSheet.hpp"
-#include "Scripts/PauseBackGround.hpp"
+#include "Scripts/AnimateMesh.hpp"
 #include "Button.hpp"
+#include "GameObjects/Scripts/PauseControl.hpp"
 
 void Game::SetupGame()
 {
@@ -30,12 +31,12 @@ void Game::SetupGame()
     player->AttachScript(playerController);
 
     // Setup Start Scene
-    if (!SceneManager::RegisterScene("start", GameSceneFactory::CreateScene(0)))
+    if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
-    std::shared_ptr<IScene> startScene = SceneManager::GetScene("start");
-    SetupStartScene(startScene, player);
+    std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
+    SetupMainScene(mainScene, player);
 
     if (!SceneManager::RegisterScene("pause", GameSceneFactory::CreateScene(0)))
     {
@@ -54,19 +55,25 @@ void Game::SetupGame()
 
 
     // Setup Main Scene
-    if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
+    if (!SceneManager::RegisterScene("game", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
     }
-    std::shared_ptr<IScene> mainScene = SceneManager::GetScene("main");
-    SetupMainScene(mainScene, player);
+    std::shared_ptr<IScene> gameScene = SceneManager::GetScene("game");
+    SetupGameScene(gameScene, player);
 
+    std::shared_ptr<Empty> escape = std::make_shared<Empty>();
+    std::shared_ptr<IScript> pauseScript = std::static_pointer_cast<IScript, PauseControl>(std::make_shared<PauseControl>());
+    escape->AttachScript(pauseScript);
+    gameScene->AddGameObject(escape);
+    pauseScene->AddGameObject(escape);
+    
 }
 
 void Game::ResetGame()
 {
+    SceneManager::ClearScene("game");
     SceneManager::ClearScene("main");
-    SceneManager::ClearScene("start");
     SceneManager::ClearScene("pause");
     SceneManager::ClearScene("secondScene");
     EnemyManager::Cleanup();
@@ -84,10 +91,10 @@ void Game::ResetGame()
     {
         gameObject->OnStart();
     }
-    SceneManager::LoadScene("start");
+    SceneManager::LoadScene("main");
 }
 
-void Game::SetupStartScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
+void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
 {
 
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "wood_arena_v1.png");
@@ -105,7 +112,7 @@ void Game::SetupStartScene(std::shared_ptr<IScene> startScene, std::shared_ptr<I
     startScene->AddGameObject(exitButton);
 }
 
-void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player)
+void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player)
 {
     // Player, Controller and CardDeck
 
@@ -154,12 +161,6 @@ void Game::SetupMainScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);
-
-
-    // Temporary Exit Button
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Quit);
-    exitButton->SetPosition({ 0, 280 });
-    mainScene->AddGameObject(exitButton);
      
 }
 
@@ -168,20 +169,24 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Continue);
-    continueButton->SetPosition({ 245, 150 });
+    continueButton->SetPosition({ 244, 150 });
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
-    quitButton->SetPosition({ 245, 210 });
+    quitButton->SetPosition({ 244, 210 });
 
     pauseScene->AddGameObject(continueButton);
     pauseScene->AddGameObject(quitButton);
     pauseScene->AddGameObject(mouse);
-
+    std::shared_ptr<IScript> updateScript = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
+    std::shared_ptr<Mesh> pausedText = std::make_shared<Mesh>(MeshType::Object, "PauseText", "paused");
+    pausedText->AttachScript(updateScript);
+    pausedText->SetPosition({241, 75});
+    pauseScene->AddGameObject(pausedText);
 
     //Create animated background
     for (size_t i = 0; i < 8; i++)
     {
-        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pawnground.apng");
-        std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, PauseBackgroundScript>(std::make_shared<PauseBackgroundScript>());
+        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pause_background");
+        std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });
         pauseScene->AddGameObject(background);

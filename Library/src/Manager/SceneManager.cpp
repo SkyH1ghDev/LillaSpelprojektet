@@ -3,6 +3,8 @@
 
 std::unordered_map<std::string, std::shared_ptr<IScene>> SceneManager::m_scenesMap = {};
 std::shared_ptr<IScene> SceneManager::m_currentScene = {};
+std::string SceneManager::m_currentSceneID = "main";
+std::string SceneManager::m_previousSceneID = "main";
 
 bool SceneManager::RegisterScene(const std::string& id, const std::shared_ptr<IScene>& scene)
 {
@@ -22,7 +24,8 @@ bool SceneManager::LoadScene(const std::string& id)
     {
         return false;
     }
-    
+    m_previousSceneID = m_currentSceneID;
+    m_currentSceneID = id;
     m_currentScene = m_scenesMap[id];
     m_currentScene->SetActive(true); // Activate all objects in the scene
     return true;

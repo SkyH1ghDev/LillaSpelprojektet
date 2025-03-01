@@ -2,7 +2,6 @@
 #include "EntityAttackComponentFactory.hpp"
 #include "EntityMoveComponentFactory.hpp"
 #include "EntityTakeDamageComponentFactory.hpp"
-#include "EntityUseCardComponentFactory.hpp"
 #include "EntityVisibleComponentFactory.hpp"
 #include "EntitySetColliderComponentFactory.hpp"
 #include <iostream>
@@ -21,7 +20,6 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
     m_visible(CreateVisibleComponent(entityType)),
     m_attack(CreateAttackComponent(entityType)),
     m_takeDamage(CreateTakeDamageComponent(entityType)),
-    m_useCard(CreateUseCardComponent(entityType)),
     m_type(entityType),
     m_setCollider(CreateColliderComponent(entityType))
 {
@@ -32,6 +30,7 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
 void Entity::Initialize()
 {
     this->m_state = EntityState::Spawning;
+    this->m_isAnimating = false;
     PerformVisible(this->m_state);
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
@@ -52,7 +51,7 @@ void Entity::Initialize()
             this->m_DeathAnimationTimer = 3.9;
             break;
         
-        case EntityType::Enemy:
+        case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
             break;
         default:
@@ -87,6 +86,7 @@ void Entity::Update()
         m_spawnTimer -= Clock::GetDeltaTime(); // Assuming GetDeltaTime() returns the time since last frame
         if (m_spawnTimer <= 0.0f)
         {
+            this->m_spawnTimer = 0;
             this->m_state = EntityState::Base;
             this->m_isAnimating = false;
         }
@@ -114,21 +114,20 @@ void Entity::Update()
 
     if (this->m_hp <= 0)
     {   
-        this->m_damageTimer = 0;
-        if (!this->m_isAnimating && this->m_state != EntityState::Dying)
+        if ((!this->m_isAnimating && this->m_state != EntityState::Dying) || this->m_state == EntityState::TakingDamage)
+        {
             this->ResetAnimation();
+            this->m_damageTimer = 0;
+        }
         this->m_isAnimating = true;
         this->m_state = EntityState::Dying;
         this->m_DeathAnimationTimer -= Clock::GetDeltaTime();
         if (this->m_DeathAnimationTimer <= 0)
         {
-            this->m_state = EntityState::Dead;
-            this->m_isAnimating = false;
-            SetActive(false);
-            SetIsAlive(false);
-            //this->m_DeathAnimationTimer = 0;
+            this->m_DeathAnimationTimer = 0;
             if (this->m_type != EntityType::Player)
             {
+
                 SetShouldRender(false);
                 this->m_isAlive = false;
                 this->m_isActive = false;
@@ -159,8 +158,7 @@ void Entity::Update()
 
     }
 
-    if (this->m_isActive)
-        PerformVisible(this->m_state);
+    PerformVisible(this->m_state);
 
 }
 
@@ -185,7 +183,7 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         if (dashing)
         {
             this->m_state = EntityState::Dashing;
-            this->m_dashTimer = 0.5f;
+            this->m_dashTimer = 0.12f;
         }
         
         m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
@@ -201,11 +199,20 @@ void Entity::PerformVisible(EntityState entityState)
         
 }
 
+void Entity::PerformTakeDamage(float damage)
+{
+    if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
+    {
+        this->m_isAnimating = false;
+        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame);
+    }
+}
+
 void Entity::PlayerDeath()
 {
     SceneManager::UnloadScene();
     SceneManager::LoadScene("death");
-    SceneManager::ResetScene("main");
+    SceneManager::ResetScene("game");
 
     HealthBarManager::Reset();
     ManaBarManager::Reset();
@@ -233,7 +240,7 @@ void Entity::Reset()
         this->m_DeathAnimationTimer = 3.9;
         this->m_isActive = true;
         break;
-    case EntityType::Enemy:
+    case EntityType::Bishop:
         this->m_DeathAnimationTimer = 0.9;
         this->m_isActive = false;
         this->m_isAlive = false;

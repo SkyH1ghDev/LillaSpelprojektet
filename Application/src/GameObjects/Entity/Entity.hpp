@@ -3,7 +3,6 @@
 #include "IEntityVisible.hpp"
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
-#include "IEntityUseCard.hpp"
 #include "IEntitySetCollider.hpp"
 
 #include <memory>
@@ -13,7 +12,7 @@
 // Define an enum for the entity type
 enum class EntityType {
     Player,
-    Enemy
+    Bishop
 };
 
 
@@ -33,8 +32,7 @@ public:
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
-    void PerformTakeDamage(float damage) { if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame); }
-    void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
+    void PerformTakeDamage(float damage);
     void PerformSetCollider();
     void PlayerDeath();
 
@@ -49,7 +47,6 @@ private:
     std::shared_ptr<IEntityVisible> m_visible;
     std::shared_ptr<IEntityAttack> m_attack;
     std::shared_ptr<IEntityTakeDamage> m_takeDamage;
-    std::shared_ptr<IEntityUseCard> m_useCard;
     std::shared_ptr<IEntitySetCollider> m_setCollider;
 
     EntityType m_type;

@@ -4,7 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
-#include "EnemyController.hpp"
+#include "BishopController.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -32,15 +32,15 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::str
     objectPool.clear();
     objectPool.reserve(poolSize);
 
-    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
+    std::shared_ptr<IScene> testScene = SceneManager::GetScene("game");
     for (size_t i = 0; i < poolSize; ++i) {
         // Use the provided name and append an index for uniqueness
         auto obj = std::make_shared<T>(type, name + "_" + std::to_string(i));
         obj->SetActive(false);
         if (name == "Bishop")
         {
-            std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>();
-            obj->AttachScript(enemyController);
+            std::shared_ptr<IScript> bishopController = std::make_shared<BishopController>();
+            obj->AttachScript(bishopController);
         }
         objectPool.push_back(obj);
         testScene->AddGameObject(obj);
@@ -69,7 +69,7 @@ std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type, const std::string&
     size_t oldSize = objectPool.size();
     size_t newSize = oldSize * 2;
 
-    std::shared_ptr<IScene> testScene = SceneManager::GetScene("main");
+    std::shared_ptr<IScene> testScene = SceneManager::GetScene("game");
     objectPool.reserve(newSize);
 
     for (size_t i = oldSize; i < newSize; ++i) {

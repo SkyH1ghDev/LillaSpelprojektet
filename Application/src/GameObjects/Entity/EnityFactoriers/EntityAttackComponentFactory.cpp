@@ -6,8 +6,8 @@ std::shared_ptr<IEntityAttack> CreateAttackComponent(EntityType type) {
     case EntityType::Player:
         return std::make_shared<PlayerAttack>();
         break;
-    case EntityType::Enemy:
-        return std::make_shared<EnemyAttack>();
+    case EntityType::Bishop:
+        return std::make_shared<BishopAttack>();
         break;
     default:
         throw std::invalid_argument("Unknown EntityType in CreateAttackComponent");
