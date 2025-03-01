@@ -6,5 +6,6 @@
 #include "BishopBallMove.hpp"
 #include "ScatterPelletMove.hpp"
 #include "SniperBulletMove.hpp"
+#include "DisruptorWaveMove.hpp"
 
 std::shared_ptr<IProjectileMove> CreateMoveComponent(ProjectileType type);

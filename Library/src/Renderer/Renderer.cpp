@@ -124,12 +124,12 @@ void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec
 				positions.push_back({ col.GetPosition().x - col.GetRadiusX() / 1.41f, col.GetPosition().y + col.GetRadiusY() / 1.41f });
 				positions.push_back({ col.GetPosition().x - col.GetRadiusX() / 1.41f, col.GetPosition().y - col.GetRadiusY() / 1.41f });
 
-				for (int i = 0; i < positions.size(); i++)
+				for (int j = 0; j < positions.size(); j++)
 				{
 					this->DrawTexture
 					(
 						AssetManager::GetSprite("hitPixel", 0)->GetSRV().Get(),
-						positions.at(i),
+						positions.at(j),
 						AssetManager::GetSprite("hitPixel.png", 0)->GetSourceRectangle().get(),
 						DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(),
 						{ 0, 0 },

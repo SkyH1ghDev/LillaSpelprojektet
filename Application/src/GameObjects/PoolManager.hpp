@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
 
+#include "RookFactory.hpp"
 #include "BishopFactory.hpp"
 #include "PawnFactory.hpp"
 #include "PlayerFactory.hpp"
@@ -137,9 +138,14 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
                 break;
             }
+            case EntityType::Rook:
+            {
+                RookFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
 
             case EntityType::Queen:
-            case EntityType::Rook:
             case EntityType::Knight:
             default:
                 break;

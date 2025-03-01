@@ -3,7 +3,6 @@
 #include "IEntityVisible.hpp"
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
-#include "IEntityUseCard.hpp"
 #include "IEntitySetCollider.hpp"
 
 #include <memory>
@@ -38,7 +37,6 @@ public:
         const std::shared_ptr<IEntityMove>& moveComponent,
         const std::shared_ptr<IEntityVisible>& visibleComponent,
         const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
-        const std::shared_ptr<IEntityUseCard>& useCardComponent,
         const std::shared_ptr<IEntitySetCollider>& setColliderComponent,
         const EntityType& type,
         const std::string& name
@@ -49,7 +47,7 @@ public:
     void PerformVisible(EntityState entityState);
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction);
     void PerformTakeDamage(float damage);
-    void PerformUseCard(); 
+
     void PerformSetCollider();
     void PlayerDeath();
 
@@ -57,6 +55,8 @@ public:
     void OnStart() override;
     void Reset() override;
 
+    bool Dashing() const;
+    bool IsStunned() const;
     EntityType GetType() const { return m_type; }
 
 private:
@@ -64,7 +64,6 @@ private:
     std::shared_ptr<IEntityVisible> m_visible;
     std::shared_ptr<IEntityAttack> m_attack;
     std::shared_ptr<IEntityTakeDamage> m_takeDamage;
-    std::shared_ptr<IEntityUseCard> m_useCard;
     std::shared_ptr<IEntitySetCollider> m_setCollider;
 
     EntityType m_type;
@@ -74,6 +73,9 @@ private:
     float m_damageTimer = 0.0f;
     float m_DeathAnimationTimer = 0.0f;
     float m_dashTimer = 0.0f;
+    bool m_isDashing = false;
     EntityState m_state = EntityState::Base;
     bool m_iFrame = false;
+    bool m_isStunned = false;
+    float m_stunnedTimer;
 };

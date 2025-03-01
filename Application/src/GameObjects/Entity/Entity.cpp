@@ -1,5 +1,5 @@
 #include "Entity.hpp"
-#include "EnemyManager.hpp"
+
 #include <SpEngine/Clock/Clock.hpp>
 
 #include "StatSheet.hpp"
@@ -15,7 +15,6 @@ Entity::Entity
     const std::shared_ptr<IEntityMove>& moveComponent,
     const std::shared_ptr<IEntityVisible>& visibleComponent,
     const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
-    const std::shared_ptr<IEntityUseCard>& useCardComponent,
     const std::shared_ptr<IEntitySetCollider>& setColliderComponent,
     const EntityType& type,
     const std::string& name
@@ -25,7 +24,6 @@ Entity::Entity
     this->m_move = moveComponent;
     this->m_visible = visibleComponent;
     this->m_takeDamage = takeDamageComponent;
-    this->m_useCard = useCardComponent;
     this->m_setCollider = setColliderComponent;
     this->m_type = type;
 }
@@ -58,13 +56,17 @@ void Entity::Initialize()
         case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
             break;
+
+        case EntityType::Rook:
+            this->m_DeathAnimationTimer = 0.9;
+            m_stunnedTimer = 0.9;
+            break;
         
         case EntityType::Queen:
-        case EntityType::Rook:
         case EntityType::Knight:
         case EntityType::Pawn:
         default:
-            this->m_DeathAnimationTimer = 0.0;
+            this->m_DeathAnimationTimer = 0.9;
             break;
     }
 }
@@ -163,12 +165,28 @@ void Entity::Update()
 
     }
 
+    if (this->m_isStunned)
+    {
+        if (!this->m_isAnimating)
+            this->ResetAnimation();
+        this->m_isAnimating = true;
+        this->m_stunnedTimer -= Clock::GetDeltaTime();
+        this->m_state = EntityState::Stunned;
+        if (this->m_stunnedTimer <= 0)
+        {
+            this->m_isAnimating = false;
+            this->m_stunnedTimer = 0.9;
+            this->m_state = EntityState::Base;
+            this->m_isStunned = false;
+        }
+    }
+
     PerformVisible(this->m_state);
 
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
-    if (m_move != nullptr && this->m_state != EntityState::Dying) {
+    if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
         if (direction.y == -1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkUp;
@@ -188,10 +206,11 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         if (dashing)
         {
             this->m_state = EntityState::Dashing;
-            this->m_dashTimer = 0.5f;
+            this->m_dashTimer = 0.12f;
+            this->m_isDashing = true;
         }
         
-        m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
+        m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider, this->m_isStunned);
     }
 }
 
@@ -213,18 +232,23 @@ void Entity::PerformTakeDamage(float damage)
     }
 }
 
-void Entity::PerformUseCard()
+void Entity::PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {
-    if (m_useCard)
+    if
+    (
+        m_attack && this->m_state != EntityState::Dying 
+        &&
+        (
+            this->m_state != EntityState::Spawning
+            ||
+            this->m_type == EntityType::Player
+        )
+    )
     {
-        m_useCard->UseCard();
+        m_attack->Attack(position, direction);
     }
 }
 
-void Entity::PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
-{
-    if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction);
-}
 
 void Entity::PerformSetCollider()
 {
@@ -268,7 +292,20 @@ void Entity::Reset()
         this->m_shouldRender = false;
         break;
     default:
-        this->m_DeathAnimationTimer = 0.0;
+        this->m_DeathAnimationTimer = 0.9;
+        this->m_isActive = false;
+        this->m_isAlive = false;
+        this->m_shouldRender = false;
         break;
     }
+}
+
+bool Entity::Dashing() const
+{
+    return this->m_isDashing;
+}
+
+bool Entity::IsStunned() const
+{
+    return this->m_isStunned;
 }

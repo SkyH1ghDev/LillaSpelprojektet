@@ -23,6 +23,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->m_direction = direction;
     this->m_velocity = velocity;
     this->m_lifetime = lifetime;
+    this->m_maxlifetime = lifetime;
     this->m_damage = damage;
 
     this->ResetAnimation();
@@ -68,11 +69,18 @@ void Projectile::Update()
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= Clock::GetDeltaTime();
         this->m_collider->UpdatePosition(this->m_position);
-        if (PhysicsEngine::WallProjectileCollision(m_collider) || PhysicsEngine::WallProjectileCollision(m_collider))
+        if (PhysicsEngine::WallProjectileCollision(m_collider) && this->m_type != ProjectileType::DisruptorWave)
         {
             this->m_isActive = false;
             this->m_isAlive = false;
             this->m_shouldRender = false;
+        }
+        if (this->m_type == ProjectileType::DisruptorWave)
+        {
+            float minRadius = 10 * this->m_maxlifetime;
+            float maxRadius = 100 * this->m_maxlifetime;
+            //this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - (this->m_lifetime / this->m_maxlifetime))); //Linear
+            this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - exp(-3 * (1 - (this->m_lifetime / this->m_maxlifetime)))));
         }
     }
     else if(this->m_hasDeathAnimation)
