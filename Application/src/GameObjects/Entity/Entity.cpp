@@ -2,7 +2,6 @@
 #include "EntityAttackComponentFactory.hpp"
 #include "EntityMoveComponentFactory.hpp"
 #include "EntityTakeDamageComponentFactory.hpp"
-#include "EntityUseCardComponentFactory.hpp"
 #include "EntityVisibleComponentFactory.hpp"
 #include "EntitySetColliderComponentFactory.hpp"
 #include <iostream>
@@ -21,7 +20,6 @@ Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(nam
     m_visible(CreateVisibleComponent(entityType)),
     m_attack(CreateAttackComponent(entityType)),
     m_takeDamage(CreateTakeDamageComponent(entityType)),
-    m_useCard(CreateUseCardComponent(entityType)),
     m_type(entityType),
     m_setCollider(CreateColliderComponent(entityType))
 {
@@ -53,7 +51,7 @@ void Entity::Initialize()
             this->m_DeathAnimationTimer = 3.9;
             break;
         
-        case EntityType::Enemy:
+        case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
             break;
         default:
@@ -242,7 +240,7 @@ void Entity::Reset()
         this->m_DeathAnimationTimer = 3.9;
         this->m_isActive = true;
         break;
-    case EntityType::Enemy:
+    case EntityType::Bishop:
         this->m_DeathAnimationTimer = 0.9;
         this->m_isActive = false;
         this->m_isAlive = false;

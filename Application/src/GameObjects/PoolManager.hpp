@@ -4,7 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
-#include "EnemyController.hpp"
+#include "BishopController.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -39,8 +39,8 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::str
         obj->SetActive(false);
         if (name == "Bishop")
         {
-            std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>();
-            obj->AttachScript(enemyController);
+            std::shared_ptr<IScript> bishopController = std::make_shared<BishopController>();
+            obj->AttachScript(bishopController);
         }
         objectPool.push_back(obj);
         testScene->AddGameObject(obj);
