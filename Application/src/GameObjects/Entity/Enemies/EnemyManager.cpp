@@ -1,5 +1,4 @@
 #include "EnemyManager.hpp"
-#include "EnemyController.hpp"
 #include "PoolManager.hpp"
 
 #include <SpEngine/Manager/SceneManager.hpp>
@@ -21,7 +20,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 
     // Initialize the pool with a certain number of enemies
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Pawn, 10, "Pawn");
-    PoolManager<Entity, EntityType>::Initialize(EntityType::Enemy, 20, "Bishop");
+    PoolManager<Entity, EntityType>::Initialize(EntityType::Bishop, 20, "Bishop");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 3, "Rook");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
@@ -265,10 +264,10 @@ void EnemyManager::Cleanup()
 EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
 {
     //if (type == "Pawn") return EntityType::Pawn;
-    if (type == "Bishop") return EntityType::Enemy;
+    if (type == "Bishop") return EntityType::Bishop;
     //if (type == "Knight") return EntityType::Knight;
     //if (type == "Rook") return EntityType::Rook;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
-    return EntityType::Enemy;
+    return EntityType::Bishop;
 }

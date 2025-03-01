@@ -4,11 +4,11 @@
 #include <SpEngine/Assets/Game/IScript.hpp>
 
 
-class EnemyController : public IScript
+class BishopController : public IScript
 {
 public:
-	EnemyController() = default;
-	~EnemyController() override = default;
+	BishopController() = default;
+	~BishopController() override = default;
 
 	void OnStart() override;
 	void Update() override;

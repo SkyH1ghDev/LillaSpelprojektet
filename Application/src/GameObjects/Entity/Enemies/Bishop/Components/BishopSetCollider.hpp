@@ -5,7 +5,7 @@
 
 namespace DX = DirectX;
 
-class EnemySetCollider : public IEntitySetCollider
+class BishopSetCollider : public IEntitySetCollider
 {
 public:
 	Collider CreateCollider(DX::XMFLOAT2 position) override;

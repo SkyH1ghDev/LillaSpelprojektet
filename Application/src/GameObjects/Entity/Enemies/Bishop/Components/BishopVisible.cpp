@@ -1,6 +1,6 @@
-#include "EnemyVisible.hpp"
+#include "BishopVisible.hpp"
 
-void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityState entityState, float& layer, float& scale)
+void BishopVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityState entityState, float& layer, float& scale)
 {
     switch (entityState) {
     case EntityState::Spawning:
@@ -21,7 +21,7 @@ void EnemyVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySt
     scale = 0.25;
 }
 
-void EnemyVisible::UpdateLayer(DX::XMFLOAT2 position, float& layer)
+void BishopVisible::UpdateLayer(DX::XMFLOAT2 position, float& layer)
 {
     layer = 0.5 + position.y * 0.3 / 360;
 }
