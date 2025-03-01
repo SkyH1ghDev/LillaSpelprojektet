@@ -185,7 +185,7 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         if (dashing)
         {
             this->m_state = EntityState::Dashing;
-            this->m_dashTimer = 0.5f;
+            this->m_dashTimer = 0.12f;
         }
         
         m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
