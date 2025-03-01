@@ -13,7 +13,11 @@
 // Define an enum for the entity type
 enum class EntityType {
     Player,
-    Enemy
+    Queen,
+    Rook,
+    Knight,
+    Bishop,
+    Pawn
 };
 
 
@@ -28,13 +32,23 @@ public:
     Entity(Entity&& other) noexcept = default;
     Entity& operator=(Entity&& other) noexcept = default;
 
-    Entity(EntityType entityType, const std::string& name);
+    Entity
+    (
+        const std::shared_ptr<IEntityAttack>& attackComponent,
+        const std::shared_ptr<IEntityMove>& moveComponent,
+        const std::shared_ptr<IEntityVisible>& visibleComponent,
+        const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
+        const std::shared_ptr<IEntityUseCard>& useCardComponent,
+        const EntityType& type,
+        const std::string& name
+    );
+    
     void Initialize();
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
-    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
+    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction);
     void PerformTakeDamage(float damage);
-    void PerformUseCard() { if (m_useCard) m_useCard->UseCard(); }
+    void PerformUseCard(); 
     void PerformSetCollider();
     void PlayerDeath();
 

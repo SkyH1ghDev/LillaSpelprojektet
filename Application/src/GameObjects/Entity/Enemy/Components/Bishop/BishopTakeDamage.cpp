@@ -1,7 +1,7 @@
-#include "EnemyTakeDamage.hpp"
+#include "BishopTakeDamage.hpp"
 #include <SpEngine/Audio/Sound.hpp>
 
-void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& damageTimer, bool& iFrame)
+void BishopTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& damageTimer, bool& iFrame)
 {
     hp -= damage;
     if (hp > 0)
@@ -16,7 +16,7 @@ void EnemyTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& 
     }
 }
 
-void EnemyTakeDamage::SetHealth(float& hp)
+void BishopTakeDamage::SetHealth(float& hp)
 {
     hp = 100;
 }

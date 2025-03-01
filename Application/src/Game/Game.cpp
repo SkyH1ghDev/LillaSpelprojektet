@@ -20,15 +20,13 @@
 #include "Abilities/StatSheet.hpp"
 #include "Scripts/AnimateMesh.hpp"
 #include "Button.hpp"
+#include "PlayerFactory.hpp"
 #include "GameObjects/Scripts/PauseControl.hpp"
 
 void Game::SetupGame()
 {
-    std::shared_ptr<IGameObject> player = std::make_shared<Entity>(EntityType::Player, "Player");
-    std::shared_ptr<IScript> playerController = std::static_pointer_cast<IScript, PlayerController>(std::make_shared<PlayerController>());
-    std::shared_ptr<Entity> playerEntity = std::dynamic_pointer_cast<Entity>(player);
-    playerEntity->Initialize();
-    player->AttachScript(playerController);
+    PlayerFactory playerFactory;
+    std::shared_ptr<Entity> player = playerFactory.CreateEntity();
 
     // Setup Start Scene
     if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
@@ -156,8 +154,8 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
 
 
     // Managers
-    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20, "PawnPellet");
-    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20, "PawnPellet");
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::PawnPellet, 20);
+    PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20);
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);

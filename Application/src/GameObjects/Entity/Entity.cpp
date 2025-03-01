@@ -1,11 +1,4 @@
 #include "Entity.hpp"
-#include "EntityAttackComponentFactory.hpp"
-#include "EntityMoveComponentFactory.hpp"
-#include "EntityTakeDamageComponentFactory.hpp"
-#include "EntityUseCardComponentFactory.hpp"
-#include "EntityVisibleComponentFactory.hpp"
-#include "EntitySetColliderComponentFactory.hpp"
-#include <iostream>
 #include "EnemyManager.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
@@ -16,16 +9,23 @@
 #include <SpEngine/Manager/SceneManager.hpp>
 
 
-Entity::Entity(EntityType entityType, const std::string& name) : IGameObject(name),
-    m_move(CreateMoveComponent(entityType)),
-    m_visible(CreateVisibleComponent(entityType)),
-    m_attack(CreateAttackComponent(entityType)),
-    m_takeDamage(CreateTakeDamageComponent(entityType)),
-    m_useCard(CreateUseCardComponent(entityType)),
-    m_type(entityType),
-    m_setCollider(CreateColliderComponent(entityType))
+Entity::Entity
+(
+    const std::shared_ptr<IEntityAttack>& attackComponent,
+    const std::shared_ptr<IEntityMove>& moveComponent,
+    const std::shared_ptr<IEntityVisible>& visibleComponent,
+    const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
+    const std::shared_ptr<IEntityUseCard>& useCardComponent, 
+    const EntityType& type,
+    const std::string& name
+) : IGameObject(name)
 {
-    std::cout << "Entity created of type: " << (m_type == EntityType::Player ? "Player" : "Enemy") << "\n";
+    this->m_attack = attackComponent;
+    this->m_move = moveComponent;
+    this->m_visible = visibleComponent;
+    this->m_takeDamage = takeDamageComponent;
+    this->m_useCard = useCardComponent;
+    this->m_type = type;
 }
 
 
@@ -53,9 +53,14 @@ void Entity::Initialize()
             this->m_DeathAnimationTimer = 3.9;
             break;
         
-        case EntityType::Enemy:
+        case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
             break;
+        
+        case EntityType::Queen:
+        case EntityType::Rook:
+        case EntityType::Knight:
+        case EntityType::Pawn:
         default:
             this->m_DeathAnimationTimer = 0.0;
             break;
@@ -71,10 +76,6 @@ void Entity::OnStart()
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
 }
 
-void Entity::PerformSetCollider()
-{
-    this->m_collider = std::make_unique<Collider>(this->m_setCollider->CreateCollider(this->m_position));
-}
 
 void Entity::Update()
 {
@@ -210,6 +211,24 @@ void Entity::PerformTakeDamage(float damage)
     }
 }
 
+void Entity::PerformUseCard()
+{
+    if (m_useCard)
+    {
+        m_useCard->UseCard();
+    }
+}
+
+void Entity::PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
+{
+    if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction);
+}
+
+void Entity::PerformSetCollider()
+{
+    this->m_collider = std::make_unique<Collider>(this->m_setCollider->CreateCollider(this->m_position));
+}
+
 void Entity::PlayerDeath()
 {
     SceneManager::UnloadScene();
@@ -222,8 +241,6 @@ void Entity::PlayerDeath()
 
     this->m_state = EntityState::Dead;
 }
-
-
 
 void Entity::Reset()
 {
