@@ -1,21 +1,24 @@
 #include "Projectile.hpp"
-#include "ProjectileMoveComponentFactory.hpp"
-#include "ProjectileVisibleComponentFactory.hpp"
-#include "ProjectileHitComponentFactory.hpp"
-#include "ProjectileSetColliderComponentFactory.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 #include <iostream>
 
-Projectile::Projectile(ProjectileType projectileType, const std::string& name) :
-    m_move(CreateMoveComponent(projectileType)),
-    m_visible(CreateVisibleComponent(projectileType)),
-    m_hit(CreateHitComponent(projectileType)),
-    m_setCollider(CreateSetColliderComponent(projectileType)),
-    m_type(projectileType),
-    m_velocity(0), 
-    m_lifetime(0)
+Projectile::Projectile
+(
+    const std::shared_ptr<IProjectileMove>& moveComponent,
+    const std::shared_ptr<IProjectileHit>& hitComponent,
+    const std::shared_ptr<IProjectileSetCollider>& setColliderComponent,
+    const std::shared_ptr<IProjectileVisible>& visibleComponent,
+    const ProjectileType& type,
+    const std::string& name
+) : IGameObject(name)
 {
-    std::cout << "Projectile created of type: " << (m_type == ProjectileType::Base ? "Base" : "not base") << "\n";
+    this->m_move = moveComponent;
+    this->m_hit = hitComponent;
+    this->m_visible = visibleComponent;
+    this->m_setCollider = setColliderComponent;
+    this->m_type = type;
+    this->m_velocity = 0;
+    this->m_lifetime = 0;
 }
 
 void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage) {

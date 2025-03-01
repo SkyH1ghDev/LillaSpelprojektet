@@ -20,7 +20,7 @@ public:
     void Reset() override;
     
     void SpawnEnemies();
-    void CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player);
+    void CreateEnemy(const std::string& type, const DX::XMFLOAT2& position);
     void UpdateEnemies();
     EntityType ConvertStringToEntityType(const std::string& type);
     static void Cleanup();

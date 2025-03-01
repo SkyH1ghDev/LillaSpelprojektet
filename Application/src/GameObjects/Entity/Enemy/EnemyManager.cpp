@@ -11,7 +11,7 @@ std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
 std::shared_ptr<IGameObject> EnemyManager::m_player;
 RoundState EnemyManager::m_state = RoundState_Waiting;
 int EnemyManager::m_numberOfEnemies = 0;
-int EnemyManager::m_pointBudget = 3;
+int EnemyManager::m_pointBudget = 6;
 int EnemyManager::m_waveNumber = 0;
 
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
@@ -22,7 +22,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Pawn, 10, "Pawn");
     PoolManager<Entity, EntityType>::Initialize(EntityType::Bishop, 20);
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
-    //PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 3, "Rook");
+    PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 3);
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
 }
 
@@ -42,7 +42,7 @@ void EnemyManager::Reset()
     m_enemies.clear();
     EnemyManager::m_state = RoundState_Waiting;
     EnemyManager::m_numberOfEnemies = 0;
-    EnemyManager::m_pointBudget = 3;
+    EnemyManager::m_pointBudget = 6;
     EnemyManager::m_waveNumber = 0;
 }
 
@@ -99,12 +99,16 @@ void EnemyManager::SpawnEnemies()
                 !IsTooCloseToOtherEnemies(randomPos, minDistanceBetweenEnemies)
             )
             {
-                CreateEnemy(enemiesToSpawn.at(i), randomPos, m_player);
+                CreateEnemy(enemiesToSpawn.at(i), randomPos);
                 break;
             }
         }
     }
 }
+
+/*
+// TODO: FIX, MISCALCULATES HOW MANY ENEMIES TO SPAWN FOR SOME REASON
+*/
 
 std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
 {
@@ -186,7 +190,7 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
             pointBudget -= pointData.Pawn;
             successPercentage -= SpMath::RandomReal<float>(0.0f, 0.10f);
         }
-            
+
         if (SpMath::RandomReal<float>(0.0f, 1.0f) > successPercentage)
         {
             break;
@@ -196,7 +200,7 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
     return entitiesToSpawn;
 }
 
-void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& position, const std::shared_ptr<IGameObject>& player)
+void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& position)
 {
     // Convert the string type to EntityType (assuming you have a mapping)
     EntityType enemyType = ConvertStringToEntityType(type);
@@ -266,7 +270,7 @@ EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
     //if (type == "Pawn") return EntityType::Pawn;
     if (type == "Bishop") return EntityType::Bishop;
     //if (type == "Knight") return EntityType::Knight;
-    //if (type == "Rook") return EntityType::Rook;
+    if (type == "Rook") return EntityType::Rook;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
     return EntityType::Bishop;

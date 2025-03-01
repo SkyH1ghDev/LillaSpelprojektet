@@ -28,7 +28,16 @@ public:
     Projectile(Projectile&& other) noexcept = default;
     Projectile& operator=(Projectile&& other) noexcept = default;
 
-    Projectile(ProjectileType projectileType, const std::string& name);
+    Projectile
+    (
+        const std::shared_ptr<IProjectileMove>& moveComponent,
+        const std::shared_ptr<IProjectileHit>& hitComponent,
+        const std::shared_ptr<IProjectileSetCollider>& setColliderComponent,
+        const std::shared_ptr<IProjectileVisible>& visibleComponent,
+        const ProjectileType& type,
+        const std::string& name
+    );
+    
     void Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float velocity, float lifetime, float damage);
     void PerformMove(const DX::XMFLOAT2& direction, float velocity);
     void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, this->m_state, m_layerFloat, m_scaleFloat, this->m_hasDeathAnimation); }

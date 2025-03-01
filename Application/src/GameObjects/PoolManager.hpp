@@ -1,15 +1,24 @@
 #pragma once
 
+// DON'T TOUCH, IT IS HERE SO THAT THE COMPILER DOESN'T MISTAKE (GetObject) FOR THE wingdi.h MACRO
+#undef GetObject
+
 #include <vector>
 #include <memory>
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
 
+#include "BaseProjectileFactory.hpp"
+#include "BishopBallFactory.hpp"
 #include "RookFactory.hpp"
 #include "BishopFactory.hpp"
+#include "DisruptorWaveFactory.hpp"
 #include "PawnFactory.hpp"
+#include "PawnPelletFactory.hpp"
 #include "PlayerFactory.hpp"
 #include "Projectile.hpp"
+#include "ScatterPelletFactory.hpp"
+#include "SniperBulletFactory.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -138,6 +147,7 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
                 break;
             }
+            
             case EntityType::Rook:
             {
                 RookFactory factory;
@@ -156,24 +166,47 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
     {
         switch (type)
         {
-            case ProjectileType::BishopBall:
-                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::BishopBall, "BishopBall"));
+            case ProjectileType::Base:
+            {
+                BaseProjectileFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
+            }
+            
+            case ProjectileType::BishopBall:
+            {
+                BishopBallFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
 
             case ProjectileType::PawnPellet:
-                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::PawnPellet, "PawnPellet"));
+            {
+                PawnPelletFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
+            }               
 
             case ProjectileType::ScatterPellet:
-                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::ScatterPellet, "ScatterPellet"));
+            {
+                ScatterPelletFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
+            }
 
             case ProjectileType::SniperBullet:
-                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::SniperBullet, "SniperBullet"));
+            {
+                SniperBulletFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
+            }
 
             case ProjectileType::DisruptorWave:
-                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::DisruptorWave, "DisruptorWave"));
+            {
+                DisruptorWaveFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
 
             default:
                 break;
