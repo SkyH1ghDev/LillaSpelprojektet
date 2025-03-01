@@ -12,7 +12,8 @@
 // Define an enum for the entity type
 enum class EntityType {
     Player,
-    Bishop
+    Bishop,
+    Rook
 };
 
 
@@ -31,7 +32,8 @@ public:
     void Initialize();
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible(EntityState entityState);
-    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying) m_attack->Attack(position, direction); }
+    void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) { if (m_attack && this->m_state != EntityState::Dying 
+        && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) m_attack->Attack(position, direction); }
     void PerformTakeDamage(float damage);
     void PerformSetCollider();
     void PlayerDeath();
@@ -40,6 +42,7 @@ public:
     void OnStart() override;
     void Reset() override;
 
+    bool Dashing() const;
     EntityType GetType() const { return m_type; }
 
 private:
@@ -56,6 +59,7 @@ private:
     float m_damageTimer = 0.0f;
     float m_DeathAnimationTimer = 0.0f;
     float m_dashTimer = 0.0f;
+    bool m_isDashing = false;
     EntityState m_state = EntityState::Base;
     bool m_iFrame = false;
 };
