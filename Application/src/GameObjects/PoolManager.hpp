@@ -172,6 +172,9 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::SniperBullet, "SniperBullet"));
                 break;
 
+            case ProjectileType::DisruptorWave:
+                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::DisruptorWave, "DisruptorWave"));
+
             default:
                 break;
         }
