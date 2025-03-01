@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
 #include "BishopController.hpp"
+#include "RookController.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -41,6 +42,11 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::str
         {
             std::shared_ptr<IScript> bishopController = std::make_shared<BishopController>();
             obj->AttachScript(bishopController);
+        }
+        else if (name == "Rook")
+        {
+            std::shared_ptr<IScript> rookController = std::make_shared<RookController>();
+            obj->AttachScript(rookController);
         }
         objectPool.push_back(obj);
         testScene->AddGameObject(obj);

@@ -9,6 +9,9 @@ std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent(EntityType type) {
     case EntityType::Bishop:
         return std::make_shared<BishopTakeDamage>();
         break;
+    case EntityType::Rook:
+        return std::make_shared<RookTakeDamage>();
+        break;
     default:
         throw std::invalid_argument("Unknown EntityType in CreateTakeDamageComponent");
         break;

@@ -55,7 +55,7 @@ void Entity::Initialize()
             this->m_DeathAnimationTimer = 0.9;
             break;
         default:
-            this->m_DeathAnimationTimer = 0.0;
+            this->m_DeathAnimationTimer = 0.9;
             break;
     }
 }
@@ -163,7 +163,7 @@ void Entity::Update()
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
-    if (m_move != nullptr && this->m_state != EntityState::Dying) {
+    if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
         if (direction.y == -1 && !m_isAnimating)
         {
             this->m_state = EntityState::WalkUp;
@@ -184,9 +184,10 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         {
             this->m_state = EntityState::Dashing;
             this->m_dashTimer = 0.12f;
+            this->m_isDashing = true;
         }
         
-        m_position = m_move->Move(m_position, direction, dashing, this->m_collider);
+        m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider);
     }
 }
 
@@ -247,7 +248,15 @@ void Entity::Reset()
         this->m_shouldRender = false;
         break;
     default:
-        this->m_DeathAnimationTimer = 0.0;
+        this->m_DeathAnimationTimer = 0.9;
+        this->m_isActive = false;
+        this->m_isAlive = false;
+        this->m_shouldRender = false;
         break;
     }
+}
+
+bool Entity::Dashing() const
+{
+    return this->m_isDashing;
 }
