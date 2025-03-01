@@ -9,6 +9,9 @@ std::shared_ptr<IEntityMove> CreateMoveComponent(EntityType type) {
     case EntityType::Bishop:
         return std::make_shared<BishopMove>();
         break;
+    case EntityType::Rook:
+        return std::make_shared<RookMove>();
+        break;
     default:
         throw std::invalid_argument("Unknown EntityType in CreateMoveComponent");
         break;
