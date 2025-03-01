@@ -21,13 +21,13 @@ void DisruptorCard::SetCardTexture(size_t cardLevel)
 {
     switch (cardLevel) {
     case 1:
-        this->m_textureName = "card_basic.png";
+        this->m_textureName = "disruptor_wave_lvl1.png";
         break;
     case 2:
-        this->m_textureName = "card_basic.png";
+        this->m_textureName = "disruptor_wave_lvl2.png";
         break;
     case 3:
-        this->m_textureName = "card_basic.png";
+        this->m_textureName = "disruptor_wave_lvl3.png";
         break;
     default:
         this->m_textureName = "card_basic.png";
