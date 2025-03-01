@@ -265,7 +265,7 @@ EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
 {
     //if (type == "Pawn") return EntityType::Pawn;
     if (type == "Bishop") return EntityType::Bishop;
-    //if (type == "Knight") return EntityType::Knight;
+    if (type == "Knight") return EntityType::Rook;
     if (type == "Rook") return EntityType::Rook;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
