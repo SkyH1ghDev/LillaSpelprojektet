@@ -161,12 +161,6 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);
-
-
-    // Temporary Exit Button
-    std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Quit);
-    exitButton->SetPosition({ 0, 280 });
-    mainScene->AddGameObject(exitButton);
      
 }
 
