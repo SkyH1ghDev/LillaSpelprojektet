@@ -54,6 +54,10 @@ void Entity::Initialize()
         case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
             break;
+        case EntityType::Rook:
+            this->m_DeathAnimationTimer = 0.9;
+            m_stunnedTimer = 0.9;
+            break;
         default:
             this->m_DeathAnimationTimer = 0.9;
             break;
@@ -158,6 +162,22 @@ void Entity::Update()
 
     }
 
+    if (this->m_isStunned)
+    {
+        if (!this->m_isAnimating)
+            this->ResetAnimation();
+        this->m_isAnimating = true;
+        this->m_stunnedTimer -= Clock::GetDeltaTime();
+        this->m_state = EntityState::Stunned;
+        if (this->m_stunnedTimer <= 0)
+        {
+            this->m_isAnimating = false;
+            this->m_stunnedTimer = 0.9;
+            this->m_state = EntityState::Base;
+            this->m_isStunned = false;
+        }
+    }
+
     PerformVisible(this->m_state);
 
 }
@@ -187,7 +207,7 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
             this->m_isDashing = true;
         }
         
-        m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider);
+        m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider, this->m_isStunned);
     }
 }
 
@@ -259,4 +279,9 @@ void Entity::Reset()
 bool Entity::Dashing() const
 {
     return this->m_isDashing;
+}
+
+bool Entity::IsStunned() const
+{
+    return this->m_isStunned;
 }

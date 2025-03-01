@@ -52,7 +52,7 @@ void RookController::Update()
     }
 
     // Search for player in + pattern
-    if ((distance < 700) && !rook->Dashing()) { // Adjust search range
+    if ((distance < 700) && !rook->Dashing() && !rook->IsStunned()) { // Adjust search range
         if (fabs(rookPos.x - playerPos.x) < 10 || fabs(rookPos.y - playerPos.y) < 10) {
             m_isCharging = true;
             m_chargeTimer = 1.0f; // Charge time before dashing
@@ -61,7 +61,7 @@ void RookController::Update()
     }
 
     // Patrol behavior
-    if (!m_isCharging) {
+    if (!m_isCharging && !rook->IsStunned()) {
         m_patrolTime += Clock::GetDeltaTime();
 
         // Change direction after a random amount of time

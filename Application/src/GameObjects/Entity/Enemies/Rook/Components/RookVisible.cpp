@@ -24,6 +24,9 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
     case EntityState::Dying:
         texture = "rook_death";
         break;
+    case EntityState::Stunned:
+        texture = "rook_stun";
+        break;
     default:
         texture = "rook_front.png";
         break;

@@ -43,6 +43,7 @@ public:
     void Reset() override;
 
     bool Dashing() const;
+    bool IsStunned() const;
     EntityType GetType() const { return m_type; }
 
 private:
@@ -62,4 +63,6 @@ private:
     bool m_isDashing = false;
     EntityState m_state = EntityState::Base;
     bool m_iFrame = false;
+    bool m_isStunned = false;
+    float m_stunnedTimer;
 };

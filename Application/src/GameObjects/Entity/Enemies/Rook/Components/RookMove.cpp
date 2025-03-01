@@ -4,7 +4,7 @@
 #include "RookMove.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 
-DX::XMFLOAT2 RookMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool& dashInput, std::shared_ptr<Collider> m_collider) {
+DX::XMFLOAT2 RookMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& direction, bool& dashInput, std::shared_ptr<Collider> m_collider, bool& isStunned) {
     float deltaTime = Clock::GetDeltaTime();
     DX::XMVECTOR positionXMVector = XMLoadFloat2(&position);  // Convert XMFLOAT2 to XMVECTOR
     DX::XMVECTOR directionXMVector = XMLoadFloat2(&direction);
@@ -29,6 +29,7 @@ DX::XMFLOAT2 RookMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& di
         if (PhysicsEngine::WallEntityXCollision(m_collider) || PhysicsEngine::WallEntityYCollision(m_collider)) {
             isDashing = false;
             dashInput = false;
+            isStunned = true;
             dashSpeed = 0.0f;
         }
         else {
