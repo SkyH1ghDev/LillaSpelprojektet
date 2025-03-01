@@ -1,15 +1,7 @@
-<<<<<<<< HEAD:Application/src/GameObjects/Entity/Enemy/Components/Bishop/BishopAttack.cpp
-#include "BishopAttack.hpp"
-========
 #include "RookAttack.hpp"
->>>>>>>> main:Application/src/GameObjects/Entity/Enemies/Rook/Components/RookAttack.cpp
 #include "ProjectileManager.hpp"
 
-<<<<<<<< HEAD:Application/src/GameObjects/Entity/Enemy/Components/Bishop/BishopAttack.cpp
-void BishopAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
-========
 void RookAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
->>>>>>>> main:Application/src/GameObjects/Entity/Enemies/Rook/Components/RookAttack.cpp
 {
     const int numProjectiles = 5;    // Total projectiles in spread
     const float spreadAngle = 35.0f; // Total angle variation in degrees

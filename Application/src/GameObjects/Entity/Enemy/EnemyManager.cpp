@@ -1,5 +1,4 @@
 #include "EnemyManager.hpp"
-#include "EnemyController.hpp"
 #include "PoolManager.hpp"
 
 #include <SpEngine/Manager/SceneManager.hpp>

@@ -5,7 +5,7 @@
 #include "BishopSetCollider.hpp"
 #include "BishopTakeDamage.hpp"
 #include "BishopVisible.hpp"
-#include "EnemyController.hpp"
+#include "BishopController.hpp"
 
 std::shared_ptr<Entity> PawnFactory::CreateEntity()
 {
@@ -17,7 +17,6 @@ std::shared_ptr<Entity> PawnFactory::CreateEntity()
             CreateMoveComponent(),
             CreateVisibleComponent(),
             CreateTakeDamageComponent(),
-            CreateUseCardComponent(),
             CreateSetColliderComponent(),
             EntityType::Pawn,
             "Pawn"
@@ -26,7 +25,7 @@ std::shared_ptr<Entity> PawnFactory::CreateEntity()
 
     pawn->Initialize();
     
-    pawn->AttachScript(std::make_shared<EnemyController>());
+    pawn->AttachScript(std::make_shared<BishopController>());
     return pawn;
 }
 
@@ -48,11 +47,6 @@ std::shared_ptr<IEntityVisible> PawnFactory::CreateVisibleComponent()
 std::shared_ptr<IEntityTakeDamage> PawnFactory::CreateTakeDamageComponent()
 {
     return std::make_shared<BishopTakeDamage>();
-}
-
-std::shared_ptr<IEntityUseCard> PawnFactory::CreateUseCardComponent()
-{
-    return nullptr;  
 }
 
 std::shared_ptr<IEntitySetCollider> PawnFactory::CreateSetColliderComponent()

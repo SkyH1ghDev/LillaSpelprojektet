@@ -5,7 +5,6 @@
 #include "IEntityMove.hpp"
 #include "IEntityVisible.hpp"
 #include "IEntityTakeDamage.hpp"
-#include "IEntityUseCard.hpp"
 
 class IEntityFactory
 {
@@ -25,6 +24,5 @@ protected:
     virtual std::shared_ptr<IEntityMove> CreateMoveComponent() = 0;
     virtual std::shared_ptr<IEntityVisible> CreateVisibleComponent() = 0;
     virtual std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent() = 0;
-    virtual std::shared_ptr<IEntityUseCard> CreateUseCardComponent() = 0;
     virtual std::shared_ptr<IEntitySetCollider> CreateSetColliderComponent() = 0;
 };

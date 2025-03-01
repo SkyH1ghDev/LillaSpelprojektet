@@ -7,7 +7,6 @@
 #include "PlayerMove.hpp"
 #include "PlayerSetCollider.hpp"
 #include "PlayerTakeDamage.hpp"
-#include "PlayerUseCard.hpp"
 #include "PlayerVisible.hpp"
 
 std::shared_ptr<Entity> PlayerFactory::CreateEntity()
@@ -20,7 +19,6 @@ std::shared_ptr<Entity> PlayerFactory::CreateEntity()
             CreateMoveComponent(),
             CreateVisibleComponent(),
             CreateTakeDamageComponent(),
-            CreateUseCardComponent(),
             CreateSetColliderComponent(),
             EntityType::Player,
             "Player"
@@ -53,11 +51,6 @@ std::shared_ptr<IEntityVisible> PlayerFactory::CreateVisibleComponent()
 std::shared_ptr<IEntityTakeDamage> PlayerFactory::CreateTakeDamageComponent()
 {
     return std::make_shared<PlayerTakeDamage>();
-}
-
-std::shared_ptr<IEntityUseCard> PlayerFactory::CreateUseCardComponent()
-{
-    return std::make_shared<PlayerUseCard>();   
 }
 
 std::shared_ptr<IEntitySetCollider> PlayerFactory::CreateSetColliderComponent()

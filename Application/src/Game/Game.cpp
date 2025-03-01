@@ -11,7 +11,7 @@
 
 #include "Player/PlayerAttackScript.hpp"
 #include "Player/PlayerCardScript.hpp"
-#include "Enemies/EnemyManager.hpp"
+#include "EnemyManager.hpp"
 #include "Projectile/ProjectileManager.hpp"
 #include "GameObjects/Scripts/Wand.hpp"
 #include "Collision/CollisionHandler.hpp"

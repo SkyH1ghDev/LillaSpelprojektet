@@ -18,7 +18,6 @@ private:
     std::shared_ptr<IEntityMove> CreateMoveComponent() override;
     std::shared_ptr<IEntityVisible> CreateVisibleComponent() override;
     std::shared_ptr<IEntityTakeDamage> CreateTakeDamageComponent() override;
-    std::shared_ptr<IEntityUseCard> CreateUseCardComponent() override;
     std::shared_ptr<IEntitySetCollider> CreateSetColliderComponent() override;
     
 };
