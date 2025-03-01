@@ -4,15 +4,20 @@
 #include <memory>
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
-#include "EnemyController.hpp"
+
+#include "BishopFactory.hpp"
+#include "PawnFactory.hpp"
+#include "PlayerFactory.hpp"
+#include "Projectile.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
 public:
-    static void Initialize(Type type, size_t poolSize, const std::string& name);
+    static void Initialize(Type type, size_t poolSize);
     static std::shared_ptr<T> GetObject(Type type, const std::string& name);
     static void ReturnObject(Type type, std::shared_ptr<T> object);
     static void Cleanup(Type type);
+    static std::shared_ptr<T> CreateObject(Type type);
 
 private:
     static std::unordered_map<Type, std::vector<std::shared_ptr<T>>> objectPools;
@@ -26,8 +31,11 @@ std::unordered_map<Type, std::vector<std::shared_ptr<T>>> PoolManager<T, Type>::
 template <typename T, typename Type>
 std::unordered_map<Type, size_t> PoolManager<T, Type>::lastInactiveIndexMap;
 
+
+
+
 template <typename T, typename Type>
-void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::string& name) {
+void PoolManager<T, Type>::Initialize(Type type, size_t poolSize) {
     auto& objectPool = objectPools[type];
     objectPool.clear();
     objectPool.reserve(poolSize);
@@ -35,15 +43,16 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize, const std::str
     std::shared_ptr<IScene> testScene = SceneManager::GetScene("game");
     for (size_t i = 0; i < poolSize; ++i) {
         // Use the provided name and append an index for uniqueness
-        auto obj = std::make_shared<T>(type, name + "_" + std::to_string(i));
-        obj->SetActive(false);
-        if (name == "Bishop")
+        //auto obj = std::make_shared<T>(type, name + "_" + std::to_string(i));
+
+        std::shared_ptr<T> obj = CreateObject(type);
+        
+        if (obj)
         {
-            std::shared_ptr<IScript> enemyController = std::make_shared<EnemyController>();
-            obj->AttachScript(enemyController);
+            obj->SetActive(false);
+            objectPool.push_back(obj);
+            testScene->AddGameObject(obj);
         }
-        objectPool.push_back(obj);
-        testScene->AddGameObject(obj);
     }
 }
 
@@ -52,7 +61,7 @@ std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type, const std::string&
     auto& objectPool = objectPools[type];
 
     if (objectPool.empty()) {
-        Initialize(type, 10, name); // Initialize the pool with the provided name
+        Initialize(type, 10); // Initialize the pool with the provided name
     }
 
     size_t& lastInactiveIndex = lastInactiveIndexMap[type];
@@ -73,11 +82,15 @@ std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type, const std::string&
     objectPool.reserve(newSize);
 
     for (size_t i = oldSize; i < newSize; ++i) {
-        // Use the provided name and append an index for uniqueness
-        auto newObj = std::make_shared<T>(type, name + "_" + std::to_string(i));
-        newObj->SetActive(false);
-        objectPool.push_back(newObj);
-        testScene->AddGameObject(newObj);
+        std::shared_ptr<T> obj = CreateObject(type);
+        
+        if (obj)
+        {
+            obj->SetActive(false);
+            objectPool.push_back(obj);
+            testScene->AddGameObject(obj);
+        }
+
     }
 
     objectPool[oldSize]->SetActive(true);
@@ -94,4 +107,69 @@ template <typename T, typename Type>
 void PoolManager<T, Type>::Cleanup(Type type) {
     objectPools[type].clear();
     lastInactiveIndexMap[type] = 0;
+}
+
+template <typename T, typename Type>
+std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
+{
+    std::shared_ptr<T> obj;
+
+    if constexpr (std::is_same_v<Type, EntityType>)
+    {
+        switch (type)
+        {
+            case EntityType::Player:
+            {
+                PlayerFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
+            case EntityType::Bishop:
+            {
+                BishopFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
+            
+            case EntityType::Pawn:
+            {
+                PawnFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
+
+            case EntityType::Queen:
+            case EntityType::Rook:
+            case EntityType::Knight:
+            default:
+                break;
+        }
+    }
+    
+    else if constexpr (std::is_same_v<Type, ProjectileType>)
+    {
+        switch (type)
+        {
+            case ProjectileType::BishopBall:
+                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::BishopBall, "BishopBall"));
+                break;
+
+            case ProjectileType::PawnPellet:
+                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::PawnPellet, "PawnPellet"));
+                break;
+
+            case ProjectileType::ScatterPellet:
+                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::ScatterPellet, "ScatterPellet"));
+                break;
+
+            case ProjectileType::SniperBullet:
+                obj = std::dynamic_pointer_cast<T>(std::make_shared<Projectile>(ProjectileType::SniperBullet, "SniperBullet"));
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return obj;
 }

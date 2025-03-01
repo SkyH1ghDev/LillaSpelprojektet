@@ -3,6 +3,7 @@
 #include "BishopMove.hpp"
 #include "BishopTakeDamage.hpp"
 #include "BishopVisible.hpp"
+#include "BishopSetCollider.hpp"
 #include "EnemyController.hpp"
 
 std::shared_ptr<Entity> BishopFactory::CreateEntity()
@@ -16,10 +17,13 @@ std::shared_ptr<Entity> BishopFactory::CreateEntity()
             CreateVisibleComponent(),
             CreateTakeDamageComponent(),
             CreateUseCardComponent(),
+            CreateSetColliderComponent(),
             EntityType::Bishop,
             "Bishop"
         )
     );
+    
+    bishop->Initialize();
     bishop->AttachScript(std::make_shared<EnemyController>());
     return bishop;
 }
@@ -47,4 +51,9 @@ std::shared_ptr<IEntityTakeDamage> BishopFactory::CreateTakeDamageComponent()
 std::shared_ptr<IEntityUseCard> BishopFactory::CreateUseCardComponent()
 {
     return nullptr;  
+}
+
+std::shared_ptr<IEntitySetCollider> BishopFactory::CreateSetColliderComponent()
+{
+    return std::make_shared<BishopSetCollider>();
 }

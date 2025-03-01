@@ -15,7 +15,8 @@ Entity::Entity
     const std::shared_ptr<IEntityMove>& moveComponent,
     const std::shared_ptr<IEntityVisible>& visibleComponent,
     const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
-    const std::shared_ptr<IEntityUseCard>& useCardComponent, 
+    const std::shared_ptr<IEntityUseCard>& useCardComponent,
+    const std::shared_ptr<IEntitySetCollider>& setColliderComponent,
     const EntityType& type,
     const std::string& name
 ) : IGameObject(name)
@@ -25,6 +26,7 @@ Entity::Entity
     this->m_visible = visibleComponent;
     this->m_takeDamage = takeDamageComponent;
     this->m_useCard = useCardComponent;
+    this->m_setCollider = setColliderComponent;
     this->m_type = type;
 }
 
@@ -259,7 +261,7 @@ void Entity::Reset()
         this->m_DeathAnimationTimer = 3.9;
         this->m_isActive = true;
         break;
-    case EntityType::Enemy:
+    case EntityType::Bishop:
         this->m_DeathAnimationTimer = 0.9;
         this->m_isActive = false;
         this->m_isAlive = false;

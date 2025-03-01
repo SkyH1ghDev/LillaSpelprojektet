@@ -39,6 +39,7 @@ public:
         const std::shared_ptr<IEntityVisible>& visibleComponent,
         const std::shared_ptr<IEntityTakeDamage>& takeDamageComponent,
         const std::shared_ptr<IEntityUseCard>& useCardComponent,
+        const std::shared_ptr<IEntitySetCollider>& setColliderComponent,
         const EntityType& type,
         const std::string& name
     );
