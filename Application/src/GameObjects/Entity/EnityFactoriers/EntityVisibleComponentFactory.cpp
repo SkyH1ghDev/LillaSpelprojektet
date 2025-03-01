@@ -9,6 +9,9 @@ std::shared_ptr<IEntityVisible> CreateVisibleComponent(EntityType type) {
     case EntityType::Bishop:
         return std::make_shared<BishopVisible>();
         break;
+    case EntityType::Rook:
+        return std::make_shared<RookVisible>();
+        break;
     default:
         throw std::invalid_argument("Unknown EntityType in CreateVisibleComponent");
         break;

@@ -10,6 +10,10 @@ std::shared_ptr<IEntitySetCollider> CreateColliderComponent(EntityType type)
 		break;
 	case EntityType::Bishop:
 		return std::make_shared<BishopSetCollider>();
+		break;
+	case EntityType::Rook:
+		return std::make_shared<RookSetCollider>();
+		break;
 	default:
 		throw std::invalid_argument("Unknown EntityType in CreateColliderComponent");
 		break;
