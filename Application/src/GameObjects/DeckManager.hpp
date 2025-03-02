@@ -1,0 +1,50 @@
+#include "Mesh.hpp"
+#include "CardDeck.hpp"
+
+enum UpgradeType
+{
+	AddCard,
+	LevelCard
+};
+
+class DeckManager : public IGameObject
+{
+public:
+	DeckManager() = default;
+	~DeckManager() noexcept = default;
+	DeckManager(const DeckManager& other) = default;
+	DeckManager& operator=(const DeckManager& other) = default;
+	DeckManager(DeckManager&& other) noexcept = default;
+	DeckManager& operator=(DeckManager&& other) noexcept = default;
+
+	static void Initialize(
+		std::shared_ptr<IGameObject> button1,
+		std::shared_ptr<IGameObject> button2,
+		std::shared_ptr<IGameObject> button3,
+		std::shared_ptr<IGameObject> card1,
+		std::shared_ptr<IGameObject> card2,
+		std::shared_ptr<IGameObject> card3,
+		std::shared_ptr<IGameObject> cardDeck);
+
+	static void PerformDeckUpgrade(int buttonValue);
+	void OnStart() override;
+	void Update() override;
+	void Reset() override;
+	static void ResetMenu();
+
+private:
+
+	static std::shared_ptr<IGameObject> m_button1;
+	static std::shared_ptr<IGameObject> m_button2;
+	static std::shared_ptr<IGameObject> m_button3;
+
+	static std::vector <std::shared_ptr<Mesh>> m_cardDisplay;
+
+	static std::shared_ptr<CardDeck> m_cardDeck;
+	static std::vector<int> m_cardChoice;
+
+	static bool m_upgradePerformed;
+	static int m_chosenCard;
+
+	static float m_cardSpeed;
+};

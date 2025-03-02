@@ -4,7 +4,7 @@
 #include "ContinueClicked.hpp"
 #include "QuitClicked.hpp"
 #include "ExitClicked.hpp"
-
+#include "CardClicked.hpp"
 
 
 std::shared_ptr<IUIClicked> CreateClickComponent(ButtonType type) {
@@ -17,6 +17,8 @@ std::shared_ptr<IUIClicked> CreateClickComponent(ButtonType type) {
         return std::make_shared<QuitClicked>();
     case ButtonType::Exit:
         return std::make_shared<ExitClicked>();
+    case ButtonType::Card:
+        return std::make_shared<CardClicked>();
     default:
         throw std::invalid_argument("Invalid ButtonType");
     }
@@ -26,6 +28,14 @@ Button::Button(ButtonType type) :
     m_clicked(CreateClickComponent(type)),
     m_type(type)
 {
+    this->m_value = 0;
+}
+
+Button::Button(ButtonType type, int value) :
+    m_clicked(CreateClickComponent(type)),
+    m_type(type),
+    m_value(value)
+{
 }
 
 
@@ -34,18 +44,39 @@ void Button::PerformClicked()
     //Mouse over Button
     if (this->m_isActive)
     {
-        if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 145 &&
-            Input::GetMousePositionY() > this->m_position.y + 25 && Input::GetMousePositionY() < this->m_position.y + 75)
+        switch (m_type)
         {
-            PerformHover();
+        case ButtonType::Card:
+            if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 50 &&
+                Input::GetMousePositionY() > this->m_position.y && Input::GetMousePositionY() < this->m_position.y + 70)
+            {
+                PerformHover();
 
-            if (m_mouseClick->VL_Click()) {
-                m_clicked->Clicked();
+                if (m_mouseClick->VL_Click()) {
+                    m_clicked->Clicked(this->m_value);
+                    PerformVisible();
+                }
             }
+            else {
+                PerformVisible();
+            }
+            break;
+        default:
+            if (Input::GetMousePositionX() > this->m_position.x && Input::GetMousePositionX() < this->m_position.x + 145 &&
+                Input::GetMousePositionY() > this->m_position.y + 25 && Input::GetMousePositionY() < this->m_position.y + 75)
+            {
+                PerformHover();
+
+                if (m_mouseClick->VL_Click()) {
+                    m_clicked->Clicked(this->m_value);
+                }
+            }
+            else {
+                PerformVisible();
+            }
+            break;
         }
-        else {
-            PerformVisible();
-        }
+        
     }
 }
 
@@ -63,6 +94,9 @@ void Button::PerformVisible()
         break;
     case ButtonType::Exit:
         this->m_textureName = "button_exit.png";
+        break;
+    case ButtonType::Card:
+        this->m_textureName = "button_card.png";
         break;
     default:
         this->m_textureName = "button_basic.png";
@@ -85,6 +119,9 @@ void Button::PerformHover()
     case ButtonType::Exit:
         this->m_textureName = "button_exit_hover.png";
         break;
+    case ButtonType::Card:
+        this->m_textureName = "button_card_hover.png";
+        break;
     default:
         this->m_textureName = "button_basic.png";
         break;
@@ -100,7 +137,7 @@ void Button::SetupButton()
 
     this->m_shouldRender = true;
     this->m_textureName = "button_basic.png";
-    this->m_layerFloat = 0.3;
+    this->m_layerFloat = 0.9;
     this->m_scaleFloat = 1.0;
 }
 

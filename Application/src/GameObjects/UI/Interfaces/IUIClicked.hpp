@@ -2,6 +2,7 @@
 class IUIClicked
 {
 public:
-	virtual void Clicked() = 0;
+	virtual void Clicked(int value) = 0;
+
 	virtual ~IUIClicked() = default;
 };

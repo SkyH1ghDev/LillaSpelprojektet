@@ -5,7 +5,7 @@
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Audio/Sound.hpp>
 
-void PlayClicked::Clicked()
+void PlayClicked::Clicked(int value)
 {	
 	SceneManager::UnloadScene();
 	SceneManager::ResetScene("game");

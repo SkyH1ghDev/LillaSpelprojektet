@@ -16,6 +16,9 @@ void CardDeck::OnStart()
     this->m_shouldRender = true;
     this->m_isActive = false;
     SetIsAlive(true);
+    if (m_cardDeck.empty()) {
+        return;
+    }
     m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
 
@@ -30,6 +33,9 @@ void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
 
 std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetTopCard()
 {
+    if (m_cardDeck.empty()) {
+        return { 0, 0 };
+    }
     return m_cardDeck.at(m_currentCard);
 }
 
@@ -38,13 +44,19 @@ std::vector<std::pair<std::shared_ptr<ICard>, size_t>> CardDeck::GetDeck()
     return m_cardDeck;
 }
 
-void CardDeck::LevelUppCard(size_t cardIndex)
+void CardDeck::LevelUpCard(size_t cardIndex)
 {
+    if (m_cardDeck.empty()) {
+        return;
+    }
     m_cardDeck.at(cardIndex).second++;
 }
 
 void CardDeck::ChangeCurrentCard()
 {
+    if (m_cardDeck.empty()) {
+        return;
+    }
     m_currentCard = (m_currentCard + 1) % m_cardDeck.size();
 }
 
@@ -60,6 +72,9 @@ void CardDeck::ShuffleDeck()
 
 void CardDeck::UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    if (m_cardDeck.empty()) {
+        return;
+    }
     std::pair<std::shared_ptr<ICard>, size_t> topCard = GetTopCard();
     topCard.first->ActivateLevel(topCard.second, position, target);
     ChangeCurrentCard();
@@ -69,13 +84,14 @@ void CardDeck::UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 
 void CardDeck::PerformVisible()
 {
+    this->m_scaleFloat = 1.0;
+    this->m_layerFloat = 0.9;
+    this->m_position = { 560, 285 };
+
     if (!m_cardDeck.empty())
-    {
         this->m_textureName = m_cardDeck[m_currentCard].first->GetCardTexture();
-        this->m_scaleFloat = 1.0;
-        this->m_layerFloat = 0.9;
-        this->m_position = { 560, 285 };
-    }
+    else
+        this->m_textureName = "button_card.png";
 }
 
 void CardDeck::Reset()
@@ -83,5 +99,7 @@ void CardDeck::Reset()
     this->m_shouldRender = true;
     this->m_isActive = false;
     SetIsAlive(true);
-    m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
+
+    if (!m_cardDeck.empty())
+        m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }

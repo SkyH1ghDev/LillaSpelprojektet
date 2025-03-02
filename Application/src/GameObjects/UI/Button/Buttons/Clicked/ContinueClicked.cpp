@@ -2,7 +2,7 @@
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Audio/Sound.hpp>
 
-void ContinueClicked::Clicked()
+void ContinueClicked::Clicked(int value)
 {
 	SceneManager::UnloadScene();
 	SceneManager::LoadScene("game");

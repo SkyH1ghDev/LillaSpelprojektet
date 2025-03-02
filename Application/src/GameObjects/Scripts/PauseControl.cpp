@@ -2,6 +2,7 @@
 #include "PauseControl.hpp"
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Audio/Sound.hpp>
+#include "DeckManager.hpp"
 
 void PauseControl::OnStart()
 {
@@ -14,11 +15,13 @@ void PauseControl::Update()
 	{
 		if (!m_keyHeld)
 		{
-			if (SceneManager::GetCurrentSceneID() != "pause")
+			if (SceneManager::GetCurrentSceneID() != "upgrade")
 			{
 				SceneManager::UnloadScene();
-				SceneManager::LoadScene("pause");
-				Sound::SetMusic("paused.wav", 0.5f);
+				SceneManager::ResetScene("upgrade");
+				SceneManager::LoadScene("upgrade");
+
+				Sound::SetMusic("prepare.wav", 0.5f);
 				Sound::PlayMusic(true);
 			}
 			else

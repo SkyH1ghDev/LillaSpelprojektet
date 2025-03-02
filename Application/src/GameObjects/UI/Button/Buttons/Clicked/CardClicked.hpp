@@ -1,7 +1,7 @@
 #pragma once
 #include "IUIClicked.hpp"
 
-class QuitClicked : public IUIClicked
+class CardClicked : public IUIClicked
 {
 public:
     void Clicked(int value) override;

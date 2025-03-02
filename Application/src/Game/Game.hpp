@@ -16,9 +16,8 @@ public:
 
 private:
     void SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player);
-    void SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player);
+    void SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player, std::shared_ptr<IScript> pcs, std::shared_ptr<IGameObject> cardDeck);
     void SetupPauseScene(std::shared_ptr<IScene> pauseScene);
     void SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<IGameObject> player);
-    void SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene);
-    void SetupAddCardScene(std::shared_ptr<IScene> upgradeScene);
+    void SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_ptr<IScene> addCardScene, std::shared_ptr<IGameObject> cardDeck);
 };

@@ -10,7 +10,7 @@ void PlayerCardScript::OnStart()
 {
 	Input::GetKey(VK_RBUTTON)->Attach(std::static_pointer_cast<IObserver, UseCard>(m_useCard));
 
-	m_cardDeck->AddToDeck(CardType::Shotgun, 1);
+	/*m_cardDeck->AddToDeck(CardType::Shotgun, 1);
 	m_cardDeck->AddToDeck(CardType::Shotgun, 2);
 	m_cardDeck->AddToDeck(CardType::Shotgun, 3);
 	m_cardDeck->AddToDeck(CardType::Spread, 1);
@@ -25,7 +25,7 @@ void PlayerCardScript::OnStart()
 	m_cardDeck->AddToDeck(CardType::Disruptor, 1);
 	m_cardDeck->AddToDeck(CardType::Disruptor, 2);
 	m_cardDeck->AddToDeck(CardType::Disruptor, 3);
-	m_cardDeck->ShuffleDeck();
+	m_cardDeck->ShuffleDeck();*/
 }
 
 void PlayerCardScript::Update()

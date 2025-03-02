@@ -3,7 +3,7 @@
 #include <SpEngine/Audio/Sound.hpp>
 
 
-void QuitClicked::Clicked()
+void QuitClicked::Clicked(int value)
 {
 	SceneManager::UnloadScene();
 	SceneManager::LoadScene("main");
