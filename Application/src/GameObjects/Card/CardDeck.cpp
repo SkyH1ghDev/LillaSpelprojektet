@@ -28,7 +28,6 @@ void CardDeck::AddToDeck(CardType cardtype, size_t lvl)
     std::shared_ptr<ICard> card = CardManager::GetCard(cardtype);
     std::pair<std::shared_ptr<ICard>, size_t> cardInfo = std::make_pair(card, lvl);
     m_cardDeck.push_back(cardInfo);
-
 }
 
 std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetTopCard()
@@ -58,6 +57,7 @@ void CardDeck::ChangeCurrentCard()
         return;
     }
     m_currentCard = (m_currentCard + 1) % m_cardDeck.size();
+    m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
 
 void CardDeck::ShuffleDeck()
@@ -79,7 +79,6 @@ void CardDeck::UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
     topCard.first->ActivateLevel(topCard.second, position, target);
     ChangeCurrentCard();
     m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
-
 }
 
 void CardDeck::PerformVisible()

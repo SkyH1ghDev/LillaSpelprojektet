@@ -84,7 +84,7 @@ void DeckManager::Update()
 			{
 				this->m_isAlive = false;
 				m_cardDeck->AddToDeck(CardType(m_cardChoice[m_chosenCard - 1]), 1);
-				m_cardDeck->ShuffleDeck();
+				m_cardDeck->ChangeCurrentCard();
 			}
 
 			this->m_cardSpeed += Clock::GetDeltaTime();
