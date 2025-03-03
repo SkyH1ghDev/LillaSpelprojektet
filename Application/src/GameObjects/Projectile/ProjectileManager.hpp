@@ -8,7 +8,6 @@
 #include <unordered_map>
 #include <SpEngine/Manager/SceneManager.hpp>
 #include "PoolManager.hpp"
-#include "Projectile.hpp"
 
 class ProjectileManager {
 public:
