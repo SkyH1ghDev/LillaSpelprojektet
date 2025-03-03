@@ -18,8 +18,13 @@ void PauseControl::Update()
 			if (SceneManager::GetCurrentSceneID() != "upgrade")
 			{
 				SceneManager::UnloadScene();
-				SceneManager::ResetScene("upgrade");
+
 				SceneManager::LoadScene("upgrade");
+
+				if (rand() % 3 == 0)
+					DeckManager::ResetMenu(UpgradeType::LevelCard);
+				else
+					DeckManager::ResetMenu(UpgradeType::AddCard);
 
 				Sound::SetMusic("prepare.wav", 0.5f);
 				Sound::PlayMusic(true);

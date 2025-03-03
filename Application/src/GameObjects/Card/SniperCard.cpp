@@ -2,6 +2,11 @@
 #include "AbilityManager.hpp"
 #include "StatSheet.hpp"
 
+SniperCard::SniperCard()
+{
+    this->m_type = CardType::Sniper;
+}
+
 void SniperCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
     AbilityManager::SniperShot(position, target, 600, 3);

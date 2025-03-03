@@ -76,7 +76,6 @@ void Button::PerformClicked()
             }
             break;
         }
-        
     }
 }
 
@@ -153,14 +152,11 @@ void Button::OnStart()
 
 void Button::Reset()
 {
-    Input::GetKey(VK_LBUTTON)->Attach(m_mouseClick);
-
     PerformVisible();
     SetActive(false);
     SetIsAlive(true);
 
     this->m_shouldRender = true;
-    this->m_textureName = "button_basic.png";
     this->m_layerFloat = 0.9;
     this->m_scaleFloat = 1.0;
 }

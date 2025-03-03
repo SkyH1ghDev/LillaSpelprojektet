@@ -2,7 +2,10 @@
 #include "AbilityManager.hpp"
 #include <iostream>
 
-
+SpreadCard::SpreadCard()
+{
+    this->m_type = CardType::Spread;
+}
 
 void SpreadCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
 	AbilityManager::SurroundShot(position, 10, 5, 100);
