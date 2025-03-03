@@ -9,7 +9,8 @@ enum class ProjectileType {
     PawnPellet,
     ScatterPellet,
     SniperBullet,
-    DisruptorWave
+    DisruptorWave,
+    FireBall
 };
 
 #include "IProjectileMove.hpp"
