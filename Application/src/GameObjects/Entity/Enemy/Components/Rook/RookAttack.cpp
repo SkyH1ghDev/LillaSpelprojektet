@@ -4,7 +4,7 @@
 void RookAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {
     const int numProjectiles = 10;    // Total projectiles in spread
-    const float shotSpeed = 300.0f;
+    const float shotSpeed = 280.0f;
     const float lifeSpan = 30.0f;
     // Convert direction to XMVECTOR for calculations
     DX::XMVECTOR dirVec = XMLoadFloat2(&direction);
