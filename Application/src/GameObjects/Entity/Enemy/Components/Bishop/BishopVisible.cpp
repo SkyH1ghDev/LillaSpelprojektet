@@ -7,13 +7,13 @@ void BishopVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
         texture = "bishop_spawn_bilinear.apng";
         break;
     case EntityState::Dying:
-        texture = "bishop_death";
+        texture = "bishop_b_death";
         break;
     case EntityState::TakingDamage:
         texture = "bishop_damage";
         break;
     default:
-        texture = "bishop_idle";
+        texture = "bishop_b_idle";
         break;
     }
     
