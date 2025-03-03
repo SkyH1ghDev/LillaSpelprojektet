@@ -4,9 +4,10 @@
 bool SetupHelper::SetupInterfaces(MW::ComPtr<ID3D11DeviceContext>& immediateContext, const UINT& width, const UINT& height, const HWND& window, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<IDXGISwapChain>& swapChain)
 {
 	UINT flags = 0;
-	if (_DEBUG)
+	#if defined(_DEBUG)
 		flags = D3D11_CREATE_DEVICE_DEBUG;
-
+	#endif
+	
 	D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_11_0 };
 
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = {};

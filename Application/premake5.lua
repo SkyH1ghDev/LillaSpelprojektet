@@ -22,18 +22,12 @@ project "Application"
         targetBuildPath .. "/External/lib/ImGui"
     }
 
-    filter {"files:**.hlsl"}
-        shadermodel("5.0")
-        buildaction("FxCompile")
-    filter {"files:vs**.hlsl"}
-        shadertype "Vertex"
-    filter {"files:ps**.hlsl"}
-        shadertype "Pixel"
-    filter {"files:hs**.hlsl"}
-        shadertype "Hull"
-    filter {"files:gs**.hlsl"}
-        shadertype "Geometry"
-    filter {"files:ds**.hlsl"}
-        shadertype "Domain"
-    filter {"files:cs**.hlsl"}
-        shadertype "Compute"
+    filter "configurations:release"
+        postbuildcommands{
+            "{MKDIR} " .. gameCopyPath,
+            "{COPY} ../Application/Resources " .. gameCopyPath,
+            "{COPY} " .. targetBuildPath .. "/Application/Application.exe " .. gameCopyPath
+        }
+
+
+    
