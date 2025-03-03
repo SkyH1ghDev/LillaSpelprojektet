@@ -28,7 +28,7 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
         texture = "rook_w_stun";
         break;
     default:
-        texture = "rook_w_front.png";
+        texture = "rook_front_idle";
         break;
     }
     this->m_lastState = entityState;
