@@ -4,7 +4,7 @@ void FireBallVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Proje
 {
     layer = 0.5 + 0.3 * position.y / 360;
     scale = 1.0f;
-    texture = "fireball.apng";
+    texture = "fireball_red";
 }
 
 void FireBallVisible::UpdateLayer(DX::XMFLOAT2 position, float& layer)
