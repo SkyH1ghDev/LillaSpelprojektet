@@ -2,6 +2,11 @@
 #include "AbilityManager.hpp"
 #include "StatSheet.hpp"
 
+DisruptorCard::DisruptorCard()
+{
+    this->m_type = CardType::Disruptor;
+}
+
 void DisruptorCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
     AbilityManager::DisruptorWave(position, target, 0.5f);

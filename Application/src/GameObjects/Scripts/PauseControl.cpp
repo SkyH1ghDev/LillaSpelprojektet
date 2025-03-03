@@ -2,6 +2,7 @@
 #include "PauseControl.hpp"
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Audio/Sound.hpp>
+#include "DeckManager.hpp"
 
 void PauseControl::OnStart()
 {
@@ -18,6 +19,7 @@ void PauseControl::Update()
 			{
 				SceneManager::UnloadScene();
 				SceneManager::LoadScene("pause");
+
 				Sound::SetMusic("paused.wav", 0.5f);
 				Sound::PlayMusic(true);
 			}

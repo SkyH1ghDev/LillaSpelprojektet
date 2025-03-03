@@ -2,7 +2,10 @@
 #include "AbilityManager.hpp"
 #include <iostream>
 
-
+ShotgunCard::ShotgunCard()
+{
+    this->m_type = CardType::Shotgun;
+}
 
 void ShotgunCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
     AbilityManager::Shotgun(position, target, 7, 0.4f, 225, 10);
