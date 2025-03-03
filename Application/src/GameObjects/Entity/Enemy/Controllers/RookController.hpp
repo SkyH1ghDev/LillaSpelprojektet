@@ -25,4 +25,6 @@ private:
 	float m_patrolTime;
 	DX::XMFLOAT2 m_currentPatrolDirection;
 	float m_nextDirectionChangeTime;
+	bool m_isAttacking;
+	bool m_hasAttacked;
 };

@@ -59,7 +59,7 @@ void Entity::Initialize()
 
         case EntityType::Rook:
             this->m_DeathAnimationTimer = 0.9;
-            m_stunnedTimer = 0.9;
+            this->m_stunnedTimer = 0.9;
             break;
         
         case EntityType::Queen:
@@ -78,6 +78,7 @@ void Entity::OnStart()
     this->m_spawnTimer = 2.0;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    this->m_stunnedTimer = 0.9;
 }
 
 

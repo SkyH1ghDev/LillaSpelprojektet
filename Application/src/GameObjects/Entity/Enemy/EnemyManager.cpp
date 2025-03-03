@@ -268,10 +268,10 @@ void EnemyManager::Cleanup()
 EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
 {
     //if (type == "Pawn") return EntityType::Pawn;
-    if (type == "Bishop") return EntityType::Bishop;
+    if (type == "Bishop") return EntityType::Rook;
     //if (type == "Knight") return EntityType::Knight;
     if (type == "Rook") return EntityType::Rook;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
-    return EntityType::Bishop;
+    return EntityType::Rook;
 }
