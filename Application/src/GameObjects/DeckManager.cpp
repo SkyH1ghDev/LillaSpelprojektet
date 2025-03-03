@@ -73,6 +73,9 @@ void DeckManager::Update()
 			m_buttons[0]->SetActive(false);
 			m_buttons[1]->SetActive(false);
 			m_buttons[2]->SetActive(false);
+			m_buttons[0]->SetIsAlive(false);
+			m_buttons[1]->SetIsAlive(false);
+			m_buttons[2]->SetIsAlive(false);
 
 			//Animate card buttons to reflect chosen card
 			switch (m_chosenCard)
@@ -114,7 +117,7 @@ void DeckManager::Update()
 				}
 				m_cardDeck->ChangeCurrentCard();
 				SceneManager::UnloadScene();
-				SceneManager::LoadScene(SceneManager::GetPreviousSceneID());
+				SceneManager::LoadScene("game");
 				Sound::SetMusic("battle_theme_1.wav", 0.5f);
 				Sound::PlayMusic(true);
 			}
@@ -139,6 +142,13 @@ void DeckManager::PerformDeckUpgrade(int buttonValue)
 void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 {
 	m_update = true;
+
+	m_buttons[0]->SetActive(true);
+	m_buttons[1]->SetActive(true);
+	m_buttons[2]->SetActive(true);
+	m_buttons[0]->SetIsAlive(true);
+	m_buttons[1]->SetIsAlive(true);
+	m_buttons[2]->SetIsAlive(true);
 
 	if (SpMath::RandomInteger(0, 40) == 40)
 		m_chesster->SetTexture("chesster_chad");

@@ -254,8 +254,8 @@ void EnemyManager::UpdateEnemies()
                 DeckManager::ResetMenu(UpgradeType::AddCard, 2);
             }
         }
-        //Sound::SetMusic("prepare", 0.4f);
-        //Sound::PlayMusic(true);
+        Sound::SetMusic("prepare.wav", 0.4f);
+        Sound::PlayMusic(true);
         
         m_state = RoundState_WaveStarted;
         m_pointBudget += SpMath::RandomInteger<int>(1, 4);
