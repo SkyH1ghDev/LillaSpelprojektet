@@ -21,6 +21,7 @@
 #include "Projectile.hpp"
 #include "ScatterPelletFactory.hpp"
 #include "SniperBulletFactory.hpp"
+#include "FireBallFactory.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -221,6 +222,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case ProjectileType::DisruptorWave:
             {
                 DisruptorWaveFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::FireBall:
+            {
+                FireBallFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }

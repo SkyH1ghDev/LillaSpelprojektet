@@ -4,16 +4,16 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
 {
     switch (entityState) {
     case EntityState::WalkUp:
-        texture = "rook_w_back.png";
+        texture = "rook_w_back_idle";
         break;
     case EntityState::WalkDown:
-        texture = "rook_front_idle";
+        texture = "rook_w_front_idle";
         break;
     case EntityState::WalkRight:
-        texture = "rook_w_right.png";
+        texture = "rook_w_right_idle";
         break;
     case EntityState::WalkLeft:
-        texture = "rook_w_left.png";
+        texture = "rook_w_left_idle";
         break;
     case EntityState::TakingDamage:
         texture = "rook_w_damage";
@@ -28,7 +28,7 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
         texture = "rook_w_stun";
         break;
     default:
-        texture = "rook_w_front.png";
+        texture = "rook_w_front_idle";
         break;
     }
     this->m_lastState = entityState;
