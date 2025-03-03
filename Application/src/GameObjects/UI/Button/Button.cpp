@@ -42,7 +42,7 @@ Button::Button(ButtonType type, int value) :
 void Button::PerformClicked()
 {
     //Mouse over Button
-    if (this->m_isActive)
+    if (this->m_isAlive)
     {
         switch (m_type)
         {

@@ -20,15 +20,19 @@ void PauseControl::Update()
 				SceneManager::UnloadScene();
 				SceneManager::LoadScene("pause");
 
-				Sound::SetMusic("pausedwav", 0.5f);
+				Sound::SetMusic("paused.wav", 0.4f);
 				Sound::PlayMusic(true);
 			}
 			else
 			{
+				if (SceneManager::GetPreviousSceneID() == "game")
+					Sound::SetMusic("battle_theme_1.wav", 0.4f);
+				if (SceneManager::GetPreviousSceneID() == "upgrade")
+					Sound::SetMusic("prepare.wav", 0.4f);
+				Sound::PlayMusic(true);
+
 				SceneManager::UnloadScene();
 				SceneManager::LoadScene(SceneManager::GetPreviousSceneID());
-				Sound::SetMusic("battle_theme_1.wav", 0.5f);
-				Sound::PlayMusic(true);
 			}
 
 			m_keyHeld = true;
