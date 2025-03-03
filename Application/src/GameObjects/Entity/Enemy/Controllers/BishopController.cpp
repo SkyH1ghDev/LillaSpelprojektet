@@ -25,13 +25,11 @@ void BishopController::Update()
 
 	float distance = DX::XMVectorGetX(DX::XMVector3Length(bishopToPlayerVec));
 
-	this->m_attackTimer += Clock::GetDeltaTime();
 
 	// Only attack if enough time has passed
-	if (distance < 300 && (this->m_attackTimer >= this->m_attackCooldown))
+	if (distance < 700)
 	{
 		bishop->PerformAttack(bishopPos, direction);
-		this->m_attackTimer = 0;
 	}
 
 }   
