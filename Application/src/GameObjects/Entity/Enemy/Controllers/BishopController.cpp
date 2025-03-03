@@ -34,4 +34,8 @@ void BishopController::Update()
 		this->m_attackTimer = 0;
 	}
 
+	//Update collider
+	std::shared_ptr<Collider> temp = bishop->GetCollider();
+	temp->UpdatePosition({ bishopPos.x, bishopPos.y - 5});
+	bishop->SetCollider(temp);
 }   

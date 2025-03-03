@@ -75,7 +75,7 @@ void EnemyManager::SpawnEnemies()
     DX::XMFLOAT2 playerPos = m_player->GetPosition();
     
     constexpr float minDistanceFromPlayer = 50.0f; // Avoid spawning too close to player
-    constexpr float minDistanceBetweenEnemies = 30.0f; // Avoid enemy clustering
+    constexpr float minDistanceBetweenEnemies = 40.0f; // Avoid enemy clustering
 
     for (int i = 0; i < enemiesToSpawn.size(); ++i) {
 
@@ -84,8 +84,8 @@ void EnemyManager::SpawnEnemies()
         {
             DX::XMFLOAT2 randomPos =
             {
-                SpMath::RandomReal<float>(80.0f, 590.0f),
-                SpMath::RandomReal<float>(47.0f, 310.0f)
+                SpMath::RandomReal<float>(90.0f, 580.0f),
+                SpMath::RandomReal<float>(57.0f, 300.0f)
             };
             
             float dx = playerPos.x - randomPos.x;
