@@ -13,7 +13,8 @@ void RookController::OnStart()
     m_currentPatrolDirection = DX::XMFLOAT2(1, 0); // Start moving right by default
     m_patrolTime = 0.0f;
     m_nextDirectionChangeTime = GetRandomDirectionChangeTime();
-
+    m_isAttacking = false;
+    m_hasAttacked = false;
     srand(static_cast<unsigned int>(time(0))); // Seed the random number generator
 }
 
@@ -51,31 +52,48 @@ void RookController::Update()
         return;
     }
 
-    // Search for player in + pattern
-    if ((distance < 700) && !rook->Dashing() && !rook->IsStunned()) { // Adjust search range
-        if (fabs(rookPos.x - playerPos.x) < 10 || fabs(rookPos.y - playerPos.y) < 10) {
-            m_isCharging = true;
-            m_chargeTimer = 1.0f; // Charge time before dashing
-            return;
-        }
+    //Perform Attack
+    if (this->m_isAttacking)
+    {
+        rook->PerformAttack(rookPos, {0, 0});
+        this->m_isAttacking = false;
+        this->m_hasAttacked = true;
     }
 
-    // Patrol behavior
-    if (!m_isCharging && !rook->IsStunned()) {
-        m_patrolTime += Clock::GetDeltaTime();
-
-        // Change direction after a random amount of time
-        if (m_patrolTime >= m_nextDirectionChangeTime) {
-            m_currentPatrolDirection = GetRandomDirection();
-            m_nextDirectionChangeTime = GetRandomDirectionChangeTime();
-            m_patrolTime = 0.0f;
+    if (rook->IsStunned())
+    {
+        if(!this->m_hasAttacked)
+            this->m_isAttacking = true;
+    }
+    else
+    {
+        this->m_hasAttacked = false;
+        // Search for player in + pattern
+        if ((distance < 700) && !rook->Dashing()) { // Adjust search range
+            if (fabs(rookPos.x - playerPos.x) < 10 || fabs(rookPos.y - playerPos.y) < 10) {
+                m_isCharging = true;
+                m_chargeTimer = 1.0f; // Charge time before dashing
+                return;
+            }
         }
 
-        // Move at patrol speed
-        DX::XMFLOAT2 patrolMove = { m_currentPatrolDirection.x,
-                                    m_currentPatrolDirection.y};
+        // Patrol behavior
+        if (!m_isCharging) {
+            m_patrolTime += Clock::GetDeltaTime();
 
-        rook->PerformMove(patrolMove, false);
+            // Change direction after a random amount of time
+            if (m_patrolTime >= m_nextDirectionChangeTime) {
+                m_currentPatrolDirection = GetRandomDirection();
+                m_nextDirectionChangeTime = GetRandomDirectionChangeTime();
+                m_patrolTime = 0.0f;
+            }
+
+            // Move at patrol speed
+            DX::XMFLOAT2 patrolMove = { m_currentPatrolDirection.x,
+                                        m_currentPatrolDirection.y };
+
+            rook->PerformMove(patrolMove, false);
+        }
     }
 }
 
