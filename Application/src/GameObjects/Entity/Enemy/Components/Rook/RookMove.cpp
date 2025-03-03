@@ -23,7 +23,7 @@ DX::XMFLOAT2 RookMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& di
         DX::XMFLOAT2 newPosition;
         XMStoreFloat2(&newPosition, newPositionVec);  // Convert back to XMFLOAT2
 
-        m_collider->UpdatePosition(newPosition);
+        m_collider->UpdatePosition({ newPosition.x, newPosition.y - 10});
 
         // Stop dashing if a wall is hit
         if (PhysicsEngine::WallEntityXCollision(m_collider) || PhysicsEngine::WallEntityYCollision(m_collider)) {
@@ -60,7 +60,7 @@ DX::XMFLOAT2 RookMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& di
         DX::XMFLOAT2 newPosition;
         XMStoreFloat2(&newPosition, newPositionVec);  // Convert back to XMFLOAT2
 
-        m_collider->UpdatePosition(newPosition);
+        m_collider->UpdatePosition({ newPosition.x, newPosition.y - 10});
 
         // Check for collisions and adjust position if necessary
         if (PhysicsEngine::WallEntityXCollision(m_collider) || PhysicsEngine::WallEntityYCollision(m_collider)) {
