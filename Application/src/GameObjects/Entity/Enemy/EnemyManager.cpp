@@ -11,7 +11,7 @@ std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
 std::shared_ptr<IGameObject> EnemyManager::m_player;
 RoundState EnemyManager::m_state = RoundState_Waiting;
 int EnemyManager::m_numberOfEnemies = 0;
-int EnemyManager::m_pointBudget = 6;
+int EnemyManager::m_pointBudget = 0;
 int EnemyManager::m_waveNumber = 0;
 
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
@@ -30,7 +30,6 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 void EnemyManager::OnStart()
 {
     this->m_isAlive = true;
-    SpawnEnemies();
 }
 
 void EnemyManager::Update()
@@ -39,11 +38,11 @@ void EnemyManager::Update()
 }
 
 void EnemyManager::Reset()
- {
+{
     m_enemies.clear();
     EnemyManager::m_state = RoundState_Waiting;
     EnemyManager::m_numberOfEnemies = 0;
-    EnemyManager::m_pointBudget = 6;
+    EnemyManager::m_pointBudget = 0;
     EnemyManager::m_waveNumber = 0;
 }
 
@@ -143,23 +142,23 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         }
         else if (pointBudget < 5)
         {
-            chance.Bishop = SpMath::RandomReal<float>(0.2f, 0.4f);
-            chance.BishopAlt = SpMath::RandomReal<float>(0.2f, 0.4f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.2f, 0.4f) + chance.BishopAlt;
+            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.2f);
+            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Bishop;
+            chance.Knight = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.BishopAlt;
         }
         else if (pointBudget < 9)
         {
             chance.Rook = SpMath::RandomReal<float>(0.1f, 0.2f);
-            chance.Bishop = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.Rook;
-            chance.BishopAlt = SpMath::RandomReal<float>(0.2f, 0.4f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.BishopAlt;
+            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.15f) + chance.Rook;
+            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Bishop;
+            chance.Knight = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.BishopAlt;
         }
         else
         {
             chance.Queen = SpMath::RandomReal<float>(0.0f, 0.05f);
-            chance.Rook = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.Queen;
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.25f) + chance.Rook;
-            chance.BishopAlt = SpMath::RandomReal<float>(0.2f, 0.4f) + chance.Bishop;
+            chance.Rook = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Queen;
+            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Rook;
+            chance.BishopAlt = SpMath::RandomReal<float>(0.15f, 0.25f) + chance.Bishop;
             chance.Knight = SpMath::RandomReal<float>(0.1f, 0.25f) + chance.BishopAlt;
         }
 
