@@ -143,6 +143,8 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 {
 	m_update = true;
 
+	m_level = level;
+
 	m_buttons[0]->SetActive(true);
 	m_buttons[1]->SetActive(true);
 	m_buttons[2]->SetActive(true);

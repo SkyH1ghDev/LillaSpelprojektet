@@ -240,18 +240,19 @@ void EnemyManager::UpdateEnemies()
         SceneManager::LoadScene("upgrade");
 
         if (SpMath::RandomInteger(0, 2) == 0)
-            DeckManager::ResetMenu(UpgradeType::LevelCard);
+            DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
         else
         {
-            if (SpMath::RandomInteger(0, 2) == 0)
+            if (SpMath::RandomInteger(0, 1) == 0)
             {
-                if (SpMath::RandomInteger(0, 2) == 0)
+                if (SpMath::RandomInteger(0, 1) == 0)
                     DeckManager::ResetMenu(UpgradeType::AddCard, 3);
-                DeckManager::ResetMenu(UpgradeType::AddCard, 3);
+                else
+                    DeckManager::ResetMenu(UpgradeType::AddCard, 2);
             }
             else
             {
-                DeckManager::ResetMenu(UpgradeType::AddCard, 2);
+                DeckManager::ResetMenu(UpgradeType::AddCard, 1);
             }
         }
         Sound::SetMusic("prepare.wav", 0.4f);
