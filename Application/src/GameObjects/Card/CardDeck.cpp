@@ -98,7 +98,7 @@ void CardDeck::Reset()
     this->m_shouldRender = true;
     this->m_isActive = false;
     SetIsAlive(true);
-
+    this->m_cardDeck.clear();
     if (!m_cardDeck.empty())
         m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }

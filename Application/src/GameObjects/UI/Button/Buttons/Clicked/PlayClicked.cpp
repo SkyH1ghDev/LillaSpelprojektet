@@ -4,6 +4,7 @@
 #include "StatSheet.hpp"
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Audio/Sound.hpp>
+#include <CardManager.hpp>
 
 void PlayClicked::Clicked(int value)
 {	
@@ -14,6 +15,7 @@ void PlayClicked::Clicked(int value)
 	ManaBarManager::Reset();
 	HealthBarManager::Reset();
 	StatSheet::Reset();
+	//CardManager::Cleanup();
 	Sound::SetMusic("battle_theme_1.wav", 0.5f);
 	Sound::PlayMusic(true);
 }
