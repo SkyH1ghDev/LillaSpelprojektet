@@ -14,6 +14,7 @@ enum class EntityType {
     Player,
     Queen,
     Rook,
+    RookAlt,
     Knight,
     Bishop,
     BishopAlt,

@@ -26,6 +26,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
     PoolManager<Entity, EntityType>::Initialize(EntityType::BishopAlt, 10);
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
     PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 10);
+    PoolManager<Entity, EntityType>::Initialize(EntityType::RookAlt, 10);
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
 }
 
@@ -124,6 +125,7 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         float BishopAlt;
         float Knight;
         float Rook;
+        float RookAlt;
         float Queen;
     };
     
@@ -152,7 +154,8 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         else if (pointBudget < 9)
         {
             chance.Rook = SpMath::RandomReal<float>(0.1f, 0.2f);
-            chance.Bishop = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.Rook;
+            chance.RookAlt = SpMath::RandomReal<float>(0.1f, 0.2f); + chance.Rook;
+            chance.Bishop = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.RookAlt;
             chance.BishopAlt = SpMath::RandomReal<float>(0.2f, 0.4f) + chance.Bishop;
             chance.Knight = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.BishopAlt;
         }
@@ -160,7 +163,8 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         {
             chance.Queen = SpMath::RandomReal<float>(0.0f, 0.05f);
             chance.Rook = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.Queen;
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.25f) + chance.Rook;
+            chance.RookAlt = SpMath::RandomReal<float>(0.1f, 0.2f); +chance.Rook;
+            chance.Bishop = SpMath::RandomReal<float>(0.2f, 0.3f) + chance.RookAlt;
             chance.BishopAlt = SpMath::RandomReal<float>(0.2f, 0.4f) + chance.Bishop;
             chance.Knight = SpMath::RandomReal<float>(0.1f, 0.25f) + chance.BishopAlt;
         }
@@ -177,6 +181,12 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         {
             entitiesToSpawn.push_back("Rook");
             pointBudget -= pointData.Rook;
+            successPercentage -= SpMath::RandomReal<float>(0.10f, 0.25f);
+        }
+        else if (rand < chance.RookAlt)
+        {
+            entitiesToSpawn.push_back("RookAlt");
+            pointBudget -= pointData.RookAlt;
             successPercentage -= SpMath::RandomReal<float>(0.10f, 0.25f);
         }
         else if (rand < chance.Bishop)
@@ -309,7 +319,8 @@ EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
     if (type == "BishopAlt") return EntityType::BishopAlt;
     //if (type == "Knight") return EntityType::Knight;
     if (type == "Rook") return EntityType::Rook;
+    if (type == "RookAlt") return EntityType::RookAlt;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
-    return EntityType::Bishop;
+    return EntityType::RookAlt;
 }
