@@ -133,33 +133,6 @@ void DeckManager::PerformDeckUpgrade(int buttonValue)
 {
 	DeckManager::m_upgradePerformed = true;
 	DeckManager::m_chosenCard = buttonValue;
-
-	if (m_type == UpgradeType::LevelCard)
-	{
-		switch (m_cardChoice[buttonValue])
-		{
-		case CardType::Shotgun: //Scatter
-			m_cardDisplay.at(buttonValue)->SetTexture("card_scatter_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
-			break;
-		case CardType::Spread: //Ring of fire
-			m_cardDisplay.at(buttonValue)->SetTexture("card_rof_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
-			break;
-		case CardType::Heal: //Heal
-			m_cardDisplay.at(buttonValue)->SetTexture("card_heal_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
-			break;
-		case CardType::Sniper: //Rune shard
-			m_cardDisplay.at(buttonValue)->SetTexture("rune_shard_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
-			break;
-		case CardType::Disruptor: //Disruptor
-			m_cardDisplay.at(buttonValue)->SetTexture("disruptor_wave_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
-			break;
-		default: //Nothing
-			m_cardDisplay.at(buttonValue)->SetTexture("button_card.png");
-			break;
-		}
-
-		m_cardDisplay.at(buttonValue)->PerformVisible();
-	}
 }
 
 //Call after loading scene for correct buttons to be disabled
