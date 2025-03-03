@@ -56,6 +56,9 @@ void Entity::Initialize()
         case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
             break;
+        case EntityType::BishopAlt:
+            this->m_DeathAnimationTimer = 0.9;
+            break;
 
         case EntityType::Rook:
             this->m_DeathAnimationTimer = 0.9;
@@ -287,6 +290,12 @@ void Entity::Reset()
         this->m_isActive = true;
         break;
     case EntityType::Bishop:
+        this->m_DeathAnimationTimer = 0.9;
+        this->m_isActive = false;
+        this->m_isAlive = false;
+        this->m_shouldRender = false;
+        break;
+    case EntityType::BishopAlt:
         this->m_DeathAnimationTimer = 0.9;
         this->m_isActive = false;
         this->m_isAlive = false;

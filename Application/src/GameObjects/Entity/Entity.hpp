@@ -16,6 +16,7 @@ enum class EntityType {
     Rook,
     Knight,
     Bishop,
+    BishopAlt,
     Pawn
 };
 
