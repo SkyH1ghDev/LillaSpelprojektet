@@ -278,7 +278,7 @@ void EnemyManager::Cleanup()
 
 EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
 {
-    //if (type == "Pawn") return EntityType::Pawn;
+    if (type == "Pawn") return EntityType::Pawn;
     if (type == "Bishop") return EntityType::Bishop;
     if (type == "BishopAlt") return EntityType::BishopAlt;
     //if (type == "Knight") return EntityType::Knight;
