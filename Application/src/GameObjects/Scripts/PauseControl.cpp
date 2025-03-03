@@ -20,7 +20,7 @@ void PauseControl::Update()
 				SceneManager::UnloadScene();
 				SceneManager::LoadScene("pause");
 
-				Sound::SetMusic("paused.wav", 0.5f);
+				Sound::SetMusic("pausedwav", 0.5f);
 				Sound::PlayMusic(true);
 			}
 			else

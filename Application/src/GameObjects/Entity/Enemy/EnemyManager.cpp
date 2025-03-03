@@ -5,6 +5,8 @@
 #include <cmath>
 #include <random>
 #include <SpEngine/Math/SpMath.hpp>
+#include "DeckManager.hpp"
+#include <SpEngine/Audio/Sound.hpp>
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
@@ -232,6 +234,29 @@ void EnemyManager::UpdateEnemies()
     switch (m_state)
     {
     case RoundState_Waiting:
+
+        //Start upgrade sequence
+        SceneManager::UnloadScene();
+        SceneManager::LoadScene("upgrade");
+
+        if (SpMath::RandomInteger(0, 2) == 0)
+            DeckManager::ResetMenu(UpgradeType::LevelCard);
+        else
+        {
+            if (SpMath::RandomInteger(0, 2) == 0)
+            {
+                if (SpMath::RandomInteger(0, 2) == 0)
+                    DeckManager::ResetMenu(UpgradeType::AddCard, 3);
+                DeckManager::ResetMenu(UpgradeType::AddCard, 3);
+            }
+            else
+            {
+                DeckManager::ResetMenu(UpgradeType::AddCard, 2);
+            }
+        }
+        Sound::SetMusic("prepare", 0.4f);
+        Sound::PlayMusic(true);
+        
         m_state = RoundState_WaveStarted;
         m_pointBudget += SpMath::RandomInteger<int>(1, 4);
         break;
