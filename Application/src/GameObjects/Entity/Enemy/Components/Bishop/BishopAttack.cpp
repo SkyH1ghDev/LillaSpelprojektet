@@ -3,7 +3,7 @@
 
 void BishopAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {
-    const int numProjectiles = 5;    // Total projectiles in spread
+    const int numProjectiles = 3;    // Total projectiles in spread
     const float spreadAngle = 35.0f; // Total angle variation in degrees
 
     // Convert direction to XMVECTOR for calculations

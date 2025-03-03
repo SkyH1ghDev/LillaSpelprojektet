@@ -4,16 +4,16 @@ void BishopAltVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Enti
 {
     switch (entityState) {
     case EntityState::Spawning:
-        texture = "bishop_spawn_bilinear.apng";
+        texture = "bishop_b_spawn";
         break;
     case EntityState::Dying:
-        texture = "bishop_death";
+        texture = "bishop_b_death";
         break;
     case EntityState::TakingDamage:
-        texture = "bishop_damage";
+        texture = "bishop_b_damage";
         break;
     default:
-        texture = "bishop_idle";
+        texture = "bishop_b_idle";
         break;
     }
     
