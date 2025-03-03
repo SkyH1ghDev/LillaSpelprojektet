@@ -1,10 +1,10 @@
-#include "RookAttack.hpp"
+#include "RookAltAttack.hpp"
 #include "ProjectileManager.hpp"
 
-void RookAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
+void RookAltAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {
-    const int numProjectiles = 10;    // Total projectiles in spread
-    const float shotSpeed = 300.0f;
+    const int numProjectiles = 20;    // Total projectiles in spread
+    const float shotSpeed = 200.0f;
     const float lifeSpan = 30.0f;
     // Convert direction to XMVECTOR for calculations
     DX::XMVECTOR dirVec = XMLoadFloat2(&direction);

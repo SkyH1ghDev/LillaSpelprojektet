@@ -11,6 +11,7 @@
 #include "BaseProjectileFactory.hpp"
 #include "BishopBallFactory.hpp"
 #include "RookFactory.hpp"
+#include "RookAltFactory.hpp"
 #include "BishopFactory.hpp"
 #include "BishopAltFactory.hpp"
 #include "DisruptorWaveFactory.hpp"
@@ -157,6 +158,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case EntityType::Rook:
             {
                 RookFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
+
+            case EntityType::RookAlt:
+            {
+                RookAltFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
                 break;
             }
