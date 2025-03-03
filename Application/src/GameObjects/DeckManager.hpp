@@ -31,7 +31,7 @@ public:
 	void OnStart() override;
 	void Update() override;
 	void Reset() override;
-	static void ResetMenu(UpgradeType upgrade);
+	static void ResetMenu(UpgradeType upgrade, size_t level = 1);
 	static void SetLevel(int level);
 
 private:

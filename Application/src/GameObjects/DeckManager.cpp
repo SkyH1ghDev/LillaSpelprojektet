@@ -136,7 +136,7 @@ void DeckManager::PerformDeckUpgrade(int buttonValue)
 }
 
 //Call after loading scene for correct buttons to be disabled
-void DeckManager::ResetMenu(UpgradeType upgrade)
+void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 {
 	m_update = true;
 

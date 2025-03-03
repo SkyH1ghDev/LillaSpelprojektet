@@ -15,15 +15,12 @@ void PauseControl::Update()
 	{
 		if (!m_keyHeld)
 		{
-			if (SceneManager::GetCurrentSceneID() != "upgrade")
+			if (SceneManager::GetCurrentSceneID() != "pause")
 			{
 				SceneManager::UnloadScene();
+				SceneManager::LoadScene("pause");
 
-				SceneManager::LoadScene("upgrade");
-
-				DeckManager::ResetMenu(UpgradeType::LevelCard);
-
-				Sound::SetMusic("prepare.wav", 0.5f);
+				Sound::SetMusic("paused.wav", 0.5f);
 				Sound::PlayMusic(true);
 			}
 			else
