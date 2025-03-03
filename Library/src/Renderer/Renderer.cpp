@@ -6,7 +6,11 @@
 Renderer::Renderer(HWND& window)
 {
 	SetupPipeline(window);
+
+	#if defined(DEBUG)
 	SetupImGui(window, this->m_device, this->m_immediateContext);
+	#endif
+	
 	this->m_spriteBatch = std::make_unique<DX::DX11::SpriteBatch>(this->m_immediateContext.Get());
 	
 	AssetManager::InitializeAudioEngine();
@@ -20,7 +24,9 @@ Renderer::Renderer(HWND& window)
 
 Renderer::~Renderer()
 {
+	#if defined(DEBUG)
 	ImGuiTool::Shutdown();
+	#endif
 }
 
 void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
@@ -74,12 +80,16 @@ void Renderer::DrawScene(const std::shared_ptr<IScene>& sceneToRender)
 
 void Renderer::Draw(const std::shared_ptr<IScene>& mainScene)
 {
+	#if defined(DEBUG)
 	ImGuiTool::Start();
+	#endif
 
 	DrawScene(mainScene);
 
+	#if defined(DEBUG)
 	ImGuiTool::Run();
 	ImGuiTool::End();
+	#endif
 
 	this->m_swapChain->Present(0, 0);
 }
