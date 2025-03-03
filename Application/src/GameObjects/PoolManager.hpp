@@ -12,6 +12,7 @@
 #include "BishopBallFactory.hpp"
 #include "RookFactory.hpp"
 #include "BishopFactory.hpp"
+#include "BishopAltFactory.hpp"
 #include "DisruptorWaveFactory.hpp"
 #include "PawnFactory.hpp"
 #include "PawnPelletFactory.hpp"
@@ -140,7 +141,12 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
                 break;
             }
-            
+            case EntityType::BishopAlt:
+            {
+                BishopAltFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
             case EntityType::Pawn:
             {
                 PawnFactory factory;
