@@ -296,5 +296,5 @@ EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
     if (type == "RookAlt") return EntityType::RookAlt;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
-    return EntityType::Bishop;
+    return EntityType::RookAlt;
 }

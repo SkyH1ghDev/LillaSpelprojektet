@@ -5,9 +5,7 @@
 
 void BishopAltAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 {
-    const int numProjectiles = 3;    // Total projectiles in spread
-
-    // Convert direction to XMVECTOR for calculations
+   // Convert direction to XMVECTOR for calculations
     DX::XMVECTOR dirVec = XMLoadFloat2(&direction);
     dirVec = DX::XMVector3Normalize(dirVec); // Ensure it's normalized
 
