@@ -29,7 +29,7 @@ public:
     static void Initialize(Type type, size_t poolSize);
     static std::shared_ptr<T> GetObject(Type type, const std::string& name);
     static void ReturnObject(Type type, std::shared_ptr<T> object);
-    static void Cleanup(Type type);
+    static void Reset();
     static std::shared_ptr<T> CreateObject(Type type);
 
 private:
@@ -117,9 +117,15 @@ void PoolManager<T, Type>::ReturnObject(Type type, std::shared_ptr<T> object) {
 }
 
 template <typename T, typename Type>
-void PoolManager<T, Type>::Cleanup(Type type) {
-    objectPools[type].clear();
-    lastInactiveIndexMap[type] = 0;
+void PoolManager<T, Type>::Reset() {
+    for (auto& [type, objectPool] : objectPools) {
+        for (auto& obj : objectPool) {
+            if (obj) {
+                obj->Reset(); // Assuming Reset() is a method in your object
+            }
+        }
+    }
+    lastInactiveIndexMap.clear();
 }
 
 template <typename T, typename Type>

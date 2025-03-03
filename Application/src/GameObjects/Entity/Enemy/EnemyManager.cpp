@@ -7,6 +7,7 @@
 #include <SpEngine/Math/SpMath.hpp>
 #include "DeckManager.hpp"
 #include <SpEngine/Audio/Sound.hpp>
+#include "ProjectileManager.hpp"
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
@@ -244,8 +245,9 @@ void EnemyManager::UpdateEnemies()
     {
     case RoundState_Waiting:
 
-        //Start upgrade sequence
+        //Start upgrade 
         SceneManager::UnloadScene();
+        ProjectileManager::Reset();
         SceneManager::LoadScene("upgrade");
 
         if (SpMath::RandomInteger(0, 2) == 0)

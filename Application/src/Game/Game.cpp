@@ -86,8 +86,6 @@ void Game::ResetGame()
     SceneManager::ClearScene("pause");
     SceneManager::ClearScene("secondScene");
     EnemyManager::Cleanup();
-    ProjectileManager::Cleanup(ProjectileType::BishopBall);
-    ProjectileManager::Cleanup(ProjectileType::PawnPellet);
     HealthBarManager::Cleanup();
     ManaBarManager::Cleanup();
     StatSheet::Reset();
