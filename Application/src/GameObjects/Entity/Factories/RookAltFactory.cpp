@@ -30,7 +30,7 @@ std::shared_ptr<Entity> RookAltFactory::CreateEntity()
 
 std::shared_ptr<IEntityAttack> RookAltFactory::CreateAttackComponent()
 {
-    return std::make_shared<RookAttack>();
+    return std::make_shared<RookAltAttack>();
 }
 
 std::shared_ptr<IEntityMove> RookAltFactory::CreateMoveComponent()
@@ -40,7 +40,7 @@ std::shared_ptr<IEntityMove> RookAltFactory::CreateMoveComponent()
 
 std::shared_ptr<IEntityVisible> RookAltFactory::CreateVisibleComponent()
 {
-    return std::make_shared<RookVisible>();
+    return std::make_shared<RookAltVisible>();
 }
 
 std::shared_ptr<IEntityTakeDamage> RookAltFactory::CreateTakeDamageComponent()
