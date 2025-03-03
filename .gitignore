@@ -6,6 +6,7 @@ Makefile
 Build/
 Generated/
 ImageDump/
+Game/
 
 **.make
 **.vcxproj.filters

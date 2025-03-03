@@ -24,6 +24,7 @@ workspace "LillaSpelprojektet"
 
     targetBuildPath = path.getdirectory(_SCRIPT) .. "/Build/target"
     objBuildPath = path.getdirectory(_SCRIPT) .. "/Build/obj"
+    gameCopyPath = path.getdirectory(_SCRIPT) .. "/Game"
 
 include "External"
 include "Library"
