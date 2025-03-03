@@ -30,6 +30,8 @@ public:
     size_t GetDeckSize();
     std::pair<std::shared_ptr<ICard>, size_t> GetCardAt(size_t index);
     void PerformVisible();
+    bool IsEmpty();
+    bool CanLevelUp();
 
 private:
     std::vector<std::pair<std::shared_ptr<ICard>, size_t>> m_cardDeck = {};
@@ -44,4 +46,9 @@ inline size_t CardDeck::GetDeckSize()
 inline std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetCardAt(size_t index)
 {
     return m_cardDeck.at(index);
+}
+
+inline bool CardDeck::IsEmpty()
+{
+    return m_cardDeck.empty();
 }

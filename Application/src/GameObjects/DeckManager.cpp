@@ -2,6 +2,7 @@
 #include <SpEngine/Clock/Clock.hpp>
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <SpEngine/Audio/Sound.hpp>
+#include <SpEngine/Math/SpMath.hpp>
 
 int DeckManager::m_chosenCard = 0;
 bool DeckManager::m_upgradePerformed = false;
@@ -16,6 +17,7 @@ std::vector <std::shared_ptr<IGameObject>> DeckManager::m_buttons;
 
 std::vector<std::shared_ptr<Mesh>> DeckManager::m_cardDisplay;
 
+std::shared_ptr<Mesh> DeckManager::m_chesster;
 std::shared_ptr<CardDeck> DeckManager::m_cardDeck;
 int DeckManager::m_level = 1;
 UpgradeType DeckManager::m_type = UpgradeType::AddCard;
@@ -26,8 +28,10 @@ void DeckManager::Initialize(std::shared_ptr<IGameObject> button1,
 	std::shared_ptr<IGameObject> card1,
 	std::shared_ptr<IGameObject> card2,
 	std::shared_ptr<IGameObject> card3,
-	std::shared_ptr<IGameObject> cardDeck)
+	std::shared_ptr<IGameObject> cardDeck,
+	std::shared_ptr<IGameObject> chesster)
 {
+	m_chesster = std::static_pointer_cast<Mesh>(chesster);
 	m_buttons.push_back(button1);
 	m_buttons.push_back(button2);
 	m_buttons.push_back(button3);
@@ -101,7 +105,6 @@ void DeckManager::Update()
 				{
 				case AddCard:
 					m_cardDeck->AddToDeck(CardType(m_cardChoice[m_chosenCard - 1]), m_level);
-					m_cardDeck->ChangeCurrentCard();
 					break;
 				case LevelCard:
 					m_cardDeck->LevelUpCard(m_cardIndex[m_chosenCard - 1]);
@@ -109,7 +112,7 @@ void DeckManager::Update()
 				default:
 					break;
 				}
-				
+				m_cardDeck->ChangeCurrentCard();
 				SceneManager::UnloadScene();
 				SceneManager::LoadScene(SceneManager::GetPreviousSceneID());
 				Sound::SetMusic("battle_theme_1.wav", 0.5f);
@@ -130,13 +133,48 @@ void DeckManager::PerformDeckUpgrade(int buttonValue)
 {
 	DeckManager::m_upgradePerformed = true;
 	DeckManager::m_chosenCard = buttonValue;
+
+	if (m_type == UpgradeType::LevelCard)
+	{
+		switch (m_cardChoice[buttonValue])
+		{
+		case CardType::Shotgun: //Scatter
+			m_cardDisplay.at(buttonValue)->SetTexture("card_scatter_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
+			break;
+		case CardType::Spread: //Ring of fire
+			m_cardDisplay.at(buttonValue)->SetTexture("card_rof_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
+			break;
+		case CardType::Heal: //Heal
+			m_cardDisplay.at(buttonValue)->SetTexture("card_heal_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
+			break;
+		case CardType::Sniper: //Rune shard
+			m_cardDisplay.at(buttonValue)->SetTexture("rune_shard_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
+			break;
+		case CardType::Disruptor: //Disruptor
+			m_cardDisplay.at(buttonValue)->SetTexture("disruptor_wave_lvl" + std::to_string(m_displayLevel[buttonValue] + 1) + ".png");
+			break;
+		default: //Nothing
+			m_cardDisplay.at(buttonValue)->SetTexture("button_card.png");
+			break;
+		}
+
+		m_cardDisplay.at(buttonValue)->PerformVisible();
+	}
 }
 
 //Call after loading scene for correct buttons to be disabled
 void DeckManager::ResetMenu(UpgradeType upgrade)
 {
 	m_update = true;
-	m_type = upgrade;
+
+	if (SpMath::RandomInteger(0, 40) == 40)
+		m_chesster->SetTexture("chesster_chad");
+	else
+		m_chesster->SetTexture("chesster_closeup");
+
+	m_type = UpgradeType::AddCard;
+	if (m_cardDeck->CanLevelUp())
+		m_type = upgrade;
 
 	m_cardSpeed = 0;
 	m_upgradePerformed = false;
@@ -153,15 +191,15 @@ void DeckManager::ResetMenu(UpgradeType upgrade)
 	case AddCard:
 
 		//Randomise options
-		m_cardChoice[0] = CardType(rand() % 5);
-		m_cardChoice[1] = CardType(rand() % 5);
-		m_cardChoice[2] = CardType(rand() % 5);
+		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 4));
+		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 4));
+		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 4));
 
 		//Make sure all options are different
 		while (m_cardChoice[1] == m_cardChoice[0])
-			m_cardChoice[1] = CardType(rand() % 5);
+			m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 4));
 		while (m_cardChoice[2] == m_cardChoice[0] || m_cardChoice[2] == m_cardChoice[1])
-			m_cardChoice[2] = CardType(rand() % 5);
+			m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 4));
 
 		break;
 

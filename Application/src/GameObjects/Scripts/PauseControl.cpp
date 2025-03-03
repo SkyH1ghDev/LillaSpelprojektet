@@ -21,10 +21,7 @@ void PauseControl::Update()
 
 				SceneManager::LoadScene("upgrade");
 
-				if (rand() % 3 == 0)
-					DeckManager::ResetMenu(UpgradeType::LevelCard);
-				else
-					DeckManager::ResetMenu(UpgradeType::AddCard);
+				DeckManager::ResetMenu(UpgradeType::LevelCard);
 
 				Sound::SetMusic("prepare.wav", 0.5f);
 				Sound::PlayMusic(true);

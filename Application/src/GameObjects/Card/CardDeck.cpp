@@ -102,3 +102,12 @@ void CardDeck::Reset()
     if (!m_cardDeck.empty())
         m_cardDeck[m_currentCard].first.get()->SetCardTexture(m_cardDeck[m_currentCard].second);
 }
+
+bool CardDeck::CanLevelUp()
+{
+    for (size_t i = 0; i < m_cardDeck.size(); i++)
+        if (m_cardDeck.at(i).second < 3)
+            return true;
+    
+    return false;
+}

@@ -70,21 +70,13 @@ void Game::SetupGame()
         std::cerr << "Scene registration failed!\n";
     }
     std::shared_ptr<IScene> upgradeScene = SceneManager::GetScene("upgrade");
-
-    // Setup AddCard Scene
-    if (!SceneManager::RegisterScene("addCard", GameSceneFactory::CreateScene(0)))
-    {
-        std::cerr << "Scene registration failed!\n";
-    }
-    std::shared_ptr<IScene> addCardScene = SceneManager::GetScene("addCard");
-    SetupUpgradeScene(upgradeScene, addCardScene, pcs->GetCardDeck());
+    SetupUpgradeScene(upgradeScene, pcs->GetCardDeck());
 
     std::shared_ptr<Empty> escape = std::make_shared<Empty>();
     std::shared_ptr<IScript> pauseScript = std::static_pointer_cast<IScript, PauseControl>(std::make_shared<PauseControl>());
     escape->AttachScript(pauseScript);
     gameScene->AddGameObject(escape);
     pauseScene->AddGameObject(escape);
-    addCardScene->AddGameObject(escape);
     upgradeScene->AddGameObject(escape);
     
 }
@@ -223,11 +215,17 @@ void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<I
     deathScene->AddGameObject(quitButton);
 }
 
-void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_ptr<IScene> addCardScene, std::shared_ptr<IGameObject> cardDeck)
+void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_ptr<IGameObject> cardDeck)
 {
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PauseMouse", "mouse.png");
     upgradeScene->AddGameObject(mouse);
-    addCardScene->AddGameObject(mouse);
+
+   
+    std::shared_ptr<IGameObject> chesster = std::make_shared<Mesh>(MeshType::Object, "chesster_closeup", "chesster_closeup");
+    std::shared_ptr<IScript> updateChesster = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
+    chesster->AttachScript(updateChesster);
+    upgradeScene->AddGameObject(chesster);
+    chesster->SetPosition({ 420, 120 });
 
     std::shared_ptr<IGameObject> cardButton1 = std::make_shared<Button>(ButtonType::Card, 1);
     cardButton1->SetPosition({ 200, 145 });
@@ -239,9 +237,6 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
     upgradeScene->AddGameObject(cardButton1);
     upgradeScene->AddGameObject(cardButton2);
     upgradeScene->AddGameObject(cardButton3);
-    addCardScene->AddGameObject(cardButton1);
-    addCardScene->AddGameObject(cardButton2);
-    addCardScene->AddGameObject(cardButton3);
 
     std::shared_ptr<IGameObject> card1 = std::make_shared<Mesh>(MeshType::Object, "card1", "card_basic.png");
     card1->SetPosition({ 200, 145 });
@@ -253,9 +248,6 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
     upgradeScene->AddGameObject(card1);
     upgradeScene->AddGameObject(card2);
     upgradeScene->AddGameObject(card3);
-    addCardScene->AddGameObject(card1);
-    addCardScene->AddGameObject(card2);
-    addCardScene->AddGameObject(card3);
 
     for (size_t i = 0; i < 8; i++)
     {
@@ -264,11 +256,9 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });
         upgradeScene->AddGameObject(background);
-        addCardScene->AddGameObject(background);
     }
 
     std::shared_ptr<DeckManager> deckManager = std::make_shared<DeckManager>();
-    addCardScene->AddGameObject(std::static_pointer_cast<IGameObject>(deckManager));
     upgradeScene->AddGameObject(std::static_pointer_cast<IGameObject>(deckManager));
-    DeckManager::Initialize(cardButton1, cardButton2, cardButton3, card1, card2, card3, cardDeck);
+    DeckManager::Initialize(cardButton1, cardButton2, cardButton3, card1, card2, card3, cardDeck, chesster);
 }
