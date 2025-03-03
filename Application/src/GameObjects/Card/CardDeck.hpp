@@ -23,14 +23,32 @@ public:
     void AddToDeck(CardType cardtype, size_t lvl);
     std::pair<std::shared_ptr<ICard>, size_t> GetTopCard();
     std::vector < std::pair<std::shared_ptr<ICard>, size_t>> GetDeck();
-    void LevelUppCard(size_t cardIndex);
+    void LevelUpCard(size_t cardIndex);
     void ChangeCurrentCard(); //CCC baby
     void ShuffleDeck();
     void UseTopCard(DX::XMFLOAT2 position, DX::XMFLOAT2 target);
-
+    size_t GetDeckSize();
+    std::pair<std::shared_ptr<ICard>, size_t> GetCardAt(size_t index);
     void PerformVisible();
+    bool IsEmpty();
+    bool CanLevelUp();
 
 private:
     std::vector<std::pair<std::shared_ptr<ICard>, size_t>> m_cardDeck = {};
     size_t m_currentCard = 0;
 };
+
+inline size_t CardDeck::GetDeckSize()
+{
+    return m_cardDeck.size();
+}
+
+inline std::pair<std::shared_ptr<ICard>, size_t> CardDeck::GetCardAt(size_t index)
+{
+    return m_cardDeck.at(index);
+}
+
+inline bool CardDeck::IsEmpty()
+{
+    return m_cardDeck.empty();
+}

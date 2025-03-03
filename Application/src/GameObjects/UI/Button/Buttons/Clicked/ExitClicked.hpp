@@ -4,5 +4,5 @@
 class ExitClicked : public IUIClicked
 {
 public:
-    void Clicked() override;
+    void Clicked(int value) override;
 };

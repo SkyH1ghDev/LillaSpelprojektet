@@ -10,7 +10,8 @@ enum class ButtonType {
     Play,
     Continue,
     Quit,
-    Exit
+    Exit,
+    Card
 };
 
 class Button : public IGameObject
@@ -24,6 +25,7 @@ public:
     Button& operator=(Button&& other) noexcept = default;
 
     Button(ButtonType type);
+    Button(ButtonType type, int value);
     void PerformClicked();
     void SetupButton();
 
@@ -36,6 +38,8 @@ private:
     std::shared_ptr<IUIClicked> m_clicked;
     std::shared_ptr<OnMouseClick> m_mouseClick = std::make_shared<OnMouseClick>();
     ButtonType m_type;
+
+    int m_value;
 
 private:
     void PerformVisible();

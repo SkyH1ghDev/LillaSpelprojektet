@@ -28,6 +28,7 @@ public:
     
     void PerformStatic() { if (m_static) m_static->Static(); }
     void PerformVisible() { if (m_visible) m_visible->Visible(m_textureName, m_position, m_layerFloat, m_scaleFloat); }
+    void SetTexture(std::string textureName);
 
     void Update() override;
     void OnStart() override;

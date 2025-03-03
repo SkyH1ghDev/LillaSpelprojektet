@@ -30,3 +30,8 @@ void Mesh::Reset()
     this->m_isAlive = true;
     this->m_isActive = false;
 }
+
+void Mesh::SetTexture(std::string textureName)
+{
+    this->m_textureName = textureName;
+}

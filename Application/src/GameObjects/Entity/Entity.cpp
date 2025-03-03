@@ -64,6 +64,10 @@ void Entity::Initialize()
             this->m_DeathAnimationTimer = 0.9;
             this->m_stunnedTimer = 0.9;
             break;
+        case EntityType::RookAlt:
+            this->m_DeathAnimationTimer = 0.9;
+            this->m_stunnedTimer = 0.9;
+            break;
         
         case EntityType::Queen:
         case EntityType::Knight:

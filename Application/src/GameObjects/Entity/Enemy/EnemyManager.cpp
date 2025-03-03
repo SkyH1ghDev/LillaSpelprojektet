@@ -5,6 +5,8 @@
 #include <cmath>
 #include <random>
 #include <SpEngine/Math/SpMath.hpp>
+#include "DeckManager.hpp"
+#include <SpEngine/Audio/Sound.hpp>
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
@@ -24,6 +26,7 @@ EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
     PoolManager<Entity, EntityType>::Initialize(EntityType::BishopAlt, 10);
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
     PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 10);
+    PoolManager<Entity, EntityType>::Initialize(EntityType::RookAlt, 10);
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
 }
 
@@ -121,6 +124,7 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         float BishopAlt;
         float Knight;
         float Rook;
+        float RookAlt;
         float Queen;
     };
     
@@ -148,18 +152,20 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         }
         else if (pointBudget < 9)
         {
-            chance.Rook = SpMath::RandomReal<float>(0.1f, 0.2f);
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.15f) + chance.Rook;
-            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.BishopAlt;
+            chance.Rook = SpMath::RandomReal<float>(0.05f, 0.1f);
+            chance.RookAlt = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Rook;
+            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.15f) + chance.RookAlt;
+            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.15f) + chance.Bishop;
+            chance.Knight = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.BishopAlt;
         }
         else
         {
             chance.Queen = SpMath::RandomReal<float>(0.0f, 0.05f);
             chance.Rook = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Queen;
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Rook;
-            chance.BishopAlt = SpMath::RandomReal<float>(0.15f, 0.25f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.1f, 0.25f) + chance.BishopAlt;
+            chance.RookAlt = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Rook;
+            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.RookAlt;
+            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Bishop;
+            chance.Knight = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.BishopAlt;
         }
 
         float rand = SpMath::RandomReal<float>(0.0f, 1.0f);
@@ -174,6 +180,12 @@ std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
         {
             entitiesToSpawn.push_back("Rook");
             pointBudget -= pointData.Rook;
+            successPercentage -= SpMath::RandomReal<float>(0.10f, 0.25f);
+        }
+        else if (rand < chance.RookAlt)
+        {
+            entitiesToSpawn.push_back("RookAlt");
+            pointBudget -= pointData.RookAlt;
             successPercentage -= SpMath::RandomReal<float>(0.10f, 0.25f);
         }
         else if (rand < chance.Bishop)
@@ -231,6 +243,30 @@ void EnemyManager::UpdateEnemies()
     switch (m_state)
     {
     case RoundState_Waiting:
+
+        //Start upgrade sequence
+        SceneManager::UnloadScene();
+        SceneManager::LoadScene("upgrade");
+
+        if (SpMath::RandomInteger(0, 2) == 0)
+            DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
+        else
+        {
+            if (SpMath::RandomInteger(0, 1) == 0)
+            {
+                if (SpMath::RandomInteger(0, 1) == 0)
+                    DeckManager::ResetMenu(UpgradeType::AddCard, 3);
+                else
+                    DeckManager::ResetMenu(UpgradeType::AddCard, 2);
+            }
+            else
+            {
+                DeckManager::ResetMenu(UpgradeType::AddCard, 1);
+            }
+        }
+        Sound::SetMusic("prepare.wav", 0.4f);
+        Sound::PlayMusic(true);
+        
         m_state = RoundState_WaveStarted;
         m_pointBudget += SpMath::RandomInteger<int>(1, 4);
         break;
@@ -282,7 +318,8 @@ EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
     if (type == "BishopAlt") return EntityType::BishopAlt;
     //if (type == "Knight") return EntityType::Knight;
     if (type == "Rook") return EntityType::Rook;
+    if (type == "RookAlt") return EntityType::RookAlt;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
-    return EntityType::Bishop;
+    return EntityType::RookAlt;
 }
