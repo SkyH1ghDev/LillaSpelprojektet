@@ -74,9 +74,7 @@ void Projectile::Update()
         this->m_collider->UpdatePosition(this->m_position);
         if (PhysicsEngine::WallProjectileCollision(m_collider) && this->m_type != ProjectileType::DisruptorWave)
         {
-            this->m_isActive = false;
             this->m_isAlive = false;
-            this->m_shouldRender = false;
         }
         if (this->m_type == ProjectileType::DisruptorWave)
         {

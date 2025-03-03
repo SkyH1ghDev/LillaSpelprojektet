@@ -11,6 +11,7 @@
 #include "BaseProjectileFactory.hpp"
 #include "BishopBallFactory.hpp"
 #include "RookFactory.hpp"
+#include "RookAltFactory.hpp"
 #include "BishopFactory.hpp"
 #include "BishopAltFactory.hpp"
 #include "DisruptorWaveFactory.hpp"
@@ -20,6 +21,7 @@
 #include "Projectile.hpp"
 #include "ScatterPelletFactory.hpp"
 #include "SniperBulletFactory.hpp"
+#include "FireBallFactory.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -161,6 +163,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 break;
             }
 
+            case EntityType::RookAlt:
+            {
+                RookAltFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
+
             case EntityType::Queen:
             case EntityType::Knight:
             default:
@@ -210,6 +219,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case ProjectileType::DisruptorWave:
             {
                 DisruptorWaveFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::FireBall:
+            {
+                FireBallFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }

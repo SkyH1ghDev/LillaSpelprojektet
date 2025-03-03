@@ -8,15 +8,15 @@ SpreadCard::SpreadCard()
 }
 
 void SpreadCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
-	AbilityManager::SurroundShot(position, 10, 5, 100);
+	AbilityManager::SurroundShot(position, 15, 7, 100);
 }
 
 void SpreadCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
-	AbilityManager::SurroundShot(position, 20, 6, 150);
+	AbilityManager::SurroundShot(position, 30, 8, 150);
 }
 
 void SpreadCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
-	AbilityManager::SurroundShot(position, 30, 7, 200);
+	AbilityManager::SurroundShot(position, 45, 9, 200);
 }
 
 void SpreadCard::SetCardTexture(size_t cardLevel)

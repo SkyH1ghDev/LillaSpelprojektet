@@ -43,6 +43,7 @@ private:
         const int BishopAlt = 3;
         const int Knight = 3;
         const int Rook = 5;
+        const int RookAlt = 5;
         const int Queen = 9;
     };
     
