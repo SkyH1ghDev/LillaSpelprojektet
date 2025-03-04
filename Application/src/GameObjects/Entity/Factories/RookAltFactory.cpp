@@ -9,7 +9,7 @@
 
 std::shared_ptr<Entity> RookAltFactory::CreateEntity()
 {
-    std::shared_ptr<Entity> bishop = std::make_shared<Entity> 
+    std::shared_ptr<Entity> rook = std::make_shared<Entity> 
     (
         Entity
         (
@@ -19,13 +19,13 @@ std::shared_ptr<Entity> RookAltFactory::CreateEntity()
             CreateTakeDamageComponent(),
             CreateSetColliderComponent(),
             EntityType::RookAlt,
-            "BishopAlt"
+            "RookAlt"
         )
     );
     
-    bishop->Initialize();
-    bishop->AttachScript(std::make_shared<RookController>());
-    return bishop;
+    rook->Initialize();
+    rook->AttachScript(std::make_shared<RookController>());
+    return rook;
 }
 
 std::shared_ptr<IEntityAttack> RookAltFactory::CreateAttackComponent()
