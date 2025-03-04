@@ -10,10 +10,10 @@ void BishopBallVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Pro
     switch (entityState)
     {
     case ProjectileState::Exploding:
-        texture = "fireball_red_hit";
+        texture = "enemy_proj_death";
         break;
     default:
-        texture = "fireball_red";
+        texture = "enemy_proj";
         break;
     }
 

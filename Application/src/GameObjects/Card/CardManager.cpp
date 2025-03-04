@@ -12,6 +12,8 @@ void CardManager::Initialize()
         m_cardObjects.push_back(std::make_shared<HealCard>());
         m_cardObjects.push_back(std::make_shared<SniperCard>());
         m_cardObjects.push_back(std::make_shared<DisruptorCard>());
+        m_cardObjects.push_back(std::make_shared<RangeBuffCard>());
+        m_cardObjects.push_back(std::make_shared<AttackSpeedBuffCard>());
     }
 }
 
@@ -33,6 +35,12 @@ std::shared_ptr<ICard> CardManager::GetCard(CardType cardType)
         break;
     case CardType::Disruptor:
         return m_cardObjects[4];
+        break;
+    case CardType::RangeBuff:
+        return m_cardObjects[5];
+        break;
+    case CardType::AttackSpeedBuff:
+        return m_cardObjects[6];
         break;
     default:
         std::cerr << "Unknown card type in CardManager";

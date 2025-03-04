@@ -13,7 +13,7 @@ void PawnVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
         texture = "pawn_damage";
         break;
     default:
-        texture = "pawn_front.png";
+        texture = "pawn_w_idle";
         break;
     }
     

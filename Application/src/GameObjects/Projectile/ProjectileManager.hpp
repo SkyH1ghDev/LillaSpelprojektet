@@ -16,7 +16,7 @@ public:
         projectile->Initialize(position, direction, speed, lifetime, damage);
     }
 
-    static void Cleanup(ProjectileType type) {
-        PoolManager<Projectile, ProjectileType>::Cleanup(type);
+    static void Reset() {
+        PoolManager<Projectile, ProjectileType>::Reset();
     }
 };

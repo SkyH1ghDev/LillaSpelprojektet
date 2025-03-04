@@ -33,7 +33,7 @@ void Entity::Initialize()
 {
     this->m_state = EntityState::Spawning;
     this->m_isAnimating = false;
-    PerformVisible(this->m_state);
+    PerformVisible();
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
@@ -72,6 +72,8 @@ void Entity::Initialize()
         case EntityType::Queen:
         case EntityType::Knight:
         case EntityType::Pawn:
+            this->m_DeathAnimationTimer = 0.9;
+            break;
         default:
             this->m_DeathAnimationTimer = 0.9;
             break;
@@ -81,7 +83,7 @@ void Entity::Initialize()
 
 void Entity::OnStart()
 {
-    PerformVisible(this->m_state);
+    PerformVisible();
     this->m_spawnTimer = 2.0;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
@@ -158,7 +160,7 @@ void Entity::Update()
         }
     }
 
-    if (this->m_dashTimer > 0)
+    if (this->m_dashTimer > 0 && this->m_type == EntityType::Player)
     {
         if (!this->m_isAnimating)
             this->ResetAnimation();
@@ -189,25 +191,25 @@ void Entity::Update()
         }
     }
 
-    PerformVisible(this->m_state);
+    PerformVisible();
 
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
-        if (direction.y == -1 && !m_isAnimating)
+        if (direction.y == -1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkUp;
         }
-        else if (direction.y == 1 && !m_isAnimating)
+        else if (direction.y == 1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkDown;
         }
-        else if (direction.x == 1 && !m_isAnimating)
+        else if (direction.x == 1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkRight;
         }
-        else if (direction.x == -1 && !m_isAnimating)
+        else if (direction.x == -1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkLeft;
         }
@@ -220,13 +222,9 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         
         m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider, this->m_isStunned);
     }
-
-	//Update collider
-	this->m_collider->UpdatePosition(m_position);
-	//this->SetCollider(m_collider);
 }
 
-void Entity::PerformVisible(EntityState entityState)
+void Entity::PerformVisible()
 {
     if (m_visible)
     {
@@ -240,7 +238,7 @@ void Entity::PerformTakeDamage(float damage)
     if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
     {
         this->m_isAnimating = false;
-        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame);
+        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isAlive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame);
     }
 }
 
@@ -272,6 +270,7 @@ void Entity::PlayerDeath()
     SceneManager::UnloadScene();
     SceneManager::LoadScene("death");
     SceneManager::ResetScene("game");
+    this->m_isActive = false;
 
     HealthBarManager::Reset();
     ManaBarManager::Reset();
@@ -326,4 +325,14 @@ bool Entity::Dashing() const
 bool Entity::IsStunned() const
 {
     return this->m_isStunned;
+}
+
+void Entity::SetState(EntityState state)
+{
+    this->m_state = state;
+}
+
+EntityState Entity::GetState()
+{
+    return this->m_state;
 }

@@ -23,8 +23,9 @@ public:
     void CreateEnemy(const EntityType& type, const DX::XMFLOAT2& position);
     void UpdateEnemies();
     static void Cleanup();
-
+    
     std::vector<EntityType> CalculateEnemiesToSpawn(const int& wave);
+    static int GetRoundCount();
     bool IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance);
 
 private:
@@ -34,6 +35,7 @@ private:
     static int m_numberOfEnemies;
     static int m_pointBudget;
     static int m_waveNumber;
+    static int m_roundCount;
 
     static std::vector<std::unordered_map<EntityType, std::uint16_t>> m_spawnWeights;
     static std::vector<std::uint8_t> m_numOfEnemiesPerWave;

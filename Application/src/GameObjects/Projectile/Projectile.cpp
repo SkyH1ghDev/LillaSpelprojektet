@@ -65,7 +65,7 @@ void Projectile::OnStart()
 
 void Projectile::Update()
 {
-    if (m_lifetime > 0 && m_isAlive)
+    if (m_lifetime > 0 && this->m_isAlive)
     {
         this->UpdateAnimation();
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
@@ -101,6 +101,7 @@ void Projectile::Update()
             this->m_isActive = false;
             this->m_isAlive = false;
             this->m_shouldRender = false;
+            this->m_isAnimating = false;
         }
     }
     else
@@ -140,6 +141,7 @@ void Projectile::Reset()
 {
     PerformVisible();
     this->m_shouldRender = false;
+    this->m_isAnimating = false;
     this->m_isActive = false;
     this->m_isAlive = false;
     this->CenterOrigin(true);

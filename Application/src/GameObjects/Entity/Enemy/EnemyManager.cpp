@@ -8,6 +8,7 @@
 #include <SpEngine/Math/SpMath.hpp>
 #include "DeckManager.hpp"
 #include <SpEngine/Audio/Sound.hpp>
+#include "ProjectileManager.hpp"
 
 // Define static members
 std::vector<std::shared_ptr<IGameObject>> EnemyManager::m_enemies;
@@ -16,6 +17,7 @@ RoundState EnemyManager::m_state = RoundState_Waiting;
 int EnemyManager::m_numberOfEnemies = 0;
 int EnemyManager::m_pointBudget = 0;
 int EnemyManager::m_waveNumber = 0;
+int EnemyManager::m_roundCount = 0;
 
 std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawnWeights =
 {
@@ -190,10 +192,13 @@ void EnemyManager::Update()
 void EnemyManager::Reset()
 {
     m_enemies.clear();
+
     m_state = RoundState_Waiting;
     m_numberOfEnemies = 0;
     m_pointBudget = 0;
     m_waveNumber = 0;
+    m_roundCount = 0;
+
 }
 
 bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance)
@@ -323,17 +328,18 @@ void EnemyManager::UpdateEnemies()
     {
     case RoundState_Waiting:
 
-        //Start upgrade sequence
+        //Start upgrade 
         SceneManager::UnloadScene();
+        ProjectileManager::Reset();
         SceneManager::LoadScene("upgrade");
-
+        EnemyManager::m_roundCount += 1;
         if (SpMath::RandomInteger(0, 2) == 0)
             DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
         else
         {
-            if (SpMath::RandomInteger(0, 1) == 0)
+            if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 10)
             {
-                if (SpMath::RandomInteger(0, 1) == 0)
+                if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 20)
                     DeckManager::ResetMenu(UpgradeType::AddCard, 3);
                 else
                     DeckManager::ResetMenu(UpgradeType::AddCard, 2);
@@ -383,4 +389,9 @@ void EnemyManager::UpdateEnemies()
 void EnemyManager::Cleanup()
 {
     m_enemies.clear();
+}
+
+int EnemyManager::GetRoundCount()
+{
+    return m_roundCount;
 }
