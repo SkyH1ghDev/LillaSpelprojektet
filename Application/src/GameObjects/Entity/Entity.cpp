@@ -236,7 +236,7 @@ void Entity::PerformTakeDamage(float damage)
     if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
     {
         this->m_isAnimating = false;
-        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isActive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame);
+        m_takeDamage->TakeDamage(this->m_hp, damage, this->m_isAlive, this->m_shouldRender, this->m_damageTimer, this->m_iFrame);
     }
 }
 

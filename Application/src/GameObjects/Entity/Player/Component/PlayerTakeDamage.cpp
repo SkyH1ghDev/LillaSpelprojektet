@@ -4,7 +4,7 @@
 #include <SpEngine/Audio/Sound.hpp>
 
 
-void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& shouldRender, float& damageTimer, bool& iFrame)
+void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& shouldRender, float& damageTimer, bool& iFrame)
 {
     if (!iFrame)
     {

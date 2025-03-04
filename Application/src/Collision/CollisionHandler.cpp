@@ -98,8 +98,11 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
 
         if (projectile && entity) {
             // Call the Perform functions
-            projectile->PerformHit();
-            entity->PerformTakeDamage(projectile->GetDamage());
+            if (projectile->IsAlive())
+            {
+                projectile->PerformHit();
+                entity->PerformTakeDamage(projectile->GetDamage());
+            }
         }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::AllyProjectile &&
@@ -111,8 +114,11 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
 
         if (projectile && entity) {
             // Call the Perform functions
-            projectile->PerformHit();
-            entity->PerformTakeDamage(projectile->GetDamage());
+            if (projectile->IsAlive())
+            {
+                projectile->PerformHit();
+                entity->PerformTakeDamage(projectile->GetDamage());
+            }
         }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::Player &&
