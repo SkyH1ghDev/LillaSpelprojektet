@@ -4,13 +4,13 @@ void PawnVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
 {
     switch (entityState) {
     case EntityState::Spawning:
-        texture = "pawn_spawn";
+        texture = "pawn_w_spawn";
         break;
     case EntityState::Dying:
-        texture = "pawn_death";
+        texture = "pawn_w_death";
         break;
     case EntityState::TakingDamage:
-        texture = "pawn_damage";
+        texture = "pawn_w_damage";
         break;
     default:
         texture = "pawn_w_idle";
