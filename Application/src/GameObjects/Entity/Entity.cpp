@@ -215,14 +215,16 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         {
             this->m_state = EntityState::WalkLeft;
         }
-        if (dashing)
+        if (dashing && !this->m_isDashing)
         {
-            this->m_state = EntityState::Dashing;
             this->m_dashTimer = 0.12f;
             this->m_isDashing = true;
         }
         
         m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider, this->m_isStunned);
+
+        if (m_isDashing)
+            this->m_state = EntityState::Dashing;
     }
 }
 
@@ -323,6 +325,11 @@ void Entity::Reset()
 bool Entity::Dashing() const
 {
     return this->m_isDashing;
+}
+
+void Entity::SetIsStunned(bool isStunned)
+{
+    this->m_isStunned = isStunned;
 }
 
 bool Entity::IsStunned() const

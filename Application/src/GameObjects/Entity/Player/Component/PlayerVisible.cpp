@@ -68,10 +68,26 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
         texture = "chesster_dead.png";
         break;
     default:
-        texture = "chesster_front_idle";
-        break;
+        switch (this->m_lastState)
+        {
+        case EntityState::WalkUp:
+            texture = "chesster_back_idle";
+            break;
+        case EntityState::WalkDown:
+            texture = "chesster_front_idle";
+            break;
+        case EntityState::WalkRight:
+            texture = "chesster_right_idle";
+            break;
+        case EntityState::WalkLeft:
+            texture = "chesster_left_idle";
+            break;
+        default:
+            break;
+        }
     }
-    this->m_lastState = entityState;
+    if (entityState != EntityState::Dashing && entityState != EntityState::Base)
+        this->m_lastState = entityState;
 }
 
 void PlayerVisible::UpdateLayer(DX::XMFLOAT2 position, float& layer)

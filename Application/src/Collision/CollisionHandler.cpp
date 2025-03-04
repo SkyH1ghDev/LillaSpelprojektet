@@ -152,7 +152,10 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             DX::XMStoreFloat2(&knockback, knockbackVector);
 
             // Move the player
+
+            player->SetIsStunned(true);
             player->PerformMove(knockback, true);
+            player->SetIsStunned(false);
         }
     }
     else if (objB->GetCollider()->GetLayer() == CollisionLayer::Player &&
@@ -186,7 +189,9 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             DX::XMStoreFloat2(&knockback, knockbackVector);
 
             // Move the player
+            player->SetIsStunned(true);
             player->PerformMove(knockback, true);
+            player->SetIsStunned(false);
         }
     }
     else if (objB->GetCollider()->GetLayer() == CollisionLayer::DisruptorWave &&

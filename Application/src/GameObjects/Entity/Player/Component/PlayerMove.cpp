@@ -10,6 +10,12 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
 
     this->maxSpeed = StatSheet::GetMoveSpeed();
 
+    if (isStunned)
+    {
+        isDashing = false;
+        dashSpeed = 0.0f;
+        dashCooldownTimer = 0.0f;
+    }
     //In the middle of the Dash
     if (isDashing) {
 
@@ -33,6 +39,7 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     //Start the Dash
     else if (dashInput && dashCooldownTimer <= 0) {
         isDashing = true;
+        dashInput = true;
         dashTimer = dashDuration;
         dashSpeed = maxSpeed;
 
@@ -47,6 +54,7 @@ DX::XMFLOAT2 PlayerMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& 
     }
     //Regular movement
     else {
+        dashInput = false;
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= deltaTime;
 

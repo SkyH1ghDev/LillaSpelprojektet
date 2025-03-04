@@ -22,7 +22,7 @@ private:
 	float dashAcceleration = 4000.0f;
 
     float dashDuration = 0.12f;
-    float dashCooldown = 0.6f;
+    float dashCooldown = 0.3f;
     float dashCooldownTimer = 0.0f;
     float dashTimer = 0.0f;
 	bool isDashing = false;

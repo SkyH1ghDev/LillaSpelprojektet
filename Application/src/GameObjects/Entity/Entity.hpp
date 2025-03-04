@@ -59,6 +59,7 @@ public:
     void Reset() override;
 
     bool Dashing() const;
+    void SetIsStunned(bool isStunned);
     bool IsStunned() const;
 
     void SetState(EntityState state);
