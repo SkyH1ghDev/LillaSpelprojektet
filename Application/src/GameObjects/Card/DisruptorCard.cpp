@@ -1,6 +1,5 @@
 #include "card.hpp"
 #include "AbilityManager.hpp"
-#include "StatSheet.hpp"
 
 DisruptorCard::DisruptorCard()
 {
