@@ -254,9 +254,9 @@ void EnemyManager::UpdateEnemies()
             DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
         else
         {
-            if (SpMath::RandomInteger(0, 1) == 0)
+            if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 10)
             {
-                if (SpMath::RandomInteger(0, 1) == 0)
+                if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 20)
                     DeckManager::ResetMenu(UpgradeType::AddCard, 3);
                 else
                     DeckManager::ResetMenu(UpgradeType::AddCard, 2);
