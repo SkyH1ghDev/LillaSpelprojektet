@@ -13,6 +13,7 @@ enum class CardType {
     Sniper,
     Disruptor,
     RangeBuff,
+    AttackSpeedBuff,
     Heal
 };
 
