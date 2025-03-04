@@ -220,10 +220,6 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         
         m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider, this->m_isStunned);
     }
-
-	//Update collider
-	this->m_collider->UpdatePosition(m_position);
-	//this->SetCollider(m_collider);
 }
 
 void Entity::PerformVisible(EntityState entityState)
