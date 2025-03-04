@@ -9,8 +9,10 @@
 // Define an enum for the entity type
 enum class MeshType {
     Background,
+    Title,
     Mouse,
     Object
+
 };
 
 class Mesh : public IGameObject

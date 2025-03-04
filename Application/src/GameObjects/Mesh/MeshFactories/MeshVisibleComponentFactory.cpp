@@ -2,6 +2,7 @@
 #include "BackgroundVisible.hpp"
 #include "MouseVisible.hpp"
 #include "ObjectVisible.hpp"
+#include "TitleVisible.hpp"
 #include <stdexcept>
 
 std::shared_ptr<IMeshVisible> CreateVisibleComponent(MeshType type)
@@ -9,6 +10,9 @@ std::shared_ptr<IMeshVisible> CreateVisibleComponent(MeshType type)
     switch (type) {
     case MeshType::Background:
         return std::make_shared<BackgroundVisible>();
+        break;
+    case MeshType::Title:
+        return std::make_shared<TitleVisible>();
         break;
     case MeshType::Mouse:
         return std::make_shared<MouseVisible>();

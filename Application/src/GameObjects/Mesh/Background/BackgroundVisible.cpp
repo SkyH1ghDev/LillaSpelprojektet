@@ -4,7 +4,6 @@ void BackgroundVisible::Visible(std::string& texture, DX::XMFLOAT2 position, flo
 {
 	scale = 1.0;
 	layer = 0.0;
-
 }
 
 void BackgroundVisible::UpdateLayer(DX::XMFLOAT2& position, float& layer) {}
