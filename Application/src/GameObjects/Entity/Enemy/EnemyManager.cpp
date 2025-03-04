@@ -16,7 +16,7 @@ RoundState EnemyManager::m_state = RoundState_Waiting;
 int EnemyManager::m_numberOfEnemies = 0;
 int EnemyManager::m_pointBudget = 0;
 int EnemyManager::m_waveNumber = 0;
-int EnemyManager::m_roundCount = 1;
+int EnemyManager::m_roundCount = 0;
 
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 {
@@ -49,7 +49,7 @@ void EnemyManager::Reset()
     EnemyManager::m_numberOfEnemies = 0;
     EnemyManager::m_pointBudget = 0;
     EnemyManager::m_waveNumber = 0;
-    EnemyManager::m_roundCount = 1;
+    EnemyManager::m_roundCount = 0;
 }
 
 bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance)
