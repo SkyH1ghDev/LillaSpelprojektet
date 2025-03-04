@@ -74,7 +74,10 @@ void Projectile::Update()
         this->m_collider->UpdatePosition(this->m_position);
         if (PhysicsEngine::WallProjectileCollision(m_collider) && this->m_type != ProjectileType::DisruptorWave)
         {
-            this->m_isAlive = false;
+            if (this->m_type == ProjectileType::FireBall)
+                this->m_velocity = 0;
+            else
+                this->m_isAlive = false;
         }
         if (this->m_type == ProjectileType::DisruptorWave)
         {
@@ -82,6 +85,15 @@ void Projectile::Update()
             float maxRadius = 100 * this->m_maxlifetime;
             //this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - (this->m_lifetime / this->m_maxlifetime))); //Linear
             this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - exp(-3 * (1 - (this->m_lifetime / this->m_maxlifetime)))));
+        }
+
+        if (this->m_type == ProjectileType::FireBall)
+        {
+            this->m_rotationFloat = 0;
+            if (this->m_velocity <= 0)
+                this->m_velocity = 0;
+            else
+                this->m_velocity -= Clock::GetDeltaTime() * 100;
         }
     }
     else if(this->m_hasDeathAnimation)
@@ -110,7 +122,6 @@ void Projectile::Update()
         this->m_isAlive = false;
         this->m_shouldRender = false;
     }
-    
     PerformVisible();
 }
 void Projectile::PerformSetCollider()

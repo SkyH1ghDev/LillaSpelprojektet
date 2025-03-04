@@ -120,6 +120,11 @@ void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IG
     startScene->AddGameObject(mouse);
     startScene->AddGameObject(playButton);
     startScene->AddGameObject(exitButton);
+
+    std::shared_ptr<IGameObject> qr = std::make_shared<Mesh>(MeshType::Object, "QR_Code", "questionnaire_qr_code_half.png");
+    startScene->AddGameObject(qr);
+    qr->SetPosition({ 475, 15 });
+
 }
 
 void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player, std::shared_ptr<IScript> playerCardScript, std::shared_ptr<IGameObject> cardDeck)
