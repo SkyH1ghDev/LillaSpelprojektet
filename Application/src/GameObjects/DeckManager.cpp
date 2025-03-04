@@ -192,9 +192,9 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			m_background.at(i)->SetTexture("background_card");
 
 		//Randomise options
-		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 4));
-		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 4));
-		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 4));
+		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 5));
+		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 5));
+		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 5));
 
 		//Make sure all options are different
 		while (m_cardChoice[1] == m_cardChoice[0])
@@ -282,6 +282,9 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			break;
 		case CardType::RangeBuff: //RangeBuff
 			m_cardDisplay.at(i)->SetTexture("range_buff_lvl" + std::to_string(level) + ".png");
+			break;
+		case CardType::AttackSpeedBuff: //RangeBuff
+			m_cardDisplay.at(i)->SetTexture("attack_speed_buff_lvl" + std::to_string(level) + ".png");
 			break;
 		default: //Nothing
 			m_cardDisplay.at(i)->SetTexture("button_card.png");

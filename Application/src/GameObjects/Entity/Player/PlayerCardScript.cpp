@@ -26,7 +26,6 @@ void PlayerCardScript::OnStart()
 	m_cardDeck->AddToDeck(CardType::Disruptor, 2);
 	m_cardDeck->AddToDeck(CardType::Disruptor, 3);
 	m_cardDeck->ShuffleDeck();*/
-	m_cardDeck->AddToDeck(CardType::RangeBuff, 1);
 }
 
 void PlayerCardScript::Update()
