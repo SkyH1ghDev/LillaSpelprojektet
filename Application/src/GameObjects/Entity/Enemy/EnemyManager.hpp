@@ -24,6 +24,7 @@ public:
     void UpdateEnemies();
     EntityType ConvertStringToEntityType(const std::string& type);
     static void Cleanup();
+    static int GetRoundCount();
     
     std::vector<std::string> CalculateEnemiesToSpawn();
     bool IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance);
@@ -35,6 +36,7 @@ private:
     static int m_numberOfEnemies;
     static int m_pointBudget;
     static int m_waveNumber;
+    static int m_roundCount;
 
     struct EnemyPointData
     {
