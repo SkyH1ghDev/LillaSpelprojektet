@@ -18,7 +18,8 @@ enum class EntityType {
     Knight,
     Bishop,
     BishopAlt,
-    Pawn
+    Pawn,
+    PawnAlt
 };
 
 
