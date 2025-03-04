@@ -161,7 +161,7 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 	m_buttons[2]->SetIsAlive(true);
 
 	if (SpMath::RandomInteger(0, 40) == 40)
-		m_chesster->SetTexture("chesster_chad");
+		m_chesster->SetTexture("chadster_closeup");
 	else
 		m_chesster->SetTexture("chesster_closeup");
 
@@ -198,9 +198,9 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 
 		//Make sure all options are different
 		while (m_cardChoice[1] == m_cardChoice[0])
-			m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 4));
+			m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 3));
 		while (m_cardChoice[2] == m_cardChoice[0] || m_cardChoice[2] == m_cardChoice[1])
-			m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 4));
+			m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 3));
 
 		if (SpMath::RandomInteger(0, 19) == 0)
 			m_cardChoice[2] = CardType::Heal;
