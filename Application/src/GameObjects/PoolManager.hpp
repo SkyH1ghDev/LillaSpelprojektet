@@ -22,12 +22,13 @@
 #include "ScatterPelletFactory.hpp"
 #include "SniperBulletFactory.hpp"
 #include "FireBallFactory.hpp"
+#include "PawnAltFactory.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
 public:
     static void Initialize(Type type, size_t poolSize);
-    static std::shared_ptr<T> GetObject(Type type, const std::string& name);
+    static std::shared_ptr<T> GetObject(Type type);
     static void ReturnObject(Type type, std::shared_ptr<T> object);
     static void Cleanup(Type type);
     static std::shared_ptr<T> CreateObject(Type type);
@@ -70,7 +71,7 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize) {
 }
 
 template <typename T, typename Type>
-std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type, const std::string& name) {
+std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type) {
     auto& objectPool = objectPools[type];
 
     if (objectPool.empty()) {
@@ -155,6 +156,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case EntityType::Pawn:
             {
                 PawnFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
+                break;
+            }
+
+            case EntityType::PawnAlt:
+            {
+                PawnAltFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateEntity());
                 break;
             }

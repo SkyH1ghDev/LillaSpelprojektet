@@ -20,12 +20,11 @@ public:
     void Reset() override;
     
     void SpawnEnemies();
-    void CreateEnemy(const std::string& type, const DX::XMFLOAT2& position);
+    void CreateEnemy(const EntityType& type, const DX::XMFLOAT2& position);
     void UpdateEnemies();
-    EntityType ConvertStringToEntityType(const std::string& type);
     static void Cleanup();
-    
-    std::vector<std::string> CalculateEnemiesToSpawn();
+
+    std::vector<EntityType> CalculateEnemiesToSpawn(const int& wave);
     bool IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance);
 
 private:
@@ -36,15 +35,7 @@ private:
     static int m_pointBudget;
     static int m_waveNumber;
 
-    struct EnemyPointData
-    {
-        const int Pawn = 1;
-        const int Bishop = 3;
-        const int BishopAlt = 3;
-        const int Knight = 3;
-        const int Rook = 5;
-        const int RookAlt = 5;
-        const int Queen = 9;
-    };
-    
+    static std::vector<std::unordered_map<EntityType, std::uint16_t>> m_spawnWeights;
+    static std::vector<std::uint8_t> m_numOfEnemiesPerWave;
+
 };

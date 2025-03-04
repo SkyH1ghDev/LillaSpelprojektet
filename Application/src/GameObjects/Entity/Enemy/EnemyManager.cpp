@@ -3,6 +3,7 @@
 
 #include <SpEngine/Manager/SceneManager.hpp>
 #include <cmath>
+#include <map>
 #include <random>
 #include <SpEngine/Math/SpMath.hpp>
 #include "DeckManager.hpp"
@@ -16,17 +17,163 @@ int EnemyManager::m_numberOfEnemies = 0;
 int EnemyManager::m_pointBudget = 0;
 int EnemyManager::m_waveNumber = 0;
 
+std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawnWeights =
+{
+    // Round 1
+    {
+        {EntityType::Pawn, 500},
+        {EntityType::PawnAlt, 500},
+        {EntityType::Bishop, 0},
+        {EntityType::BishopAlt, 0},
+        {EntityType::Rook, 0},
+        {EntityType::RookAlt, 0}
+    },
+    
+    // Round 2
+    {
+        {EntityType::Pawn, 350},
+        {EntityType::PawnAlt, 350},
+        {EntityType::Bishop, 150},
+        {EntityType::BishopAlt, 150},
+        {EntityType::Rook, 0},
+        {EntityType::RookAlt, 0}
+    },
+    
+    // Round 3
+    {
+        {EntityType::Pawn, 250},
+        {EntityType::PawnAlt, 250},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 50},
+        {EntityType::RookAlt, 50}
+    },
+    
+    // Round 4
+    {
+        {EntityType::Pawn, 200},
+        {EntityType::PawnAlt, 200},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 100},
+        {EntityType::RookAlt, 100}
+    },
+    
+    // Round 5
+    {
+        {EntityType::Pawn, 150},
+        {EntityType::PawnAlt, 150},
+        {EntityType::Bishop, 250},
+        {EntityType::BishopAlt, 250},
+        {EntityType::Rook, 100},
+        {EntityType::RookAlt, 100}
+    },
+    
+    // Round 6
+    {
+        {EntityType::Pawn, 100},
+        {EntityType::PawnAlt, 100},
+        {EntityType::Bishop, 250},
+        {EntityType::BishopAlt, 250},
+        {EntityType::Rook, 150},
+        {EntityType::RookAlt, 150}
+    },
+    
+    // Round 7
+    {
+        {EntityType::Pawn, 50},
+        {EntityType::PawnAlt, 50},
+        {EntityType::Bishop, 300},
+        {EntityType::BishopAlt, 300},
+        {EntityType::Rook, 150},
+        {EntityType::RookAlt, 150}
+    },
+    
+    // Round 8
+    {
+        {EntityType::Pawn, 50},
+        {EntityType::PawnAlt, 50},
+        {EntityType::Bishop, 250},
+        {EntityType::BishopAlt, 250},
+        {EntityType::Rook, 200},
+        {EntityType::RookAlt, 200}
+    },
+    
+    // Round 9
+    {
+        {EntityType::Pawn, 0},
+        {EntityType::PawnAlt, 0},
+        {EntityType::Bishop, 250},
+        {EntityType::BishopAlt, 250},
+        {EntityType::Rook, 250},
+        {EntityType::RookAlt, 250}
+    },
+    
+    // Round 10
+    {
+        {EntityType::Pawn, 0},
+        {EntityType::PawnAlt, 0},
+        {EntityType::Bishop, 150},
+        {EntityType::BishopAlt, 150},
+        {EntityType::Rook, 350},
+        {EntityType::RookAlt, 350}
+    }
+};
+
+std::vector<std::uint8_t> EnemyManager::m_numOfEnemiesPerWave =
+{
+    // Round 1
+    1, 2, 3,
+    
+    // Round 2
+    2, 3, 4,
+    
+    // Round 3
+    3, 3, 4,
+    
+    // Round 3
+    4, 4, 5,
+    
+    // Round 4
+    6, 6, 6,
+    
+    // Round 5
+    6, 6, 7,
+    
+    // Round 6
+    7, 7, 7,
+    
+    // Round 7
+    7, 7, 8,
+    
+    // Round 8
+    8, 9, 9,
+    
+    // Round 9
+    10, 10, 11,
+    
+    // Round 10
+    11, 12, 14
+};
+
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
 {
     m_player = player;
 
     // Initialize the pool with a certain number of enemies
-    //PoolManager<Entity, EntityType>::Initialize(EntityType::Pawn, 10, "Pawn");
+    // Pawn
+    PoolManager<Entity, EntityType>::Initialize(EntityType::Pawn, 10);
+    PoolManager<Entity, EntityType>::Initialize(EntityType::PawnAlt, 10);
+
+    // Bishop
     PoolManager<Entity, EntityType>::Initialize(EntityType::Bishop, 10);
     PoolManager<Entity, EntityType>::Initialize(EntityType::BishopAlt, 10);
-    //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
+
+    // Rook
     PoolManager<Entity, EntityType>::Initialize(EntityType::Rook, 10);
     PoolManager<Entity, EntityType>::Initialize(EntityType::RookAlt, 10);
+    
+    //PoolManager<Entity, EntityType>::Initialize(EntityType::Knight, 5, "Knight");
     //PoolManager<Entity, EntityType>::Initialize(EntityType::Queen, 2, "Queen");
 }
 
@@ -43,10 +190,10 @@ void EnemyManager::Update()
 void EnemyManager::Reset()
 {
     m_enemies.clear();
-    EnemyManager::m_state = RoundState_Waiting;
-    EnemyManager::m_numberOfEnemies = 0;
-    EnemyManager::m_pointBudget = 0;
-    EnemyManager::m_waveNumber = 0;
+    m_state = RoundState_Waiting;
+    m_numberOfEnemies = 0;
+    m_pointBudget = 0;
+    m_waveNumber = 0;
 }
 
 bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistance)
@@ -73,7 +220,7 @@ bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistan
 void EnemyManager::SpawnEnemies()
 {
     std::shared_ptr<IScene> testScene = SceneManager::GetCurrentScene();
-    std::vector<std::string> enemiesToSpawn = CalculateEnemiesToSpawn();
+    std::vector<EntityType> enemiesToSpawn = CalculateEnemiesToSpawn(m_waveNumber);
 
     DX::XMFLOAT2 playerPos = m_player->GetPosition();
     
@@ -109,126 +256,58 @@ void EnemyManager::SpawnEnemies()
     }
 }
 
-/*
-// TODO: FIX, MISCALCULATES HOW MANY ENEMIES TO SPAWN FOR SOME REASON
-*/
-
-std::vector<std::string> EnemyManager::CalculateEnemiesToSpawn()
+std::vector<EntityType> EnemyManager::CalculateEnemiesToSpawn(const int& wave)
 {
-    float successPercentage = 1.0f;
+    //EnemyPointData pointData = {};
 
-    struct EnemySpawnChance
-    {
-        float Pawn;
-        float Bishop;
-        float BishopAlt;
-        float Knight;
-        float Rook;
-        float RookAlt;
-        float Queen;
-    };
+    std::vector<EntityType> entitiesToSpawn;
+    std::unordered_map<EntityType, std::uint16_t> spawnWeights = m_spawnWeights.at(wave / 3);
+    std::map<float, EntityType> spawnChance;
+    std::uint8_t numToSpawn = m_numOfEnemiesPerWave.at(wave);
+
+    std::uint32_t totalWeight = 0;
     
-    EnemyPointData pointData = {};
-
-    std::vector<std::string> entitiesToSpawn;
-
-    int pointBudget = m_pointBudget;
-    
-    while (pointBudget > 0)
+    for (const auto& weight : spawnWeights)
     {
-
-        EnemySpawnChance chance = {};
-        
-        // Set percent odds of spawning a certain type
-        if (pointBudget < 3)
-        {
-            // PAWN IS GUARANTEED   
-        }
-        else if (pointBudget < 5)
-        {
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.2f);
-            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.BishopAlt;
-        }
-        else if (pointBudget < 9)
-        {
-            chance.Rook = SpMath::RandomReal<float>(0.05f, 0.1f);
-            chance.RookAlt = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Rook;
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.15f) + chance.RookAlt;
-            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.15f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.BishopAlt;
-        }
-        else
-        {
-            chance.Queen = SpMath::RandomReal<float>(0.0f, 0.05f);
-            chance.Rook = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Queen;
-            chance.RookAlt = SpMath::RandomReal<float>(0.05f, 0.1f) + chance.Rook;
-            chance.Bishop = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.RookAlt;
-            chance.BishopAlt = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.Bishop;
-            chance.Knight = SpMath::RandomReal<float>(0.1f, 0.2f) + chance.BishopAlt;
-        }
-
-        float rand = SpMath::RandomReal<float>(0.0f, 1.0f);
-
-        if (rand < chance.Queen)
-        {
-            entitiesToSpawn.push_back("Queen");
-            pointBudget -= pointData.Queen;
-            successPercentage -= SpMath::RandomReal<float>(0.4f, 0.55f);
-        }
-        else if (rand < chance.Rook)
-        {
-            entitiesToSpawn.push_back("Rook");
-            pointBudget -= pointData.Rook;
-            successPercentage -= SpMath::RandomReal<float>(0.10f, 0.25f);
-        }
-        else if (rand < chance.RookAlt)
-        {
-            entitiesToSpawn.push_back("RookAlt");
-            pointBudget -= pointData.RookAlt;
-            successPercentage -= SpMath::RandomReal<float>(0.10f, 0.25f);
-        }
-        else if (rand < chance.Bishop)
-        {
-            entitiesToSpawn.push_back("Bishop");
-            pointBudget -= pointData.Bishop;
-            successPercentage -= SpMath::RandomReal<float>(0.0f, 0.15f);
-        }
-        else if (rand < chance.BishopAlt)
-        {
-            entitiesToSpawn.push_back("BishopAlt");
-            pointBudget -= pointData.BishopAlt;
-            successPercentage -= SpMath::RandomReal<float>(0.0f, 0.15f);
-        }
-        else if (rand < chance.Knight)
-        {
-            entitiesToSpawn.push_back("Knight");
-            pointBudget -= pointData.Knight;
-            successPercentage -= SpMath::RandomReal<float>(0.0f, 0.15f);
-        }
-        else
-        {
-            entitiesToSpawn.push_back("Pawn");
-            pointBudget -= pointData.Pawn;
-            successPercentage -= SpMath::RandomReal<float>(0.0f, 0.10f);
-        }
-
-        if (SpMath::RandomReal<float>(0.0f, 1.0f) > successPercentage)
-        {
-            break;
-        }
+        totalWeight += weight.second;
     }
 
+    float currentPosition = 0.0f;
+    
+    for (auto& weight : spawnWeights)
+    {
+        float percentage = static_cast<float>(spawnWeights.at(weight.first)) / totalWeight;
+
+        if (percentage == 0.0f)
+        {
+            continue;
+        }
+        
+        spawnChance[percentage + currentPosition] = weight.first; 
+        currentPosition += percentage;
+    }
+    
+    for (std::uint8_t i = 0; i < numToSpawn; ++i)
+    {
+        float randomized = SpMath::RandomReal<float>(0.0f, 1.0f);
+
+        for (const auto& chance : spawnChance)
+        {
+            if (randomized < chance.first)
+            {
+                entitiesToSpawn.push_back(chance.second);
+                break;
+            }
+        }
+    }
+    
     return entitiesToSpawn;
 }
 
-void EnemyManager::CreateEnemy(const std::string& type, const DX::XMFLOAT2& position)
+void EnemyManager::CreateEnemy(const EntityType& type, const DX::XMFLOAT2& position)
 {
-    // Convert the string type to EntityType (assuming you have a mapping)
-    EntityType enemyType = ConvertStringToEntityType(type);
-
     // Retrieve an enemy from the pool
-    std::shared_ptr<Entity> enemy = PoolManager<Entity, EntityType>::GetObject(enemyType, type);
+    std::shared_ptr<Entity> enemy = PoolManager<Entity, EntityType>::GetObject(type);
 
     // Set the enemy's position and activate it
     enemy->SetPosition(position);
@@ -272,35 +351,30 @@ void EnemyManager::UpdateEnemies()
         break;
 
     case RoundState_WaveStarted:
-        m_enemies.erase
+        std::erase_if
         (
-            std::remove_if
-            (
-                m_enemies.begin(),
-                m_enemies.end(),
-                [](const std::shared_ptr<IGameObject>& enemy) {
-                    if (!enemy || !enemy->IsActive()) {
-                        // Return the enemy to the pool
-                        std::shared_ptr<Entity> enemyEntity = std::dynamic_pointer_cast<Entity>(enemy);
-                        PoolManager<Entity, EntityType>::ReturnObject(enemyEntity->GetType(), enemyEntity);
-                        return true;
-                    }
-                    return false;
+            m_enemies,
+            [](const std::shared_ptr<IGameObject>& enemy) {
+                if (!enemy || !enemy->IsActive()) {
+                    // Return the enemy to the pool
+                    std::shared_ptr<Entity> enemyEntity = std::dynamic_pointer_cast<Entity>(enemy);
+                    PoolManager<Entity, EntityType>::ReturnObject(enemyEntity->GetType(), enemyEntity);
+                    return true;
                 }
-            ),
-            m_enemies.end()
+                return false;
+            }
         );
 
         if (m_enemies.empty())
         {
-            ++m_waveNumber;
             SpawnEnemies();
-
-            if (m_waveNumber % 3 == 0)
+            
+            if (m_waveNumber % 3 == 0 && m_waveNumber != 0)
             {
                 m_state = RoundState_Waiting;
-                break;
             }
+
+            ++m_waveNumber;
         }
         break;
     }
@@ -309,17 +383,4 @@ void EnemyManager::UpdateEnemies()
 void EnemyManager::Cleanup()
 {
     m_enemies.clear();
-}
-
-EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
-{
-    if (type == "Pawn") return EntityType::Pawn;
-    if (type == "Bishop") return EntityType::Bishop;
-    if (type == "BishopAlt") return EntityType::BishopAlt;
-    //if (type == "Knight") return EntityType::Knight;
-    if (type == "Rook") return EntityType::Rook;
-    if (type == "RookAlt") return EntityType::RookAlt;
-    //if (type == "Queen") return EntityType::Queen;
-    // Default to Pawn if no match is found
-    return EntityType::Rook;
 }

@@ -16,7 +16,7 @@ void PawnAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
         XMStoreFloat2(&finalDirection, dirVec);
 
         // Create and add projectile
-        ProjectileManager::AddProjectile(ProjectileType::BishopBall, position, finalDirection, 90.0f, 3, 1.0f);
+        ProjectileManager::AddProjectile(ProjectileType::BishopBall, position, finalDirection, 120.0f, 3, 1.0f);
         this->m_attackTimer = 0;
     }
 }
