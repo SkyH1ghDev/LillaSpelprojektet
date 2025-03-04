@@ -42,6 +42,8 @@ void Entity::Initialize()
     this->m_takeDamage->SetHealth(this->m_hp);
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    this->m_isDashing = false;
+
     if (!this->m_collider)
         PerformSetCollider();
     else
@@ -290,6 +292,7 @@ void Entity::Reset()
     this->m_takeDamage->SetHealth(this->m_hp);
     this->m_animationTime = 0;
     this->m_iFrame = false;
+    this->m_isDashing = false;
 
     switch (m_type) {
     case EntityType::Player:
