@@ -176,15 +176,18 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 	case AddCard:
 
 		//Randomise options
-		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 4));
-		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 4));
-		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 4));
+		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 3));
+		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 3));
+		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 3));
 
 		//Make sure all options are different
 		while (m_cardChoice[1] == m_cardChoice[0])
 			m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 4));
 		while (m_cardChoice[2] == m_cardChoice[0] || m_cardChoice[2] == m_cardChoice[1])
 			m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 4));
+
+		if (SpMath::RandomInteger(0, 19) == 0)
+			m_cardChoice[2] = CardType::Heal;
 
 		break;
 
