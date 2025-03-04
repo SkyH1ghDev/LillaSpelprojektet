@@ -322,11 +322,11 @@ int EnemyManager::GetRoundCount()
 
 EntityType EnemyManager::ConvertStringToEntityType(const std::string& type)
 {
-    if (type == "Pawn") return EntityType::RookAlt;
-    if (type == "Bishop") return EntityType::RookAlt;
-    if (type == "BishopAlt") return EntityType::RookAlt;
+    if (type == "Pawn") return EntityType::Pawn;
+    if (type == "Bishop") return EntityType::Bishop;
+    if (type == "BishopAlt") return EntityType::BishopAlt;
     //if (type == "Knight") return EntityType::Knight;
-    if (type == "Rook") return EntityType::RookAlt;
+    if (type == "Rook") return EntityType::Rook;
     if (type == "RookAlt") return EntityType::RookAlt;
     //if (type == "Queen") return EntityType::Queen;
     // Default to Pawn if no match is found
