@@ -331,8 +331,14 @@ void EnemyManager::UpdateEnemies()
         //Start upgrade 
         SceneManager::UnloadScene();
         ProjectileManager::Reset();
-        SceneManager::LoadScene("upgrade");
         EnemyManager::m_roundCount += 1;
+        if (EnemyManager::m_roundCount > 10)
+        {
+            SceneManager::LoadScene("victory");
+        }
+        else
+            SceneManager::LoadScene("upgrade");
+        
         if (SpMath::RandomInteger(0, 2) == 0)
             DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
         else

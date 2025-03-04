@@ -55,6 +55,13 @@ void Game::SetupGame()
     std::shared_ptr<IScene> deathScene = SceneManager::GetScene("death");
     SetupDeathScene(deathScene, player);
 
+    if (!SceneManager::RegisterScene("victory", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+    std::shared_ptr<IScene> victoryScene = SceneManager::GetScene("victory");
+    SetupVictoryScene(victoryScene, player);
+
     // Setup Main Scene
     if (!SceneManager::RegisterScene("game", GameSceneFactory::CreateScene(0)))
     {
@@ -233,6 +240,28 @@ void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<I
     deathScene->AddGameObject(player);
     deathScene->AddGameObject(restartButton);
     deathScene->AddGameObject(quitButton);
+}
+
+void Game::SetupVictoryScene(std::shared_ptr<IScene> victoryScene, std::shared_ptr<IGameObject> player)
+{
+    std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PauseMouse", "mouse.png");
+
+    std::shared_ptr<IGameObject> restartButton = std::make_shared<Button>(ButtonType::Play);
+    restartButton->SetPosition({ 245, 150 });
+    std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
+    quitButton->SetPosition({ 245, 210 });
+
+    std::shared_ptr<IGameObject> gameOverText = std::make_shared<Mesh>(MeshType::Object, "PromotedText", "text_promoted");
+    std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
+    gameOverText->AttachScript(script);
+    gameOverText->SetPosition({ 190 + 27, 75 - 106 }); 
+    victoryScene->AddGameObject(gameOverText);
+
+    victoryScene->AddGameObject(mouse);
+
+    victoryScene->AddGameObject(player);
+    victoryScene->AddGameObject(restartButton);
+    victoryScene->AddGameObject(quitButton);
 }
 
 void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_ptr<IGameObject> cardDeck)
