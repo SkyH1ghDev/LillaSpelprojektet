@@ -18,6 +18,9 @@ std::vector <std::shared_ptr<IGameObject>> DeckManager::m_buttons;
 std::vector<std::shared_ptr<Mesh>> DeckManager::m_cardDisplay;
 
 std::shared_ptr<Mesh> DeckManager::m_chesster;
+std::shared_ptr<Mesh> DeckManager::m_text;
+std::vector<std::shared_ptr<Mesh>> DeckManager::m_background;
+
 std::shared_ptr<CardDeck> DeckManager::m_cardDeck;
 int DeckManager::m_level = 1;
 UpgradeType DeckManager::m_type = UpgradeType::AddCard;
@@ -29,9 +32,14 @@ void DeckManager::Initialize(std::shared_ptr<IGameObject> button1,
 	std::shared_ptr<IGameObject> card2,
 	std::shared_ptr<IGameObject> card3,
 	std::shared_ptr<IGameObject> cardDeck,
-	std::shared_ptr<IGameObject> chesster)
+	std::shared_ptr<IGameObject> chesster,
+	std::shared_ptr<IGameObject> text,
+	std::vector<std::shared_ptr<Mesh>> background)
 {
 	m_chesster = std::static_pointer_cast<Mesh>(chesster);
+	m_text = std::static_pointer_cast<Mesh>(text);
+	m_background = background;
+
 	m_buttons.push_back(button1);
 	m_buttons.push_back(button2);
 	m_buttons.push_back(button3);
@@ -175,6 +183,14 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 	{
 	case AddCard:
 
+		//Set text position and texture
+		m_text->SetTexture("text_pick");
+		m_text->SetPosition({ 180, 71 });
+
+		//Set background texture
+		for (size_t i = 0; i < 8; i++)
+			m_background.at(i)->SetTexture("background_card");
+
 		//Randomise options
 		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 3));
 		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 3));
@@ -192,6 +208,16 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 		break;
 
 	case LevelCard:
+
+		//Set text texture and position
+		m_text->SetTexture("text_upgrade");
+		m_text->SetPosition({ 141, 75 });
+
+		//Set background texture
+		for (size_t i = 0; i < 8; i++)
+			m_background.at(i)->SetTexture("background_upgrade");
+
+		//Reset stored values for comparison
 		m_cardIndex[0] = -1;
 		m_cardIndex[1] = -2;
 		m_cardIndex[2] = -3;

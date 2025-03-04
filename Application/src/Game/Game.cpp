@@ -179,18 +179,20 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
 {
+    //Buttons and mouse
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
     std::shared_ptr<IGameObject> continueButton = std::make_shared<Button>(ButtonType::Continue);
     continueButton->SetPosition({ 244, 150 });
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
     quitButton->SetPosition({ 244, 210 });
-
     pauseScene->AddGameObject(continueButton);
     pauseScene->AddGameObject(quitButton);
     pauseScene->AddGameObject(mouse);
+
+    //Animated text
     std::shared_ptr<IScript> updateScript = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
-    std::shared_ptr<Mesh> pausedText = std::make_shared<Mesh>(MeshType::Object, "PauseText", "paused");
+    std::shared_ptr<Mesh> pausedText = std::make_shared<Mesh>(MeshType::Object, "PauseText", "text_paused");
     pausedText->AttachScript(updateScript);
     pausedText->SetPosition({241, 75});
     pauseScene->AddGameObject(pausedText);
@@ -198,7 +200,7 @@ void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
     //Create animated background
     for (size_t i = 0; i < 8; i++)
     {
-        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "pause_background");
+        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("PauseBackground" + std::to_string(i)), "background_paused");
         std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });
@@ -215,6 +217,13 @@ void Game::SetupDeathScene(std::shared_ptr<IScene> deathScene, std::shared_ptr<I
     restartButton->SetPosition({ 245, 150 });
     std::shared_ptr<IGameObject> quitButton = std::make_shared<Button>(ButtonType::Quit);
     quitButton->SetPosition({ 245, 210 });
+
+    std::shared_ptr<IGameObject> gameOverText = std::make_shared<Mesh>(MeshType::Object, "CapturedText", "text_captured");
+    std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
+    gameOverText->AttachScript(script);
+    gameOverText->SetPosition( { 190, 75 });
+    deathScene->AddGameObject(gameOverText);
+
     deathScene->AddGameObject(mouse);
        
     deathScene->AddGameObject(player);
@@ -227,7 +236,7 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "PauseMouse", "mouse.png");
     upgradeScene->AddGameObject(mouse);
 
-   
+    
     std::shared_ptr<IGameObject> chesster = std::make_shared<Mesh>(MeshType::Object, "chesster_closeup", "chesster_closeup");
     std::shared_ptr<IScript> updateChesster = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
     chesster->AttachScript(updateChesster);
@@ -256,16 +265,25 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
     upgradeScene->AddGameObject(card2);
     upgradeScene->AddGameObject(card3);
 
+    std::vector<std::shared_ptr<Mesh>> backgroundSegments;
+
     for (size_t i = 0; i < 8; i++)
     {
-        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("upgradeBackground" + std::to_string(i)), "card_background");
+        std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, std::string("upgradeBackground" + std::to_string(i)), "background_card");
         std::shared_ptr<IScript> script = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
         background->AttachScript(script);
         background->SetPosition({ float(80 * i), 0 });
         upgradeScene->AddGameObject(background);
+        backgroundSegments.push_back(std::static_pointer_cast<Mesh>(background));
     }
+
+    std::shared_ptr<IGameObject> text = std::make_shared<Mesh>(MeshType::Object, "UpgradeText", "text_pick");
+    text->SetPosition({ 180, 75 });
+    std::shared_ptr<IScript> textScript = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
+    text->AttachScript(textScript);
+    upgradeScene->AddGameObject(text);
 
     std::shared_ptr<DeckManager> deckManager = std::make_shared<DeckManager>();
     upgradeScene->AddGameObject(std::static_pointer_cast<IGameObject>(deckManager));
-    DeckManager::Initialize(cardButton1, cardButton2, cardButton3, card1, card2, card3, cardDeck, chesster);
+    DeckManager::Initialize(cardButton1, cardButton2, cardButton3, card1, card2, card3, cardDeck, chesster, text, backgroundSegments);
 }
