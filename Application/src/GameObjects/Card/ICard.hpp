@@ -12,7 +12,8 @@ enum class CardType {
     Spread,
     Heal,
     Sniper,
-    Disruptor
+    Disruptor,
+    RangeBuff
 };
 
 class ICard : public std::enable_shared_from_this<ICard>
