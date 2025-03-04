@@ -133,6 +133,13 @@ void DeckManager::Update()
 			this->m_cardSpeed += Clock::GetDeltaTime();
 		}
 	}
+
+	if (m_buttons[0]->IsActive())
+		m_buttons[0]->SetIsAlive(true);
+	if (m_buttons[1]->IsActive())
+		m_buttons[1]->SetIsAlive(true);
+	if (m_buttons[2]->IsActive())
+		m_buttons[2]->SetIsAlive(true);
 }
 
 void DeckManager::Reset()
@@ -156,9 +163,9 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 	m_buttons[0]->SetActive(true);
 	m_buttons[1]->SetActive(true);
 	m_buttons[2]->SetActive(true);
-	m_buttons[0]->SetIsAlive(true);
-	m_buttons[1]->SetIsAlive(true);
-	m_buttons[2]->SetIsAlive(true);
+	m_buttons[0]->SetIsAlive(false);
+	m_buttons[1]->SetIsAlive(false);
+	m_buttons[2]->SetIsAlive(false);
 
 	if (SpMath::RandomInteger(0, 40) == 40)
 		m_chesster->SetTexture("chadster_closeup");
