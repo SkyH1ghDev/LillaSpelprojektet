@@ -1,4 +1,7 @@
 #include "MeshVisibleComponentFactory.hpp"
+#include "BackgroundVisible.hpp"
+#include "MouseVisible.hpp"
+#include "ObjectVisible.hpp"
 #include <stdexcept>
 
 std::shared_ptr<IMeshVisible> CreateVisibleComponent(MeshType type)

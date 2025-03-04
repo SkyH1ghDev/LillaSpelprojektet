@@ -1,6 +1,7 @@
 #include "MeshStaticComponentFactory.hpp"
 #include "CursorMeshStatic.hpp"
 #include "ObjectMeshStatic.hpp"
+#include "BackgroundStatic.hpp"
 
 std::shared_ptr<IMeshStatic> CreateStaticComponent(MeshType type)
 {
@@ -11,7 +12,7 @@ std::shared_ptr<IMeshStatic> CreateStaticComponent(MeshType type)
     case MeshType::Mouse:
         return std::make_shared<CursorMeshStatic>();
         break;
-        case MeshType::Object:
+    case MeshType::Object:
         return std::make_shared<ObjectMeshStatic>();
         break;
     default:
