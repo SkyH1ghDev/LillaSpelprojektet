@@ -27,6 +27,24 @@ void RookAltVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Entity
     case EntityState::Stunned:
         texture = "rook_b_stun";
         break;
+    case EntityState::Dashing:
+        switch (this->m_lastState) {
+        case EntityState::WalkUp:
+            texture = "rook_b_back.png";
+            break;
+        case EntityState::WalkDown:
+            texture = "rook_b_front.png";
+            break;
+        case EntityState::WalkRight:
+            texture = "rook_b_right.png";
+            break;
+        case EntityState::WalkLeft:
+            texture = "rook_b_left.png";
+            break;
+        default:
+            break;
+        }
+        break;
     default:
         texture = "rook_b_front.png";
         break;

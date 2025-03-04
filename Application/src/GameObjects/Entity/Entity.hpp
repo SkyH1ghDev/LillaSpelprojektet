@@ -46,7 +46,7 @@ public:
     
     void Initialize();
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
-    void PerformVisible(EntityState entityState);
+    void PerformVisible();
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction);
     void PerformTakeDamage(float damage);
 
@@ -59,6 +59,10 @@ public:
 
     bool Dashing() const;
     bool IsStunned() const;
+
+    void SetState(EntityState state);
+    EntityState GetState();
+
     EntityType GetType() const { return m_type; }
 
 private:

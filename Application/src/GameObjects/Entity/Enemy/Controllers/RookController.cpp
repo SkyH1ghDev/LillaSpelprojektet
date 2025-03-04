@@ -38,14 +38,32 @@ void RookController::Update()
             DX::XMFLOAT2 direction;
             XMStoreFloat2(&direction, directionVec);
 
-            // Ensure dash is only horizontal or vertical
+            // Determine the primary movement direction
             if (fabs(direction.x) > fabs(direction.y)) {
-                direction.y = 0.0f; // Move horizontally
+                // Horizontal movement
+                direction.y = 0.0f;
+                if (direction.x > 0.0f) {
+                    direction.x = 1.0f; // Move Right
+                    rook->SetState(EntityState::WalkRight);
+                }
+                else {
+                    direction.x = -1.0f; // Move Left
+                    rook->SetState(EntityState::WalkLeft);
+                }
             }
             else {
-                direction.x = 0.0f; // Move vertically
+                // Vertical movement
+                direction.x = 0.0f;
+                if (direction.y > 0.0f) {
+                    direction.y = 1.0f; // Move Down
+                    rook->SetState(EntityState::WalkDown);
+                }
+                else {
+                    direction.y = -1.0f; // Move Up
+                    rook->SetState(EntityState::WalkUp);
+                }
             }
-
+            rook->PerformVisible();
             rook->PerformMove(direction, true); // Dash towards player
             m_isCharging = false;
         }
@@ -69,10 +87,41 @@ void RookController::Update()
     {
         this->m_hasAttacked = false;
         // Search for player in + pattern
-        if ((distance < 700) && !rook->Dashing()) { // Adjust search range
+        if ((distance < 700) && !rook->Dashing() && rook->GetState() != EntityState::Spawning) { // Adjust search range
             if (fabs(rookPos.x - playerPos.x) < 10 || fabs(rookPos.y - playerPos.y) < 10) {
                 m_isCharging = true;
-                m_chargeTimer = 1.0f; // Charge time before dashing
+                this->m_chargeTimer = 1.0f;
+                {
+                    DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);
+                    DX::XMFLOAT2 direction;
+                    XMStoreFloat2(&direction, directionVec);
+
+                    // Determine the primary movement direction
+                    if (fabs(direction.x) > fabs(direction.y)) {
+                        // Horizontal movement
+                        direction.y = 0.0f;
+                        if (direction.x > 0.0f) {
+                            direction.x = 1.0f; // Move Right
+                            rook->SetState(EntityState::WalkRight);
+                        }
+                        else {
+                            direction.x = -1.0f; // Move Left
+                            rook->SetState(EntityState::WalkLeft);
+                        }
+                    }
+                    else {
+                        // Vertical movement
+                        direction.x = 0.0f;
+                        if (direction.y > 0.0f) {
+                            direction.y = 1.0f; // Move Down
+                            rook->SetState(EntityState::WalkDown);
+                        }
+                        else {
+                            direction.y = -1.0f; // Move Up
+                            rook->SetState(EntityState::WalkUp);
+                        }
+                    }
+                }
                 return;
             }
         }

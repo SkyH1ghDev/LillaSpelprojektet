@@ -33,7 +33,7 @@ void Entity::Initialize()
 {
     this->m_state = EntityState::Spawning;
     this->m_isAnimating = false;
-    PerformVisible(this->m_state);
+    PerformVisible();
     this->m_spawnTimer = 2.0;
     this->m_shouldRender = true;
     this->m_isAlive = true;
@@ -81,7 +81,7 @@ void Entity::Initialize()
 
 void Entity::OnStart()
 {
-    PerformVisible(this->m_state);
+    PerformVisible();
     this->m_spawnTimer = 2.0;
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
@@ -158,7 +158,7 @@ void Entity::Update()
         }
     }
 
-    if (this->m_dashTimer > 0)
+    if (this->m_dashTimer > 0 && this->m_type == EntityType::Player)
     {
         if (!this->m_isAnimating)
             this->ResetAnimation();
@@ -189,25 +189,25 @@ void Entity::Update()
         }
     }
 
-    PerformVisible(this->m_state);
+    PerformVisible();
 
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
-        if (direction.y == -1 && !m_isAnimating)
+        if (direction.y == -1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkUp;
         }
-        else if (direction.y == 1 && !m_isAnimating)
+        else if (direction.y == 1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkDown;
         }
-        else if (direction.x == 1 && !m_isAnimating)
+        else if (direction.x == 1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkRight;
         }
-        else if (direction.x == -1 && !m_isAnimating)
+        else if (direction.x == -1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkLeft;
         }
@@ -222,7 +222,7 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
     }
 }
 
-void Entity::PerformVisible(EntityState entityState)
+void Entity::PerformVisible()
 {
     if (m_visible)
     {
@@ -323,4 +323,14 @@ bool Entity::Dashing() const
 bool Entity::IsStunned() const
 {
     return this->m_isStunned;
+}
+
+void Entity::SetState(EntityState state)
+{
+    this->m_state = state;
+}
+
+EntityState Entity::GetState()
+{
+    return this->m_state;
 }

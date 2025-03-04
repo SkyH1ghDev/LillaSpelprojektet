@@ -18,5 +18,5 @@ void PawnTakeDamage::TakeDamage(float& hp, float damage, bool& isActive, bool& s
 
 void PawnTakeDamage::SetHealth(float& hp)
 {
-    hp = 100;
+    hp = 45;
 }
