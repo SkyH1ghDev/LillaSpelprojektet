@@ -1,6 +1,7 @@
 #include "Projectile.hpp"
 #include <SpEngine/Clock/Clock.hpp>
 #include <iostream>
+#include <SpEngine/Audio/Sound.hpp>
 
 Projectile::Projectile
 (
@@ -77,7 +78,9 @@ void Projectile::Update()
             if (this->m_type == ProjectileType::FireBall)
                 this->m_velocity = 0;
             else
+            {
                 this->m_isAlive = false;
+            }
         }
         if (this->m_type == ProjectileType::DisruptorWave)
         {
