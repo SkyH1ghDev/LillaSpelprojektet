@@ -9,7 +9,7 @@ Numbers::Numbers(NumberPos numberPos)
 void Numbers::Update()
 {
 	int roundNum = EnemyManager::GetRoundCount();
-	int firstDigit = (roundNum < 10) ? 0 : 1 + (roundNum / 10); // If single-digit, first is 0
+	int firstDigit = 1 + (roundNum / 10);  // Extract first digit
 	int secondDigit = 1 + (roundNum % 10); // Extract second digit
 
 	if (this->m_pos == NumberPos::First)
