@@ -130,7 +130,7 @@ void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IG
 
     std::shared_ptr<IGameObject> qr = std::make_shared<Mesh>(MeshType::Object, "QR_Code", "questionnaire_qr_code_half.png");
     startScene->AddGameObject(qr);
-    qr->SetPosition({ 475, 15 });
+    qr->SetPosition({ 485, 10 });
 
 }
 

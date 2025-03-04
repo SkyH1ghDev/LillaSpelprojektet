@@ -275,7 +275,7 @@ void Entity::PlayerDeath()
     SceneManager::LoadScene("death");
     SceneManager::ResetScene("game");
     this->m_isActive = false;
-
+    Sound::PlayOnce("game_over.wav", 0.4f);
     HealthBarManager::Reset();
     ManaBarManager::Reset();
     StatSheet::Reset();
