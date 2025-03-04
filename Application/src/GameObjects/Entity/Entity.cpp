@@ -72,6 +72,8 @@ void Entity::Initialize()
         case EntityType::Queen:
         case EntityType::Knight:
         case EntityType::Pawn:
+            this->m_DeathAnimationTimer = 0.9;
+            break;
         default:
             this->m_DeathAnimationTimer = 0.9;
             break;
