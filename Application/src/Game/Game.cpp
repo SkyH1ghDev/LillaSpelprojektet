@@ -23,6 +23,7 @@
 #include "PlayerFactory.hpp"
 #include "GameObjects/Scripts/PauseControl.hpp"
 #include "DeckManager.hpp"
+#include "Numbers.hpp"
 
 void Game::SetupGame()
 {
@@ -153,6 +154,12 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     mainScene->AddGameObject(mouse);
     mainScene->AddGameObject(wand);
 
+    std::shared_ptr<IGameObject> num1 = std::make_shared<Numbers>(NumberPos::First);
+    std::shared_ptr<IGameObject> num2 = std::make_shared<Numbers>(NumberPos::Second);
+    num1->SetPosition({ 560, 0 });
+    num2->SetPosition({ 580, 0 });
+    mainScene->AddGameObject(num1);
+    mainScene->AddGameObject(num2);
 
     // Collision
     std::shared_ptr<IGameObject> collisionObject = std::make_shared<Empty>();
