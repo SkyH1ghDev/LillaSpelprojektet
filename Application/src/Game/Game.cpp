@@ -112,7 +112,7 @@ void Game::ResetGame()
 void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
 {
     std::shared_ptr<IGameObject> title = std::make_shared<Mesh>(MeshType::Title, "Title", "title_logo_v1.png");
-    title->SetPosition({170, 10});
+    title->SetPosition({161, 10});
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "start_background.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
 
