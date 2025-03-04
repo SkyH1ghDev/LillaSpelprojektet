@@ -89,21 +89,17 @@ void Game::ResetGame()
 
 void Game::SetupStartScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
 {
-
     std::shared_ptr<IGameObject> background = std::make_shared<Mesh>(MeshType::Background, "Background", "start_background.png");
     std::shared_ptr<IGameObject> mouse = std::make_shared<Mesh>(MeshType::Mouse, "MenuMouse", "mouse.png");
-    std::shared_ptr<IGameObject> wand = std::make_shared<Mesh>(MeshType::Object, "Wand", "wandMockupOne.png");
 
     std::shared_ptr<IGameObject> playButton = std::make_shared<Button>(ButtonType::Play);
     playButton->SetPosition({245, 150 });
     std::shared_ptr<IGameObject> exitButton = std::make_shared<Button>(ButtonType::Exit);
     exitButton->SetPosition({ 245, 210 });
-    wand->SetPosition({ 530, 270 });
 
     startScene->AddGameObject(player);
     startScene->AddGameObject(background);
     startScene->AddGameObject(mouse);
-    startScene->AddGameObject(wand);
     startScene->AddGameObject(playButton);
     startScene->AddGameObject(exitButton);
 }
