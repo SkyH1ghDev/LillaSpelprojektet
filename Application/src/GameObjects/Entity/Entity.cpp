@@ -268,6 +268,7 @@ void Entity::PlayerDeath()
     SceneManager::UnloadScene();
     SceneManager::LoadScene("death");
     SceneManager::ResetScene("game");
+    this->m_isActive = false;
 
     HealthBarManager::Reset();
     ManaBarManager::Reset();
