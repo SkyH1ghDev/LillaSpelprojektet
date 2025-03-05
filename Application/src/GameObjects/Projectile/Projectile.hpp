@@ -52,6 +52,7 @@ public:
     ProjectileType GetType() const { return m_type; }
 
     float GetDamage() const;
+    bool GetHasHit() const;
 
 private:
     std::shared_ptr<IProjectileMove> m_move;

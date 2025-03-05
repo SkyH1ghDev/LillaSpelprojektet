@@ -141,7 +141,12 @@ void Projectile::PerformMove(const DX::XMFLOAT2& direction, float velocity) {
 float Projectile::GetDamage() const
 {
     return this->m_damage * this->m_damageAmp;
-}   
+}
+
+bool Projectile::GetHasHit() const
+{
+    return this->m_hasHit;
+}
 
 void Projectile::PerformHit()
 {
