@@ -130,7 +130,7 @@ void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IG
 
     std::shared_ptr<IGameObject> qr = std::make_shared<Mesh>(MeshType::Object, "QR_Code", "questionnaire_qr_code_half.png");
     startScene->AddGameObject(qr);
-    qr->SetPosition({ 475, 15 });
+    qr->SetPosition({ 485, 10 });
 
 }
 
@@ -165,10 +165,17 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     mainScene->AddGameObject(mouse);
     mainScene->AddGameObject(wand);
 
+    //round text and numbers
+    std::shared_ptr<IGameObject> roundText = std::make_shared<Mesh>(MeshType::Object, "RoundText", "text_round");
+    roundText->SetPosition({ 408, 1 });
+    std::shared_ptr<IScript> textScript = std::static_pointer_cast<IScript, AnimateScript>(std::make_shared<AnimateScript>());
+    roundText->AttachScript(textScript);
+
+    mainScene->AddGameObject(roundText);
     std::shared_ptr<IGameObject> num1 = std::make_shared<Numbers>(NumberPos::First);
     std::shared_ptr<IGameObject> num2 = std::make_shared<Numbers>(NumberPos::Second);
-    num1->SetPosition({ 560, 0 });
-    num2->SetPosition({ 580, 0 });
+    num1->SetPosition({ 560, 1 });
+    num2->SetPosition({ 584, 1 });
     mainScene->AddGameObject(num1);
     mainScene->AddGameObject(num2);
 

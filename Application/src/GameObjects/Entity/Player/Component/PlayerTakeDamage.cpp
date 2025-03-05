@@ -16,8 +16,6 @@ void PlayerTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& 
         {
             HealthBarManager::DrawHearts();
             Sound::PlayOnce("aaagh.wav", 0.2f);
-            Sound::SetMusic("menu_theme.wav", 0.2f);
-            Sound::PlayMusic(true);
         }
         else
         {

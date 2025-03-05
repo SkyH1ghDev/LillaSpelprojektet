@@ -1,6 +1,6 @@
 #include "ScatterPelletHit.hpp"
 
-void ScatterPelletHit::Hit(bool& isAlive)
+void ScatterPelletHit::Hit(bool& hasHit)
 {
-	isAlive = false;
+	hasHit = true;
 }

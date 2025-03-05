@@ -70,4 +70,5 @@ private:
     bool m_isAnimating = false;
     float m_animationTimer = 0;
     bool m_hasDeathAnimation = false;
+    bool m_hasHit = true;
 };

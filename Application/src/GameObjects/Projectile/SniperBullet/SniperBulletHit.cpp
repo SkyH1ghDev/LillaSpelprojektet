@@ -1,6 +1,6 @@
 #include "SniperBulletHit.hpp"
 
-void SniperBulletHit::Hit(bool& isAlive)
+void SniperBulletHit::Hit(bool& hasHit)
 {
-	isAlive = false;
+	hasHit = true;
 }
