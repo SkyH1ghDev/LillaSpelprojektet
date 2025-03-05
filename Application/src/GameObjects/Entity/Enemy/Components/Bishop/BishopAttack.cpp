@@ -14,24 +14,36 @@ void BishopAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 
     if (this->m_attackTimer >= this->m_attackCooldown)
     {
-        for (int i = 0; i < numProjectiles; ++i)
-        {
-            // Calculate angle offset (-spreadAngle to +spreadAngle)
-            float angleOffset = DX::XMConvertToRadians(spreadAngle * ((i - (numProjectiles - 1) / 2.0f) / ((numProjectiles - 1) / 2.0f)));
+        this->m_burstTimer += Clock::GetDeltaTime();
 
-            // Create rotation matrix
-            DX::XMMATRIX rotationMatrix = DX::XMMatrixRotationZ(angleOffset);
+        if (this->m_burstTimer >= this->m_burstCooldown && this->m_burstAmount > 0) {
+            for (int i = 0; i < numProjectiles; ++i)
+            {
+                // Calculate angle offset (-spreadAngle to +spreadAngle)
+                float angleOffset = DX::XMConvertToRadians(spreadAngle * ((i - (numProjectiles - 1) / 2.0f) / ((numProjectiles - 1) / 2.0f)));
 
-            // Rotate direction vector
-            DX::XMVECTOR spreadDirection = XMVector3TransformNormal(dirVec, rotationMatrix);
+                // Create rotation matrix
+                DX::XMMATRIX rotationMatrix = DX::XMMatrixRotationZ(angleOffset);
 
-            // Convert back to XMFLOAT2
-            DX::XMFLOAT2 finalDirection;
-            XMStoreFloat2(&finalDirection, spreadDirection);
+                // Rotate direction vector
+                DX::XMVECTOR spreadDirection = XMVector3TransformNormal(dirVec, rotationMatrix);
 
-            // Create and add projectile
-            ProjectileManager::AddProjectile(ProjectileType::BishopBall, position, finalDirection, 60.0f, 8, 1.0f);
+                // Convert back to XMFLOAT2
+                DX::XMFLOAT2 finalDirection;
+                XMStoreFloat2(&finalDirection, spreadDirection);
+
+                // Create and add projectile
+                ProjectileManager::AddProjectile(ProjectileType::BishopBall, position, finalDirection, 60.0f, 8, 1.0f);
+            }
+            this->m_burstAmount -= 1;
+            this->m_burstTimer = 0;
+            if (m_burstAmount == 0) {
+                this->m_burstAmount = 15;
+                this->m_burstTimer = 0;
+                this->m_attackTimer = 0;
+            }
+
         }
-        this->m_attackTimer = 0;
+
     }
 }
