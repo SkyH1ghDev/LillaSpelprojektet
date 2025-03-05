@@ -11,5 +11,5 @@ private:
     float m_burstCooldown = 1.0f;
     float m_burstTimer = 0.0f;
     float m_attackTimer = 0.0f;
-    int m_burstAmount = 15;
+    int m_burstAmount = 10;
 };
