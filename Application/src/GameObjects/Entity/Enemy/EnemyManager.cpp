@@ -335,6 +335,8 @@ void EnemyManager::UpdateEnemies()
         if (EnemyManager::m_roundCount > 10)
         {
             SceneManager::LoadScene("victory");
+            Sound::SetMusic("menu_theme.wav", 0.4f);
+            Sound::PlayOnce("promoted.wav", 0.4f);
         }
         else
             SceneManager::LoadScene("upgrade");
