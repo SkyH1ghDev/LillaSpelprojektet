@@ -141,7 +141,7 @@ void Renderer::DrawHitBoxes(std::vector<std::shared_ptr<IGameObject>>& ObjectVec
 						AssetManager::GetSprite("hitPixel", 0)->GetSRV().Get(),
 						positions.at(j),
 						AssetManager::GetSprite("hitPixel.png", 0)->GetSourceRectangle().get(),
-						DX::Colors::Green, ObjectVec.at(i)->GetRotationFloat(),
+						DX::Colors::Gold, ObjectVec.at(i)->GetRotationFloat(),
 						{ 0, 0 },
 						2.0f,
 						DX::DX11::SpriteEffects_None,

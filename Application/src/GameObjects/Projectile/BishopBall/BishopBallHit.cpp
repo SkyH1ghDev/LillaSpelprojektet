@@ -1,6 +1,6 @@
 #include "BishopBallHit.hpp"
 
-void BishopBallHit::Hit(bool& isAlive)
+void BishopBallHit::Hit(bool& hasHit)
 {
-	isAlive = false;
+	hasHit = true;
 }

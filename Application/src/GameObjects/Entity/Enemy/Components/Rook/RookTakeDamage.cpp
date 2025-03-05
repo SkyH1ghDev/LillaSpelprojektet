@@ -14,7 +14,6 @@ void RookTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& sh
     if (hp <= 0 && isAlive)
     {
         Sound::PlayOnce("rook_death.wav", 0.2f);
-        isAlive = false;
     }
 }
 

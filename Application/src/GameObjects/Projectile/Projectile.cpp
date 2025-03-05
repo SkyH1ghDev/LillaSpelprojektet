@@ -29,7 +29,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     this->m_lifetime = lifetime;
     this->m_maxlifetime = lifetime;
     this->m_damage = damage;
-
+    this->m_hasHit = false;
     this->ResetAnimation();
 
     // Normalize direction
@@ -66,7 +66,7 @@ void Projectile::OnStart()
 
 void Projectile::Update()
 {
-    if (m_lifetime > 0 && this->m_isAlive)
+    if (m_lifetime > 0 && !this->m_hasHit)
     {
         this->UpdateAnimation();
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
@@ -79,13 +79,13 @@ void Projectile::Update()
                 this->m_velocity = 0;
             else
             {
-                this->m_isAlive = false;
+                this->m_hasHit = true;
             }
         }
         if (this->m_type == ProjectileType::DisruptorWave)
         {
-            float minRadius = 10 * this->m_maxlifetime;
-            float maxRadius = 100 * this->m_maxlifetime;
+            float minRadius = 30 * this->m_maxlifetime;
+            float maxRadius = 120 * this->m_maxlifetime;
             //this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - (this->m_lifetime / this->m_maxlifetime))); //Linear
             this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - exp(-3 * (1 - (this->m_lifetime / this->m_maxlifetime)))));
         }
@@ -141,13 +141,18 @@ void Projectile::PerformMove(const DX::XMFLOAT2& direction, float velocity) {
 float Projectile::GetDamage() const
 {
     return this->m_damage * this->m_damageAmp;
-}   
+}
+
+bool Projectile::GetHasHit() const
+{
+    return this->m_hasHit;
+}
 
 void Projectile::PerformHit()
 {
     if (m_hit)
     {
-        m_hit->Hit(this->m_isAlive);
+        m_hit->Hit(this->m_hasHit);
     }  
 }
 
@@ -158,5 +163,6 @@ void Projectile::Reset()
     this->m_isAnimating = false;
     this->m_isActive = false;
     this->m_isAlive = false;
+    this->m_hasHit = false;
     this->CenterOrigin(true);
 }
