@@ -1,5 +1,6 @@
 #include "PawnTakeDamage.hpp"
 #include <SpEngine/Audio/Sound.hpp>
+#include <SpEngine/Math/SpMath.hpp>
 
 void PawnTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& shouldRender, float& damageTimer, bool& iFrame)
 {
@@ -13,7 +14,7 @@ void PawnTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& sh
     }
     if (hp <= 0 && isAlive)
     {
-        Sound::PlayOnce("pawn_death.wav", 0.2f);
+        Sound::PlayOnce("pawn_death" + std::to_string(SpMath::RandomInteger(1, 3)) + ".wav", 0.2f);
         isAlive = false;
     }
 }
