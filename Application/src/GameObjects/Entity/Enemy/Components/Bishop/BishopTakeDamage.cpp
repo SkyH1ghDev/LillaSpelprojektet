@@ -1,5 +1,6 @@
 #include "BishopTakeDamage.hpp"
 #include <SpEngine/Audio/Sound.hpp>
+#include <SpEngine/Math/SpMath.hpp>
 
 void BishopTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& shouldRender, float& damageTimer, bool& iFrame)
 {
@@ -13,7 +14,7 @@ void BishopTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& 
     }
     if (hp <= 0 && isAlive)
     {
-        Sound::PlayOnce("bishop_death.wav", 0.2f);
+        Sound::PlayOnce("bishop_death" + std::to_string(SpMath::RandomInteger(1, 2)) + ".wav", 0.2f);
     }
 }
 
