@@ -1,6 +1,6 @@
 #include "FireBallHit.hpp"
 
-void FireBallHit::Hit(bool& isAlive)
+void FireBallHit::Hit(bool& hasHit)
 {
-	isAlive = false;
+	hasHit = true;
 }

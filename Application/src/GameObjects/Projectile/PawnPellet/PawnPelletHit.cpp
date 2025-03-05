@@ -1,6 +1,6 @@
 #include "PawnPelletHit.hpp"
 
-void PawnPelletHit::Hit(bool& isAlive)
+void PawnPelletHit::Hit(bool& hasHit)
 {
-	isAlive = false;
+	hasHit = true;
 }

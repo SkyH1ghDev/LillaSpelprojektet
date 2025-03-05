@@ -14,8 +14,12 @@ void PawnTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& sh
     }
     if (hp <= 0 && isAlive)
     {
+<<<<<<< Updated upstream
         Sound::PlayOnce("pawn_death" + std::to_string(SpMath::RandomInteger(1, 3)) + ".wav", 0.2f);
         isAlive = false;
+=======
+        Sound::PlayOnce("buh.wav", 0.2f);
+>>>>>>> Stashed changes
     }
 }
 
