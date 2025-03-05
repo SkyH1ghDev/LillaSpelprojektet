@@ -38,7 +38,7 @@ void BishopAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
             this->m_burstAmount -= 1;
             this->m_burstTimer = 0;
             if (m_burstAmount == 0) {
-                this->m_burstAmount = 15;
+                this->m_burstAmount = 10;
                 this->m_burstTimer = 0;
                 this->m_attackTimer = 0;
             }
