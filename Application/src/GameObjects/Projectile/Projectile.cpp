@@ -84,8 +84,8 @@ void Projectile::Update()
         }
         if (this->m_type == ProjectileType::DisruptorWave)
         {
-            float minRadius = 10 * this->m_maxlifetime;
-            float maxRadius = 100 * this->m_maxlifetime;
+            float minRadius = 30 * this->m_maxlifetime;
+            float maxRadius = 120 * this->m_maxlifetime;
             //this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - (this->m_lifetime / this->m_maxlifetime))); //Linear
             this->m_collider->SetRadius(minRadius + (maxRadius - minRadius) * (1 - exp(-3 * (1 - (this->m_lifetime / this->m_maxlifetime)))));
         }
