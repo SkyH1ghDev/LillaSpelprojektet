@@ -13,7 +13,7 @@ void PawnTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& sh
     }
     if (hp <= 0 && isAlive)
     {
-        Sound::PlayOnce("buh.wav", 0.2f);
+        Sound::PlayOnce("pawn_death.wav", 0.2f);
         isAlive = false;
     }
 }

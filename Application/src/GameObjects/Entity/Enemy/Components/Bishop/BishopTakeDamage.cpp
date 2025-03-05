@@ -13,7 +13,7 @@ void BishopTakeDamage::TakeDamage(float& hp, float damage, bool& isAlive, bool& 
     }
     if (hp <= 0 && isAlive)
     {
-        Sound::PlayOnce("buh.wav", 0.2f);
+        Sound::PlayOnce("bishop_death.wav", 0.2f);
         isAlive = false;
     }
 }
