@@ -8,12 +8,12 @@ DisruptorCard::DisruptorCard()
 
 void DisruptorCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    AbilityManager::DisruptorWave(position, target, 0.5f);
+    AbilityManager::DisruptorWave(position, target, 0.6f);
 }
 
 void DisruptorCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    AbilityManager::DisruptorWave(position, target, 0.7f);
+    AbilityManager::DisruptorWave(position, target, 0.8f);
 }
 
 void DisruptorCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
