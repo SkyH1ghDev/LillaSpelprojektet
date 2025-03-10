@@ -33,6 +33,14 @@ void Game::SetupGame()
     std::shared_ptr<PlayerCardScript> pcs = std::make_shared<PlayerCardScript>();
 
     // Setup Start Scene
+    if (!SceneManager::RegisterScene("intro", GameSceneFactory::CreateScene(0)))
+    {
+        std::cerr << "Scene registration failed!\n";
+    }
+    std::shared_ptr<IScene> introScene = SceneManager::GetScene("intro");
+    SetupIntroScene(introScene);
+
+    // Setup Start Scene
     if (!SceneManager::RegisterScene("main", GameSceneFactory::CreateScene(0)))
     {
         std::cerr << "Scene registration failed!\n";
@@ -107,6 +115,19 @@ void Game::ResetGame()
         gameObject->OnStart();
     }
     SceneManager::LoadScene("main");
+}
+
+void Game::SetupIntroScene(std::shared_ptr<IScene> introScene)
+{
+    std::shared_ptr<IGameObject> logo = std::make_shared<Mesh>(MeshType::Background, "Logo", "caplog_logo.png");
+    std::shared_ptr<IGameObject> scene1 = std::make_shared<Mesh>(MeshType::Background, "Scene1", "intro_scene1.png");
+    std::shared_ptr<IGameObject> scene2 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2.png");
+    std::shared_ptr<IGameObject> scene3 = std::make_shared<Mesh>(MeshType::Background, "Scene3", "intro_scene3.png");
+
+	introScene->AddGameObject(logo);
+	introScene->AddGameObject(scene1);
+    introScene->AddGameObject(scene2);
+    introScene->AddGameObject(scene3);
 }
 
 void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)

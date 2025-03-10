@@ -40,7 +40,7 @@ private:
     void Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>& device, MW::ComPtr<ID3D11DeviceContext>& immediateContext, MW::ComPtr<IDXGISwapChain>& swapChain,
                MW::ComPtr<ID3D11Texture2D>& dsTexture, MW::ComPtr<ID3D11DepthStencilView>& dsView, MW::ComPtr<ID3D11RenderTargetView>& rtv, D3D11_VIEWPORT &viewport, const UINT &width,
                const UINT &height, HWND &window);
-
+    void LoadIntro(Window window, Renderer& renderer);
 private:
     SetupHelper m_setup;
     Game m_game;
