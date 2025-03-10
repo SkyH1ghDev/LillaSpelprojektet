@@ -20,7 +20,7 @@ void BishopAltAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 
         if (this->m_burstTimer >= this->m_burstCooldown && this->m_burstAmount > 0)
         {
-            ProjectileManager::AddProjectile(ProjectileType::BishopBall, position, finalDirection, 300.0f, 8, 1.0f);
+            ProjectileManager::AddProjectile(ProjectileType::BishopBall, position, finalDirection, 280.0f, 8, 1.0f);
             this->m_burstAmount -= 1;
             this->m_burstTimer = 0;
             if (this->m_burstAmount == 0)
