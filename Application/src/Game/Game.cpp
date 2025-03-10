@@ -127,7 +127,6 @@ void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IG
     startScene->AddGameObject(mouse);
     startScene->AddGameObject(playButton);
     startScene->AddGameObject(exitButton);
-
 }
 
 void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player, std::shared_ptr<IScript> playerCardScript, std::shared_ptr<IGameObject> cardDeck)

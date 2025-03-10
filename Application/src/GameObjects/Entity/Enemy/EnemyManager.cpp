@@ -354,6 +354,7 @@ void EnemyManager::UpdateEnemies()
                 DeckManager::ResetMenu(UpgradeType::AddCard, 1);
             }
         }
+
         Sound::SetMusic("prepare.wav", 0.4f);
         Sound::PlayMusic(true);
         
