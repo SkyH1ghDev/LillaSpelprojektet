@@ -4,6 +4,7 @@
 #include "StaticMesh.hpp"
 #include "SpEngine/Physics/PhysicsEngine.hpp"
 #include "StatSheet.hpp"
+#include "HealthBarManager.hpp"
 
 CollisionHandler::CollisionHandler(int tileSize) : tileSize(tileSize) {}
 
@@ -234,7 +235,8 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             
             if (player && staticMesh)
             {
-                //SOMETING?
+                StatSheet::IncreaseHealth(1);
+                HealthBarManager::DrawHearts();
             }
         }
     else if (objB->GetCollider()->GetLayer() == CollisionLayer::StaticMesh &&
@@ -245,7 +247,8 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
 
             if (player && staticMesh)
             {
-                //SOMETING?
+                StatSheet::IncreaseHealth(1);
+                HealthBarManager::DrawHearts();
             }
          }
 }

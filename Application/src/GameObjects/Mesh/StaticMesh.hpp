@@ -15,7 +15,9 @@ public:
     StaticMesh(StaticMesh&& other) noexcept = default;
     StaticMesh& operator=(StaticMesh&& other) noexcept = default;
 
-    StaticMesh(const std::string& name, const std::string& textureName, DX::XMFLOAT2 position, float radius, float aspectRatio);
+    StaticMesh(const std::string& name);
+
+    void Initialize(const std::string& textureName, DX::XMFLOAT2 position, float radius, float aspectRatio);
 
     void Update() override;
     void OnStart() override;

@@ -1,14 +1,18 @@
 #include "StaticMesh.hpp"
 #include <SpEngine/Physics/Collider.hpp>
 
-StaticMesh::StaticMesh(const std::string& name, const std::string& textureName, DX::XMFLOAT2 position, float radius, float aspectRatio) : IGameObject(name),
-m_radius(radius),
-m_aspectRatio(aspectRatio)
+StaticMesh::StaticMesh(const std::string& name) : IGameObject(name)
 {
+
+}
+
+void StaticMesh::Initialize(const std::string& textureName, DX::XMFLOAT2 position, float radius, float aspectRatio)
+{   
+    this->m_radius = radius;
+    this->m_aspectRatio = aspectRatio;
     this->m_position = position;
     this->m_textureName = textureName;
 }
-
 
 void StaticMesh::OnStart() {
     this->m_shouldRender = true;

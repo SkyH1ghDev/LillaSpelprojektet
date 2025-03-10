@@ -191,7 +191,7 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
 
     //StaicMeshes
     DX::XMFLOAT2 pos = { 150, 150 };
-    std::shared_ptr<IGameObject> testMesh = std::make_shared<StaticMesh>("testMesh", "Toe.png", pos, 6, 1);
+    std::shared_ptr<IGameObject> testMesh = std::make_shared<StaticMesh>("testMesh", "heart.png", pos, 6, 1);
     mainScene->AddGameObject(testMesh);
 }
 
