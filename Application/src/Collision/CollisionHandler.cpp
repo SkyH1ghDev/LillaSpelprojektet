@@ -1,7 +1,9 @@
 #include "CollisionHandler.hpp"
 #include "Entity.hpp"
 #include "Projectile.hpp"
+#include "StaticMesh.hpp"
 #include "SpEngine/Physics/PhysicsEngine.hpp"
+#include "StatSheet.hpp"
 
 CollisionHandler::CollisionHandler(int tileSize) : tileSize(tileSize) {}
 
@@ -224,4 +226,26 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
                 enemyProjectile->PerformHit();
             }
     }
+    else if (objA->GetCollider()->GetLayer() == CollisionLayer::StaticMesh &&
+        objB->GetCollider()->GetLayer() == CollisionLayer::Player)
+        {
+            auto player = std::dynamic_pointer_cast<Entity>(objA);
+            auto staticMesh = std::dynamic_pointer_cast<StaticMesh>(objB);
+            
+            if (player && staticMesh)
+            {
+                //SOMETING?
+            }
+        }
+    else if (objB->GetCollider()->GetLayer() == CollisionLayer::StaticMesh &&
+        objA->GetCollider()->GetLayer() == CollisionLayer::Player)
+        {
+            auto player = std::dynamic_pointer_cast<Entity>(objA);
+            auto staticMesh = std::dynamic_pointer_cast<StaticMesh>(objB);
+
+            if (player && staticMesh)
+            {
+                //SOMETING?
+            }
+         }
 }

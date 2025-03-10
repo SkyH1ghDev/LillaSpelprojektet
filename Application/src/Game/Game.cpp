@@ -24,6 +24,7 @@
 #include "GameObjects/Scripts/PauseControl.hpp"
 #include "DeckManager.hpp"
 #include "Numbers.hpp"
+#include "StaticMesh.hpp"
 
 void Game::SetupGame()
 {
@@ -187,7 +188,11 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);
-     
+
+    //StaicMeshes
+    DX::XMFLOAT2 pos = { 150, 150 };
+    std::shared_ptr<IGameObject> testMesh = std::make_shared<StaticMesh>("testMesh", "Toe.png", pos, 6, 1);
+    mainScene->AddGameObject(testMesh);
 }
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)

@@ -10,12 +10,13 @@ namespace DX = DirectX;
  */
 enum class CollisionLayer {
 	None = 0,
-	Player = 1 << 0,  // 00001 (1)
-	Enemy = 1 << 1,   // 00010 (2)
-	AllyProjectile = 1 << 2, // 00100 (4)
-	EnemyProjectile = 1 << 3,    // 01000 (8)
-	DisruptorWave = 1 << 4, // 10000
-	All = ~0          // 11111 (all bits set)
+	Player = 1 << 0,  // 000001 (1)
+	Enemy = 1 << 1,   // 000010 (2)
+	AllyProjectile = 1 << 2, // 000100 (4)
+	EnemyProjectile = 1 << 3,    // 001000 (8)
+	DisruptorWave = 1 << 4, // 010000
+	StaticMesh = 1 << 5, // 100000
+	All = ~0          // 111111 (all bits set)
 };
 
 class Collider
