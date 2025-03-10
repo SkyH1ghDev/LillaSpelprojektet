@@ -336,27 +336,30 @@ void EnemyManager::UpdateEnemies()
             Sound::PlayOnce("promoted.wav", 0.4f);
         }
         else
-            SceneManager::LoadScene("upgrade");
-        
-        if (SpMath::RandomInteger(0, 2) == 0)
-            DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
-        else
         {
-            if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 10)
-            {
-                if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 20)
-                    DeckManager::ResetMenu(UpgradeType::AddCard, 3);
-                else
-                    DeckManager::ResetMenu(UpgradeType::AddCard, 2);
-            }
+            SceneManager::LoadScene("upgrade");
+
+            if (SpMath::RandomInteger(0, 2) == 0)
+                DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
             else
             {
-                DeckManager::ResetMenu(UpgradeType::AddCard, 1);
+                if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 10)
+                {
+                    if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 20)
+                        DeckManager::ResetMenu(UpgradeType::AddCard, 3);
+                    else
+                        DeckManager::ResetMenu(UpgradeType::AddCard, 2);
+                }
+                else
+                {
+                    DeckManager::ResetMenu(UpgradeType::AddCard, 1);
+                }
             }
-        }
 
-        Sound::SetMusic("prepare.wav", 0.4f);
-        Sound::PlayMusic(true);
+            Sound::SetMusic("prepare.wav", 0.4f);
+            Sound::PlayMusic(true);
+        }
+            
         
         m_state = RoundState_WaveStarted;
         m_pointBudget += SpMath::RandomInteger<int>(1, 4);
