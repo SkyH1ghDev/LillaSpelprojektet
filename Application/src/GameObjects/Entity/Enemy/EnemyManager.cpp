@@ -43,22 +43,22 @@ std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawn
     
     // Round 3
     {
+        {EntityType::Pawn, 300},
+        {EntityType::PawnAlt, 300}, 
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 00},
+        {EntityType::RookAlt, 00}
+    },
+    
+    // Round 4
+    {
         {EntityType::Pawn, 250},
         {EntityType::PawnAlt, 250},
         {EntityType::Bishop, 200},
         {EntityType::BishopAlt, 200},
         {EntityType::Rook, 50},
         {EntityType::RookAlt, 50}
-    },
-    
-    // Round 4
-    {
-        {EntityType::Pawn, 200},
-        {EntityType::PawnAlt, 200},
-        {EntityType::Bishop, 200},
-        {EntityType::BishopAlt, 200},
-        {EntityType::Rook, 100},
-        {EntityType::RookAlt, 100}
     },
     
     // Round 5
@@ -83,42 +83,42 @@ std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawn
     
     // Round 7
     {
-        {EntityType::Pawn, 50},
-        {EntityType::PawnAlt, 50},
+        {EntityType::Pawn, 400},
+        {EntityType::PawnAlt, 400},
+        {EntityType::Bishop, 0},
+        {EntityType::BishopAlt, 0},
+        {EntityType::Rook, 100},
+        {EntityType::RookAlt, 100}
+    },
+    
+    // Round 8
+    {
+        {EntityType::Pawn, 100},
+        {EntityType::PawnAlt, 100},
         {EntityType::Bishop, 300},
         {EntityType::BishopAlt, 300},
         {EntityType::Rook, 150},
         {EntityType::RookAlt, 150}
     },
     
-    // Round 8
-    {
-        {EntityType::Pawn, 50},
-        {EntityType::PawnAlt, 50},
-        {EntityType::Bishop, 250},
-        {EntityType::BishopAlt, 250},
-        {EntityType::Rook, 200},
-        {EntityType::RookAlt, 200}
-    },
-    
     // Round 9
     {
-        {EntityType::Pawn, 0},
-        {EntityType::PawnAlt, 0},
-        {EntityType::Bishop, 250},
-        {EntityType::BishopAlt, 250},
-        {EntityType::Rook, 250},
-        {EntityType::RookAlt, 250}
+        {EntityType::Pawn, 150},
+        {EntityType::PawnAlt, 150},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 150},
+        {EntityType::RookAlt, 150}
     },
     
     // Round 10
     {
-        {EntityType::Pawn, 0},
-        {EntityType::PawnAlt, 0},
-        {EntityType::Bishop, 150},
-        {EntityType::BishopAlt, 150},
-        {EntityType::Rook, 350},
-        {EntityType::RookAlt, 350}
+        {EntityType::Pawn, 100},
+        {EntityType::PawnAlt, 100},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 200},
+        {EntityType::RookAlt, 200}
     }
 };
 
@@ -133,29 +133,26 @@ std::vector<std::uint8_t> EnemyManager::m_numOfEnemiesPerWave =
     // Round 3
     3, 3, 4,
     
-    // Round 3
+    // Round 4
     4, 4, 5,
     
-    // Round 4
-    6, 6, 6,
-    
     // Round 5
-    6, 6, 7,
+    5, 5, 5,
     
     // Round 6
-    7, 7, 7,
+    5, 6, 6,
     
     // Round 7
-    7, 7, 8,
+    7, 7, 7,
     
     // Round 8
-    8, 9, 9,
+    6, 6, 6,
     
     // Round 9
-    10, 10, 11,
+    6, 6, 6,
     
     // Round 10
-    11, 12, 14
+    7, 7, 7
 };
 
 EnemyManager::EnemyManager(const std::shared_ptr<IGameObject>& player)
