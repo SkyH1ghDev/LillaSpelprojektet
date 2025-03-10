@@ -222,7 +222,11 @@ bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistan
 void EnemyManager::SpawnEnemies()
 {
     std::shared_ptr<IScene> testScene = SceneManager::GetCurrentScene();
-    std::vector<EntityType> enemiesToSpawn = CalculateEnemiesToSpawn(m_waveNumber);
+    std::vector<EntityType> enemiesToSpawn;
+    if (m_waveNumber > 29)
+        enemiesToSpawn = CalculateEnemiesToSpawn(29);
+    else
+        enemiesToSpawn = CalculateEnemiesToSpawn(m_waveNumber);
 
     DX::XMFLOAT2 playerPos = m_player->GetPosition();
     
@@ -328,7 +332,9 @@ void EnemyManager::UpdateEnemies()
         //Start upgrade 
         SceneManager::UnloadScene();
         ProjectileManager::Reset();
+
         EnemyManager::m_roundCount += 1;
+
         if (EnemyManager::m_roundCount > 10)
         {
             SceneManager::LoadScene("victory");
@@ -382,6 +388,7 @@ void EnemyManager::UpdateEnemies()
 
         if (m_enemies.empty())
         {
+            
             SpawnEnemies();
             
             if (m_waveNumber % 3 == 0 && m_waveNumber != 0)
@@ -391,6 +398,7 @@ void EnemyManager::UpdateEnemies()
 
             ++m_waveNumber;
         }
+
         break;
     }
 }
