@@ -62,6 +62,8 @@ public:
     void SetIsStunned(bool isStunned);
     bool IsStunned() const;
 
+    bool HasIFrame();
+
     void SetState(EntityState state);
     EntityState GetState();
 

@@ -128,7 +128,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         auto player = std::dynamic_pointer_cast<Entity>(objA);
         auto enemy = std::dynamic_pointer_cast<Entity>(objB);
 
-        if (player && enemy && enemy->GetState() != EntityState::Dying && enemy->GetState() != EntityState::Spawning)
+        if (player && enemy && enemy->GetState() != EntityState::Dying && enemy->GetState() != EntityState::Spawning && !player->HasIFrame())
         {
             player->PerformTakeDamage(1);
 
@@ -165,7 +165,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         auto player = std::dynamic_pointer_cast<Entity>(objB);
         auto enemy = std::dynamic_pointer_cast<Entity>(objA);
 
-        if (player && enemy && enemy->GetState() != EntityState::Dying && enemy->GetState() != EntityState::Spawning)
+        if (player && enemy && enemy->GetState() != EntityState::Dying && enemy->GetState() != EntityState::Spawning && !player->HasIFrame())
         {
             player->PerformTakeDamage(1);
 

@@ -172,6 +172,8 @@ void Entity::Update()
         {
             m_isAnimating = false;
             this->m_dashTimer = 0;
+            if(this->m_state != EntityState::TakingDamage)
+                this->m_iFrame = false;
             this->m_state = EntityState::Base;
         }
 
@@ -219,12 +221,14 @@ void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
         {
             this->m_dashTimer = 0.12f;
             this->m_isDashing = true;
+            this->m_iFrame = true;
         }
         
         m_position = m_move->Move(m_position, direction, this->m_isDashing, this->m_collider, this->m_isStunned);
 
         if (m_isDashing)
             this->m_state = EntityState::Dashing;
+
     }
 }
 
@@ -336,6 +340,11 @@ void Entity::SetIsStunned(bool isStunned)
 bool Entity::IsStunned() const
 {
     return this->m_isStunned;
+}
+
+bool Entity::HasIFrame()
+{
+    return this->m_iFrame;
 }
 
 void Entity::SetState(EntityState state)
