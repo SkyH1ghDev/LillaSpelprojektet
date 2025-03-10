@@ -290,7 +290,7 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 		case CardType::RangeBuff: //RangeBuff
 			m_cardDisplay.at(i)->SetTexture("range_buff_lvl" + std::to_string(level) + ".png");
 			break;
-		case CardType::AttackSpeedBuff: //RangeBuff
+		case CardType::AttackSpeedBuff: //Attack speed buff
 			m_cardDisplay.at(i)->SetTexture("attack_speed_buff_lvl" + std::to_string(level) + ".png");
 			break;
 		default: //Nothing
