@@ -15,7 +15,7 @@ enum class CollisionLayer {
 	AllyProjectile = 1 << 2, // 000100 (4)
 	EnemyProjectile = 1 << 3,    // 001000 (8)
 	DisruptorWave = 1 << 4, // 010000
-	StaticMesh = 1 << 5, // 100000
+	PickUps = 1 << 5, // 100000
 	All = ~0          // 111111 (all bits set)
 };
 

@@ -1,7 +1,7 @@
 #include "CollisionHandler.hpp"
 #include "Entity.hpp"
 #include "Projectile.hpp"
-#include "StaticMesh.hpp"
+#include "PickUps.hpp"
 #include "SpEngine/Physics/PhysicsEngine.hpp"
 #include "StatSheet.hpp"
 #include "HealthBarManager.hpp"
@@ -227,28 +227,30 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
                 enemyProjectile->PerformHit();
             }
     }
-    else if (objA->GetCollider()->GetLayer() == CollisionLayer::StaticMesh &&
+    else if (objA->GetCollider()->GetLayer() == CollisionLayer::PickUps &&
         objB->GetCollider()->GetLayer() == CollisionLayer::Player)
         {
             auto player = std::dynamic_pointer_cast<Entity>(objA);
-            auto staticMesh = std::dynamic_pointer_cast<StaticMesh>(objB);
+            auto pickUp = std::dynamic_pointer_cast<PickUps>(objB);
             
-            if (player && staticMesh)
+            if (player && pickUp)
             {
                 StatSheet::IncreaseHealth(1);
                 HealthBarManager::DrawHearts();
+                pickUp->Reset();
             }
         }
-    else if (objB->GetCollider()->GetLayer() == CollisionLayer::StaticMesh &&
+    else if (objB->GetCollider()->GetLayer() == CollisionLayer::PickUps &&
         objA->GetCollider()->GetLayer() == CollisionLayer::Player)
         {
             auto player = std::dynamic_pointer_cast<Entity>(objA);
-            auto staticMesh = std::dynamic_pointer_cast<StaticMesh>(objB);
+            auto pickUp = std::dynamic_pointer_cast<PickUps>(objB);
 
-            if (player && staticMesh)
+            if (player && pickUp)
             {
                 StatSheet::IncreaseHealth(1);
                 HealthBarManager::DrawHearts();
+                pickUp->Reset();
             }
          }
 }

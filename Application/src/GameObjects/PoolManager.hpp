@@ -24,6 +24,8 @@
 #include "FireBallFactory.hpp"
 #include "PawnAltFactory.hpp"
 
+#include "PickUps.hpp"
+
 template <typename T, typename Type>
 class PoolManager {
 public:
@@ -251,6 +253,21 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 break;
         }
     }
-
+    else if constexpr (std::is_same_v<Type, PickUpType>)
+    {
+        switch (type)
+        {
+            case PickUpType::Base:
+            {
+                obj = std::make_shared<PickUps>(PickUpType::Base, "PickUp");
+                break;
+            }
+            default:
+            {
+                obj = std::make_shared<PickUps>(PickUpType::Base, "PickUp");
+                break;
+            }
+        }
+    }
     return obj;
 }
