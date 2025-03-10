@@ -25,10 +25,16 @@ project "Application"
     filter "configurations:release"
         
         gCopyPath = "\"" .. gameCopyPath .. "\""
+
+        resourcesPath = "\"" .. gameCopyPath .. "/Application/Resources\""
+        exePath = "\"" .. gameCopyPath .. "/Exe\""
+
         postbuildcommands{
             "{MKDIR} " .. gCopyPath,
-            "{COPY} ../Application/Resources " .. gCopyPath,
-            "{COPY} \"" .. targetBuildPath .. "/Application/Application.exe\" " .. gCopyPath
+            "{MKDIR} " .. resourcesPath,
+            "{MKDIR} " .. exePath,
+            "{COPY} ../Application/Resources " .. resourcesPath,
+            "{COPY} \"" .. targetBuildPath .. "/Application/Application.exe\" " .. exePath
         }
 
 
