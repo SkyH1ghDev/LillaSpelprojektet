@@ -1,5 +1,6 @@
 #include "PickUps.hpp"
 #include <SpEngine/Physics/Collider.hpp>
+#include "SpEngine/Clock/Clock.hpp"
 
 PickUps::PickUps(const PickUpType& type, const std::string& name) : IGameObject(name),
 m_type(type)
@@ -21,6 +22,7 @@ void PickUps::Initialize(const std::string& textureName, DX::XMFLOAT2 position, 
     this->m_aspectRatio = aspectRatio;
     this->m_position = position;
     this->m_textureName = textureName;
+    this->m_timer = 10;
     this->m_collider = std::make_unique<Collider>(Collider(this->m_position, this->m_radius, this->m_aspectRatio, CollisionLayer::PickUps, static_cast<CollisionLayer>(
         static_cast<int>(CollisionLayer::PickUps) | static_cast<int>(CollisionLayer::Player))));
 }
@@ -37,7 +39,11 @@ void PickUps::OnStart() {
 }
 
 void PickUps::Update() {
-
+    this->m_timer -= Clock::GetDeltaTime();
+    if (this->m_timer <= 0)
+    {
+        Reset();
+    }
 }
 
 void PickUps::Reset()

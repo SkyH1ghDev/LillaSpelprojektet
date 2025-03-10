@@ -28,5 +28,6 @@ public:
 private:
     float m_radius;
     float m_aspectRatio;
+    float m_timer;
     PickUpType m_type;
 };
