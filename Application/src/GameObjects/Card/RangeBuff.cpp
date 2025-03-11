@@ -1,5 +1,6 @@
 #include "card.hpp"
 #include "StatSheet.hpp"
+#include "AbilityManager.hpp"
 
 RangeBuffCard::RangeBuffCard()
 {
@@ -9,6 +10,7 @@ RangeBuffCard::RangeBuffCard()
 void RangeBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
     StatSheet::CreateEffect(StatType::ShotSpeed, 5, 100);
+    AbilityManager::longEffect(position, target, 1, 5, 0, 0);
 }
 
 void RangeBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)

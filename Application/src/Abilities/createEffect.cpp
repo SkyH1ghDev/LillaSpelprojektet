@@ -15,6 +15,8 @@ void AbilityManager::longEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, s
 {
     // Convert direction to XMVECTOR for calculations
 
+    ProjectileManager::AddProjectile(ProjectileType::Longshot, DX::XMFLOAT2(position.x, position.y), direction, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
+
 }
 
 
