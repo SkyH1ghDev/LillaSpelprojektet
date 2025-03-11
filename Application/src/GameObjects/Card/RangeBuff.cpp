@@ -1,6 +1,7 @@
 #include "card.hpp"
 #include "StatSheet.hpp"
 #include "AbilityManager.hpp"
+#include "playerinfo.hpp"
 
 RangeBuffCard::RangeBuffCard()
 {
@@ -9,18 +10,23 @@ RangeBuffCard::RangeBuffCard()
 
 void RangeBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    DirectX::XMFLOAT2 dir = { 1,0 };
     StatSheet::CreateEffect(StatType::ShotSpeed, 5, 100);
-    AbilityManager::longEffect(position, target, 1, 5, 0, 0);
+    AbilityManager::longEffect(position, dir, 1, 5, 0, 0);
 }
 
 void RangeBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    DirectX::XMFLOAT2 dir = { 1,0 };
     StatSheet::CreateEffect(StatType::ShotSpeed, 5, 225);
+    AbilityManager::longEffect(position, dir, 1, 5, 0, 0);
 }
 
 void RangeBuffCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    DirectX::XMFLOAT2 dir = { 1,0 };
     StatSheet::CreateEffect(StatType::ShotSpeed, 5, 500);
+    AbilityManager::longEffect(position, dir, 1, 5, 0, 0);
 }
 
 void RangeBuffCard::SetCardTexture(size_t cardLevel)
