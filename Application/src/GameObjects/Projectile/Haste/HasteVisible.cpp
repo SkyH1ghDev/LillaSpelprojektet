@@ -4,7 +4,7 @@ void HasteVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Projecti
 {
     layer = 0.5 + 0.3 * position.y / 360;
     scale = 1.0f;
-    texture = "longshot_effect";
+    texture = "haste_effect";
     hasDeathAnimation = false;
 }
 
