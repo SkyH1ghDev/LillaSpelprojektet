@@ -9,7 +9,7 @@ AttackSpeedBuffCard::AttackSpeedBuffCard()
 
 void AttackSpeedBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    float lifetime = 5;
+    float lifetime = 7;
     DirectX::XMFLOAT2 dir = { 1,0 };
     AbilityManager::HasteEffect(position, dir, 1, lifetime, 0, 0);
     float currentAtkSpd = StatSheet::GetShotDelay();
@@ -22,7 +22,7 @@ void AttackSpeedBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 targe
 
 void AttackSpeedBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    float lifetime = 5;
+    float lifetime = 7;
     DirectX::XMFLOAT2 dir = { 1,0 };
     AbilityManager::HasteEffect(position, dir, 1, lifetime, 0, 0);
 
@@ -37,8 +37,7 @@ void AttackSpeedBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 targe
 
 void AttackSpeedBuffCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-
-    float lifetime = 5;
+    float lifetime = 7;
     DirectX::XMFLOAT2 dir = { 1,0 };
     AbilityManager::HasteEffect(position, dir, 1, lifetime, 0, 0);
     float currentAtkSpd = StatSheet::GetShotDelay();
