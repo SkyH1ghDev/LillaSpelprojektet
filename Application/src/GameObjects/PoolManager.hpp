@@ -23,6 +23,10 @@
 #include "SniperBulletFactory.hpp"
 #include "FireBallFactory.hpp"
 #include "PawnAltFactory.hpp"
+#include "LongshotFactory.hpp"
+#include "HasteFactory.hpp"
+
+#include "PickUps.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -240,6 +244,20 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 break;
             }
 
+            case ProjectileType::Longshot:
+            {
+                LongshotFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::Haste:
+            {
+                HasteFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
             case ProjectileType::FireBall:
             {
                 FireBallFactory factory;
@@ -251,6 +269,21 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 break;
         }
     }
-
+    else if constexpr (std::is_same_v<Type, PickUpType>)
+    {
+        switch (type)
+        {
+            case PickUpType::Base:
+            {
+                obj = std::make_shared<PickUps>(PickUpType::Base, "PickUp");
+                break;
+            }
+            default:
+            {
+                obj = std::make_shared<PickUps>(PickUpType::Base, "PickUp");
+                break;
+            }
+        }
+    }
     return obj;
 }

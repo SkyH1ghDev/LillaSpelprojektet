@@ -8,15 +8,15 @@ ShotgunCard::ShotgunCard()
 }
 
 void ShotgunCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
-    AbilityManager::Shotgun(position, target, 7, 0.4f, 225, 10);
+    AbilityManager::Shotgun(position, target, 8, 0.4f, 225, 10);
 }
 
 void ShotgunCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
-    AbilityManager::Shotgun(position, target, 10, 0.4f, 225, 9);
+    AbilityManager::Shotgun(position, target, 11, 0.4f, 225, 9);
 }
 
 void ShotgunCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) {
-    AbilityManager::Shotgun(position, target, 12, 0.4f, 225, 7);
+    AbilityManager::Shotgun(position, target, 14, 0.4f, 225, 7);
 }
 
 void ShotgunCard::SetCardTexture(size_t cardLevel)

@@ -10,6 +10,8 @@ enum class ProjectileType {
     ScatterPellet,
     SniperBullet,
     DisruptorWave,
+    Longshot,
+    Haste,
     FireBall
 };
 
@@ -53,6 +55,7 @@ public:
 
     float GetDamage() const;
     bool GetHasHit() const;
+    ProjectileState GetState() const;
 
 private:
     std::shared_ptr<IProjectileMove> m_move;

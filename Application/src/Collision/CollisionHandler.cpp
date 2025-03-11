@@ -1,7 +1,10 @@
 #include "CollisionHandler.hpp"
 #include "Entity.hpp"
 #include "Projectile.hpp"
+#include "PickUps.hpp"
 #include "SpEngine/Physics/PhysicsEngine.hpp"
+#include "StatSheet.hpp"
+#include "HealthBarManager.hpp"
 
 CollisionHandler::CollisionHandler(int tileSize) : tileSize(tileSize) {}
 
@@ -96,7 +99,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         auto projectile = std::dynamic_pointer_cast<Projectile>(objB);
         auto entity = std::dynamic_pointer_cast<Entity>(objA);
 
-        if (projectile && entity) {
+        if (projectile && entity && entity->GetState() != EntityState::Dying) {
             // Call the Perform functions
             if (!projectile->GetHasHit())
             {
@@ -112,7 +115,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         auto projectile = std::dynamic_pointer_cast<Projectile>(objA);
         auto entity = std::dynamic_pointer_cast<Entity>(objB);
 
-        if (projectile && entity) {
+        if (projectile && entity && entity->GetState() != EntityState::Dying) {
             // Call the Perform functions
             if (!projectile->GetHasHit())
             {
@@ -224,4 +227,30 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
                 enemyProjectile->PerformHit();
             }
     }
+    else if (objA->GetCollider()->GetLayer() == CollisionLayer::PickUps &&
+        objB->GetCollider()->GetLayer() == CollisionLayer::Player)
+        {
+            auto player = std::dynamic_pointer_cast<Entity>(objA);
+            auto pickUp = std::dynamic_pointer_cast<PickUps>(objB);
+            
+            if (player && pickUp && pickUp->IsAlive())
+            {
+                StatSheet::IncreaseHealth(1);
+                HealthBarManager::DrawHearts();
+                pickUp->Reset();
+            }
+        }
+    else if (objB->GetCollider()->GetLayer() == CollisionLayer::PickUps &&
+        objA->GetCollider()->GetLayer() == CollisionLayer::Player)
+        {
+            auto player = std::dynamic_pointer_cast<Entity>(objA);
+            auto pickUp = std::dynamic_pointer_cast<PickUps>(objB);
+
+            if (player && pickUp && pickUp->IsAlive())
+            {
+                StatSheet::IncreaseHealth(1);
+                HealthBarManager::DrawHearts();
+                pickUp->Reset();
+            }
+         }
 }

@@ -7,7 +7,9 @@
 #include "ManaBarManager.hpp"
 #include <SpEngine/Audio/Sound.hpp>
 #include <SpEngine/Manager/SceneManager.hpp>
+#include "PickUpsManager.hpp"
 
+#include <SpEngine/Math/SpMath.hpp>
 
 Entity::Entity
 (
@@ -150,6 +152,10 @@ void Entity::Update()
                 SetShouldRender(false);
                 this->m_isAlive = false;
                 this->m_isActive = false;
+                if (SpMath::RandomInteger(10, 10) == 10)
+                {
+                    PickUpsManager::AddPickUp(PickUpType::Base, "heart.png", this->m_position, 6.0, 1.0);
+                }
             }
             else
             {

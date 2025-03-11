@@ -14,6 +14,11 @@ DX::XMFLOAT2 RookMove::Move(const DX::XMFLOAT2& position, const DX::XMFLOAT2& di
         directionXMVector = DX::XMVector2Normalize(directionXMVector);
     }
 
+    if (isDashing && !dashInput)
+    {
+        isDashing = false;
+        dashSpeed = 0.0f;
+    }
     // Continue dashing until a wall is hit
     if (isDashing) {
         // Apply dash movement

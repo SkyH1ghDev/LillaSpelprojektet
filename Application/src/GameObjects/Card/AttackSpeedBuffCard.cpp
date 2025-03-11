@@ -1,5 +1,6 @@
 #include "card.hpp"
 #include "StatSheet.hpp"
+#include "AbilityManager.hpp"
 
 AttackSpeedBuffCard::AttackSpeedBuffCard()
 {
@@ -8,29 +9,43 @@ AttackSpeedBuffCard::AttackSpeedBuffCard()
 
 void AttackSpeedBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    float lifetime = 7;
+    DirectX::XMFLOAT2 dir = { 1,0 };
+    AbilityManager::HasteEffect(position, dir, 1, lifetime, 0, 0);
     float currentAtkSpd = StatSheet::GetShotDelay();
     float maxAtkSpd = 0.5f;
 
-    StatSheet::CreateEffect(StatType::ShotDelay, 5, maxAtkSpd - currentAtkSpd);
-    StatSheet::CreateEffect(StatType::ShotDelay, 5, -0.1f);
+
+    StatSheet::CreateEffect(StatType::ShotDelay, lifetime, maxAtkSpd - currentAtkSpd);
+    StatSheet::CreateEffect(StatType::ShotDelay, lifetime, -0.1f);
 }
 
 void AttackSpeedBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    float lifetime = 7;
+    DirectX::XMFLOAT2 dir = { 1,0 };
+    AbilityManager::HasteEffect(position, dir, 1, lifetime, 0, 0);
+
     float currentAtkSpd = StatSheet::GetShotDelay();
     float maxAtkSpd = 0.5f;
 
-    StatSheet::CreateEffect(StatType::ShotDelay, 5, maxAtkSpd - currentAtkSpd);
-    StatSheet::CreateEffect(StatType::ShotDelay, 5, -0.2f);
+
+    StatSheet::CreateEffect(StatType::ShotDelay, lifetime, maxAtkSpd - currentAtkSpd);
+    StatSheet::CreateEffect(StatType::ShotDelay, lifetime, -0.2f);
+
 }
 
 void AttackSpeedBuffCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+    float lifetime = 7;
+    DirectX::XMFLOAT2 dir = { 1,0 };
+    AbilityManager::HasteEffect(position, dir, 1, lifetime, 0, 0);
     float currentAtkSpd = StatSheet::GetShotDelay();
     float maxAtkSpd = 0.5f;
 
-    StatSheet::CreateEffect(StatType::ShotDelay, 5, maxAtkSpd - currentAtkSpd);
-    StatSheet::CreateEffect(StatType::ShotDelay, 5, -0.3f);
+
+    StatSheet::CreateEffect(StatType::ShotDelay, lifetime, maxAtkSpd - currentAtkSpd);
+    StatSheet::CreateEffect(StatType::ShotDelay, lifetime, -0.3f);
 }
 
 void AttackSpeedBuffCard::SetCardTexture(size_t cardLevel)

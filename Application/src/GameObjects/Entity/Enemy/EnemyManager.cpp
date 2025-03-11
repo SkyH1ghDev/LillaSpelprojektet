@@ -33,70 +33,70 @@ std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawn
     
     // Round 2
     {
-        {EntityType::Pawn, 350},
-        {EntityType::PawnAlt, 350},
-        {EntityType::Bishop, 150},
-        {EntityType::BishopAlt, 150},
+        {EntityType::Pawn, 400},
+        {EntityType::PawnAlt, 400},
+        {EntityType::Bishop, 100},
+        {EntityType::BishopAlt, 100},
         {EntityType::Rook, 0},
         {EntityType::RookAlt, 0}
     },
     
     // Round 3
     {
-        {EntityType::Pawn, 300},
-        {EntityType::PawnAlt, 300}, 
-        {EntityType::Bishop, 200},
-        {EntityType::BishopAlt, 200},
+        {EntityType::Pawn, 350},
+        {EntityType::PawnAlt, 350}, 
+        {EntityType::Bishop, 150},
+        {EntityType::BishopAlt, 150},
         {EntityType::Rook, 00},
         {EntityType::RookAlt, 00}
     },
     
     // Round 4
     {
-        {EntityType::Pawn, 250},
-        {EntityType::PawnAlt, 250},
-        {EntityType::Bishop, 200},
-        {EntityType::BishopAlt, 200},
+        {EntityType::Pawn, 275},
+        {EntityType::PawnAlt, 275},
+        {EntityType::Bishop, 175},
+        {EntityType::BishopAlt, 175},
         {EntityType::Rook, 50},
         {EntityType::RookAlt, 50}
     },
     
     // Round 5
     {
-        {EntityType::Pawn, 150},
-        {EntityType::PawnAlt, 150},
-        {EntityType::Bishop, 250},
-        {EntityType::BishopAlt, 250},
-        {EntityType::Rook, 100},
-        {EntityType::RookAlt, 100}
+        {EntityType::Pawn, 225},
+        {EntityType::PawnAlt, 225},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 75},
+        {EntityType::RookAlt, 75}
     },
     
     // Round 6
     {
-        {EntityType::Pawn, 100},
-        {EntityType::PawnAlt, 100},
-        {EntityType::Bishop, 250},
-        {EntityType::BishopAlt, 250},
-        {EntityType::Rook, 150},
-        {EntityType::RookAlt, 150}
-    },
-    
-    // Round 7
-    {
-        {EntityType::Pawn, 400},
-        {EntityType::PawnAlt, 400},
-        {EntityType::Bishop, 0},
-        {EntityType::BishopAlt, 0},
+        {EntityType::Pawn, 200},
+        {EntityType::PawnAlt, 200},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
         {EntityType::Rook, 100},
         {EntityType::RookAlt, 100}
     },
     
+    // Round 7
+    {
+        {EntityType::Pawn, 175},
+        {EntityType::PawnAlt, 175},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
+        {EntityType::Rook, 125},
+        {EntityType::RookAlt, 125}
+    },
+    
     // Round 8
     {
-        {EntityType::Pawn, 100},
-        {EntityType::PawnAlt, 100},
-        {EntityType::Bishop, 300},
-        {EntityType::BishopAlt, 300},
+        {EntityType::Pawn, 150},
+        {EntityType::PawnAlt, 150},
+        {EntityType::Bishop, 200},
+        {EntityType::BishopAlt, 200},
         {EntityType::Rook, 150},
         {EntityType::RookAlt, 150}
     },
@@ -137,19 +137,19 @@ std::vector<std::uint8_t> EnemyManager::m_numOfEnemiesPerWave =
     4, 4, 5,
     
     // Round 5
-    5, 5, 5,
+    4, 5, 5,
     
     // Round 6
-    5, 6, 6,
+    5, 5, 6,
     
     // Round 7
-    7, 7, 7,
+    5, 6, 6,
     
     // Round 8
-    6, 6, 6,
+    6, 6, 7,
     
     // Round 9
-    6, 6, 6,
+    6, 7, 7,
     
     // Round 10
     7, 7, 7
@@ -222,7 +222,11 @@ bool EnemyManager::IsTooCloseToOtherEnemies(DX::XMFLOAT2 newPos, float minDistan
 void EnemyManager::SpawnEnemies()
 {
     std::shared_ptr<IScene> testScene = SceneManager::GetCurrentScene();
-    std::vector<EntityType> enemiesToSpawn = CalculateEnemiesToSpawn(m_waveNumber);
+    std::vector<EntityType> enemiesToSpawn;
+    if (m_waveNumber > 29)
+        enemiesToSpawn = CalculateEnemiesToSpawn(29);
+    else
+        enemiesToSpawn = CalculateEnemiesToSpawn(m_waveNumber);
 
     DX::XMFLOAT2 playerPos = m_player->GetPosition();
     
@@ -328,35 +332,40 @@ void EnemyManager::UpdateEnemies()
         //Start upgrade 
         SceneManager::UnloadScene();
         ProjectileManager::Reset();
+
         EnemyManager::m_roundCount += 1;
-        if (EnemyManager::m_roundCount > 10)
+
+        if (EnemyManager::m_roundCount > 8)
         {
             SceneManager::LoadScene("victory");
             Sound::SetMusic("menu_theme.wav", 0.4f);
             Sound::PlayOnce("promoted.wav", 0.4f);
         }
         else
-            SceneManager::LoadScene("upgrade");
-        
-        if (SpMath::RandomInteger(0, 2) == 0)
-            DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
-        else
         {
-            if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 10)
-            {
-                if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 20)
-                    DeckManager::ResetMenu(UpgradeType::AddCard, 3);
-                else
-                    DeckManager::ResetMenu(UpgradeType::AddCard, 2);
-            }
+            SceneManager::LoadScene("upgrade");
+
+            if (SpMath::RandomInteger(0, 2) == 0)
+                DeckManager::ResetMenu(UpgradeType::LevelCard, 1);
             else
             {
-                DeckManager::ResetMenu(UpgradeType::AddCard, 1);
+                if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 10)
+                {
+                    if (SpMath::RandomInteger(0, 1) == 0 && m_waveNumber > 20)
+                        DeckManager::ResetMenu(UpgradeType::AddCard, 3);
+                    else
+                        DeckManager::ResetMenu(UpgradeType::AddCard, 2);
+                }
+                else
+                {
+                    DeckManager::ResetMenu(UpgradeType::AddCard, 1);
+                }
             }
-        }
 
-        Sound::SetMusic("prepare.wav", 0.4f);
-        Sound::PlayMusic(true);
+            Sound::SetMusic("prepare.wav", 0.4f);
+            Sound::PlayMusic(true);
+        }
+            
         
         m_state = RoundState_WaveStarted;
         m_pointBudget += SpMath::RandomInteger<int>(1, 4);
@@ -379,6 +388,7 @@ void EnemyManager::UpdateEnemies()
 
         if (m_enemies.empty())
         {
+            
             SpawnEnemies();
             
             if (m_waveNumber % 3 == 0 && m_waveNumber != 0)
@@ -388,6 +398,7 @@ void EnemyManager::UpdateEnemies()
 
             ++m_waveNumber;
         }
+
         break;
     }
 }
