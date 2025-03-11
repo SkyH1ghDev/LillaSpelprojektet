@@ -23,6 +23,8 @@
 #include "SniperBulletFactory.hpp"
 #include "FireBallFactory.hpp"
 #include "PawnAltFactory.hpp"
+#include "LongshotFactory.hpp"
+#include "HasteFactory.hpp"
 
 #include "PickUps.hpp"
 
@@ -238,6 +240,20 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case ProjectileType::DisruptorWave:
             {
                 DisruptorWaveFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::Longshot:
+            {
+                LongshotFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::Haste:
+            {
+                HasteFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }
