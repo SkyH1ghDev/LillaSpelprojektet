@@ -8,17 +8,17 @@ RangeBuffCard::RangeBuffCard()
 
 void RangeBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    StatSheet::CreateEffect(StatType::ShotSpeed, 5, 100);
+    StatSheet::CreateEffect(StatType::ShotSpeed, 7, 100);
 }
 
 void RangeBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    StatSheet::CreateEffect(StatType::ShotSpeed, 5, 225);
+    StatSheet::CreateEffect(StatType::ShotSpeed, 7, 225);
 }
 
 void RangeBuffCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    StatSheet::CreateEffect(StatType::ShotSpeed, 5, 500);
+    StatSheet::CreateEffect(StatType::ShotSpeed, 7, 500);
 }
 
 void RangeBuffCard::SetCardTexture(size_t cardLevel)

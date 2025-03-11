@@ -24,6 +24,7 @@
 #include "GameObjects/Scripts/PauseControl.hpp"
 #include "DeckManager.hpp"
 #include "Numbers.hpp"
+#include "PickUps.hpp"
 
 void Game::SetupGame()
 {
@@ -187,7 +188,9 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
     ManaBarManager::RefillManaShard(5);
-     
+
+    //StaicMeshes
+    PoolManager<PickUps, PickUpType>::Initialize(PickUpType::Base, 10);
 }
 
 void Game::SetupPauseScene(std::shared_ptr<IScene> pauseScene)
