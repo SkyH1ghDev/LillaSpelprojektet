@@ -10,6 +10,8 @@ enum class ProjectileType {
     ScatterPellet,
     SniperBullet,
     DisruptorWave,
+    Longshot,
+    Haste,
     FireBall
 };
 
