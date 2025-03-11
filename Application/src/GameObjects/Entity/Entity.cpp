@@ -41,10 +41,12 @@ void Entity::Initialize()
     this->m_isAlive = true;
     //PerformAttack();
     this->m_isActive = true;
+    this->m_damageTimer = 0;
     this->m_takeDamage->SetHealth(this->m_hp);
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     this->m_isDashing = false;
+    this->m_isStunned = false;
 
     if (!this->m_collider)
         PerformSetCollider();
@@ -92,6 +94,12 @@ void Entity::OnStart()
     this->CenterOrigin(true);
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     this->m_stunnedTimer = 0.9;
+    this->m_state = EntityState::Spawning;
+    this->m_takeDamage->SetHealth(this->m_hp);
+    this->m_animationTime = 0;
+    this->m_iFrame = false;
+    this->m_isDashing = false;
+    this->m_isStunned = false;
 }
 
 
