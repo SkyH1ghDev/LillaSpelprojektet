@@ -152,7 +152,7 @@ void Entity::Update()
                 SetShouldRender(false);
                 this->m_isAlive = false;
                 this->m_isActive = false;
-                if (SpMath::RandomInteger(10, 10) == 10)
+                if (SpMath::RandomInteger(1, 10) == 10)
                 {
                     PickUpsManager::AddPickUp(PickUpType::Base, "heart.png", this->m_position, 6.0, 1.0);
                 }
