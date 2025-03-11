@@ -148,6 +148,11 @@ bool Projectile::GetHasHit() const
     return this->m_hasHit;
 }
 
+ProjectileState Projectile::GetState() const
+{
+    return this->m_state;
+}
+
 void Projectile::PerformHit()
 {
     if (m_hit)

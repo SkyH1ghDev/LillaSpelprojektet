@@ -53,6 +53,7 @@ public:
 
     float GetDamage() const;
     bool GetHasHit() const;
+    ProjectileState GetState() const;
 
 private:
     std::shared_ptr<IProjectileMove> m_move;
