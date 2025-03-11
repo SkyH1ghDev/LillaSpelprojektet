@@ -1,3 +1,5 @@
+#pragma once
+
 #include <DirectXMath.h>
 
 namespace DX = DirectX;
@@ -10,6 +12,4 @@ public:
 	static void SniperShot(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float shotSpeed, float damageMultiplier);
 
 	static void DisruptorWave(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float duration);
-
-private:
 };

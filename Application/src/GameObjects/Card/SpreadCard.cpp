@@ -1,6 +1,5 @@
 #include "Card.hpp"
 #include "AbilityManager.hpp"
-#include <iostream>
 
 SpreadCard::SpreadCard()
 {

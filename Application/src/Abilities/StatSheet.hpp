@@ -1,6 +1,8 @@
+#pragma once
+
+#include <algorithm>
 #include <vector>
 #include "Effect.hpp"
-#include "SpEngine/Clock/Clock.hpp"
 
 enum StatType
 {
@@ -153,10 +155,7 @@ inline float StatSheet::GetCurrentHealth()
 inline void StatSheet::IncreaseHealth(float amount)
 {
 	StatSheet::m_currentHealth += amount;
-	if (m_currentHealth > m_maxHealth)
-	{
-		m_currentHealth = m_maxHealth;
-	}
+	m_currentHealth = std::min<float>(m_currentHealth, static_cast<float>(m_maxHealth));
 }
 
 /**
