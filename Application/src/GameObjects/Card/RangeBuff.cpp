@@ -10,16 +10,13 @@ RangeBuffCard::RangeBuffCard()
 
 void RangeBuffCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-
     StatSheet::CreateEffect(StatType::ShotSpeed, 7, 100);
     DirectX::XMFLOAT2 dir = { 1,0 };
     AbilityManager::longEffect(position, dir, 1, 5, 0, 0);
-
 }
 
 void RangeBuffCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-
     StatSheet::CreateEffect(StatType::ShotSpeed, 7, 225);
     DirectX::XMFLOAT2 dir = { 1,0 };
     AbilityManager::longEffect(position, dir, 1, 5, 0, 0);
@@ -30,7 +27,6 @@ void RangeBuffCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
     StatSheet::CreateEffect(StatType::ShotSpeed, 7, 500);
     DirectX::XMFLOAT2 dir = { 1,0 };
     AbilityManager::longEffect(position, dir, 1, 5, 0, 0);
-
 }
 
 void RangeBuffCard::SetCardTexture(size_t cardLevel)
