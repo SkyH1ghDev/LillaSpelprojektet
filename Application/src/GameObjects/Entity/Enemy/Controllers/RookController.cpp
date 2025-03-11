@@ -31,7 +31,7 @@ void RookController::Update()
     float distance = DX::XMVectorGetX(DX::XMVector3Length(rookToPlayerVec));
 
     // Charging behavior
-    if (m_isCharging) {
+    if (m_isCharging && rook->GetState() != EntityState::Spawning) {
         m_chargeTimer -= Clock::GetDeltaTime();
         if (m_chargeTimer <= 0.0f) {
             DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);

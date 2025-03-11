@@ -67,7 +67,7 @@ void PoolManager<T, Type>::Initialize(Type type, size_t poolSize) {
         
         if (obj)
         {
-            obj->SetActive(false);
+            obj->Reset();
             objectPool.push_back(obj);
             testScene->AddGameObject(obj);
         }
@@ -104,21 +104,20 @@ std::shared_ptr<T> PoolManager<T, Type>::GetObject(Type type) {
         
         if (obj)
         {
-            obj->SetActive(false);
+            obj->Reset();
             objectPool.push_back(obj);
             testScene->AddGameObject(obj);
         }
 
     }
 
-    objectPool[oldSize]->SetActive(true);
     lastInactiveIndex = oldSize;
     return objectPool[oldSize];
 }
 
 template <typename T, typename Type>
 void PoolManager<T, Type>::ReturnObject(Type type, std::shared_ptr<T> object) {
-    object->SetActive(false);
+    object->Reset();
 }
 
 template <typename T, typename Type>
