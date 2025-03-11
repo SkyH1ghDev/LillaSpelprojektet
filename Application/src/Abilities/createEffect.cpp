@@ -13,10 +13,13 @@
   */
 void AbilityManager::longEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle)
 {
-    // Convert direction to XMVECTOR for calculations
-
     ProjectileManager::AddProjectile(ProjectileType::Longshot, DX::XMFLOAT2(position.x, position.y), direction, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
-
 }
+
+void AbilityManager::HasteEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle)
+{
+    ProjectileManager::AddProjectile(ProjectileType::Haste, DX::XMFLOAT2(position.x, position.y), direction, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
+}
+
 
 

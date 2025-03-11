@@ -12,6 +12,7 @@ public:
 	static void DisruptorWave(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float duration);
 
 	static void longEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle);
+	static void HasteEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle);
 
 
 private:

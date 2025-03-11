@@ -24,6 +24,7 @@
 #include "FireBallFactory.hpp"
 #include "PawnAltFactory.hpp"
 #include "LongshotFactory.hpp"
+#include "HasteFactory.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -244,6 +245,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case ProjectileType::Longshot:
             {
                 LongshotFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::Haste:
+            {
+                HasteFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }
