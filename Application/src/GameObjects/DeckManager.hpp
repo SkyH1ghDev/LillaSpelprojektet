@@ -24,6 +24,9 @@ public:
 		std::shared_ptr<IGameObject> card1,
 		std::shared_ptr<IGameObject> card2,
 		std::shared_ptr<IGameObject> card3,
+		std::shared_ptr<IGameObject> desc1,
+		std::shared_ptr<IGameObject> desc2,
+		std::shared_ptr<IGameObject> desc3,
 		std::shared_ptr<IGameObject> cardDeck,
 		std::shared_ptr<IGameObject> chesster,
 		std::shared_ptr<IGameObject> text,
@@ -44,6 +47,7 @@ private:
 	static std::shared_ptr<Mesh> m_chesster;
 	static std::shared_ptr<Mesh> m_text;
 	static std::vector<std::shared_ptr<Mesh>> m_background;
+	static std::vector<std::shared_ptr<Mesh>> m_descriptions;
 
 	static std::shared_ptr<CardDeck> m_cardDeck;
 	static std::vector<CardType> m_cardChoice;

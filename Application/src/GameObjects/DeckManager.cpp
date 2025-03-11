@@ -14,6 +14,7 @@ std::vector<int> DeckManager::m_cardIndex;
 std::vector<int> DeckManager::m_displayLevel;
 
 std::vector <std::shared_ptr<IGameObject>> DeckManager::m_buttons;
+std::vector<std::shared_ptr<Mesh>> DeckManager::m_descriptions;
 
 std::vector<std::shared_ptr<Mesh>> DeckManager::m_cardDisplay;
 
@@ -31,6 +32,9 @@ void DeckManager::Initialize(std::shared_ptr<IGameObject> button1,
 	std::shared_ptr<IGameObject> card1,
 	std::shared_ptr<IGameObject> card2,
 	std::shared_ptr<IGameObject> card3,
+	std::shared_ptr<IGameObject> desc1,
+	std::shared_ptr<IGameObject> desc2,
+	std::shared_ptr<IGameObject> desc3,
 	std::shared_ptr<IGameObject> cardDeck,
 	std::shared_ptr<IGameObject> chesster,
 	std::shared_ptr<IGameObject> text,
@@ -47,6 +51,10 @@ void DeckManager::Initialize(std::shared_ptr<IGameObject> button1,
 	m_cardDisplay.push_back(std::static_pointer_cast<Mesh>(card1));
 	m_cardDisplay.push_back(std::static_pointer_cast<Mesh>(card2));
 	m_cardDisplay.push_back(std::static_pointer_cast<Mesh>(card3));
+
+	m_descriptions.push_back(std::static_pointer_cast<Mesh>(desc1));
+	m_descriptions.push_back(std::static_pointer_cast<Mesh>(desc2));
+	m_descriptions.push_back(std::static_pointer_cast<Mesh>(desc3));
 
 	m_cardChoice.push_back(CardType::Shotgun);
 	m_cardChoice.push_back(CardType::Shotgun);
@@ -85,23 +93,27 @@ void DeckManager::Update()
 			m_buttons[1]->SetIsAlive(false);
 			m_buttons[2]->SetIsAlive(false);
 
+			m_descriptions.at(0)->SetTexture("button_card.png");
+			m_descriptions.at(1)->SetTexture("button_card.png");
+			m_descriptions.at(2)->SetTexture("button_card.png");
+
 			//Animate card buttons to reflect chosen card
 			switch (m_chosenCard)
 			{
 			case 1:
-				m_cardDisplay.at(0)->SetPosition({ m_cardDisplay.at(0)->GetPosition().x, m_cardDisplay.at(0)->GetPosition().y + m_cardSpeed});
-				m_cardDisplay.at(1)->SetPosition({ m_cardDisplay.at(1)->GetPosition().x, m_cardDisplay.at(1)->GetPosition().y - m_cardSpeed});
-				m_cardDisplay.at(2)->SetPosition({ m_cardDisplay.at(2)->GetPosition().x, m_cardDisplay.at(2)->GetPosition().y - m_cardSpeed});
+				m_cardDisplay.at(0)->SetPosition({ m_cardDisplay.at(0)->GetPosition().x, m_cardDisplay.at(0)->GetPosition().y + m_cardSpeed * Clock::GetDeltaTime()});
+				m_cardDisplay.at(1)->SetPosition({ m_cardDisplay.at(1)->GetPosition().x, m_cardDisplay.at(1)->GetPosition().y - m_cardSpeed * Clock::GetDeltaTime() });
+				m_cardDisplay.at(2)->SetPosition({ m_cardDisplay.at(2)->GetPosition().x, m_cardDisplay.at(2)->GetPosition().y - m_cardSpeed * Clock::GetDeltaTime() });
 				break;
 			case 2:
-				m_cardDisplay.at(0)->SetPosition({ m_cardDisplay.at(0)->GetPosition().x, m_cardDisplay.at(0)->GetPosition().y - m_cardSpeed });
-				m_cardDisplay.at(1)->SetPosition({ m_cardDisplay.at(1)->GetPosition().x, m_cardDisplay.at(1)->GetPosition().y + m_cardSpeed });
-				m_cardDisplay.at(2)->SetPosition({ m_cardDisplay.at(2)->GetPosition().x, m_cardDisplay.at(2)->GetPosition().y - m_cardSpeed });
+				m_cardDisplay.at(0)->SetPosition({ m_cardDisplay.at(0)->GetPosition().x, m_cardDisplay.at(0)->GetPosition().y - m_cardSpeed * Clock::GetDeltaTime() });
+				m_cardDisplay.at(1)->SetPosition({ m_cardDisplay.at(1)->GetPosition().x, m_cardDisplay.at(1)->GetPosition().y + m_cardSpeed * Clock::GetDeltaTime() });
+				m_cardDisplay.at(2)->SetPosition({ m_cardDisplay.at(2)->GetPosition().x, m_cardDisplay.at(2)->GetPosition().y - m_cardSpeed * Clock::GetDeltaTime() });
 				break;
 			case 3:
-				m_cardDisplay.at(0)->SetPosition({ m_cardDisplay.at(0)->GetPosition().x, m_cardDisplay.at(0)->GetPosition().y - m_cardSpeed });
-				m_cardDisplay.at(1)->SetPosition({ m_cardDisplay.at(1)->GetPosition().x, m_cardDisplay.at(1)->GetPosition().y - m_cardSpeed });
-				m_cardDisplay.at(2)->SetPosition({ m_cardDisplay.at(2)->GetPosition().x, m_cardDisplay.at(2)->GetPosition().y + m_cardSpeed });
+				m_cardDisplay.at(0)->SetPosition({ m_cardDisplay.at(0)->GetPosition().x, m_cardDisplay.at(0)->GetPosition().y - m_cardSpeed * Clock::GetDeltaTime() });
+				m_cardDisplay.at(1)->SetPosition({ m_cardDisplay.at(1)->GetPosition().x, m_cardDisplay.at(1)->GetPosition().y - m_cardSpeed * Clock::GetDeltaTime() });
+				m_cardDisplay.at(2)->SetPosition({ m_cardDisplay.at(2)->GetPosition().x, m_cardDisplay.at(2)->GetPosition().y + m_cardSpeed * Clock::GetDeltaTime() });
 				break;
 			default:
 				break;
@@ -130,7 +142,7 @@ void DeckManager::Update()
 				Sound::PlayMusic(true);
 			}
 
-			this->m_cardSpeed += Clock::GetDeltaTime();
+			this->m_cardSpeed += Clock::GetDeltaTime() * 500;
 		}
 	}
 
@@ -167,7 +179,7 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 	m_buttons[1]->SetIsAlive(false);
 	m_buttons[2]->SetIsAlive(false);
 
-	if (SpMath::RandomInteger(0, 40) == 40)
+	if (SpMath::RandomInteger(0, 50) == 0)
 		m_chesster->SetTexture("chadster_closeup");
 	else
 		m_chesster->SetTexture("chesster_closeup");
@@ -178,13 +190,13 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 
 	m_cardSpeed = 0;
 	m_upgradePerformed = false;
-	m_cardDisplay[0]->SetPosition({200, 145});
+	m_cardDisplay[0]->SetPosition({160, 145});
 	m_cardDisplay[1]->SetPosition({295, 145});
-	m_cardDisplay[2]->SetPosition({390, 145});
+	m_cardDisplay[2]->SetPosition({430, 145});
 
-	m_buttons[0]->SetPosition({200, 145});
+	m_buttons[0]->SetPosition({160, 145});
 	m_buttons[1]->SetPosition({295, 145});
-	m_buttons[2]->SetPosition({390, 145});
+	m_buttons[2]->SetPosition({430, 145});
 	
 	switch (m_type)
 	{
@@ -274,27 +286,35 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 		{
 		case CardType::Shotgun: //Scatter
 			m_cardDisplay.at(i)->SetTexture("card_scatter_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("scatter_desc.png");
 			break;
 		case CardType::Spread: //Ring of fire
 			m_cardDisplay.at(i)->SetTexture("card_rof_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("ring_of_fire_desc.png");
 			break;
 		case CardType::Heal: //Heal
 			m_cardDisplay.at(i)->SetTexture("card_heal_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("empty_textbox.png");
 			break;
 		case CardType::Sniper: //Rune shard
 			m_cardDisplay.at(i)->SetTexture("rune_shard_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("rune_shard_desc.png");
 			break;
 		case CardType::Disruptor: //Disruptor
 			m_cardDisplay.at(i)->SetTexture("disruptor_wave_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("disruptor_desc.png");
 			break;
 		case CardType::RangeBuff: //RangeBuff
 			m_cardDisplay.at(i)->SetTexture("range_buff_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("longshot_desc.png");
 			break;
 		case CardType::AttackSpeedBuff: //RangeBuff
 			m_cardDisplay.at(i)->SetTexture("attack_speed_buff_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("haste_desc.png");
 			break;
 		default: //Nothing
 			m_cardDisplay.at(i)->SetTexture("button_card.png");
+			m_descriptions.at(i)->SetTexture("button_card.png");
 			break;
 		}
 	}

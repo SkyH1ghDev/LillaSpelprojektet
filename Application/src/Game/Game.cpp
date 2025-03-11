@@ -290,15 +290,26 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
     upgradeScene->AddGameObject(cardButton3);
 
     std::shared_ptr<IGameObject> card1 = std::make_shared<Mesh>(MeshType::Object, "card1", "card_basic.png");
-    card1->SetPosition({ 200, 145 });
+    card1->SetPosition({ 160, 145 });
     std::shared_ptr<IGameObject> card2 = std::make_shared<Mesh>(MeshType::Object, "card2", "card_basic.png");
     card2->SetPosition({ 295, 145 });
     std::shared_ptr<IGameObject> card3 = std::make_shared<Mesh>(MeshType::Object, "card3", "card_basic.png");
-    card3->SetPosition({ 390, 145 });
+    card3->SetPosition({ 430, 145 });
 
     upgradeScene->AddGameObject(card1);
     upgradeScene->AddGameObject(card2);
     upgradeScene->AddGameObject(card3);
+
+    std::shared_ptr<IGameObject> desc1 = std::make_shared<Mesh>(MeshType::Object, "desc1", "empty_textbox.png");
+    desc1->SetPosition({ 119, 218 });
+    std::shared_ptr<IGameObject> desc2 = std::make_shared<Mesh>(MeshType::Object, "desc2", "empty_textbox.png");
+    desc2->SetPosition({ 254, 218 });
+    std::shared_ptr<IGameObject> desc3 = std::make_shared<Mesh>(MeshType::Object, "desc3", "empty_textbox.png");
+    desc3->SetPosition({ 389, 218 });
+
+    upgradeScene->AddGameObject(desc1);
+    upgradeScene->AddGameObject(desc2);
+    upgradeScene->AddGameObject(desc3);
 
     std::vector<std::shared_ptr<Mesh>> backgroundSegments;
 
@@ -320,5 +331,5 @@ void Game::SetupUpgradeScene(std::shared_ptr<IScene> upgradeScene, std::shared_p
 
     std::shared_ptr<DeckManager> deckManager = std::make_shared<DeckManager>();
     upgradeScene->AddGameObject(std::static_pointer_cast<IGameObject>(deckManager));
-    DeckManager::Initialize(cardButton1, cardButton2, cardButton3, card1, card2, card3, cardDeck, chesster, text, backgroundSegments);
+    DeckManager::Initialize(cardButton1, cardButton2, cardButton3, card1, card2, card3, desc1, desc2, desc3, cardDeck, chesster, text, backgroundSegments);
 }
