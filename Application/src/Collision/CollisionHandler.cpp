@@ -233,7 +233,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             auto player = std::dynamic_pointer_cast<Entity>(objA);
             auto pickUp = std::dynamic_pointer_cast<PickUps>(objB);
             
-            if (player && pickUp)
+            if (player && pickUp && pickUp->IsAlive())
             {
                 StatSheet::IncreaseHealth(1);
                 HealthBarManager::DrawHearts();
@@ -246,7 +246,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             auto player = std::dynamic_pointer_cast<Entity>(objA);
             auto pickUp = std::dynamic_pointer_cast<PickUps>(objB);
 
-            if (player && pickUp)
+            if (player && pickUp && pickUp->IsAlive())
             {
                 StatSheet::IncreaseHealth(1);
                 HealthBarManager::DrawHearts();
