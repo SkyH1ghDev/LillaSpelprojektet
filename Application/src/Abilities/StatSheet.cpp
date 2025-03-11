@@ -1,4 +1,5 @@
 #include "StatSheet.hpp"
+#include <SpEngine/Clock/Clock.hpp>
 
 float StatSheet::m_damage = 20.0f;
 float StatSheet::m_moveSpeed = 200.0f;
