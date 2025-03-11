@@ -335,7 +335,7 @@ void EnemyManager::UpdateEnemies()
 
         EnemyManager::m_roundCount += 1;
 
-        if (EnemyManager::m_roundCount > 8)
+        if (EnemyManager::m_roundCount > 10)
         {
             SceneManager::LoadScene("victory");
             Sound::SetMusic("menu_theme.wav", 0.4f);
