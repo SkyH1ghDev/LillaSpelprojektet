@@ -13,7 +13,7 @@ void PickUps::Initialize(const std::string& textureName, DX::XMFLOAT2 position, 
     this->m_layerFloat = 0.5;
     this->m_scaleFloat = 0.5;
     this->CenterOrigin(true);
-    this->m_origonOffset = DX::XMFLOAT2(0, 50);
+    this->m_origonOffset = DX::XMFLOAT2(-2, 6);
     this->m_shouldRender = true;
     this->m_isAlive = true;
     this->m_isActive = true;
