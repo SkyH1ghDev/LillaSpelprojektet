@@ -33,7 +33,7 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
     case EntityState::Dashing:
         switch (this->m_lastState) {
         case EntityState::WalkUp:
-            texture = "rook_w_back_idle";
+            texture = "rook_w_back_charge";
             break;
         case EntityState::WalkDown:
             texture = "rook_w_front_charge";
