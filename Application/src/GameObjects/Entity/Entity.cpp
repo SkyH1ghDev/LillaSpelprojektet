@@ -149,7 +149,7 @@ void Entity::Update()
 
     if (this->m_hp <= 0)
     {   
-        if ((!this->m_isAnimating && this->m_state != EntityState::Dying) || this->m_state == EntityState::TakingDamage)
+        if ((!this->m_isAnimating && this->m_state != EntityState::Dying && this->m_state != EntityState::Spawning) || this->m_state == EntityState::TakingDamage)
         {
             this->ResetAnimation();
             this->m_damageTimer = 0;
@@ -171,7 +171,7 @@ void Entity::Update()
                     PickUpsManager::AddPickUp(PickUpType::Base, "heart.png", this->m_position, 6.0, 1.0);
                 }
             }
-            else
+            else if(this->m_state == EntityState::Dying)
             {
                 this->m_state = EntityState::Dead;
                 this->m_isAnimating = false;
@@ -318,8 +318,10 @@ void Entity::Reset()
     //PerformAttack();
     this->m_takeDamage->SetHealth(this->m_hp);
     this->m_animationTime = 0;
+    this->m_isAnimating = false;
     this->m_iFrame = false;
     this->m_isDashing = false;
+    this->ResetAnimation();
 
     switch (m_type) {
     case EntityType::Player:
