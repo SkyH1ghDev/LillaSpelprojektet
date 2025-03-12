@@ -32,6 +32,11 @@ void RookController::Update()
 
     // Charging behavior
     if (m_isCharging && rook->GetState() != EntityState::Spawning) {
+        if (rook->GetState() != EntityState::Charging)
+        {
+            rook->SetState(EntityState::Charging);
+            rook->ResetAnimation();
+        }
         m_chargeTimer -= Clock::GetDeltaTime();
         if (m_chargeTimer <= 0.0f) {
             DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);
@@ -67,6 +72,7 @@ void RookController::Update()
             rook->PerformMove(direction, true); // Dash towards player
             m_isCharging = false;
         }
+        rook->PerformVisible();
         return;
     }
 

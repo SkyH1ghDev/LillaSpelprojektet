@@ -99,7 +99,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         auto projectile = std::dynamic_pointer_cast<Projectile>(objB);
         auto entity = std::dynamic_pointer_cast<Entity>(objA);
 
-        if (projectile && entity && entity->GetState() != EntityState::Dying) {
+        if (projectile && entity && entity->GetState() != EntityState::Dying && entity->GetState() != EntityState::Spawning) {
             // Call the Perform functions
             if (!projectile->GetHasHit())
             {
@@ -115,7 +115,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         auto projectile = std::dynamic_pointer_cast<Projectile>(objA);
         auto entity = std::dynamic_pointer_cast<Entity>(objB);
 
-        if (projectile && entity && entity->GetState() != EntityState::Dying) {
+        if (projectile && entity && entity->GetState() != EntityState::Dying && entity->GetState() != EntityState::Spawning) {
             // Call the Perform functions
             if (!projectile->GetHasHit())
             {

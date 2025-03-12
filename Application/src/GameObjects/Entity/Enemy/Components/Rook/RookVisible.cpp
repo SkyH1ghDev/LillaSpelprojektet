@@ -27,6 +27,9 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
     case EntityState::Stunned:
         texture = "rook_w_stun";
         break;
+    case EntityState::Charging:
+        texture = "rook_w_front_windup";
+        break;
     case EntityState::Dashing:
         switch (this->m_lastState) {
         case EntityState::WalkUp:

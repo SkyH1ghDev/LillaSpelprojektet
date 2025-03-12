@@ -15,7 +15,8 @@ enum class EntityState {
     Dying,
     Dead,
     Dashing,
-    Stunned
+    Stunned,
+    Charging
 };
 
 class IEntityVisible
