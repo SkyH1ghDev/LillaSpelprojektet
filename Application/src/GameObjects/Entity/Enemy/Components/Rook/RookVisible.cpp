@@ -36,13 +36,13 @@ void RookVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntitySta
             texture = "rook_w_back_idle";
             break;
         case EntityState::WalkDown:
-            texture = "rook_w_front_idle";
+            texture = "rook_w_front_charge";
             break;
         case EntityState::WalkRight:
-            texture = "rook_w_right_idle";
+            texture = "rook_w_right_charge";
             break;
         case EntityState::WalkLeft:
-            texture = "rook_w_left_idle";
+            texture = "rook_w_left_charge";
             break;
         default:
             break;
