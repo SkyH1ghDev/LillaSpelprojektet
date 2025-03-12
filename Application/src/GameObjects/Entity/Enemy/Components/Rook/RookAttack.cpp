@@ -28,3 +28,7 @@ void RookAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
         ProjectileManager::AddProjectile(ProjectileType::BishopBall, DX::XMFLOAT2(position.x + finalDirection.x * 15, position.y + finalDirection.y * 15), finalDirection, shotSpeed, lifeSpan, 1.0f);
     }
 }
+void RookAttack::Reset()
+{
+
+}

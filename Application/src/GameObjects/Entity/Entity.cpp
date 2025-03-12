@@ -61,9 +61,11 @@ void Entity::Initialize()
         
         case EntityType::Bishop:
             this->m_DeathAnimationTimer = 0.9;
+            this->m_attack->Reset();
             break;
         case EntityType::BishopAlt:
             this->m_DeathAnimationTimer = 0.9;
+            this->m_attack->Reset();
             break;
 
         case EntityType::Rook:
@@ -127,7 +129,7 @@ void Entity::Update()
 
     if (this->m_damageTimer > 0)
     {
-        if (this->m_state != EntityState::TakingDamage)
+        if ((this->m_state != EntityState::Charging && this->m_state != EntityState::Dashing) || this->m_type == EntityType::Player)
         {
             if (!this->m_isAnimating && this->m_state != EntityState::TakingDamage)
                 this->ResetAnimation();
@@ -138,7 +140,8 @@ void Entity::Update()
         if (this->m_damageTimer <= 0)
         {
             this->m_damageTimer = 0;
-            this->m_state = EntityState::Base;
+            if ((this->m_state != EntityState::Charging && this->m_state != EntityState::Dashing) || this->m_type == EntityType::Player)
+                this->m_state = EntityState::Base;
             this->m_isAnimating = false;
             this->m_iFrame = false;
         }

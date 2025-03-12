@@ -20,3 +20,8 @@ void PawnAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
         this->m_attackTimer = 0;
     }
 }
+
+void PawnAttack::Reset()
+{
+
+}

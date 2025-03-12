@@ -20,136 +20,151 @@ void RookController::OnStart()
 
 void RookController::Update()
 {
+
     std::shared_ptr<Entity> rook = std::static_pointer_cast<Entity>(m_gameObject.lock());
-    DX::XMFLOAT2 rookPos = rook->GetPosition();
-    DX::XMFLOAT2 playerPos = PlayerInfo::GetPosition();
 
-    DX::XMVECTOR rookVec = XMLoadFloat2(&rookPos);
-    DX::XMVECTOR playerVec = XMLoadFloat2(&playerPos);
-    DX::XMVECTOR rookToPlayerVec = DX::XMVectorSubtract(playerVec, rookVec);
+    if (rook->GetState() != EntityState::Dying && rook->GetState() != EntityState::Dead && rook->GetState() != EntityState::Spawning)
+    {
+        DX::XMFLOAT2 rookPos = rook->GetPosition();
+        DX::XMFLOAT2 playerPos = PlayerInfo::GetPosition();
 
-    float distance = DX::XMVectorGetX(DX::XMVector3Length(rookToPlayerVec));
+        DX::XMVECTOR rookVec = XMLoadFloat2(&rookPos);
+        DX::XMVECTOR playerVec = XMLoadFloat2(&playerPos);
+        DX::XMVECTOR rookToPlayerVec = DX::XMVectorSubtract(playerVec, rookVec);
 
-    // Charging behavior
-    if (m_isCharging && rook->GetState() != EntityState::Spawning) {
-        if (rook->GetState() != EntityState::Charging && rook->GetState() != EntityState::Dying && rook->GetState() != EntityState::Dead)
-        {
-            rook->SetState(EntityState::Charging);
-            rook->ResetAnimation();
-        }
-        m_chargeTimer -= Clock::GetDeltaTime();
-        if (m_chargeTimer <= 0.0f) {
-            DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);
-            DX::XMFLOAT2 direction;
-            XMStoreFloat2(&direction, directionVec);
+        float distance = DX::XMVectorGetX(DX::XMVector3Length(rookToPlayerVec));
 
-            // Determine the primary movement direction
-            if (fabs(direction.x) > fabs(direction.y)) {
-                // Horizontal movement
-                direction.y = 0.0f;
-                if (direction.x > 0.0f) {
-                    direction.x = 1.0f; // Move Right
-                    rook->SetState(EntityState::WalkRight);
-                }
-                else {
-                    direction.x = -1.0f; // Move Left
-                    rook->SetState(EntityState::WalkLeft);
-                }
+        // Charging behavior
+        if (m_isCharging) {
+            if (rook->GetState() != EntityState::Charging)
+            {
+                rook->SetState(EntityState::Charging);
+                rook->ResetAnimation();
             }
-            else {
-                // Vertical movement
-                direction.x = 0.0f;
-                if (direction.y > 0.0f) {
-                    direction.y = 1.0f; // Move Down
-                    rook->SetState(EntityState::WalkDown);
+            m_chargeTimer -= Clock::GetDeltaTime();
+            if (m_chargeTimer <= 0.0f) {
+                DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);
+                DX::XMFLOAT2 direction;
+                XMStoreFloat2(&direction, directionVec);
+
+                // Determine the primary movement direction
+                if (fabs(direction.x) > fabs(direction.y)) {
+                    // Horizontal movement
+                    direction.y = 0.0f;
+                    if (direction.x > 0.0f) {
+                        direction.x = 1.0f; // Move Right
+                        rook->SetState(EntityState::WalkRight);
+                    }
+                    else {
+                        direction.x = -1.0f; // Move Left
+                        rook->SetState(EntityState::WalkLeft);
+                    }
                 }
                 else {
-                    direction.y = -1.0f; // Move Up
-                    rook->SetState(EntityState::WalkUp);
+                    // Vertical movement
+                    direction.x = 0.0f;
+                    if (direction.y > 0.0f) {
+                        direction.y = 1.0f; // Move Down
+                        rook->SetState(EntityState::WalkDown);
+                    }
+                    else {
+                        direction.y = -1.0f; // Move Up
+                        rook->SetState(EntityState::WalkUp);
+                    }
                 }
+                rook->PerformVisible();
+                rook->PerformMove(direction, true); // Dash towards player
+                m_isCharging = false;
             }
             rook->PerformVisible();
-            rook->PerformMove(direction, true); // Dash towards player
-            m_isCharging = false;
+            return;
         }
-        rook->PerformVisible();
-        return;
-    }
 
-    //Perform Attack
-    if (this->m_isAttacking)
-    {
-        rook->PerformAttack(rookPos, {0, 0});
-        this->m_isAttacking = false;
-        this->m_hasAttacked = true;
-    }
+        //Perform Attack
+        if (this->m_isAttacking)
+        {
+            rook->PerformAttack(rookPos, { 0, 0 });
+            this->m_isAttacking = false;
+            this->m_hasAttacked = true;
+        }
 
-    if (rook->IsStunned())
-    {
-        if(!this->m_hasAttacked)
-            this->m_isAttacking = true;
+        if (rook->IsStunned())
+        {
+            if (!this->m_hasAttacked)
+                this->m_isAttacking = true;
+        }
+        else
+        {
+            this->m_hasAttacked = false;
+            // Search for player in + pattern
+            if ((distance < 700) && !rook->Dashing()) { // Adjust search range
+                if (fabs(rookPos.x - playerPos.x) < 10 || fabs(rookPos.y - playerPos.y) < 10) {
+                    m_isCharging = true;
+                    this->m_chargeTimer = 1.0f;
+                    {
+                        DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);
+                        DX::XMFLOAT2 direction;
+                        XMStoreFloat2(&direction, directionVec);
+
+                        // Determine the primary movement direction
+                        if (fabs(direction.x) > fabs(direction.y)) {
+                            // Horizontal movement
+                            direction.y = 0.0f;
+                            if (direction.x > 0.0f) {
+                                direction.x = 1.0f; // Move Right
+                                rook->SetState(EntityState::WalkRight);
+                            }
+                            else {
+                                direction.x = -1.0f; // Move Left
+                                rook->SetState(EntityState::WalkLeft);
+                            }
+                        }
+                        else {
+                            // Vertical movement
+                            direction.x = 0.0f;
+                            if (direction.y > 0.0f) {
+                                direction.y = 1.0f; // Move Down
+                                rook->SetState(EntityState::WalkDown);
+                            }
+                            else {
+                                direction.y = -1.0f; // Move Up
+                                rook->SetState(EntityState::WalkUp);
+                            }
+                        }
+                    }
+                    return;
+                }
+            }
+
+            // Patrol behavior
+            if (!m_isCharging) {
+                m_patrolTime += Clock::GetDeltaTime();
+
+                // Change direction after a random amount of time
+                if (m_patrolTime >= m_nextDirectionChangeTime) {
+                    m_currentPatrolDirection = GetRandomDirection();
+                    m_nextDirectionChangeTime = GetRandomDirectionChangeTime();
+                    m_patrolTime = 0.0f;
+                }
+
+                // Move at patrol speed
+                DX::XMFLOAT2 patrolMove = { m_currentPatrolDirection.x,
+                                            m_currentPatrolDirection.y };
+
+                rook->PerformMove(patrolMove, false);
+            }
+        }
     }
     else
     {
-        this->m_hasAttacked = false;
-        // Search for player in + pattern
-        if ((distance < 700) && !rook->Dashing() && rook->GetState() != EntityState::Spawning) { // Adjust search range
-            if (fabs(rookPos.x - playerPos.x) < 10 || fabs(rookPos.y - playerPos.y) < 10) {
-                m_isCharging = true;
-                this->m_chargeTimer = 1.0f;
-                {
-                    DX::XMVECTOR directionVec = DX::XMVector3Normalize(rookToPlayerVec);
-                    DX::XMFLOAT2 direction;
-                    XMStoreFloat2(&direction, directionVec);
-
-                    // Determine the primary movement direction
-                    if (fabs(direction.x) > fabs(direction.y)) {
-                        // Horizontal movement
-                        direction.y = 0.0f;
-                        if (direction.x > 0.0f) {
-                            direction.x = 1.0f; // Move Right
-                            rook->SetState(EntityState::WalkRight);
-                        }
-                        else {
-                            direction.x = -1.0f; // Move Left
-                            rook->SetState(EntityState::WalkLeft);
-                        }
-                    }
-                    else {
-                        // Vertical movement
-                        direction.x = 0.0f;
-                        if (direction.y > 0.0f) {
-                            direction.y = 1.0f; // Move Down
-                            rook->SetState(EntityState::WalkDown);
-                        }
-                        else {
-                            direction.y = -1.0f; // Move Up
-                            rook->SetState(EntityState::WalkUp);
-                        }
-                    }
-                }
-                return;
-            }
-        }
-
-        // Patrol behavior
-        if (!m_isCharging) {
-            m_patrolTime += Clock::GetDeltaTime();
-
-            // Change direction after a random amount of time
-            if (m_patrolTime >= m_nextDirectionChangeTime) {
-                m_currentPatrolDirection = GetRandomDirection();
-                m_nextDirectionChangeTime = GetRandomDirectionChangeTime();
-                m_patrolTime = 0.0f;
-            }
-
-            // Move at patrol speed
-            DX::XMFLOAT2 patrolMove = { m_currentPatrolDirection.x,
-                                        m_currentPatrolDirection.y };
-
-            rook->PerformMove(patrolMove, false);
-        }
+        m_isCharging = false;
+        m_chargeTimer = 0.0f;
+        m_attackTimer = 0.0f;
+        m_patrolTime = 0.0f;
+        m_isAttacking = false;
+        m_hasAttacked = false;
     }
+    
 }
 
 DX::XMFLOAT2 RookController::GetRandomDirection()

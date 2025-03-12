@@ -5,6 +5,7 @@ class BishopAltAttack : public IEntityAttack
 {
 public:
     void Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction) override;
+    void Reset();
 
 private:
     float m_attackCooldown = 2.0f;

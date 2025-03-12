@@ -47,3 +47,12 @@ void BishopAttack::Attack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
 
     }
 }
+
+void BishopAttack::Reset()
+{
+    this->m_attackCooldown = 2.0f;
+    this->m_burstCooldown = 1.0f;
+    this->m_burstTimer = 0.0f;
+    this->m_attackTimer = 0.0f;
+    this->m_burstAmount = 10;
+}
