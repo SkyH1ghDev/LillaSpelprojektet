@@ -12,6 +12,9 @@ void BishopAltVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Enti
     case EntityState::TakingDamage:
         texture = "bishop_w_damage";
         break;
+    case EntityState::Frozen:
+        texture = "bishop_w_frozen.png";
+        break;
     default:
         texture = "bishop_w_idle";
         break;

@@ -76,7 +76,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         if (projectile && entity) {
             // Call the Perform functions
             projectile->PerformHit();
-            entity->PerformTakeDamage(projectile->GetDamage());
+            entity->PerformTakeDamage(projectile->GetDamage(), projectile->GetType());
         }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile &&
@@ -89,7 +89,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
         if (projectile && entity) {
             // Call the Perform functions
             projectile->PerformHit(); 
-            entity->PerformTakeDamage(projectile->GetDamage());
+            entity->PerformTakeDamage(projectile->GetDamage(), projectile->GetType());
         }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::Enemy &&
@@ -104,7 +104,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             if (!projectile->GetHasHit())
             {
                 projectile->PerformHit();
-                entity->PerformTakeDamage(projectile->GetDamage());
+                entity->PerformTakeDamage(projectile->GetDamage(), projectile->GetType());
             }
         }
     }
@@ -120,7 +120,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
             if (!projectile->GetHasHit())
             {
                 projectile->PerformHit();
-                entity->PerformTakeDamage(projectile->GetDamage());
+                entity->PerformTakeDamage(projectile->GetDamage(), projectile->GetType());
             }
         }
     }
@@ -133,7 +133,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
 
         if (player && enemy && enemy->GetState() != EntityState::Dying && enemy->GetState() != EntityState::Spawning && !player->HasIFrame())
         {
-            player->PerformTakeDamage(1);
+            player->PerformTakeDamage(1, ProjectileType::Base);
 
             // Compute knockback direction (Player moves away from Enemy)
             DX::XMFLOAT2 playerPos = player->GetPosition();
@@ -170,7 +170,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
 
         if (player && enemy && enemy->GetState() != EntityState::Dying && enemy->GetState() != EntityState::Spawning && !player->HasIFrame())
         {
-            player->PerformTakeDamage(1);
+            player->PerformTakeDamage(1, ProjectileType::Base);
 
             // Compute knockback direction (Player moves away from Enemy)
             DX::XMFLOAT2 playerPos = player->GetPosition();
@@ -256,7 +256,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
     else if (objB->GetCollider()->GetLayer() == CollisionLayer::Blade &&
         objA->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile)
         {
-            // Handle destructive AllyProjectile hitting an enemyProjectile
+            // Handle destructive Blade hitting an enemyProjectile
 
             auto allyProjectile = std::dynamic_pointer_cast<Projectile>(objA);
             auto enemyProjectile = std::dynamic_pointer_cast<Projectile>(objB);
@@ -271,7 +271,7 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::Blade &&
         objB->GetCollider()->GetLayer() == CollisionLayer::EnemyProjectile)
         {
-            // Handle destructive AllyProjectile hitting an enemyProjectile
+            // Handle destructive enemyProjectile hitting an blade
 
             auto allyProjectile = std::dynamic_pointer_cast<Projectile>(objA);
             auto enemyProjectile = std::dynamic_pointer_cast<Projectile>(objB);
@@ -286,16 +286,16 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
     else if (objB->GetCollider()->GetLayer() == CollisionLayer::Blade &&
         objA->GetCollider()->GetLayer() == CollisionLayer::Enemy) 
     {
-            // Handle destructive AllyProjectile hitting an enemyProjectile
+            // Handle destructive blade hitting an enemy
 
-            auto allyProjectile = std::dynamic_pointer_cast<Projectile>(objA);
-            auto enemyProjectile = std::dynamic_pointer_cast<Projectile>(objB);
+            auto enemy = std::dynamic_pointer_cast<Entity>(objA);
+            auto blade = std::dynamic_pointer_cast<Projectile>(objB);
 
-            if (allyProjectile && enemyProjectile) 
+            if (blade && enemy)
             {
                 // Call the Perform functions
-                allyProjectile->PerformHit();
-                enemyProjectile->PerformHit();
+                blade->PerformHit();
+                enemy->PerformTakeDamage(blade->GetDamage(), blade->GetType());
             }
     }
     else if (objA->GetCollider()->GetLayer() == CollisionLayer::Blade &&
@@ -303,14 +303,14 @@ void CollisionHandler::HandleCollision(const std::shared_ptr<IGameObject>& objA,
     {
             // Handle destructive AllyProjectile hitting an enemyProjectile
 
-            auto allyProjectile = std::dynamic_pointer_cast<Projectile>(objA);
-            auto enemyProjectile = std::dynamic_pointer_cast<Projectile>(objB);
+            auto blade = std::dynamic_pointer_cast<Projectile>(objA);
+            auto enemy = std::dynamic_pointer_cast<Entity>(objB);
 
-            if (allyProjectile && enemyProjectile)
+            if (blade && enemy)
             {
                 // Call the Perform functions
-                allyProjectile->PerformHit();
-                enemyProjectile->PerformHit();
+                blade->PerformHit();
+                enemy->PerformTakeDamage(blade->GetDamage(), blade->GetType());
             }
     }
 }

@@ -47,6 +47,7 @@ void Entity::Initialize()
     this->m_origonOffset = DX::XMFLOAT2(0, 50);
     this->m_isDashing = false;
     this->m_isStunned = false;
+    this->m_freezeTimer = 0;
 
     if (!this->m_collider)
         PerformSetCollider();
@@ -102,6 +103,7 @@ void Entity::OnStart()
     this->m_iFrame = false;
     this->m_isDashing = false;
     this->m_isStunned = false;
+    this->m_freezeTimer = 0;
 }
 
 
@@ -199,7 +201,7 @@ void Entity::Update()
 
     }
 
-    if (this->m_isStunned)
+    if (this->m_isStunned && this->m_state != EntityState::Frozen)
     {
         if (!this->m_isAnimating)
             this->ResetAnimation();
@@ -215,12 +217,31 @@ void Entity::Update()
         }
     }
 
+    if (this->m_freezeTimer > 0)
+    {
+        if (this->m_state != EntityState::Frozen)
+            this->m_previousState = this->m_state;
+        this->m_state = EntityState::Frozen;
+        this->m_freezeTimer -= Clock::GetDeltaTime();
+
+        if (this->m_hp <= 0)
+        {
+            this->m_state = EntityState::Dying;
+            this->m_freezeTimer = 0;
+        }
+    }
+    if (this->m_freezeTimer < 0)
+    {
+        this->m_freezeTimer = 0;
+        this->m_state = this->m_previousState;
+    }
+
     PerformVisible();
 
 }
 
 void Entity::PerformMove(const DX::XMFLOAT2& direction, bool dashing) {
-    if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player)) {
+    if (m_move != nullptr && this->m_state != EntityState::Dying && (this->m_state != EntityState::Spawning || this->m_type == EntityType::Player) && this->m_state != EntityState::Frozen) {
         if (direction.y == -1 && !m_isAnimating && !this->m_isDashing)
         {
             this->m_state = EntityState::WalkUp;
@@ -261,8 +282,11 @@ void Entity::PerformVisible()
         
 }
 
-void Entity::PerformTakeDamage(float damage)
+void Entity::PerformTakeDamage(float damage, ProjectileType projectileType)
 {
+    if (this->m_type != EntityType::Player && projectileType == ProjectileType::IceBeam)
+        m_freezeTimer += 0.25;
+
     if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
     {
         this->m_isAnimating = false;
@@ -281,6 +305,8 @@ void Entity::PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction)
             ||
             this->m_type == EntityType::Player
         )
+        &&
+        m_state != EntityState::Frozen
     )
     {
         m_attack->Attack(position, direction);

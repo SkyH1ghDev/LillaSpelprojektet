@@ -4,6 +4,7 @@
 #include "IEntityAttack.hpp"
 #include "IEntityTakeDamage.hpp"
 #include "IEntitySetCollider.hpp"
+#include "Projectile.hpp"
 
 #include <memory>
 #include <SpEngine/Assets/Game/IGameObject.hpp>
@@ -49,7 +50,7 @@ public:
     void PerformMove(const DX::XMFLOAT2& direction, bool dashing);
     void PerformVisible();
     void PerformAttack(DX::XMFLOAT2 position, DX::XMFLOAT2 direction);
-    void PerformTakeDamage(float damage);
+    void PerformTakeDamage(float damage, ProjectileType projectileType);
 
     void PerformSetCollider();
     void PlayerDeath();
@@ -63,6 +64,7 @@ public:
     bool IsStunned() const;
 
     bool HasIFrame();
+    void AddFreeze(float time);
 
     void SetState(EntityState state);
     EntityState GetState();
@@ -88,4 +90,11 @@ private:
     bool m_iFrame = false;
     bool m_isStunned = false;
     float m_stunnedTimer;
+    float m_freezeTimer = 0;
+    EntityState m_previousState = EntityState::Base;
 };
+
+inline void Entity::AddFreeze(float time)
+{
+    this->m_freezeTimer += time;
+}

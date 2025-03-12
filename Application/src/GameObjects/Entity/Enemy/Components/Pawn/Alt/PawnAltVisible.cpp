@@ -12,6 +12,9 @@ void PawnAltVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Entity
     case EntityState::TakingDamage:
         texture = "pawn_b_damage";
         break;
+    case EntityState::Frozen:
+        texture = "pawn_b_frozen.png";
+        break;
     default:
         texture = "pawn_b_idle";
         break;

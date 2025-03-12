@@ -4,6 +4,7 @@
 #include <SpEngine/Audio/Sound.hpp>
 #include <SpEngine/Input/Input.hpp>
 #include "PlayerInfo.hpp"
+#include <algorithm>
 
 Projectile::Projectile
 (
@@ -55,6 +56,9 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
         this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
     else
         this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+
+    if (this->m_type == ProjectileType::IceBeam)
+        this->m_freezeTime = 0.2f;
 }
 
 void Projectile::OnStart()
@@ -103,7 +107,9 @@ void Projectile::Update()
         if (this->m_type == ProjectileType::Blade)
         {
             float div = sqrt(pow(this->m_position.x, 2) + pow(this->m_position.y, 2));
-            this->m_direction = { (Input::GetMousePositionX() - this->m_position.x) / div * 10, (Input::GetMousePositionY() - this->m_position.y) / div * 10};
+            float distX = std::clamp(Input::GetMousePositionX() - this->m_position.x, -50.0f, 50.0f);
+            float distY = std::clamp(Input::GetMousePositionY() - this->m_position.y, -50.0f, 50.0f);
+            this->m_direction = { (distX) / div * 10, (distY) / div * 10};
             this->m_position = { this->m_position.x + (PlayerInfo::GetPosition().x - this->m_position.x) * Clock::GetDeltaTime() * 20, this->m_position.y + (PlayerInfo::GetPosition().y - this->m_position.y) * Clock::GetDeltaTime() * 20 };
             DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
 

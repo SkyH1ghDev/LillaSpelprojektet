@@ -56,6 +56,7 @@ public:
 
     ProjectileType GetType() const { return m_type; }
 
+    float GetFreezeTime() const;
     float GetDamage() const;
     bool GetHasHit() const;
     ProjectileState GetState() const;
@@ -78,4 +79,5 @@ private:
     float m_animationTimer = 0;
     bool m_hasDeathAnimation = false;
     bool m_hasHit = true;
+    float m_freezeTime;
 };

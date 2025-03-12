@@ -48,6 +48,9 @@ void RookAltVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Entity
             break;
         }
         break;
+    case EntityState::Frozen:
+        texture = "rook_b_frozen.png";
+        break;
     default:
         texture = "rook_b_front.png";
         break;
