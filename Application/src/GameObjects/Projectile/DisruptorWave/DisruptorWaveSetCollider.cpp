@@ -4,7 +4,6 @@
 
 Collider DisruptorWaveSetCollider::SetCollider(DX::XMFLOAT2 position)
 {
-	return Collider(position, 1.0f, static_cast<CollisionLayer>(
-		static_cast<int>(CollisionLayer::DisruptorWave) | static_cast<int>(CollisionLayer::AllyProjectile)), static_cast<CollisionLayer>(
+	return Collider(position, 1.0f, CollisionLayer::DisruptorWave, static_cast<CollisionLayer>(
 			static_cast<int>(CollisionLayer::Enemy) | static_cast<int>(CollisionLayer::EnemyProjectile)));
 }
