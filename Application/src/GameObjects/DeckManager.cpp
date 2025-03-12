@@ -211,15 +211,15 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			m_background.at(i)->SetTexture("background_card");
 
 		//Randomise options
-		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 5));
-		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 5));
-		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 5));
+		m_cardChoice[0] = CardType(SpMath::RandomInteger(0, 8));
+		m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 8));
+		m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 8));
 
 		//Make sure all options are different
 		while (m_cardChoice[1] == m_cardChoice[0])
-			m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 3));
+			m_cardChoice[1] = CardType(SpMath::RandomInteger(0, 8));
 		while (m_cardChoice[2] == m_cardChoice[0] || m_cardChoice[2] == m_cardChoice[1])
-			m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 3));
+			m_cardChoice[2] = CardType(SpMath::RandomInteger(0, 8));
 
 		if (SpMath::RandomInteger(0, 19) == 0)
 			m_cardChoice[2] = CardType::Heal;
@@ -310,6 +310,18 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			break;
 		case CardType::AttackSpeedBuff: //Attack speed buff
 			m_cardDisplay.at(i)->SetTexture("attack_speed_buff_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("haste_desc.png");
+			break;
+		case CardType::Blade: //RangeBuff
+			m_cardDisplay.at(i)->SetTexture("blade_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("haste_desc.png");
+			break;
+		case CardType::IceBeam: //RangeBuff
+			m_cardDisplay.at(i)->SetTexture("ice_beam_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("haste_desc.png");
+			break;
+		case CardType::MagicMissile: //RangeBuff
+			m_cardDisplay.at(i)->SetTexture("magic_missile_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("haste_desc.png");
 			break;
 		default: //Nothing

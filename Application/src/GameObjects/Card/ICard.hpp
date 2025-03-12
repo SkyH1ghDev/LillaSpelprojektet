@@ -14,6 +14,9 @@ enum class CardType {
     Disruptor,
     RangeBuff,
     AttackSpeedBuff,
+    Blade,
+    MagicMissile,
+    IceBeam,
     Heal
 };
 

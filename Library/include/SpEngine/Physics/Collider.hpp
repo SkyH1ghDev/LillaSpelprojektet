@@ -16,7 +16,8 @@ enum class CollisionLayer {
 	EnemyProjectile = 1 << 3,    // 001000 (8)
 	DisruptorWave = 1 << 4, // 010000
 	PickUps = 1 << 5, // 100000
-	All = ~0          // 111111 (all bits set)
+	Blade = 1 << 6, //1000000
+	All = ~0          // 1111111 (all bits set)
 };
 
 class Collider

@@ -21,12 +21,14 @@
 #include "Projectile.hpp"
 #include "ScatterPelletFactory.hpp"
 #include "SniperBulletFactory.hpp"
+#include "IceBeamFactory.hpp"
+#include "MagicMissileFactory.hpp"
 #include "FireBallFactory.hpp"
 #include "PawnAltFactory.hpp"
 #include "LongshotFactory.hpp"
 #include "HasteFactory.hpp"
-
 #include "PickUps.hpp"
+#include "BladeFactory.hpp"
 
 template <typename T, typename Type>
 class PoolManager {
@@ -260,6 +262,27 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case ProjectileType::FireBall:
             {
                 FireBallFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::IceBeam:
+            {
+                IceBeamFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::MagicMissile:
+            {
+                MagicMissileFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::Blade:
+            {
+                BladeFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }

@@ -87,3 +87,39 @@ public:
 
 private:
 };
+
+class IceBeamCard : public ICard
+{
+public:
+    IceBeamCard();
+    void ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void SetCardTexture(size_t cardLevel) override;
+
+private:
+};
+
+class MagicMissileCard : public ICard
+{
+public:
+    MagicMissileCard();
+    void ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void SetCardTexture(size_t cardLevel) override;
+
+private:
+};
+
+class BladeCard : public ICard
+{
+public:
+    BladeCard();
+    void ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
+    void SetCardTexture(size_t cardLevel) override;
+
+private:
+};

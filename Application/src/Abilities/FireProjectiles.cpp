@@ -82,3 +82,19 @@ void AbilityManager::DisruptorWave(DX::XMFLOAT2 position, DX::XMFLOAT2 direction
     // Add projectile
     ProjectileManager::AddProjectile(ProjectileType::DisruptorWave, position, direction, 0, duration, 0);
 }
+
+void AbilityManager::Beam(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float damage, size_t projectileCount)
+{
+    for (size_t i = 0; i < projectileCount; i++)
+    {
+        ProjectileManager::AddProjectile(ProjectileType::IceBeam, position, direction, 200 + i * 8, 5, damage);
+    }
+}
+
+void AbilityManager::Blade(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float damage, size_t projectileCount)
+{
+    for (size_t i = 0; i < projectileCount; i++)
+    {
+        ProjectileManager::AddProjectile(ProjectileType::Blade, position, direction, 150 + i * 80, 10, damage);
+    }
+}

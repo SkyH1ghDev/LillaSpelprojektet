@@ -12,6 +12,8 @@ public:
 	static void SniperShot(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float shotSpeed, float damageMultiplier);
 
 	static void DisruptorWave(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float duration);
+	static void Beam(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float damage, size_t projectileCount);
+	static void Blade(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float damage, size_t projectileCount);
 
 	static void longEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle);
 	static void HasteEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle);

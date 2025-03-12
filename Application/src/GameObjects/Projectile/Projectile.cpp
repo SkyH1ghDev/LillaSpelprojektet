@@ -2,6 +2,8 @@
 #include <SpEngine/Clock/Clock.hpp>
 #include <iostream>
 #include <SpEngine/Audio/Sound.hpp>
+#include <SpEngine/Input/Input.hpp>
+#include "PlayerInfo.hpp"
 
 Projectile::Projectile
 (
@@ -68,11 +70,55 @@ void Projectile::Update()
 {
     if (m_lifetime > 0 && !this->m_hasHit)
     {
+
+        if (this->m_type == ProjectileType::MagicMissile)
+        {
+            float div = sqrt(pow(this->m_position.x, 2) + pow(this->m_position.y, 2));
+            this->m_direction = {(Input::GetMousePositionX() - this->m_position.x) / div * 20, (Input::GetMousePositionY() - this->m_position.y) / div * 20 };
+
+            DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
+
+            if (this->m_direction.y > 0)
+                this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+            else
+                this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+        }
+
+        if (this->m_type == ProjectileType::IceBeam)
+        {
+            if (sqrt(pow(PlayerInfo::GetPosition().x - this->m_position.x, 2) + pow(PlayerInfo::GetPosition().y - this->m_position.y, 2)) < this->m_lifetime * 12)
+            {
+                float div = sqrt(pow(this->m_direction.x + (Input::GetMousePositionX() - this->m_position.x) / 2, 2) + pow(this->m_direction.y + (Input::GetMousePositionY() - this->m_position.y) / 2, 2));
+                this->m_direction = { (this->m_direction.x + (Input::GetMousePositionX() - this->m_position.x) / 2) / div, (this->m_direction.y + (Input::GetMousePositionY() - this->m_position.y) / 2) / div };
+
+                DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
+
+                if (this->m_direction.y > 0)
+                    this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+                else
+                    this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+            }
+        }
+
+        if (this->m_type == ProjectileType::Blade)
+        {
+            float div = sqrt(pow(this->m_position.x, 2) + pow(this->m_position.y, 2));
+            this->m_direction = { (Input::GetMousePositionX() - this->m_position.x) / div * 10, (Input::GetMousePositionY() - this->m_position.y) / div * 10};
+            this->m_position = { this->m_position.x + (PlayerInfo::GetPosition().x - this->m_position.x) * Clock::GetDeltaTime() * 20, this->m_position.y + (PlayerInfo::GetPosition().y - this->m_position.y) * Clock::GetDeltaTime() * 20 };
+            DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
+
+            if (this->m_direction.y > 0)
+                this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+            else
+                this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+        }
+
         this->UpdateAnimation();
         this->m_visible->UpdateLayer(this->m_position, this->m_layerFloat);
         PerformMove(this->m_direction, this->m_velocity);
         m_lifetime -= Clock::GetDeltaTime();
         this->m_collider->UpdatePosition(this->m_position);
+
         if (PhysicsEngine::WallProjectileCollision(m_collider) && this->m_type != ProjectileType::DisruptorWave)
         {
             if (this->m_type == ProjectileType::FireBall)

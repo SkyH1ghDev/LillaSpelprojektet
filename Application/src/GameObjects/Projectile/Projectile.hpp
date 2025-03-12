@@ -12,7 +12,10 @@ enum class ProjectileType {
     DisruptorWave,
     Longshot,
     Haste,
-    FireBall
+    FireBall,
+    MagicMissile,
+    IceBeam,
+    Blade
 };
 
 #include "IProjectileMove.hpp"
