@@ -127,10 +127,13 @@ void Entity::Update()
 
     if (this->m_damageTimer > 0)
     {
-        if (!this->m_isAnimating && this->m_state != EntityState::TakingDamage)
-            this->ResetAnimation();
-        this->m_isAnimating = true;
-        this->m_state = EntityState::TakingDamage;
+        if (this->m_state != EntityState::TakingDamage)
+        {
+            if (!this->m_isAnimating && this->m_state != EntityState::TakingDamage)
+                this->ResetAnimation();
+            this->m_isAnimating = true;
+            this->m_state = EntityState::TakingDamage;
+        }       
         this->m_damageTimer -= Clock::GetDeltaTime();
         if (this->m_damageTimer <= 0)
         {

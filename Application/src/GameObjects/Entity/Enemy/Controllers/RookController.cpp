@@ -32,7 +32,7 @@ void RookController::Update()
 
     // Charging behavior
     if (m_isCharging && rook->GetState() != EntityState::Spawning) {
-        if (rook->GetState() != EntityState::Charging)
+        if (rook->GetState() != EntityState::Charging && rook->GetState() != EntityState::Dying && rook->GetState() != EntityState::Dead)
         {
             rook->SetState(EntityState::Charging);
             rook->ResetAnimation();
