@@ -106,9 +106,10 @@ void Projectile::Update()
         {
             float distX = Input::GetMousePositionX() - this->m_position.x;
             float distY = Input::GetMousePositionY() - this->m_position.y;
+            float length = sqrt(pow(distX - this->m_position.x, 2) + pow(distY - this->m_position.y, 2));
             float div = sqrt(pow(this->m_position.x, 2) + pow(this->m_position.y, 2));
 
-            this->m_direction = { (distX) / div * 10, (distY) / div * 10};
+            this->m_direction = { (distX) / div * std::clamp(length, -100.0f, 100.0f), (distY) / div * 10};
             this->m_position = { this->m_position.x + (PlayerInfo::GetPosition().x - this->m_position.x) * Clock::GetDeltaTime() * 20, this->m_position.y + (PlayerInfo::GetPosition().y - this->m_position.y) * Clock::GetDeltaTime() * 20 };
             DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
 

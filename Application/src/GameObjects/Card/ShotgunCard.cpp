@@ -23,13 +23,13 @@ void ShotgunCard::SetCardTexture(size_t cardLevel)
 {
     switch (cardLevel) {
     case 1:
-        this->m_textureName = "card_scatter_lvl1.png";
+        this->m_textureName = "scatter_lvl1.png";
         break;
     case 2:
-        this->m_textureName = "card_scatter_lvl2.png";
+        this->m_textureName = "scatter_lvl2.png";
         break;
     case 3:
-        this->m_textureName = "card_scatter_lvl3.png";
+        this->m_textureName = "scatter_lvl3.png";
         break;
     default:
         this->m_textureName = "card_basic.png";
