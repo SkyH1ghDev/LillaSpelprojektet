@@ -19,6 +19,9 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
     case EntityState::WalkLeft:
         texture = "chesster_left_idle";
         break;
+    case EntityState::Spawning:
+        texture = "chesster_front_idle";
+        break;
     case EntityState::Dashing:
         switch (this->m_lastState) {
         case EntityState::WalkUp:

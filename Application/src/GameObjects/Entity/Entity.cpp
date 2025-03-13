@@ -111,7 +111,7 @@ void Entity::Update()
 {
     this->UpdateAnimation();
 
-    if (this->m_state == EntityState::Spawning)
+    if (this->m_state == EntityState::Spawning && this->m_type != EntityType::Player)
     {
         if (!this->m_isAnimating)
             this->ResetAnimation();
