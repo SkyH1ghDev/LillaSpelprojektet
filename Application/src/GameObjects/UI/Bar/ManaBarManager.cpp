@@ -73,6 +73,8 @@ void ManaBarManager::Reset()
     for (size_t i = 0; i < 3; i++) {
         RemoveManaCrystal(1);
     }
+    ManaBarManager::manaBarIndex = 0;
+    ManaBarManager::manaCrystalIndex = 0;
     RefillManaShard(5);
 }
 
