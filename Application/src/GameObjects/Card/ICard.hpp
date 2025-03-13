@@ -16,7 +16,7 @@ enum class CardType {
     AttackSpeedBuff,
     Blade,
     MagicMissile,
-    IceBeam,
+    IceCubes,
     Heal
 };
 

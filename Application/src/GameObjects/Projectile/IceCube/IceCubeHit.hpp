@@ -1,7 +1,7 @@
 #pragma once
 #include "IProjectileHit.hpp"
 
-class IceBeamHit : public IProjectileHit
+class IceCubeHit : public IProjectileHit
 {
 public:
     void Hit(bool& hasHit) override;

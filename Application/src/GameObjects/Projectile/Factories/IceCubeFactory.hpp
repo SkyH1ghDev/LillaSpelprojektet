@@ -1,15 +1,15 @@
 #pragma once
 #include "IProjectileFactory.hpp"
 
-class IceBeamFactory : public IProjectileFactory
+class IceCubeFactory : public IProjectileFactory
 {
 public:
-    IceBeamFactory() = default;
-    ~IceBeamFactory() override = default;
-    IceBeamFactory(const IceBeamFactory& other) = default;
-    IceBeamFactory& operator=(const IceBeamFactory& other) = default;
-    IceBeamFactory(IceBeamFactory&& other) noexcept = default;
-    IceBeamFactory& operator=(IceBeamFactory&& other) noexcept = default;
+    IceCubeFactory() = default;
+    ~IceCubeFactory() override = default;
+    IceCubeFactory(const IceCubeFactory& other) = default;
+    IceCubeFactory& operator=(const IceCubeFactory& other) = default;
+    IceCubeFactory(IceCubeFactory&& other) noexcept = default;
+    IceCubeFactory& operator=(IceCubeFactory&& other) noexcept = default;
 
     std::shared_ptr<Projectile> CreateObject() override;
 

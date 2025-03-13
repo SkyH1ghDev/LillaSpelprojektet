@@ -14,7 +14,7 @@ enum class ProjectileType {
     Haste,
     FireBall,
     MagicMissile,
-    IceBeam,
+    IceCube,
     Blade
 };
 

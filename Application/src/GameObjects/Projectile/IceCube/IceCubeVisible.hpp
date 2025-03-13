@@ -1,7 +1,7 @@
 #pragma once
 #include "IProjectileVisible.hpp"
 
-class IceBeamVisible : public IProjectileVisible
+class IceCubeVisible : public IProjectileVisible
 {
 public:
     void Visible(std::string& texture, DX::XMFLOAT2 position, ProjectileState projectileState, float& layer, float& scale, bool& hasDeathAnimation) override;

@@ -5,7 +5,7 @@
 
 namespace DX = DirectX;
 
-class IceBeamSetCollider : public IProjectileSetCollider
+class IceCubeSetCollider : public IProjectileSetCollider
 {
 public:
 	Collider SetCollider(DX::XMFLOAT2 position) override;
