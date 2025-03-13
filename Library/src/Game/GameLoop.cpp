@@ -201,9 +201,8 @@ void GameLoop::LoadIntro(Window window, Renderer& renderer)
 			break;
 
 		std::bitset<4> skip = Input::GetKey(VK_SPACE)->GetKeyState();
-		if (skip == 1100) {
+		if (skip == 1100)
 			break;
-		}
 
 		Clock::End();
 	}
