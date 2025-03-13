@@ -91,6 +91,7 @@ void GameLoop::LoadIntro(Window window, Renderer& renderer)
 	}
 	float time = 0;
 
+
 	while (true) {
 		Clock::Start();
 		Input::HandleInput(window.GetWindowHandle());
@@ -98,20 +99,111 @@ void GameLoop::LoadIntro(Window window, Renderer& renderer)
 		renderer.Draw(currentScene);
 		time += Clock::GetDeltaTime();
 
+		//Transition1
 		if (time > 2) {
 			currentScene->GetGameObjectVec()[0]->SetShouldRender(false);
-			currentScene->GetGameObjectVec()[1]->SetShouldRender(true);
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(true);
+		}
+		if (time > 2.1) {
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[11]->SetShouldRender(true);
 		}
 		if (time > 5) {
-			currentScene->GetGameObjectVec()[1]->SetShouldRender(false);
-			currentScene->GetGameObjectVec()[2]->SetShouldRender(true);
+			currentScene->GetGameObjectVec()[11]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(true);
 		}
-		if (time > 11) {
-			currentScene->GetGameObjectVec()[2]->SetShouldRender(false);
+
+		//Scene1
+		if (time > 5.1) {
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
 			currentScene->GetGameObjectVec()[3]->SetShouldRender(true);
 		}
-		if (time > 16)
+		if (time > 8) {
+			currentScene->GetGameObjectVec()[3]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[1]->SetShouldRender(true);
+		}
+		if (time > 8.1) {
+			currentScene->GetGameObjectVec()[1]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[4]->SetShouldRender(true);
+		}
+
+		//Transition2
+		if (time > 11) {
+			currentScene->GetGameObjectVec()[4]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(true);
+		}
+		if (time > 11.1) {
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[12]->SetShouldRender(true);
+		}
+		if (time > 14) {
+			currentScene->GetGameObjectVec()[12]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(true);
+		}
+
+		//Scene2
+		if (time > 14.1) {
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[5]->SetShouldRender(true);
+		}
+		if (time > 17) {
+			currentScene->GetGameObjectVec()[5]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(true);
+		}
+		if (time > 17.1) {
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[6]->SetShouldRender(true);
+		}
+		if (time > 20) {
+			currentScene->GetGameObjectVec()[6]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(true);
+		}
+		if (time > 20.1) {
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[7]->SetShouldRender(true);
+		}
+		if (time > 23) {
+			currentScene->GetGameObjectVec()[7]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(true);
+		}
+		if (time > 23.1) {
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[8]->SetShouldRender(true);
+		}
+		if (time > 26) {
+			currentScene->GetGameObjectVec()[8]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(true);
+		}
+		if (time > 26.1) {
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[9]->SetShouldRender(true);
+		}
+
+		//Transition3
+		if (time > 29) {
+			currentScene->GetGameObjectVec()[9]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(true);
+		}
+		if (time > 29.1) {
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[13]->SetShouldRender(true);
+		}
+		if (time > 32) {
+			currentScene->GetGameObjectVec()[13]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(true);
+		}
+		if (time > 32.1) {
+			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[14]->SetShouldRender(true);
+		}
+
+		if (time > 35)
 			break;
+
+		std::bitset<4> skip = Input::GetKey(VK_SPACE)->GetKeyState();
+		if (skip == 1100) {
+			break;
+		}
 
 		Clock::End();
 	}

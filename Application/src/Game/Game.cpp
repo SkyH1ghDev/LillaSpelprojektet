@@ -121,14 +121,44 @@ void Game::ResetGame()
 void Game::SetupIntroScene(std::shared_ptr<IScene> introScene)
 {
     std::shared_ptr<IGameObject> logo = std::make_shared<Mesh>(MeshType::Background, "Logo", "caplog_logo.png");
-    std::shared_ptr<IGameObject> scene1 = std::make_shared<Mesh>(MeshType::Background, "Scene1", "intro_scene1.png");
-    std::shared_ptr<IGameObject> scene2 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2.png");
-    std::shared_ptr<IGameObject> scene3 = std::make_shared<Mesh>(MeshType::Background, "Scene3", "intro_scene3.png");
+    std::shared_ptr<IGameObject> scene1_0 = std::make_shared<Mesh>(MeshType::Background, "Scene1", "intro_scene1_act0.png");
+    std::shared_ptr<IGameObject> scene2_0 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2_act0.png");
 
-	introScene->AddGameObject(logo);
-	introScene->AddGameObject(scene1);
-    introScene->AddGameObject(scene2);
-    introScene->AddGameObject(scene3);
+    std::shared_ptr<IGameObject> scene1_1 = std::make_shared<Mesh>(MeshType::Background, "Scene1", "intro_scene1_act1.png");
+    std::shared_ptr<IGameObject> scene1_2 = std::make_shared<Mesh>(MeshType::Background, "Scene1", "intro_scene1_act2.png");
+
+    std::shared_ptr<IGameObject> scene2_1 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2_act1.png");
+    std::shared_ptr<IGameObject> scene2_2 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2_act2.png");
+    std::shared_ptr<IGameObject> scene2_3 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2_act3.png");
+    std::shared_ptr<IGameObject> scene2_4 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2_act4.png");
+    std::shared_ptr<IGameObject> scene2_5 = std::make_shared<Mesh>(MeshType::Background, "Scene2", "intro_scene2_act5.png");
+
+    std::shared_ptr<IGameObject> transition0 = std::make_shared<Mesh>(MeshType::Background, "Transition", "transition0.png");
+    std::shared_ptr<IGameObject> transition1 = std::make_shared<Mesh>(MeshType::Background, "Transition", "transition1.png");
+    std::shared_ptr<IGameObject> transition2 = std::make_shared<Mesh>(MeshType::Background, "Transition", "transition2.png");
+    std::shared_ptr<IGameObject> transition3 = std::make_shared<Mesh>(MeshType::Background, "Transition", "transition3.png");
+
+    std::shared_ptr<IGameObject> title = std::make_shared<Mesh>(MeshType::Title, "Title", "title_logo_v1.png");
+    title->SetPosition({ 161, 10 });
+
+	introScene->AddGameObject(logo); // 0
+	introScene->AddGameObject(scene1_0); // 1
+	introScene->AddGameObject(scene2_0); // 2
+	introScene->AddGameObject(scene1_1); // 3    
+    introScene->AddGameObject(scene1_2); //4        
+
+	introScene->AddGameObject(scene2_1); // 5
+	introScene->AddGameObject(scene2_2); // 6
+	introScene->AddGameObject(scene2_3); // 7
+	introScene->AddGameObject(scene2_4); // 8
+	introScene->AddGameObject(scene2_5); // 9
+
+	introScene->AddGameObject(transition0); // 10
+	introScene->AddGameObject(transition1); // 11
+	introScene->AddGameObject(transition2); // 12
+	introScene->AddGameObject(transition3); // 13
+
+    introScene->AddGameObject(title);
 }
 
 void Game::SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player)
