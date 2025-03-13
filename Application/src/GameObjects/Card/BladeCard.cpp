@@ -14,12 +14,12 @@ void BladeCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 
 void BladeCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    AbilityManager::Blade(position, target, 10, 20);
+    AbilityManager::Blade(position, target, 10, 15);
 }
 
 void BladeCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
-    AbilityManager::Blade(position, target, 10, 30);
+    AbilityManager::Blade(position, target, 10, 20);
 }
 
 void BladeCard::SetCardTexture(size_t cardLevel)

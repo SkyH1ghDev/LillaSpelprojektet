@@ -94,9 +94,6 @@ void Projectile::Update()
             {
                 float div = sqrt(pow(this->m_direction.x + (Input::GetMousePositionX() - this->m_position.x) / 2, 2) + pow(this->m_direction.y + (Input::GetMousePositionY() - this->m_position.y) / 2, 2));
                 this->m_direction = { (this->m_direction.x + (Input::GetMousePositionX() - this->m_position.x) / 2) / div, (this->m_direction.y + (Input::GetMousePositionY() - this->m_position.y) / 2) / div };
-
-                DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
-
                 
                 this->SetRotation(0);
             }
@@ -104,13 +101,12 @@ void Projectile::Update()
 
         if (this->m_type == ProjectileType::Blade)
         {
-            float distX = Input::GetMousePositionX() - this->m_position.x;
-            float distY = Input::GetMousePositionY() - this->m_position.y;
-            float length = sqrt(pow(distX - this->m_position.x, 2) + pow(distY - this->m_position.y, 2));
-            float div = sqrt(pow(this->m_position.x, 2) + pow(this->m_position.y, 2));
+            float div = sqrt(pow(Input::GetMousePositionX() - PlayerInfo::GetPosition().x, 2) + pow(Input::GetMousePositionY() - PlayerInfo::GetPosition().y, 2));
+            float dirX = (Input::GetMousePositionX() - PlayerInfo::GetPosition().x) / div;
+            float dirY = (Input::GetMousePositionY() - PlayerInfo::GetPosition().y) / div;
 
-            this->m_direction = { (distX) / div * std::clamp(length, -100.0f, 100.0f), (distY) / div * 10};
-            this->m_position = { this->m_position.x + (PlayerInfo::GetPosition().x - this->m_position.x) * Clock::GetDeltaTime() * 20, this->m_position.y + (PlayerInfo::GetPosition().y - this->m_position.y) * Clock::GetDeltaTime() * 20 };
+            this->m_direction = { dirX, dirY };
+            this->m_position = { PlayerInfo::GetPosition().x + this->m_direction.x * this->m_velocity, PlayerInfo::GetPosition().y + this->m_direction.y * this->m_velocity };
             DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
 
             if (this->m_direction.y > 0)

@@ -285,7 +285,7 @@ void Entity::PerformVisible()
 void Entity::PerformTakeDamage(float damage, ProjectileType projectileType)
 {
     if (this->m_type != EntityType::Player && projectileType == ProjectileType::IceCube)
-        m_freezeTimer += 0.25;
+        m_freezeTimer += 0.4;
 
     if (m_takeDamage && this->m_state != EntityState::Spawning && this->m_state != EntityState::Dying)
     {

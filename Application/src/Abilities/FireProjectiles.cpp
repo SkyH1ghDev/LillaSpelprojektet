@@ -95,6 +95,6 @@ void AbilityManager::Blade(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float 
 {
     for (size_t i = 0; i < projectileCount; i++)
     {
-        ProjectileManager::AddProjectile(ProjectileType::Blade, position, direction, 150 + i * 80, 10, damage);
+        ProjectileManager::AddProjectile(ProjectileType::Blade, position, direction, 20 + i * 10, 10, damage);
     }
 }
