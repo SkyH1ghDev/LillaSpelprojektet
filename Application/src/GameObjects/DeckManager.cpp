@@ -294,7 +294,7 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			break;
 		case CardType::Heal: //Heal
 			m_cardDisplay.at(i)->SetTexture("card_heal_lvl" + std::to_string(level) + ".png");
-			m_descriptions.at(i)->SetTexture("empty_textbox.png");
+			m_descriptions.at(i)->SetTexture("heal_desc.png");
 			break;
 		case CardType::Sniper: //Rune shard
 			m_cardDisplay.at(i)->SetTexture("rune_shard_lvl" + std::to_string(level) + ".png");
@@ -312,17 +312,17 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			m_cardDisplay.at(i)->SetTexture("attack_speed_buff_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("haste_desc.png");
 			break;
-		case CardType::Blade: //RangeBuff
+		case CardType::Blade: //Blade
 			m_cardDisplay.at(i)->SetTexture("blade_lvl" + std::to_string(level) + ".png");
-			m_descriptions.at(i)->SetTexture("haste_desc.png");
+			m_descriptions.at(i)->SetTexture("blade_desc.png");
 			break;
-		case CardType::IceBeam: //RangeBuff
+		case CardType::IceBeam: //Ice beam
 			m_cardDisplay.at(i)->SetTexture("ice_beam_lvl" + std::to_string(level) + ".png");
-			m_descriptions.at(i)->SetTexture("haste_desc.png");
+			m_descriptions.at(i)->SetTexture("ice_beam_desc.png");
 			break;
-		case CardType::MagicMissile: //RangeBuff
+		case CardType::MagicMissile: //Magic missile
 			m_cardDisplay.at(i)->SetTexture("magic_missile_lvl" + std::to_string(level) + ".png");
-			m_descriptions.at(i)->SetTexture("haste_desc.png");
+			m_descriptions.at(i)->SetTexture("magic_missile_desc.png");
 			break;
 		default: //Nothing
 			m_cardDisplay.at(i)->SetTexture("button_card.png");
