@@ -16,7 +16,7 @@ void CardManager::Initialize()
         m_cardObjects.push_back(std::make_shared<AttackSpeedBuffCard>());
         m_cardObjects.push_back(std::make_shared<BladeCard>());
         m_cardObjects.push_back(std::make_shared<MagicMissileCard>());
-        m_cardObjects.push_back(std::make_shared<IceBeamCard>());
+        m_cardObjects.push_back(std::make_shared<IceCubesCard>());
     }
 }
 
@@ -51,7 +51,7 @@ std::shared_ptr<ICard> CardManager::GetCard(CardType cardType)
     case CardType::MagicMissile:
         return m_cardObjects[8];
         break;
-    case CardType::IceBeam:
+    case CardType::IceCubes:
         return m_cardObjects[9];
         break;
     default:

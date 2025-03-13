@@ -87,7 +87,7 @@ void AbilityManager::Beam(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float d
 {
     for (size_t i = 0; i < projectileCount; i++)
     {
-        ProjectileManager::AddProjectile(ProjectileType::IceBeam, position, direction, 200 + i * 8, 5, damage);
+        ProjectileManager::AddProjectile(ProjectileType::IceCube, position, direction, 150 + i * 20, 5, damage);
     }
 }
 

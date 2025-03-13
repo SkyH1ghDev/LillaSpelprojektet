@@ -57,7 +57,7 @@ void Projectile::Initialize(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, float
     else
         this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
 
-    if (this->m_type == ProjectileType::IceBeam)
+    if (this->m_type == ProjectileType::IceCube)
         this->m_freezeTime = 0.2f;
 }
 
@@ -88,7 +88,7 @@ void Projectile::Update()
                 this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
         }
 
-        if (this->m_type == ProjectileType::IceBeam)
+        if (this->m_type == ProjectileType::IceCube)
         {
             if (sqrt(pow(PlayerInfo::GetPosition().x - this->m_position.x, 2) + pow(PlayerInfo::GetPosition().y - this->m_position.y, 2)) < this->m_lifetime * 12)
             {
@@ -97,18 +97,17 @@ void Projectile::Update()
 
                 DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);
 
-                if (this->m_direction.y > 0)
-                    this->SetRotation(DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
-                else
-                    this->SetRotation(-DX::XMVectorGetX(DX::XMVector2AngleBetweenVectors(DX::XMLoadFloat2(&this->m_direction), DX::XMLoadFloat2(&zeroAngle))));
+                
+                this->SetRotation(0);
             }
         }
 
         if (this->m_type == ProjectileType::Blade)
         {
+            float distX = Input::GetMousePositionX() - this->m_position.x;
+            float distY = Input::GetMousePositionY() - this->m_position.y;
             float div = sqrt(pow(this->m_position.x, 2) + pow(this->m_position.y, 2));
-            float distX = std::clamp(Input::GetMousePositionX() - this->m_position.x, -50.0f, 50.0f);
-            float distY = std::clamp(Input::GetMousePositionY() - this->m_position.y, -50.0f, 50.0f);
+
             this->m_direction = { (distX) / div * 10, (distY) / div * 10};
             this->m_position = { this->m_position.x + (PlayerInfo::GetPosition().x - this->m_position.x) * Clock::GetDeltaTime() * 20, this->m_position.y + (PlayerInfo::GetPosition().y - this->m_position.y) * Clock::GetDeltaTime() * 20 };
             DX::XMFLOAT2 zeroAngle = DX::XMFLOAT2(1, 0);

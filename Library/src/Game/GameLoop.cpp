@@ -19,6 +19,8 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 	m_setup.SetViewport(width, height, viewport);
 }
 
+
+
 //Extension of Main
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
@@ -42,10 +44,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	{
 		gameObject->OnStart();
 	}
+
+	LoadIntro(window, renderer);
+
 	SceneManager::LoadScene("main");
 
-
-	
 	//Render- / main application loop
 	//May want to change the condition to a bool variable
 	while (!exitHandler.ShouldExit())
@@ -76,5 +79,42 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 	AssetManager::ResetAudioEngine();
 	DestroyWindow(window.GetWindowHandle());
 	
+}
 
+void GameLoop::LoadIntro(Window window, Renderer& renderer)
+{
+	SceneManager::LoadScene("intro");
+	std::shared_ptr<IScene> currentScene = SceneManager::GetCurrentScene();
+	for (int i = 1; i < currentScene->GetGameObjectVec().size(); i++)
+	{
+		currentScene->GetGameObjectVec()[i]->SetShouldRender(false);
+	}
+	float time = 0;
+
+	while (true) {
+		Clock::Start();
+		Input::HandleInput(window.GetWindowHandle());
+		std::shared_ptr<IScene> currentScene = SceneManager::GetCurrentScene();
+		renderer.Draw(currentScene);
+		time += Clock::GetDeltaTime();
+
+		if (time > 2) {
+			currentScene->GetGameObjectVec()[0]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[1]->SetShouldRender(true);
+		}
+		if (time > 5) {
+			currentScene->GetGameObjectVec()[1]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(true);
+		}
+		if (time > 11) {
+			currentScene->GetGameObjectVec()[2]->SetShouldRender(false);
+			currentScene->GetGameObjectVec()[3]->SetShouldRender(true);
+		}
+		if (time > 16)
+			break;
+
+		Clock::End();
+	}
+	Clock::End();
+	SceneManager::UnloadScene();
 }

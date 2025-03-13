@@ -285,15 +285,15 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 		switch (m_cardChoice[i])
 		{
 		case CardType::Shotgun: //Scatter
-			m_cardDisplay.at(i)->SetTexture("card_scatter_lvl" + std::to_string(level) + ".png");
+			m_cardDisplay.at(i)->SetTexture("scatter_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("scatter_desc.png");
 			break;
 		case CardType::Spread: //Ring of fire
-			m_cardDisplay.at(i)->SetTexture("card_rof_lvl" + std::to_string(level) + ".png");
+			m_cardDisplay.at(i)->SetTexture("ring_of_fire_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("ring_of_fire_desc.png");
 			break;
 		case CardType::Heal: //Heal
-			m_cardDisplay.at(i)->SetTexture("card_heal_lvl" + std::to_string(level) + ".png");
+			m_cardDisplay.at(i)->SetTexture("heal_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("heal_desc.png");
 			break;
 		case CardType::Sniper: //Rune shard
@@ -301,24 +301,24 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			m_descriptions.at(i)->SetTexture("rune_shard_desc.png");
 			break;
 		case CardType::Disruptor: //Disruptor
-			m_cardDisplay.at(i)->SetTexture("disruptor_wave_lvl" + std::to_string(level) + ".png");
+			m_cardDisplay.at(i)->SetTexture("disruptor_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("disruptor_desc.png");
 			break;
 		case CardType::RangeBuff: //RangeBuff
-			m_cardDisplay.at(i)->SetTexture("range_buff_lvl" + std::to_string(level) + ".png");
+			m_cardDisplay.at(i)->SetTexture("longshot_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("longshot_desc.png");
 			break;
 		case CardType::AttackSpeedBuff: //Attack speed buff
-			m_cardDisplay.at(i)->SetTexture("attack_speed_buff_lvl" + std::to_string(level) + ".png");
+			m_cardDisplay.at(i)->SetTexture("haste_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("haste_desc.png");
 			break;
 		case CardType::Blade: //Blade
 			m_cardDisplay.at(i)->SetTexture("blade_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("blade_desc.png");
 			break;
-		case CardType::IceBeam: //Ice beam
-			m_cardDisplay.at(i)->SetTexture("ice_beam_lvl" + std::to_string(level) + ".png");
-			m_descriptions.at(i)->SetTexture("ice_beam_desc.png");
+		case CardType::IceBeam: //Ice cube
+			m_cardDisplay.at(i)->SetTexture("ice_cubes_lvl" + std::to_string(level) + ".png");
+			m_descriptions.at(i)->SetTexture("ice_cubes_desc.png");
 			break;
 		case CardType::MagicMissile: //Magic missile
 			m_cardDisplay.at(i)->SetTexture("magic_missile_lvl" + std::to_string(level) + ".png");

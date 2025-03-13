@@ -88,10 +88,10 @@ public:
 private:
 };
 
-class IceBeamCard : public ICard
+class IceCubesCard : public ICard
 {
 public:
-    IceBeamCard();
+    IceCubesCard();
     void ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
     void ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;
     void ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target) override;

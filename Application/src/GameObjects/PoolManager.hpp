@@ -21,7 +21,7 @@
 #include "Projectile.hpp"
 #include "ScatterPelletFactory.hpp"
 #include "SniperBulletFactory.hpp"
-#include "IceBeamFactory.hpp"
+#include "IceCubeFactory.hpp"
 #include "MagicMissileFactory.hpp"
 #include "FireBallFactory.hpp"
 #include "PawnAltFactory.hpp"
@@ -266,9 +266,9 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
                 break;
             }
 
-            case ProjectileType::IceBeam:
+            case ProjectileType::IceCube:
             {
-                IceBeamFactory factory;
+                IceCubeFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }
