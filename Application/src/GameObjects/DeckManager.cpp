@@ -316,9 +316,9 @@ void DeckManager::ResetMenu(UpgradeType upgrade, size_t level)
 			m_cardDisplay.at(i)->SetTexture("blade_lvl" + std::to_string(level) + ".png");
 			m_descriptions.at(i)->SetTexture("blade_desc.png");
 			break;
-		case CardType::IceBeam: //Ice cube
+		case CardType::IceCubes: //Ice cube
 			m_cardDisplay.at(i)->SetTexture("ice_cubes_lvl" + std::to_string(level) + ".png");
-			m_descriptions.at(i)->SetTexture("ice_cubes_desc.png");
+			m_descriptions.at(i)->SetTexture("ice_cube_desc.png");
 			break;
 		case CardType::MagicMissile: //Magic missile
 			m_cardDisplay.at(i)->SetTexture("magic_missile_lvl" + std::to_string(level) + ".png");
