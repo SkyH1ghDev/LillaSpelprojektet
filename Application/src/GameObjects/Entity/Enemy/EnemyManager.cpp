@@ -23,8 +23,8 @@ std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawn
 {
     // Round 1
     {
-        {EntityType::Pawn, 500},
-        {EntityType::PawnAlt, 500},
+        {EntityType::Pawn, 0},
+        {EntityType::PawnAlt, 1000},
         {EntityType::Bishop, 0},
         {EntityType::BishopAlt, 0},
         {EntityType::Rook, 0},
@@ -125,7 +125,7 @@ std::vector<std::unordered_map<EntityType, std::uint16_t>> EnemyManager::m_spawn
 std::vector<std::uint8_t> EnemyManager::m_numOfEnemiesPerWave =
 {
     // Round 1
-    1, 2, 3,
+    5, 5, 5,
     
     // Round 2
     2, 3, 4,

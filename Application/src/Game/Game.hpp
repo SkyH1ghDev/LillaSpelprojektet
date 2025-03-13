@@ -15,6 +15,7 @@ public:
     void ResetGame();
 
 private:
+	void SetupIntroScene(std::shared_ptr<IScene> introScene);
     void SetupMainScene(std::shared_ptr<IScene> startScene, std::shared_ptr<IGameObject> player);
     void SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGameObject> player, std::shared_ptr<IScript> pcs, std::shared_ptr<IGameObject> cardDeck);
     void SetupPauseScene(std::shared_ptr<IScene> pauseScene);
