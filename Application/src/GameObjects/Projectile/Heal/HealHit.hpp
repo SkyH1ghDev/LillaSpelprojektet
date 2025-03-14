@@ -2,7 +2,7 @@
 #include "IProjectileHit.hpp"
 #include <iostream>
 
-class LongshotHit : public IProjectileHit
+class HealHit : public IProjectileHit
 {
 public:
     void Hit(bool& hasHit) override;

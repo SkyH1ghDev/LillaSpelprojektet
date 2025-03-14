@@ -1,6 +1,6 @@
-#include "LongshotHit.hpp"
+#include "HealHit.hpp"
 
-void LongshotHit::Hit(bool& isAlive)
+void HealHit::Hit(bool& isAlive)
 {
 	//isAlive = false;
 }

@@ -5,7 +5,7 @@
 
 namespace DX = DirectX;
 
-class LongshotSetCollider : public IProjectileSetCollider
+class HealSetCollider : public IProjectileSetCollider
 {
 public:
 	Collider SetCollider(DX::XMFLOAT2 position) override;
