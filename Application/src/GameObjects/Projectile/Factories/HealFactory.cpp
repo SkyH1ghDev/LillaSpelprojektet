@@ -1,13 +1,13 @@
-#include "HasteFactory.hpp"
+#include "HealFactory.hpp"
 
-#include "HasteHit.hpp"
-#include "HasteMove.hpp"
-#include "HasteSetCollider.hpp"
-#include "HasteVisible.hpp"
+#include "HealHit.hpp"
+#include "HealMove.hpp"
+#include "HealSetCollider.hpp"
+#include "HealVisible.hpp"
 
-std::shared_ptr<Projectile> HasteFactory::CreateObject()
+std::shared_ptr<Projectile> HealFactory::CreateObject()
 {
-    std::shared_ptr<Projectile> Haste = std::make_shared<Projectile>
+    std::shared_ptr<Projectile> Heal = std::make_shared<Projectile>
     (
         Projectile 
         (
@@ -20,26 +20,26 @@ std::shared_ptr<Projectile> HasteFactory::CreateObject()
         )
     );
 
-    return Haste;
+    return Heal;
 
 }
 
-std::shared_ptr<IProjectileMove> HasteFactory::CreateMoveComponent()
+std::shared_ptr<IProjectileMove> HealFactory::CreateMoveComponent()
 {
-    return std::make_shared<HasteMove>();
+    return std::make_shared<HealMove>();
 }
 
-std::shared_ptr<IProjectileHit> HasteFactory::CreateHitComponent()
+std::shared_ptr<IProjectileHit> HealFactory::CreateHitComponent()
 {
-    return std::make_shared<HasteHit>();
+    return std::make_shared<HealHit>();
 }
 
-std::shared_ptr<IProjectileSetCollider> HasteFactory::CreateSetColliderComponent()
+std::shared_ptr<IProjectileSetCollider> HealFactory::CreateSetColliderComponent()
 {
-    return std::make_shared<HasteSetCollider>();
+    return std::make_shared<HealSetCollider>();
 }
 
-std::shared_ptr<IProjectileVisible> HasteFactory::CreateVisibleComponent()
+std::shared_ptr<IProjectileVisible> HealFactory::CreateVisibleComponent()
 {
-    return std::make_shared<HasteVisible>();
+    return std::make_shared<HealVisible>();
 }

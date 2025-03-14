@@ -1,15 +1,15 @@
 #pragma once
 #include "IProjectileFactory.hpp"
 
-class HasteFactory : public IProjectileFactory
+class HealFactory : public IProjectileFactory
 {
 public:
-    HasteFactory() = default;
-    ~HasteFactory() override = default;
-    HasteFactory(const HasteFactory& other) = default;
-    HasteFactory& operator=(const HasteFactory& other) = default;
-    HasteFactory(HasteFactory&& other) noexcept = default;
-    HasteFactory& operator=(HasteFactory&& other) noexcept = default;
+    HealFactory() = default;
+    ~HealFactory() override = default;
+    HealFactory(const HealFactory& other) = default;
+    HealFactory& operator=(const HealFactory& other) = default;
+    HealFactory(HealFactory&& other) noexcept = default;
+    HealFactory& operator=(HealFactory&& other) noexcept = default;
 
     std::shared_ptr<Projectile> CreateObject() override;
 
