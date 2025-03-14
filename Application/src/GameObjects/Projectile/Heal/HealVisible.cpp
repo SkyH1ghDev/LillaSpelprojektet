@@ -4,7 +4,7 @@ void HealVisible::Visible(std::string& texture, DX::XMFLOAT2 position, Projectil
 {
     layer = 0.5 + 0.3 * position.y / 360;
     scale = 1.0f;
-    texture = "longshot_effect";
+    texture = "heal_effect";
     hasDeathAnimation = false;
 }
 

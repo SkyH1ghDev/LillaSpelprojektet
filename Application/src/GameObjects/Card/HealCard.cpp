@@ -1,6 +1,7 @@
 #include "card.hpp"
 #include "GameObjects/UI/Bar/HealthBarManager.hpp"
 #include "StatSheet.hpp"
+#include "AbilityManager.hpp"
 
 HealCard::HealCard()
 {
@@ -11,18 +12,27 @@ void HealCard::ActivateLvl1(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
     StatSheet::IncreaseHealth(1);
     HealthBarManager::DrawHearts();
+    DirectX::XMFLOAT2 dir = { 1,0 };
+    AbilityManager::HealEffect(position, dir, 1, 0.5, 0, 0);
 }
 
 void HealCard::ActivateLvl2(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
+
     StatSheet::IncreaseHealth(2);
     HealthBarManager::DrawHearts();
+    DirectX::XMFLOAT2 dir = { 1,0 };
+    AbilityManager::HealEffect(position, dir, 1, 0.5, 0, 0);
+
 }
 
 void HealCard::ActivateLvl3(DX::XMFLOAT2 position, DX::XMFLOAT2 target)
 {
     StatSheet::IncreaseHealth(3);
-    HealthBarManager::DrawHearts();
+    HealthBarManager::DrawHearts(); 
+    DirectX::XMFLOAT2 dir = { 1,0 };
+    AbilityManager::HealEffect(position, dir, 1, 0.5, 0, 0);
+
 }
 
 void HealCard::SetCardTexture(size_t cardLevel)
