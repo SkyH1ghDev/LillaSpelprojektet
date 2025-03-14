@@ -89,7 +89,7 @@ void PlayerVisible::Visible(std::string& texture, DX::XMFLOAT2 position, EntityS
             break;
         }
     }
-    if (entityState != EntityState::Dashing && entityState != EntityState::Base)
+    if (entityState != EntityState::Dashing && entityState != EntityState::Base && entityState != EntityState::TakingDamage)
         this->m_lastState = entityState;
 }
 
