@@ -21,5 +21,10 @@ void AbilityManager::HasteEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, 
     ProjectileManager::AddProjectile(ProjectileType::Haste, DX::XMFLOAT2(position.x, position.y), direction, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
 }
 
+void AbilityManager::HealEffect(DX::XMFLOAT2 position, DX::XMFLOAT2 direction, size_t projectileCount, float lifeSpan, float shotSpeed, float spreadAngle)
+{
+    ProjectileManager::AddProjectile(ProjectileType::Heal, DX::XMFLOAT2(position.x, position.y), direction, shotSpeed + shotSpeed + (rand() % 50 - 25), lifeSpan, 10.0f);
+}
+
 
 

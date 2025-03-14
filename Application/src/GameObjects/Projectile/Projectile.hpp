@@ -12,6 +12,7 @@ enum class ProjectileType {
     DisruptorWave,
     Longshot,
     Haste,
+    Heal,
     FireBall,
     MagicMissile,
     IceCube,

@@ -27,6 +27,7 @@
 #include "PawnAltFactory.hpp"
 #include "LongshotFactory.hpp"
 #include "HasteFactory.hpp"
+#include "HealFactory.hpp"
 #include "PickUps.hpp"
 #include "BladeFactory.hpp"
 
@@ -255,6 +256,13 @@ std::shared_ptr<T> PoolManager<T, Type>::CreateObject(Type type)
             case ProjectileType::Haste:
             {
                 HasteFactory factory;
+                obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
+                break;
+            }
+
+            case ProjectileType::Heal:
+            {
+                HealFactory factory;
                 obj = std::dynamic_pointer_cast<T>(factory.CreateObject());
                 break;
             }
