@@ -30,8 +30,8 @@
 void Game::SetupGame()
 {
     //Set music and sfx volume
-    Sound::SetMusicVolume(1.0f);
-    Sound::SetSFXVolume(1.0f);
+    Sound::SetGlobalMusicVolume(1.0f);
+    Sound::SetGlobalSFXVolume(1.0f);
 
     PlayerFactory playerFactory;
     std::shared_ptr<Entity> player = playerFactory.CreateEntity();

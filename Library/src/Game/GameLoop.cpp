@@ -35,8 +35,7 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 	ExitHandler exitHandler;
 
-	Sound::SetMusic("menu_theme.wav", 0.4f);
-	Sound::PlayMusic(true);
+	
 
 	// OnStart for all GameObjects
 
@@ -45,8 +44,11 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 		gameObject->OnStart();
 	}
 
-	LoadIntro(window, renderer);
+	
 
+	LoadIntro(window, renderer);
+	Sound::SetMusic("menu_theme.wav", 0.4f);
+	Sound::PlayMusic(true);
 	SceneManager::LoadScene("main");
 
 	//Render- / main application loop
@@ -83,6 +85,8 @@ void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 
 void GameLoop::LoadIntro(Window window, Renderer& renderer)
 {
+	Sound::SetMusic("intro_theme.wav", 0.4f);
+	Sound::PlayMusic(true);
 	SceneManager::LoadScene("intro");
 	std::shared_ptr<IScene> currentScene = SceneManager::GetCurrentScene();
 	for (int i = 1; i < currentScene->GetGameObjectVec().size(); i++)
@@ -196,6 +200,12 @@ void GameLoop::LoadIntro(Window window, Renderer& renderer)
 			currentScene->GetGameObjectVec()[10]->SetShouldRender(false);
 			currentScene->GetGameObjectVec()[14]->SetShouldRender(true);
 		}
+
+		if (time > 31 && 32 - time >= 0)
+			Sound::SetMusicVolume(0.4f * (32 - time));
+
+		if (time > 32)
+			Sound::SetMusicVolume(0);
 
 		if (time > 35)
 			break;

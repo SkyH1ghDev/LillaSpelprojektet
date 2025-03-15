@@ -11,7 +11,8 @@ public:
 	static void PauseMusic();
 	static void ResumeMusic();
 	static void ResetAudio();
-	static void SetSFXVolume(float volume);
+	static void SetGlobalSFXVolume(float volume);
+	static void SetGlobalMusicVolume(float volume);
 	static void SetMusicVolume(float volume);
 
 private:
@@ -52,12 +53,17 @@ inline void Sound::ResetAudio()
 	AssetManager::ResetAudioEngine();
 }
 
-inline void Sound::SetSFXVolume(float volume)
+inline void Sound::SetGlobalSFXVolume(float volume)
 {
 	Sound::m_sfxVolume = volume;
 }
 
 inline void Sound::SetMusicVolume(float volume)
+{
+	Sound::m_music->SetVolume(volume * Sound::m_musicVolume);
+}
+
+inline void Sound::SetGlobalMusicVolume(float volume)
 {
 	Sound::m_musicVolume = volume;
 }
