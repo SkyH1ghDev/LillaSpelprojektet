@@ -24,10 +24,10 @@ void GameLoop::Setup(HINSTANCE hInstance, int nCmdShow, MW::ComPtr<ID3D11Device>
 //Extension of Main
 void GameLoop::Run(HINSTANCE hInstance, int nCmdShow)
 {
-	m_game.SetupGame();
 	Window window = Window(hInstance, nCmdShow, 1920, 1080);
 	ShowCursor(FALSE);
 	Renderer renderer = Renderer(window.GetWindowHandle());
+	m_game.SetupGame();
 
 	//std::shared_ptr<ExitHandler> exitHandler = std::make_shared<ExitHandler>();
 

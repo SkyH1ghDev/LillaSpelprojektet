@@ -5,7 +5,7 @@
 class ManaBarManager {
 public:
     static void Initialize(size_t manaNumber);
-    static void RefillManaShard(size_t manaNumber);
+    static void RefillManaShard(size_t manaNumber, bool sound);
     static bool RemoveManaCrystal(size_t manaNumber);
     static void Cleanup();
     static void Reset();

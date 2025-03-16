@@ -1,4 +1,5 @@
 #include "ManaBarManager.hpp"
+#include <SpEngine/Audio/Sound.hpp>
 
 std::vector<std::shared_ptr<IGameObject>> ManaBarManager::manaBar;
 int ManaBarManager::maxMana = 0;
@@ -19,10 +20,15 @@ void ManaBarManager::Initialize(size_t manaNumber)
     maxMana = manaBar.size();
 }
 
-void ManaBarManager::RefillManaShard(size_t manaNumber)
+void ManaBarManager::RefillManaShard(size_t manaNumber, bool sound)
 {
+    
 
     for (size_t i = 0; i < manaNumber; ++i) {
+
+        if (manaCrystalIndex == 4 && sound)
+            Sound::PlayOnce("mana_recharge.wav", 0.4f);
+
         if (manaCrystalIndex >= 5 && manaBarIndex < maxMana) {
             manaBarIndex++;
             manaCrystalIndex = 0;
@@ -38,6 +44,7 @@ void ManaBarManager::RefillManaShard(size_t manaNumber)
         if (mana) 
             mana->UpdateMana(true, manaCrystalIndex);
         manaCrystalIndex++;
+
     }
     return;
 }
@@ -75,7 +82,7 @@ void ManaBarManager::Reset()
     }
     ManaBarManager::manaBarIndex = 0;
     ManaBarManager::manaCrystalIndex = 0;
-    RefillManaShard(5);
+    RefillManaShard(5, false);
 }
 
 void ManaBarManager::Cleanup()

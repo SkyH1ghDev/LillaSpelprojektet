@@ -243,7 +243,7 @@ void Game::SetupGameScene(std::shared_ptr<IScene> mainScene, std::shared_ptr<IGa
     PoolManager<Projectile, ProjectileType>::Initialize(ProjectileType::BishopBall, 20);
     HealthBarManager::Initialize(5);
     ManaBarManager::Initialize(3);
-    ManaBarManager::RefillManaShard(5);
+    ManaBarManager::RefillManaShard(5, false);
 
     //StaicMeshes
     PoolManager<PickUps, PickUpType>::Initialize(PickUpType::Base, 10);

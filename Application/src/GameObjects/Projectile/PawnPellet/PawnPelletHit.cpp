@@ -4,5 +4,5 @@
 void PawnPelletHit::Hit(bool& hasHit)
 {
 	hasHit = true;
-	ManaBarManager::RefillManaShard(1);
+	ManaBarManager::RefillManaShard(1, true);
 }
