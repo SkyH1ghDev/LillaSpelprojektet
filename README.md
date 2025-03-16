@@ -14,7 +14,8 @@ Att manuellt lägga in Premake5 i PATH är rekommenderat för att globalt kunna 
 3. Gå in i Generated/ mappen och öppna .sln-filen.
 3.5. <Optional> Om External/ mappen är tom, skriv:
 
-    git submodule update --init --recursive --remote
+    
+    ```git submodule update --init --recursive --remote```
 
 4. Sätt target build config till "Release x64" och bygg "Application"-projektet. Alla dependencies kommer nu byggas som statiska bibliotek och inkluderas i projektet. Därefter byggs själva motorn och spelet.
 5. Gå in i Game/Exe/ mappen och kör spelet
