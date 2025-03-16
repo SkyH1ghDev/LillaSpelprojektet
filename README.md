@@ -12,6 +12,7 @@ Att manuellt lägga in Premake5 i PATH är rekommenderat för att globalt kunna 
 1. Öppna bas-mappen till projektet i kommandotolken.
 2. Skriv in "premake5 vs2022" för att en solution ska genereras.
 3. Gå in i Generated/ mappen och öppna .sln-filen.  
+
     3.5. <Optional> Om External/ mappen är tom, skriv:
     
     ```git submodule update --init --recursive --remote```
